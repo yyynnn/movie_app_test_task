@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+import * as Icon from "react-bootstrap-icons";
 import { useHistory, Link } from "react-router-dom";
 import {
     titleChanged,
@@ -12,11 +12,7 @@ import {
 } from "../store/task";
 import { useSelector, useDispatch } from "react-redux";
 import { getError } from "../store/errors";
-// function importAll(r) {
-//     return r.keys().map(r);
-// }
-
-// const images = importAll(require.context("../img/listImages", false, /\.(png|jpe?g|svg)$/));
+import taskImages from "../img/taskImages/taskImages.js";
 
 const List = () => {
     const state = useSelector(getTasks());
@@ -48,34 +44,34 @@ const List = () => {
     }
     return (
         <div className="colorBg">
-            <div className="px-4 py-5 text-center">
+            <div className="px-4 py-3 text-center">
                 <h1 className="display-6 colorText fw-bold ">Corrective actions</h1>
                 <div className="col-lg-6 mx-auto">
                     <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
                         <Link to="/">
                             <img
-                                className="mx-auto mb-2 mt-4"
-                                src={""}
-                                alt="3"
-                                width="100"
+                                className="mx-auto mb-2 mt-5"
+                                src={taskImages.OHS}
+                                alt="OHS"
+                                width="200"
                                 height="50"
                             />
                         </Link>
                         <Link to="/">
                             <img
-                                className="mx-auto mb-2 mt-4"
-                                src={""}
-                                alt="3"
+                                className="mx-auto mb-2 mt-5"
+                                src={taskImages.Environment}
+                                alt="environment"
                                 width="300"
                                 height="50"
                             />
                         </Link>
                         <Link to="/">
                             <img
-                                className="mx-auto mb-2 mt-4 p-1"
-                                src={""}
-                                alt="3"
-                                width="100"
+                                className="mx-auto mb-2 mt-5 p-1"
+                                src={taskImages.Quality}
+                                alt="quality"
+                                width="200"
                                 height="50"
                             />
                         </Link>
@@ -118,7 +114,7 @@ const List = () => {
                         {state.map((el) => (
                             <tr key={el.id} className="colorText table-bg">
                                 <td>
-                                    <i className="bi bi-circle"></i>
+                                    <Icon.Circle />
                                 </td>
                                 <td>03.25.2022</td>
                                 <td>Accident</td>
@@ -126,11 +122,7 @@ const List = () => {
                                 <td>{el.title}</td>
                                 <td>User</td>
                                 <td>03.25.2022</td>
-                                <td>
-                                    <i
-                                        className={"bi bi-circle" + (el.completed ? "-fill" : "")}
-                                    ></i>
-                                </td>
+                                <td>{el.completed ? <Icon.CircleFill /> : <Icon.Circle />}</td>
                                 <td className="d-grid gap-2 d-sm-flex justify-content-sm-center">
                                     <button
                                         className="btn btn-secondary"
