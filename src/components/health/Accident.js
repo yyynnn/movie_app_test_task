@@ -24,9 +24,12 @@ const Accident = () => {
 				<div className="d-grid gap-4 d-sm-flex justify-content-sm-center">
 
 					<form>
-						<input name='input' />
-						<input name='input' />
-						<input name='input' />
+						<label htmlFor='one'>TEXT</label>
+						<input id='one' name='one' />
+						<label htmlFor='two'>TEXT</label>
+						<input name='two' />
+						<label htmlFor='three'>TEXT</label>
+						<input name='three' />
 					</form>
 
 				</div>

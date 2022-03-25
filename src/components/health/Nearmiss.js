@@ -22,8 +22,10 @@ const Nearmiss = () => {
 				</div>
 
 				<div className="d-grid gap-4 d-sm-flex justify-content-sm-center">
-					<input name='input' />
-					<input name='input' />
+					<label htmlFor='one'>TEXT</label>
+					<input id='one' name='one' />
+					<label htmlFor='two'>TEXT</label>
+					<input name='two' />
 
 				</div>
 

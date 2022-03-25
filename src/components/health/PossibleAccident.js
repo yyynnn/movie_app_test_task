@@ -22,7 +22,8 @@ const PossibleAccident = () => {
 				</div>
 
 				<div className="d-grid gap-4 d-sm-flex justify-content-sm-center">
-					<input name='input' />
+					<label htmlFor='one'>TEXT</label>
+					<input id='one' name='one' />
 				</div>
 
 				<Link to="/"
