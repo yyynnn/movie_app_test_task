@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-// import Button from "react-bootstrap/Button";
 import 'bootstrap/dist/css/bootstrap.css';
 
 import "../../css/btn.css";
@@ -22,13 +21,13 @@ const Health = () => {
 				</div>
 
 				<div className="d-grid gap-4 d-sm-flex justify-content-sm-center">
-					<Link to='/accident'>
+					<Link className="link" to='/accident'>
 						<button className="btn">Accident</button>
 					</Link>
-					<Link to='/nearmiss'>
+					<Link className="link" to='/nearmiss'>
 						<button className="btn">Nearmiss</button>
 					</Link>
-					<Link to='/possibleAccident'>
+					<Link className="link" to='/possibleAccident'>
 						<button className="btn">Possible accident</button>
 					</Link>
 				</div>

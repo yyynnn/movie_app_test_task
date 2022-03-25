@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 // import Button from "react-bootstrap/Button";
-import style from 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import "../../css/btn.css";
 import "../../css/modalAll.css";
@@ -26,6 +26,7 @@ const Quality = () => {
 					<button className="btn">Non-conforming product</button>
 					<button className="btn">OTD</button>
 				</div>
+
 				<Link to="/"
 					className='close'
 
