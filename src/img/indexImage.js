@@ -4,5 +4,6 @@ import qual from "./GroupQuality.svg";
 import quality from './quality.png'
 import health from './health.png'
 import environment from './environment.png'
+import vectorNext from './vectorNext.png'
 
-export { env, hes, qual, quality, health, environment };
+export { env, hes, qual, quality, health, environment, vectorNext };

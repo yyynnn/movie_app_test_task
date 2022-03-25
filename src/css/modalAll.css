@@ -21,7 +21,7 @@
 
 .vectorNext {
 	position: absolute;
-	top: 50vh;
+	top: 500px;
 	left: 90%;
 }
 
@@ -40,30 +40,31 @@
 	color: #fff;
 }
 
-@media(max-width: 880px) {
+@media(max-width: 988px) {
 	.vectorNext {
 		position: absolute;
-		top: 65vh;
+		top: 65%;
 		left: 90%;
 	}
 }
 
-@media(max-width: 767px) {
+/* 
+@media(max-width: 797px) {
 	.vectorNext {
 		position: absolute;
-		top: 50vh;
+		top: 550px;
 		left: 90%;
 	}
-}
+} */
 
-@media(max-width: 650px) {
+/* @media(max-width: 650px) {
 	.vectorNext {
 		position: absolute;
-		top: 65vh;
+		top: 520px;
 		left: 90%;
 	}
 
 	.close {
 		top: 35vh;
 	}
-}
+} */
