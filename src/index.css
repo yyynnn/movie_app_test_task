@@ -20,9 +20,13 @@ code {
 }
 
 .colorText {
-    color: #e6e6e6;
+    color: #a09b9b;
 }
 
 .table-color {
     background-color: rgba(196, 196, 196, 0.3);
+}
+
+.weightText {
+    font-weight: 100;
 }
