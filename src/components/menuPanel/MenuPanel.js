@@ -7,17 +7,17 @@ const MenuPanel = () => {
         <div className="colorBg">
             <div className=" text-center">
                 <div className="col-lg-8 mx-auto">
-                    <Link to="/list">
+                    <Link to="/list" className="p-3">
                         <img
                             className=" mx-auto mb-2 mt-2"
                             src={listicon}
                             alt="3"
-                            width="50"
-                            height="50"
+                            width="40"
+                            height="40"
                         />
                     </Link>
 
-                    <Link to="/" className="p-2">
+                    <Link to="/" className="p-3">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={Settings}
@@ -26,7 +26,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-2">
+                    <Link to="/" className="p-3">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={Rows}
@@ -35,7 +35,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-2">
+                    <Link to="/" className="p-3">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={Works}
@@ -44,7 +44,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-2">
+                    <Link to="/" className="p-3">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={People}
@@ -53,7 +53,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-2">
+                    <Link to="/" className="p-3">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={Reports}
@@ -62,7 +62,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-2">
+                    <Link to="/" className="p-3">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={World}
