@@ -6,7 +6,7 @@ const MenuPanel = () => {
     return (
         <div className="colorBg">
             <div className=" text-center">
-                <div className="col-lg-6 mx-auto">
+                <div className="col-lg-8 mx-auto">
                     <Link to="/list">
                         <img
                             className=" mx-auto mb-2 mt-2"
