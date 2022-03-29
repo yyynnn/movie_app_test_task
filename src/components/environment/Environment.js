@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import style from "bootstrap/dist/css/bootstrap.css";
-
 import "../../css/button.css";
 import "../../css/modalAll.css";
 import { Container } from "react-bootstrap";

@@ -12,7 +12,7 @@ import {
 } from "../store/task";
 import { useSelector, useDispatch } from "react-redux";
 import { getError } from "../store/errors";
-import taskImages from "../img/taskImages/taskImages.js";
+import { Environment, OHS, Quality } from "../img/taskImages/taskImages.js";
 
 const List = () => {
     const state = useSelector(getTasks());
@@ -22,7 +22,7 @@ const List = () => {
     const error = useSelector(getError());
     useEffect(() => {
         dispatch(loadTasks());
-    }, []);
+    }, [dispatch]);
 
     const changeTitlle = (taskId) => {
         dispatch(titleChanged(taskId));
@@ -51,7 +51,7 @@ const List = () => {
                         <Link to="/">
                             <img
                                 className="mx-auto mb-2 mt-5"
-                                src={taskImages.OHS}
+                                src={OHS}
                                 alt="OHS"
                                 width="200"
                                 height="50"
@@ -60,7 +60,7 @@ const List = () => {
                         <Link to="/">
                             <img
                                 className="mx-auto mb-2 mt-5"
-                                src={taskImages.Environment}
+                                src={Environment}
                                 alt="environment"
                                 width="300"
                                 height="50"
@@ -69,7 +69,7 @@ const List = () => {
                         <Link to="/">
                             <img
                                 className="mx-auto mb-2 mt-5 p-1"
-                                src={taskImages.Quality}
+                                src={Quality}
                                 alt="quality"
                                 width="200"
                                 height="50"
