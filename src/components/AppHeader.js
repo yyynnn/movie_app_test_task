@@ -13,7 +13,7 @@ const AppHeader = () => {
             />
             <p
                 className="display-6
-			 colorText weightText"
+			 colorTextGray weightText"
             >
                 Build the statistics. Improve yourself.
             </p>

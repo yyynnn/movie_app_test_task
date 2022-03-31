@@ -19,8 +19,11 @@ code {
     background-color: #333f48;
 }
 
-.colorText {
+.colorTextGray {
     color: #a09b9b;
+}
+.colorTextLightGray {
+    color: #e6e6e6;
 }
 
 .table-color {

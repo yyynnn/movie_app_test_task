@@ -45,7 +45,7 @@ const List = () => {
     return (
         <div className="colorBg">
             <div className="px-4 py-3 text-center">
-                <h1 className="display-6 colorText fw-bold ">Corrective actions</h1>
+                <h1 className="display-6  fw-bold colorTextLightGray ">Corrective actions</h1>
                 <div className="col-lg-6 mx-auto">
                     <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
                         <Link to="/">
@@ -78,8 +78,8 @@ const List = () => {
                     </div>
                 </div>
 
-                <table className="table table-hover  table-borderless">
-                    <thead className="colorText table-th-font-weight table-group-separator-color">
+                <table className="table table-hover colorTextLightGray table-borderless">
+                    <thead className="table-th-font-weight table-group-separator-color">
                         <tr>
                             <th className="fw-normal fs-5 th-sm" scope="col">
                                 Class
