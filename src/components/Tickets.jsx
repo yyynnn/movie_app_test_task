@@ -1,24 +1,20 @@
 import React, { useEffect } from "react";
 import * as Icon from "react-bootstrap-icons";
 import { useHistory, Link } from "react-router-dom";
-import { getTasks, loadTasks, getTasksLoadingStatus, createTask } from "../store/task";
+import { getTickets, loadTickets, getTicketsLoadingStatus } from "../store/tickets";
 import { useSelector, useDispatch } from "react-redux";
 import { getError } from "../store/errors";
 import { Environment, OHS, Quality } from "../img/taskImages/taskImages.js";
 
 const Tickets = () => {
-    const state = useSelector(getTasks());
+    const state = useSelector(getTickets());
     const dispatch = useDispatch();
     const history = useHistory();
-    const isLoading = useSelector(getTasksLoadingStatus());
+    const isLoading = useSelector(getTicketsLoadingStatus());
     const error = useSelector(getError());
     useEffect(() => {
-        dispatch(loadTasks());
+        dispatch(loadTickets());
     }, [dispatch]);
-
-    const addTask = () => {
-        dispatch(createTask({ userId: 1, title: "task" + Date.now(), completed: false }));
-    };
 
     if (isLoading) {
         return <h1>Loading...</h1>;
@@ -89,18 +85,17 @@ const Tickets = () => {
                                 <td>
                                     <Icon.Circle />
                                 </td>
-                                <td>03.25.2022</td>
-                                <td>Accident</td>
-                                <td>C112</td>
+                                <td>{el.date}</td>
+                                <td>{el.category}</td>
+                                <td>{el.workcenter}</td>
 
-                                <td>{el.completed ? <Icon.CircleFill /> : <Icon.Circle />}</td>
+                                <td>
+                                    {el.correctiveActions ? <Icon.CircleFill /> : <Icon.Circle />}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <button className="btn btn-secondary m-2 p-1" onClick={addTask}>
-                    Add task
-                </button>
                 <button className="btn btn-secondary m-2 p-1" onClick={() => history.push("/")}>
                     Home
                 </button>

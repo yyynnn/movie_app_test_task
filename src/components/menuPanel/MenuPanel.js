@@ -7,7 +7,7 @@ const MenuPanel = () => {
         <div className="colorBg">
             <div className=" text-center">
                 <div className="col-lg-8 mx-auto">
-                    <Link to="/list" className="p-3">
+                    <Link to="/" className="p-3">
                         <img
                             className=" mx-auto mb-2 mt-2"
                             src={listicon}

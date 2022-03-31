@@ -1,9 +1,10 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://jsonplaceholder.typicode.com/";
+axios.defaults.baseURL = "http://heqs.trydev.ru/api/";
 
 const httpService = {
-	get: axios.get,
-	post: axios.post,
+    get: axios.get,
+    post: axios.post
 };
+
 export default httpService;
