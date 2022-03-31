@@ -17,7 +17,7 @@ const Quality = () => {
                     <div>
                         <img src={quality} alt="quality" />
                     </div>
-                    <h2 className="title-text colorText text-center ">Quality</h2>
+                    <h2 className="title-text colorTextLightGray text-center ">Quality</h2>
                 </div>
 
                 <div className="d-grid gap-3 d-sm-flex justify-content-sm-center">

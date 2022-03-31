@@ -14,7 +14,7 @@ const Environment = () => {
                     <div>
                         <img src={environment} alt="health" />
                     </div>
-                    <h2 className="title-text colorText text-center ">Environment</h2>
+                    <h2 className="title-text colorTextLightGray text-center ">Environment</h2>
                 </div>
 
                 <div className="d-grid gap-4 d-sm-flex justify-content-sm-center">

@@ -13,7 +13,9 @@ const Health = () => {
                 <div>
                     <img src={health} alt="health" />
                 </div>
-                <h2 className="title-text colorText text-updae ">Occupational health and safety</h2>
+                <h2 className="title-text colorTextLightGray text-updae ">
+                    Occupational health and safety
+                </h2>
             </div>
 
             <div className="d-grid gap-4 d-sm-flex justify-content-sm-center">

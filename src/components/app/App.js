@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import configureStore from "../../store/store";
 import Main from "../Main";
 import List from "../List";
+import Tickets from "../Tickets";
 import AppHeader from "../AppHeader";
 import { Health, Accident, Nearmiss, PossibleAccident } from "../health/indexHealth";
 import MenuPanel from "../menuPanel/MenuPanel";
@@ -24,6 +25,9 @@ function App() {
                         </Route>
                         <Route exact path="/list">
                             <List />
+                        </Route>
+                        <Route exact path="/tickets">
+                            <Tickets />
                         </Route>
                         <Route exact path="/health">
                             <Health />

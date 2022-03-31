@@ -17,7 +17,9 @@ const PossibleAccident = () => {
                     <div>
                         <img src={health} alt="health" />
                     </div>
-                    <h2 className="title-text colorText text-center ">Possible accident</h2>
+                    <h2 className="title-text colorTextLightGray text-center ">
+                        Possible accident
+                    </h2>
                 </div>
 
                 <div className="d-grid gap-4 d-sm-flex justify-content-sm-center">

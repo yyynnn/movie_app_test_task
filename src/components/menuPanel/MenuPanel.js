@@ -26,7 +26,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-3">
+                    <Link to="/tickets" className="p-3">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={Rows}
