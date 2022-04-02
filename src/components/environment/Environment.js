@@ -16,11 +16,12 @@ const Environment = () => {
                     </div>
                     <h2 className="title-text colorTextLightGray text-center ">Environment</h2>
                 </div>
-
-                <div className="d-grid gap-4 d-sm-flex justify-content-sm-center">
-                    <button className="button">Accident</button>
-                    <button className="button">Nearmiss</button>
-                    <button className="button">Possible accident</button>
+                <div className="cardHeight">
+                    <div className="d-grid gap-4 d-sm-flex justify-content-sm-center">
+                        <button className="button">Accident</button>
+                        <button className="button">Nearmiss</button>
+                        <button className="button">Possible accident</button>
+                    </div>
                 </div>
                 <Link to="/" className="close">
                     <strong>&times;</strong>

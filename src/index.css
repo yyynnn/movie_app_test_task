@@ -33,3 +33,7 @@ code {
 .weightText {
     font-weight: 100;
 }
+
+.cardHeight {
+    height: 350px;
+}

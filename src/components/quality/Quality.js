@@ -11,21 +11,22 @@ import { quality } from "../../img/indexImage";
 
 const Quality = () => {
     return (
-        <div className="col-lg-9 mx-auto">
+        <div className="col-lg-12 mx-auto">
             <Container>
                 <div className="title">
                     <div>
                         <img src={quality} alt="quality" />
                     </div>
-                    <h2 className="title-text colorTextLightGray text-center ">Quality</h2>
+                    <h2 className="title-text colorTextLightGray text-center">Quality</h2>
                 </div>
-
-                <div className="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                    <button className="button">
-                        Audit <br /> non-conformity
-                    </button>
-                    <button className="button">Non-conforming product</button>
-                    <button className="button">OTD</button>
+                <div className="cardHeight">
+                    <div className="d-grid gap-3 d-sm-flex justify-content-sm-center cardHeight mb-5">
+                        <button className="button align-items-start">
+                            Audit <br /> non-conformity
+                        </button>
+                        <button className="button">Non-conforming product</button>
+                        <button className="button">OTD</button>
+                    </div>
                 </div>
 
                 <Link to="/" className="close">
