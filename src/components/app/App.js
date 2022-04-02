@@ -10,6 +10,7 @@ import { Health, Accident, Nearmiss, PossibleAccident } from "../health/indexHea
 import MenuPanel from "../menuPanel/MenuPanel";
 import Quality from "../quality/Quality";
 import Environment from "../environment/Environment";
+import Database from "../database/Database";
 
 const store = configureStore();
 
@@ -28,6 +29,9 @@ function App() {
                         </Route>
                         <Route exact path="/tickets">
                             <Tickets />
+                        </Route>
+                        <Route exact path="/database">
+                            <Database />
                         </Route>
                         <Route exact path="/health">
                             <Health />

@@ -37,3 +37,13 @@ code {
 .cardHeight {
     height: 350px;
 }
+.title-header {
+    font-size: 35px;
+    font-weight: 700;
+}
+.database-icons-tickets {
+    width: 70px;
+}
+.database-icons-corract {
+    width: 150px;
+}
