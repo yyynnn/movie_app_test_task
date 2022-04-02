@@ -15,6 +15,23 @@ code {
         monospace;
 }
 
+.filter-btn {
+    background-color: #ffcc33;
+    color: black;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 24px;
+    text-align: center;
+    width: 100px;
+    height: 30px;
+    padding-bottom: 8px;
+    box-sizing: content-box;
+}
+.filter-btn.clicked {
+    border-color: #a68114;
+    border-width: 4px;
+}
 .colorBg {
     background-color: #333f48;
 }

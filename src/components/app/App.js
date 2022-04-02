@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import configureStore from "../../store/store";
 import Main from "../Main";
 import List from "../List";
-import Tickets from "../Tickets";
+import Tickets from "../database/Tickets";
 import AppHeader from "../AppHeader";
 import { Health, Accident, Nearmiss, PossibleAccident } from "../health/indexHealth";
 import MenuPanel from "../menuPanel/MenuPanel";

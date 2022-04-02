@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Icon from "react-bootstrap-icons";
 import { useHistory, Link } from "react-router-dom";
-import { getTickets, loadTickets, getTicketsLoadingStatus } from "../store/tickets";
+import { getTickets, loadTickets, getTicketsLoadingStatus } from "../../store/tickets";
 import { useSelector, useDispatch } from "react-redux";
-import { getError } from "../store/errors";
-import { Environment, OHS, Quality } from "../img/taskImages/taskImages.js";
+import { getError } from "../../store/errors";
+import { Environment, Quality } from "../../img/taskImages/taskImages.js";
+import { Spinner } from "react-bootstrap";
 
 const Tickets = () => {
     const state = useSelector(getTickets());
@@ -12,12 +13,14 @@ const Tickets = () => {
     const history = useHistory();
     const isLoading = useSelector(getTicketsLoadingStatus());
     const error = useSelector(getError());
+    const [btnClass, setBtnClass] = useState(false);
+
     useEffect(() => {
         dispatch(loadTickets());
     }, [dispatch]);
 
     if (isLoading) {
-        return <h1>Loading...</h1>;
+        return <Spinner animation="border" variant="light" />;
     }
     if (error) {
         return <p>{error}</p>;
@@ -28,32 +31,22 @@ const Tickets = () => {
                 <h1 className="display-6  fw-bold colorTextLightGray ">Tickets</h1>
                 <div className="col-lg-6 mx-auto ">
                     <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                        <button
+                            className={btnClass ? `filter-btn clicked` : `filter-btn`}
+                            onClick={() => setBtnClass((prevState) => (prevState = !prevState))}
+                        >
+                            OHS
+                        </button>
                         <Link to="/">
                             <img
-                                className="mx-auto mb-2 mt-5"
-                                src={OHS}
-                                alt="OHS"
-                                width="200"
-                                height="50"
-                            />
-                        </Link>
-                        <Link to="/">
-                            <img
-                                className="mx-auto mb-2 mt-5"
+                                className="mx-auto "
                                 src={Environment}
                                 alt="environment"
-                                width="300"
                                 height="50"
                             />
                         </Link>
                         <Link to="/">
-                            <img
-                                className="mx-auto mb-2 mt-5 p-1"
-                                src={Quality}
-                                alt="quality"
-                                width="200"
-                                height="50"
-                            />
+                            <img className="mx-auto " src={Quality} alt="quality" height="50" />
                         </Link>
                     </div>
                 </div>
@@ -97,9 +90,9 @@ const Tickets = () => {
 
                                 <td>
                                     {el.correctiveActions ? (
-                                        <Icon.CircleFill color="lightgreen" />
+                                        <Icon.CircleFill color="#60BC58" />
                                     ) : (
-                                        <Icon.Circle color="lightgreen" />
+                                        <Icon.Circle color="#60BC58" />
                                     )}
                                 </td>
                             </tr>
@@ -110,7 +103,7 @@ const Tickets = () => {
                     className="btn btn-secondary m-2 p-1"
                     onClick={() => history.push("/database")}
                 >
-                    Home
+                    Back
                 </button>
             </div>
         </div>
