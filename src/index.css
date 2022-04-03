@@ -15,21 +15,56 @@ code {
         monospace;
 }
 
-.filter-btn {
+.filter-btn-yellow {
     background-color: #ffcc33;
     color: black;
     cursor: pointer;
     border-radius: 30px;
     font-weight: 900;
-    font-size: 24px;
+    font-size: 14px;
     text-align: center;
     width: 100px;
-    height: 30px;
-    padding-bottom: 8px;
+    height: 20px;
+
     box-sizing: content-box;
 }
-.filter-btn.clicked {
+.filter-btn-yellow.clicked {
     border-color: #a68114;
+    border-width: 4px;
+}
+
+.filter-btn-green {
+    background-color: #c9c906;
+    color: black;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 14px;
+    text-align: center;
+    width: 200px;
+    height: 20px;
+
+    box-sizing: content-box;
+}
+.filter-btn-green.clicked {
+    border-color: #797911;
+    border-width: 4px;
+}
+.filter-btn-blue {
+    background-color: #589bbc;
+    color: black;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 14px;
+    text-align: center;
+    width: 100px;
+    height: 20px;
+
+    box-sizing: content-box;
+}
+.filter-btn-blue.clicked {
+    border-color: #1b76a4;
     border-width: 4px;
 }
 .colorBg {

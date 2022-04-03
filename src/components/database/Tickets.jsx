@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import * as Icon from "react-bootstrap-icons";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { getTickets, loadTickets, getTicketsLoadingStatus } from "../../store/tickets";
 import { useSelector, useDispatch } from "react-redux";
 import { getError } from "../../store/errors";
-import { Environment, Quality } from "../../img/taskImages/taskImages.js";
+
 import { Spinner } from "react-bootstrap";
 
 const Tickets = () => {
@@ -13,11 +13,64 @@ const Tickets = () => {
     const history = useHistory();
     const isLoading = useSelector(getTicketsLoadingStatus());
     const error = useSelector(getError());
-    const [btnClass, setBtnClass] = useState(false);
+    const [btnClassYellow, setBtnClassYellow] = useState(false);
+    const [btnClassGreen, setBtnClassGreen] = useState(false);
+    const [btnClassBlue, setBtnClassBlue] = useState(false);
+    const [filteredTickets, setFilteredTickets] = useState(["state"]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
 
+    const handleClick = (event) => {
+        event.target.name === "ohs"
+            ? setBtnClassYellow((prevState) => (prevState = !prevState))
+            : event.target.name === "environment"
+            ? setBtnClassGreen((prevState) => (prevState = !prevState))
+            : setBtnClassBlue((prevState) => (prevState = !prevState));
+
+        if (selectedCategories.length > 0) {
+            if (!selectedCategories.includes(event.target.name)) {
+                setSelectedCategories((prevState) => [...prevState, event.target.name]);
+            } else {
+                setSelectedCategories(
+                    selectedCategories.filter((category) => category !== event.target.name)
+                );
+            }
+        } else {
+            setSelectedCategories((prevState) => [...prevState, event.target.name]);
+        }
+    };
+
+    const filterTickets = () => {
+        let result = [];
+        if (selectedCategories.length > 0) {
+            for (const category of selectedCategories) {
+                if (
+                    state.filter((ticket) => ticket.class.toLowerCase() === category.toLowerCase())
+                        .length
+                ) {
+                    result = [
+                        ...result,
+                        Object.assign(
+                            {},
+                            ...state.filter(
+                                (ticket) => ticket.class.toLowerCase() === category.toLowerCase()
+                            )
+                        )
+                    ];
+                }
+            }
+
+            setFilteredTickets(result);
+        } else {
+            setFilteredTickets([]);
+        }
+    };
     useEffect(() => {
         dispatch(loadTickets());
     }, [dispatch]);
+
+    useEffect(() => {
+        filterTickets();
+    }, [selectedCategories]);
 
     if (isLoading) {
         return <Spinner animation="border" variant="light" />;
@@ -25,29 +78,38 @@ const Tickets = () => {
     if (error) {
         return <p>{error}</p>;
     }
+
     return (
         <div className="colorBg">
             <div className="px-4 py-3 text-center">
-                <h1 className="display-6  fw-bold colorTextLightGray ">Tickets</h1>
+                <h1 className="display-6  fw-bold colorTextLightGray m-3">Tickets</h1>
                 <div className="col-lg-6 mx-auto ">
-                    <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-3">
                         <button
-                            className={btnClass ? `filter-btn clicked` : `filter-btn`}
-                            onClick={() => setBtnClass((prevState) => (prevState = !prevState))}
+                            className={
+                                btnClassYellow ? `filter-btn-yellow clicked` : `filter-btn-yellow`
+                            }
+                            name="ohs"
+                            onClick={(event) => handleClick(event)}
                         >
                             OHS
                         </button>
-                        <Link to="/">
-                            <img
-                                className="mx-auto "
-                                src={Environment}
-                                alt="environment"
-                                height="50"
-                            />
-                        </Link>
-                        <Link to="/">
-                            <img className="mx-auto " src={Quality} alt="quality" height="50" />
-                        </Link>
+                        <button
+                            className={
+                                btnClassGreen ? `filter-btn-green clicked` : `filter-btn-green`
+                            }
+                            name="environment"
+                            onClick={(event) => handleClick(event)}
+                        >
+                            Environment
+                        </button>
+                        <button
+                            className={btnClassBlue ? `filter-btn-blue clicked` : `filter-btn-blue`}
+                            name="quality"
+                            onClick={(event) => handleClick(event)}
+                        >
+                            Quality
+                        </button>
                     </div>
                 </div>
 
@@ -73,7 +135,7 @@ const Tickets = () => {
                         </tr>
                     </thead>
                     <tbody className="table-color">
-                        {state.map((el) => (
+                        {(!selectedCategories.length ? state : [...filteredTickets]).map((el) => (
                             <tr key={el.id} className="table-bg">
                                 <td>
                                     {el.class === "Environment" ? (
