@@ -9,5 +9,23 @@ import vectorPrev from './vectorPrev.png'
 import file from './file.png'
 import correction from './correction.png'
 import correctionUse from './correctionUse.png'
+import database from "./database.svg";
+import correctiveactions from "./Correctiveactions.svg";
+import ticketsicon from "./TicketsIcon.svg";
 
-export { env, hes, qual, quality, health, environment, vectorNext, vectorPrev, file, correction, correctionUse };
+export {
+	env,
+	hes,
+	qual,
+	quality,
+	health,
+	environment,
+	vectorNext,
+	database,
+	correctiveactions,
+	ticketsicon,
+	vectorPrev,
+	file,
+	correction,
+	correctionUse
+};

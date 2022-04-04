@@ -4,12 +4,13 @@ import { Provider } from "react-redux";
 import configureStore from "../../store/store";
 import Main from "../Main";
 import List from "../List";
-import Tickets from "../Tickets";
+import Tickets from "../database/Tickets";
 import AppHeader from "../AppHeader";
 import { Health, Accident, Nearmiss, PossibleAccident } from "../health/indexHealth";
 import MenuPanel from "../menuPanel/MenuPanel";
 import Quality from "../quality/Quality";
 import Environment from "../environment/Environment";
+import Database from "../database/Database";
 
 const store = configureStore();
 
@@ -30,6 +31,9 @@ function App() {
 						<Route exact path="/tickets">
 							<Tickets />
 						</Route>
+						<Route exact path="/database">
+							<Database />
+						</Route>
 						<Route exact path="/health">
 							<Health />
 						</Route>
@@ -48,8 +52,6 @@ function App() {
 						<Route exact path="/possibleAccident">
 							<PossibleAccident />
 						</Route>
-
-						{/* <Redirect to="/404" /> */}
 					</Switch>
 
 				</Provider>

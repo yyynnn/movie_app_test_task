@@ -1,0 +1,24 @@
+.filter-btn {
+    background-color: #ffcc33 !important;
+    color: black;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 24px;
+    text-align: center;
+    border: none;
+    width: 300px;
+    height: 30px;
+    padding-bottom: 14px;
+    box-sizing: content-box;
+}
+.filter-btn:active {
+    color: black;
+
+    border-color: #a68114;
+}
+.btn-primary:hover,
+.btn-primary:active {
+    color: black;
+
+    border-color: #a68114;
+}

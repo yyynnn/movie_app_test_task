@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.css";
 
-// import "../../css/button.css";
-// import "../../css/modalAll.css";
+import "../../css/button.css";
+import "../../css/modalAll.css";
 import './Quality.css';
 import { Container } from "react-bootstrap";
 import { quality } from "../../img/indexImage";
