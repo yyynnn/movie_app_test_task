@@ -14,47 +14,48 @@ import Environment from "../environment/Environment";
 const store = configureStore();
 
 function App() {
-    return (
-        <Router>
-            <div className="App">
-                <AppHeader />
-                <Provider store={store}>
-                    <Switch>
-                        <Route exact path="/">
-                            <Main />
-                        </Route>
-                        <Route exact path="/list">
-                            <List />
-                        </Route>
-                        <Route exact path="/tickets">
-                            <Tickets />
-                        </Route>
-                        <Route exact path="/health">
-                            <Health />
-                        </Route>
-                        <Route exact path="/quality">
-                            <Quality />
-                        </Route>
-                        <Route exact path="/environment">
-                            <Environment />
-                        </Route>
-                        <Route exact path="/accident">
-                            <Accident />
-                        </Route>
-                        <Route exact path="/nearmiss">
-                            <Nearmiss />
-                        </Route>
-                        <Route exact path="/possibleAccident">
-                            <PossibleAccident />
-                        </Route>
+	return (
+		<Router>
+			<div className="App">
+				<AppHeader />
+				<Provider store={store}>
+					<Switch>
+						<Route exact path="/">
+							<Main />
+							<MenuPanel />
+						</Route>
+						<Route exact path="/list">
+							<List />
+						</Route>
+						<Route exact path="/tickets">
+							<Tickets />
+						</Route>
+						<Route exact path="/health">
+							<Health />
+						</Route>
+						<Route exact path="/quality">
+							<Quality />
+						</Route>
+						<Route exact path="/environment">
+							<Environment />
+						</Route>
+						<Route exact path="/accident">
+							<Accident />
+						</Route>
+						<Route exact path="/nearmiss">
+							<Nearmiss />
+						</Route>
+						<Route exact path="/possibleAccident">
+							<PossibleAccident />
+						</Route>
 
-                        {/* <Redirect to="/404" /> */}
-                    </Switch>
-                    <MenuPanel />
-                </Provider>
-            </div>
-        </Router>
-    );
+						{/* <Redirect to="/404" /> */}
+					</Switch>
+
+				</Provider>
+			</div>
+		</Router>
+	);
 }
 
 export default App;

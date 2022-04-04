@@ -1,0 +1,24 @@
+button,
+.environment:before {
+	background-color: #C9C906;
+}
+
+.environment:before {
+	font-family: 'HelveticaNeue';
+	font-size: 16px;
+	line-height: 40px;
+	text-align: center;
+	color: #E6E6E6;
+}
+
+#Accident:before {
+	content: 'already happened, injuries';
+}
+
+#Nearmiss:before {
+	content: 'already happened, no injuries';
+}
+
+#Possible_accident:before {
+	content: 'threat, violation';
+}
