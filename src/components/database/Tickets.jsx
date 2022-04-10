@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as Icon from "react-bootstrap-icons";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { getTickets, loadTickets, getTicketsLoadingStatus } from "../../store/tickets";
 import { useSelector, useDispatch } from "react-redux";
 import { getError } from "../../store/errors";
@@ -81,7 +81,7 @@ const Tickets = () => {
 
     return (
         <div className="colorBg">
-            <div className="px-4 py-3 text-center">
+            <div className="px-4 py-3 text-center wrap">
                 <h1 className="display-6  fw-bold colorTextLightGray m-3">Tickets</h1>
                 <div className="col-lg-6 mx-auto ">
                     <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-3">
@@ -167,6 +167,9 @@ const Tickets = () => {
                 >
                     Back
                 </button>
+                <Link to="/" className="close">
+                    <strong>&times;</strong>
+                </Link>
             </div>
         </div>
     );
