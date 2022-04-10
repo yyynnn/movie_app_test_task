@@ -140,13 +140,13 @@ const Tickets = () => {
                                 <td>
                                     {el.class === "Environment" ? (
                                         <Icon.CircleFill color="#C9C906" />
-                                    ) : el.class === "OHS" ? (
+                                    ) : el.class === "Health&Safety" ? (
                                         <Icon.CircleFill color="#FFCC33" />
                                     ) : (
                                         <Icon.CircleFill color="#589BBC" />
                                     )}
                                 </td>
-                                <td>{el.date}</td>
+                                <td>{el.date_created}</td>
                                 <td>{el.category}</td>
                                 <td>{el.workcenter}</td>
 

@@ -1,106 +1,106 @@
 body {
-	margin: 0 auto;
-	background-color: #333f48;
-	max-width: 1040px;
-	padding: 0;
-	height: 100%;
-	font-family: "HelveticaNeue";
+    margin: 0 auto;
+    background-color: #333f48;
+    max-width: 1040px;
+    padding: 0;
+    height: 100%;
+    font-family: "HelveticaNeue";
 }
 
 code {
-	font-family: 'HelveticaNeue';
+    font-family: "HelveticaNeue";
 }
 
 .filter-btn-yellow {
-	background-color: #ffcc33;
-	color: black;
-	cursor: pointer;
-	border-radius: 30px;
-	font-weight: 900;
-	font-size: 14px;
-	text-align: center;
-	width: 100px;
-	height: 20px;
+    background-color: #ffcc33;
+    color: black;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 14px;
+    text-align: center;
+    width: 100px;
+    height: 30px;
 
-	box-sizing: content-box;
+    box-sizing: content-box;
 }
 
 .filter-btn-yellow.clicked {
-	border-color: #a68114;
-	border-width: 4px;
+    border-color: #a68114;
+    border-width: 4px;
 }
 
 .filter-btn-green {
-	background-color: #c9c906;
-	color: black;
-	cursor: pointer;
-	border-radius: 30px;
-	font-weight: 900;
-	font-size: 14px;
-	text-align: center;
-	width: 200px;
-	height: 20px;
+    background-color: #c9c906;
+    color: black;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 14px;
+    text-align: center;
+    width: 200px;
+    height: 30px;
 
-	box-sizing: content-box;
+    box-sizing: content-box;
 }
 
 .filter-btn-green.clicked {
-	border-color: #797911;
-	border-width: 4px;
+    border-color: #797911;
+    border-width: 4px;
 }
 
 .filter-btn-blue {
-	background-color: #589bbc;
-	color: black;
-	cursor: pointer;
-	border-radius: 30px;
-	font-weight: 900;
-	font-size: 14px;
-	text-align: center;
-	width: 100px;
-	height: 20px;
+    background-color: #589bbc;
+    color: black;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 14px;
+    text-align: center;
+    width: 100px;
+    height: 30px;
 
-	box-sizing: content-box;
+    box-sizing: content-box;
 }
 
 .filter-btn-blue.clicked {
-	border-color: #1b76a4;
-	border-width: 4px;
+    border-color: #1b76a4;
+    border-width: 4px;
 }
 
 .colorBg {
-	background-color: #333f48;
+    background-color: #333f48;
 }
 
 .colorTextGray {
-	color: #a09b9b;
+    color: #a09b9b;
 }
 
 .colorTextLightGray {
-	color: #e6e6e6;
+    color: #e6e6e6;
 }
 
 .table-color {
-	background-color: rgba(196, 196, 196, 0.3);
+    background-color: rgba(196, 196, 196, 0.3);
 }
 
 .weightText {
-	font-weight: 100;
+    font-weight: 100;
 }
 
 .cardHeight {
-	height: 350px;
+    height: 350px;
 }
 
 .title-header {
-	font-size: 35px;
-	font-weight: 700;
+    font-size: 35px;
+    font-weight: 700;
 }
 
 .database-icons-tickets {
-	width: 70px;
+    width: 70px;
 }
 
 .database-icons-corract {
-	width: 150px;
+    width: 150px;
 }
