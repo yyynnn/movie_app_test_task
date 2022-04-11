@@ -3,12 +3,14 @@ import errorReducer from "./errors";
 import taskReducer from "./task";
 import ticketReducer from "./tickets";
 import workCenterReducer from "./workCenter";
+import employeeReducer from "./employee";
 
 const rootReducer = combineReducers({
     errors: errorReducer,
     tasks: taskReducer,
     tickets: ticketReducer,
-    workCenter: workCenterReducer
+    workCenter: workCenterReducer,
+    employee: employeeReducer
 });
 
 function createStore() {

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
+import { getEmployee, loadEmployee, getEmployeeLoadingStatus } from "../../store/employee";
 import { useSelector, useDispatch } from "react-redux";
 import { getError } from "../../store/errors";
 import { Spinner } from "react-bootstrap";
@@ -12,20 +13,24 @@ import { health, correction, vectorPrev } from "../../img/indexImage";
 
 const Accident = () => {
     const workCenter = useSelector(getWorkCenter());
+    const employee = useSelector(getEmployee());
+
     const dispatch = useDispatch();
     const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
+    const isLoadingEmployee = useSelector(getEmployeeLoadingStatus());
     const error = useSelector(getError());
 
     useEffect(() => {
         dispatch(loadWorkCenter());
+        dispatch(loadEmployee());
     }, [dispatch]);
-    if (isLoadingWorkCenter) {
+    if (isLoadingWorkCenter || isLoadingEmployee) {
         return <Spinner animation="border" variant="light" />;
     }
     if (error) {
         return <p>{error}</p>;
     }
-
+    console.log(employee);
     return (
         <div className="col-lg-12 mx-auto wrap">
             <Container>
@@ -47,9 +52,12 @@ const Accident = () => {
                                 <label className="select">
                                     <span>foreman</span>
                                     <select className="select" id="foreman" name="foreman-accident">
-                                        <option value="first-accident">Ivan Petrov</option>
-                                        <option value="second-accident">Alex Guse</option>
-                                        <option value="third-accident">Seregey Ytkin</option>
+                                        {!isLoadingEmployee &&
+                                            employee.map((e) => (
+                                                <option value="first-accident">
+                                                    {`${e.name}  ${e.surname}`}
+                                                </option>
+                                            ))}
                                     </select>
                                 </label>
                             </div>
