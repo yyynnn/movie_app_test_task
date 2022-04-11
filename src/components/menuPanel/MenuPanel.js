@@ -7,7 +7,7 @@ const MenuPanel = () => {
         <div className="colorBg">
             <div className=" text-center">
                 <div className="col-lg-12 mx-auto mt-3">
-                    <Link to="/" className="p-3">
+                    <Link to="/" className="p-3" title="Personal Tasks">
                         <img
                             className=" mx-auto mb-2 mt-2"
                             src={listicon}
@@ -17,7 +17,7 @@ const MenuPanel = () => {
                         />
                     </Link>
 
-                    <Link to="/" className="p-3">
+                    <Link to="/" className="p-3" title="Settings">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={Settings}
@@ -26,7 +26,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/database" className="p-3">
+                    <Link to="/database" className="p-3" title="Database">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={Rows}
@@ -35,7 +35,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-3">
+                    <Link to="/" className="p-3" title="Workstations">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={Works}
@@ -44,7 +44,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-3">
+                    <Link to="/" className="p-3" title="Personal statistics">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={People}
@@ -53,7 +53,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-3">
+                    <Link to="/" className="p-3" title="Statistics">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={Reports}
@@ -62,7 +62,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-3">
+                    <Link to="/" className="p-3" title="Global">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={World}
