@@ -2,11 +2,13 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import errorReducer from "./errors";
 import taskReducer from "./task";
 import ticketReducer from "./tickets";
+import workCenterReducer from "./workCenter";
 
 const rootReducer = combineReducers({
     errors: errorReducer,
     tasks: taskReducer,
-    tickets: ticketReducer
+    tickets: ticketReducer,
+    workCenter: workCenterReducer
 });
 
 function createStore() {

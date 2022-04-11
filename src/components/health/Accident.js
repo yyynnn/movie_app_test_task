@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
+import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
+import { useSelector, useDispatch } from "react-redux";
+import { getError } from "../../store/errors";
 
 import "../../css/button.css";
 import "../../css/modalAll.css";
@@ -8,6 +11,14 @@ import { Container } from "react-bootstrap";
 import { health, correction, vectorPrev } from "../../img/indexImage";
 
 const Accident = () => {
+    const workCenter = useSelector(getWorkCenter());
+    const dispatch = useDispatch();
+    const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
+
+    useEffect(() => {
+        dispatch(loadWorkCenter());
+    }, [dispatch]);
+
     return (
         <div className="col-lg-12 mx-auto wrap">
             <Container>
@@ -40,9 +51,10 @@ const Accident = () => {
                                 <label className="select">
                                     <span>workcenter</span>
                                     <select className="select" name="workcenter-accident">
-                                        <option value="C705-accident">C705</option>
-                                        <option value="C706-accident">C706</option>
-                                        <option value="C707-accident">C707</option>
+                                        {!isLoadingWorkCenter &&
+                                            workCenter.map((wc) => (
+                                                <option value="">{wc.number}</option>
+                                            ))}
                                     </select>
                                 </label>
                             </div>
