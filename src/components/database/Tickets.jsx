@@ -45,7 +45,7 @@ const Tickets = () => {
             for (const category of selectedCategories) {
                 if (
                     state.filter((ticket) => ticket.class.toLowerCase() === category.toLowerCase())
-                        .length
+                        .length > 0
                 ) {
                     result = [
                         ...result,
@@ -141,7 +141,12 @@ const Tickets = () => {
                         </tr>
                     </thead>
                     <tbody className="table-color">
-                        {(!selectedCategories.length ? state : [...filteredTickets]).map((el) => (
+                        {(!selectedCategories.length
+                            ? state
+                            : !filteredTickets
+                            ? []
+                            : [...filteredTickets]
+                        ).map((el) => (
                             <tr key={el.id} className="table-bg">
                                 <td>
                                     {el.class === "Environment" ? (
