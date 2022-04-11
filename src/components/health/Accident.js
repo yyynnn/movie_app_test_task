@@ -30,7 +30,7 @@ const Accident = () => {
     if (error) {
         return <p>{error}</p>;
     }
-    console.log(employee);
+
     return (
         <div className="col-lg-12 mx-auto wrap">
             <Container>
@@ -54,7 +54,7 @@ const Accident = () => {
                                     <select className="select" id="foreman" name="foreman-accident">
                                         {!isLoadingEmployee &&
                                             employee.map((e) => (
-                                                <option value="first-accident">
+                                                <option value="first-accident" key={e.id}>
                                                     {`${e.name}  ${e.surname}`}
                                                 </option>
                                             ))}

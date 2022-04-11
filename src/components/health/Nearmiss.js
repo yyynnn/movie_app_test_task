@@ -73,7 +73,7 @@ const Nearmiss = () => {
                                         >
                                             {!isLoadingEmployee &&
                                                 employee.map((e) => (
-                                                    <option value="first-accident">
+                                                    <option value="first-accident" key={e.id}>
                                                         {`${e.name}  ${e.surname}`}
                                                     </option>
                                                 ))}

@@ -16,11 +16,11 @@ const Tickets = () => {
     const [btnClassYellow, setBtnClassYellow] = useState(false);
     const [btnClassGreen, setBtnClassGreen] = useState(false);
     const [btnClassBlue, setBtnClassBlue] = useState(false);
-    const [filteredTickets, setFilteredTickets] = useState(["state"]);
+    const [filteredTickets, setFilteredTickets] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     const handleClick = (event) => {
-        event.target.name === "ohs"
+        event.target.name === "Health&Safety"
             ? setBtnClassYellow((prevState) => (prevState = !prevState))
             : event.target.name === "environment"
             ? setBtnClassGreen((prevState) => (prevState = !prevState))
@@ -49,17 +49,23 @@ const Tickets = () => {
                 ) {
                     result = [
                         ...result,
-                        Object.assign(
-                            {},
-                            ...state.filter(
-                                (ticket) => ticket.class.toLowerCase() === category.toLowerCase()
-                            )
+
+                        state.filter(
+                            (ticket) => ticket.class.toLowerCase() === category.toLowerCase()
                         )
                     ];
                 }
+                // console.log(
+                //     Object.assign(
+                //         {},
+                //         state.filter(
+                //             (ticket) => ticket.class.toLowerCase() === category.toLowerCase()
+                //         )
+                //     )
+                // );
             }
 
-            setFilteredTickets(result);
+            setFilteredTickets(...result);
         } else {
             setFilteredTickets([]);
         }
@@ -89,7 +95,7 @@ const Tickets = () => {
                             className={
                                 btnClassYellow ? `filter-btn-yellow clicked` : `filter-btn-yellow`
                             }
-                            name="ohs"
+                            name="Health&amp;Safety"
                             onClick={(event) => handleClick(event)}
                         >
                             OHS
