@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-
+import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
+import { useSelector, useDispatch } from "react-redux";
+import { getError } from "../../store/errors";
+import { Spinner } from "react-bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
 import { Container } from "react-bootstrap";
 import { health, vectorPrev } from "../../img/indexImage";
 
 const PossibleAccident = () => {
+    const workCenter = useSelector(getWorkCenter());
+    const dispatch = useDispatch();
+    const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
+    const error = useSelector(getError());
+
+    useEffect(() => {
+        dispatch(loadWorkCenter());
+    }, [dispatch]);
+    if (isLoadingWorkCenter) {
+        return <Spinner animation="border" variant="light" />;
+    }
+    if (error) {
+        return <p>{error}</p>;
+    }
     return (
         <div className="col-lg-12 mx-auto wrap">
             <Container>
@@ -30,9 +47,12 @@ const PossibleAccident = () => {
                                 <label className="select">
                                     <span>workcenter</span>
                                     <select className="select" name="workcenter-possible-accident">
-                                        <option value="C705-possible-accident">C705</option>
-                                        <option value="C706-possible-accident">C706</option>
-                                        <option value="C707-possible-accident">C707</option>
+                                        {!isLoadingWorkCenter &&
+                                            workCenter.map((wc) => (
+                                                <option value="" key={wc.id}>
+                                                    {wc.number}
+                                                </option>
+                                            ))}
                                     </select>
                                 </label>
                             </div>

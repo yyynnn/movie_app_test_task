@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
 import { useSelector, useDispatch } from "react-redux";
 import { getError } from "../../store/errors";
-
+import { Spinner } from "react-bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
 import { Container } from "react-bootstrap";
@@ -14,10 +14,17 @@ const Accident = () => {
     const workCenter = useSelector(getWorkCenter());
     const dispatch = useDispatch();
     const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
+    const error = useSelector(getError());
 
     useEffect(() => {
         dispatch(loadWorkCenter());
     }, [dispatch]);
+    if (isLoadingWorkCenter) {
+        return <Spinner animation="border" variant="light" />;
+    }
+    if (error) {
+        return <p>{error}</p>;
+    }
 
     return (
         <div className="col-lg-12 mx-auto wrap">
@@ -53,7 +60,9 @@ const Accident = () => {
                                     <select className="select" name="workcenter-accident">
                                         {!isLoadingWorkCenter &&
                                             workCenter.map((wc) => (
-                                                <option value="">{wc.number}</option>
+                                                <option value="" key={wc.id}>
+                                                    {wc.number}
+                                                </option>
                                             ))}
                                     </select>
                                 </label>
