@@ -186,11 +186,12 @@ const Accident = () => {
                                             />
                                         </label>
                                         <div className="flex">
-                                            <input
+                                            <textarea
                                                 type="text"
+                                                raws="5"
                                                 autoComplete="off"
                                                 placeholder="Correction..."
-                                                className="correction"
+                                                className="correction p-2"
                                                 name="correction"
                                                 value={values.correction}
                                                 onChange={handleChange}
