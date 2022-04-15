@@ -53,7 +53,7 @@ const Accident = () => {
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
             console.log(preparedData);
-            // dispatch(createTicket({ ...preparedData }));
+            dispatch(createTicket({ ...preparedData }));
         }
     };
 
@@ -219,120 +219,6 @@ const Accident = () => {
                     <img src={vectorPrev} alt="next" className=" d-block mx-auto mb-2 mt-2" />
                 </Link>
             </Container>
-            <>
-                {/* <p>{error}</p> */}
-                <div className="col-lg-12 mx-auto wrap">
-                    <Container>
-                        <div className="title">
-                            <div>
-                                <img src={health} alt="health" />
-                            </div>
-                            <h2 className="title-text-form title-text colorTextLightGray text-center ">
-                                Accident
-                            </h2>
-                        </div>
-                        <Formik
-                            initialValues={initialForm}
-                            onSubmit={(values) => setFormData({ ...formData, ...values })}
-                            validationSchema={accidentSchema}
-                        >
-                            {(props) => {
-                                const {
-                                    values,
-                                    touched,
-                                    errors,
-
-                                    handleChange,
-                                    handleBlur,
-                                    handleSubmit
-                                } = props;
-
-                                return (
-                                    <div className="form-wrap">
-                                        <form onSubmit={handleSubmit}>
-                                            <div className="wrap-info">
-                                                <div className="flex">
-                                                    <input
-                                                        type="date"
-                                                        id="date"
-                                                        name="date_created"
-                                                        value={values.date_created}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                    />
-                                                    {errors.date_created &&
-                                                        touched.date_created && (
-                                                            <p className="error mt-1">
-                                                                {errors.date_created}
-                                                            </p>
-                                                        )}
-                                                </div>
-                                                <div className="flex">
-                                                    <input
-                                                        type="time"
-                                                        id="time"
-                                                        name="time_created"
-                                                        value={values.time_created}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                    />
-                                                    {errors.time_created &&
-                                                        touched.time_created && (
-                                                            <p className="error mt-1">
-                                                                {errors.time_created}
-                                                            </p>
-                                                        )}
-                                                </div>
-
-                                                <div className="damagedItem-wrapper">
-                                                    <input
-                                                        name="damaged-accident"
-                                                        type="text"
-                                                        placeholder="Assembly table"
-                                                        className="input-text"
-                                                    />
-                                                    <span className="damagedItem">
-                                                        damaged item
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div className="wrap-file">
-                                                <label className="file">
-                                                    <input
-                                                        name="file-accident"
-                                                        className="cursor-pointer"
-                                                        type="file"
-                                                    />
-                                                </label>
-                                                <div className="flex">
-                                                    <input
-                                                        type="text"
-                                                        autoComplete="off"
-                                                        placeholder="Correction..."
-                                                        className="correction"
-                                                        name="correction"
-                                                        value={values.correction}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                    />
-                                                    {errors.correction && touched.correction && (
-                                                        <p className="error mt-1">
-                                                            {errors.correction}
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <button className="button submmit" type="submit">
-                                                Submit
-                                            </button>
-                                        </form>
-                                    </div>
-                                );
-                            }}
-                        </Formik>
-                    </Container>
-                </div>
-            </>
         </div>
     );
 };
