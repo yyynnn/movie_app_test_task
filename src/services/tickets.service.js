@@ -13,7 +13,10 @@ const ticketsService = {
         return data;
     },
     create: async (payload) => {
-        const { data } = await httpService.post(ticketsEndPoint, payload);
+        console.log(payload);
+        const { data } = await httpService.post("tickets", payload);
+
+        console.log(data);
         return data;
     }
 };

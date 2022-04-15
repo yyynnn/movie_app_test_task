@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 
 import ticketsService from "../services/tickets.service";
 import { setError } from "./errors";
@@ -20,18 +20,33 @@ const ticketSlice = createSlice({
 
         ticketsRequestFailed(state, action) {
             state.isLoading = false;
+        },
+        ticketAdded(state, action) {
+            state.entities.push(action.payload);
         }
     }
 });
 
 const { actions, reducer: ticketReducer } = ticketSlice;
-const { received, loadTicketsRequested, ticketsRequestFailed } = actions;
+const { received, loadTicketsRequested, ticketsRequestFailed, ticketAdded } = actions;
+const ticketRequested = createAction("ticket/ticketRequested");
 
 export const loadTickets = () => async (dispatch) => {
     dispatch(loadTicketsRequested());
     try {
         const data = await ticketsService.fetch();
         dispatch(received(data));
+    } catch (error) {
+        dispatch(ticketsRequestFailed(error.message));
+        dispatch(setError(error.message));
+    }
+};
+
+export const createTicket = (ticket) => async (dispatch) => {
+    dispatch(ticketRequested());
+    try {
+        const data = await ticketsService.create(ticket);
+        dispatch(ticketAdded(data));
     } catch (error) {
         dispatch(ticketsRequestFailed(error.message));
         dispatch(setError(error.message));
