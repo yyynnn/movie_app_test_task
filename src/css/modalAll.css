@@ -18,7 +18,7 @@
 }
 
 .form-wrap {
-    height: 488px;
+    height: 460px;
 }
 
 .title {
@@ -158,7 +158,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 input[type="text"] {
     width: 180px;
-    height: 30px;
+    height: 31px;
     font-size: 26px;
     line-height: 31px;
     text-align: center;
@@ -168,7 +168,7 @@ input[type="text"] {
 .input-text {
     position: relative;
     font-size: 26px;
-    line-height: 30px;
+    line-height: 31px;
     text-align: center;
     color: #e6e6e6;
     border-bottom: 1px solid #e6e6e6;
@@ -200,6 +200,7 @@ input[type="text"] {
     color: #e6e6e6;
     text-align: center;
     padding: 0 5px;
+    margin-bottom: 30px;
     border-bottom: 1px solid #e6e6e6;
     cursor: pointer;
 }
@@ -246,16 +247,21 @@ input[type="file"] {
 
 .file {
     width: 332px;
+    position: relative;
     height: 203px;
     background: url("../img/file.png") center/cover no-repeat;
     display: block;
     cursor: pointer;
 }
+.errorFile {
+    position: absolute;
+    margin-top: 210px !important;
+}
 
 .wrap-info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 70px;
+    /* margin-bottom: 40px; */
 }
 
 .wrap-file {
@@ -263,6 +269,7 @@ input[type="file"] {
     display: flex;
     justify-content: space-around;
     margin: 0 auto;
+    padding-top: 40px;
 }
 .error {
     color: #e6e6e6;
@@ -297,4 +304,8 @@ input[type="file"] {
     font-weight: 500;
     font-size: 16px;
     width: 100%;
+}
+
+.textarea {
+    height: 230px;
 }

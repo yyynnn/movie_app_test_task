@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../img/Logo.svg";
+import { logo } from "../img/indexImage";
 import "../css/AppHeader.css";
 
 const AppHeader = () => {
@@ -17,8 +17,8 @@ const AppHeader = () => {
                             className="d-block mx-auto mb-3 mt-2"
                             src={logo}
                             alt="logo"
-                            width="200"
-                            height="50"
+                            width="266"
+                            height="79"
                         />
                     </Link>
 

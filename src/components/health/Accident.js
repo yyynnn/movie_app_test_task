@@ -13,22 +13,24 @@ import "../../css/button.css";
 import "../../css/modalAll.css";
 import { Container } from "react-bootstrap";
 import { health, vectorPrev } from "../../img/indexImage";
+import { useHistory } from "react-router-dom";
 
 const initialForm = {
     date_created: "",
     time_created: "",
     foreman: "Ivan Petrov",
     workcenter: "C201",
-
+    selectedFile: "",
     correction: ""
 };
 
 const Accident = () => {
     const [formData, setFormData] = useState(initialForm);
+    const [selectedFile, setSelectedFile] = useState("");
+    const dispatch = useDispatch();
+    const history = useHistory();
     const workCenter = useSelector(getWorkCenter());
     const employee = useSelector(getEmployee());
-
-    const dispatch = useDispatch();
     const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
     const isLoadingEmployee = useSelector(getEmployeeLoadingStatus());
     const error = useSelector(getError());
@@ -39,8 +41,8 @@ const Accident = () => {
         correction: yup
             .string()
             .max(256, "Description is too long")
-            .required("Correction description is required")
-        // workcenter: yup.string().required("Workcenter is required")
+            .required("Correction description is required"),
+        selectedFile: yup.mixed("not format").required("Photo is required")
     });
 
     const handleSubmitForm = () => {
@@ -48,13 +50,21 @@ const Accident = () => {
             const preparedData = {
                 ...formData,
                 ticket_class_id: 2,
-                ticket_category_id: 5,
+                ticket_category_id: 6,
+                selectedFile: selectedFile,
                 workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
-            console.log(preparedData);
+
+            history.push("/health");
+            //  console.log(preparedData);
             dispatch(createTicket({ ...preparedData }));
         }
+    };
+
+    const convertFile = async (event) => {
+        const result = await convertToBase64(event.target.files[0]);
+        setSelectedFile(result);
     };
 
     useEffect(() => {
@@ -65,6 +75,19 @@ const Accident = () => {
     useEffect(() => {
         handleSubmitForm();
     }, [formData]);
+
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
 
     if (isLoadingWorkCenter || isLoadingEmployee) {
         return <Spinner animation="border" variant="light" />;
@@ -95,10 +118,10 @@ const Accident = () => {
                             values,
                             touched,
                             errors,
-
                             handleChange,
                             handleBlur,
-                            handleSubmit
+                            handleSubmit,
+                            setFieldValue
                         } = props;
 
                         return (
@@ -115,7 +138,9 @@ const Accident = () => {
                                                 onBlur={handleBlur}
                                             />
                                             {errors.date_created && touched.date_created && (
-                                                <p className="error mt-1">{errors.date_created}</p>
+                                                <p className="error mt-1 mb-0">
+                                                    {errors.date_created}
+                                                </p>
                                             )}
                                         </div>
                                         <div className="flex">
@@ -128,7 +153,9 @@ const Accident = () => {
                                                 onBlur={handleBlur}
                                             />
                                             {errors.time_created && touched.time_created && (
-                                                <p className="error mt-1">{errors.time_created}</p>
+                                                <p className="error mt-1 mb-0">
+                                                    {errors.time_created}
+                                                </p>
                                             )}
                                         </div>
                                         <div className="select-wrapper">
@@ -178,14 +205,37 @@ const Accident = () => {
                                         </div>
                                     </div>
                                     <div className="wrap-file">
-                                        <label className="file">
+                                        <label className="file flex">
                                             <input
-                                                name="file-accident"
+                                                name="selectedFile"
                                                 className="cursor-pointer"
                                                 type="file"
+                                                value=""
+                                                onChange={(event) => {
+                                                    convertFile(event);
+                                                    setFieldValue(
+                                                        "selectedFile",
+                                                        event.target.files[0].name
+                                                    );
+                                                }}
                                             />
+                                            {selectedFile && (
+                                                <img
+                                                    className="w-100 h-100"
+                                                    src={selectedFile}
+                                                    alt="preview"
+                                                />
+                                            )}
+                                            {!selectedFile &&
+                                                errors.selectedFile &&
+                                                touched.selectedFile && (
+                                                    <p className="error mt-1 errorFile mb-0">
+                                                        {errors.selectedFile}
+                                                    </p>
+                                                )}
                                         </label>
-                                        <div className="flex">
+
+                                        <div className="flex textarea">
                                             <textarea
                                                 type="text"
                                                 raws="5"
@@ -198,7 +248,9 @@ const Accident = () => {
                                                 onBlur={handleBlur}
                                             />
                                             {errors.correction && touched.correction && (
-                                                <p className="error mt-1">{errors.correction}</p>
+                                                <p className="error mt-1 mb-0">
+                                                    {errors.correction}
+                                                </p>
                                             )}
                                         </div>
                                     </div>
@@ -213,9 +265,7 @@ const Accident = () => {
                 <Link to="/" className="close">
                     <strong>&times;</strong>
                 </Link>
-                {/* <Link to="/health" className="vectorNext">
-					<img src={vectorNext} alt="next" className=" d-block mx-auto mb-2 mt-2" />
-				</Link> */}
+
                 <Link to="/health" className="vectorPrev">
                     <img src={vectorPrev} alt="next" className=" d-block mx-auto mb-2 mt-2" />
                 </Link>
