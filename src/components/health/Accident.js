@@ -57,7 +57,7 @@ const Accident = () => {
             };
 
             history.push("/health");
-            //  console.log(preparedData);
+            console.log(preparedData);
             dispatch(createTicket({ ...preparedData }));
         }
     };
@@ -98,178 +98,170 @@ const Accident = () => {
 
     return (
         <div className="col-lg-12 mx-auto wrap">
-            <Container>
-                <div className="title">
-                    <div>
-                        <img src={health} alt="health" />
-                    </div>
-                    <h2 className="title-text-form title-text colorTextLightGray text-center ">
-                        Accident
-                    </h2>
+            <div className="title">
+                <div>
+                    <img src={health} alt="health" />
                 </div>
+                <h2 className="title-text-form title-text colorTextLightGray text-center ">
+                    Accident
+                </h2>
+            </div>
 
-                <Formik
-                    initialValues={initialForm}
-                    onSubmit={(values) => setFormData({ ...formData, ...values })}
-                    validationSchema={accidentSchema}
-                >
-                    {(props) => {
-                        const {
-                            values,
-                            touched,
-                            errors,
-                            handleChange,
-                            handleBlur,
-                            handleSubmit,
-                            setFieldValue
-                        } = props;
+            <Formik
+                initialValues={initialForm}
+                onSubmit={(values) => setFormData({ ...formData, ...values })}
+                validationSchema={accidentSchema}
+            >
+                {(props) => {
+                    const {
+                        values,
+                        touched,
+                        errors,
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        setFieldValue
+                    } = props;
 
-                        return (
-                            <div className="form-wrap">
-                                <form onSubmit={handleSubmit}>
-                                    <div className="wrap-info">
-                                        <div className="flex">
-                                            <input
-                                                type="date"
-                                                id="date"
-                                                name="date_created"
-                                                value={values.date_created}
+                    return (
+                        <div className="form-wrap">
+                            <form onSubmit={handleSubmit}>
+                                <div className="wrap-info">
+                                    <div className="flex">
+                                        <input
+                                            type="date"
+                                            id="date"
+                                            name="date_created"
+                                            value={values.date_created}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        />
+                                        {errors.date_created && touched.date_created && (
+                                            <p className="error mt-1 mb-0">{errors.date_created}</p>
+                                        )}
+                                    </div>
+                                    <div className="flex">
+                                        <input
+                                            type="time"
+                                            id="time"
+                                            name="time_created"
+                                            value={values.time_created}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        />
+                                        {errors.time_created && touched.time_created && (
+                                            <p className="error mt-1 mb-0">{errors.time_created}</p>
+                                        )}
+                                    </div>
+                                    <div className="select-wrapper">
+                                        <div className="select">
+                                            <span>foreman</span>
+                                            <select
+                                                className="select"
+                                                id="foreman"
+                                                name="foreman"
+                                                value={values.foreman}
                                                 onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            />
-                                            {errors.date_created && touched.date_created && (
-                                                <p className="error mt-1 mb-0">
-                                                    {errors.date_created}
-                                                </p>
-                                            )}
-                                        </div>
-                                        <div className="flex">
-                                            <input
-                                                type="time"
-                                                id="time"
-                                                name="time_created"
-                                                value={values.time_created}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            />
-                                            {errors.time_created && touched.time_created && (
-                                                <p className="error mt-1 mb-0">
-                                                    {errors.time_created}
-                                                </p>
-                                            )}
-                                        </div>
-                                        <div className="select-wrapper">
-                                            <div className="select">
-                                                <span>foreman</span>
-                                                <select
-                                                    className="select"
-                                                    id="foreman"
-                                                    name="foreman"
-                                                    value={values.foreman}
-                                                    onChange={handleChange}
-                                                >
-                                                    {!isLoadingEmployee &&
-                                                        employee.map((e) => (
-                                                            <option key={e.id}>
-                                                                {`${e.name} ${e.surname}`}
-                                                            </option>
-                                                        ))}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="select-wrapper">
-                                            <div className="select">
-                                                <span>workcenter</span>
-                                                <select
-                                                    className="select"
-                                                    name="workcenter"
-                                                    value={values.workcenter}
-                                                    onChange={handleChange}
-                                                >
-                                                    {!isLoadingWorkCenter &&
-                                                        workCenter.map((wc) => (
-                                                            <option key={wc.id}>{wc.number}</option>
-                                                        ))}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="damagedItem-wrapper">
-                                            <input
-                                                name="damaged-accident"
-                                                type="text"
-                                                placeholder="Assembly table"
-                                                autoComplete="off"
-                                                className="input-text"
-                                            />
-                                            <span className="damagedItem">damaged item</span>
+                                            >
+                                                {!isLoadingEmployee &&
+                                                    employee.map((e) => (
+                                                        <option key={e.id}>
+                                                            {`${e.name} ${e.surname}`}
+                                                        </option>
+                                                    ))}
+                                            </select>
                                         </div>
                                     </div>
-                                    <div className="wrap-file">
-                                        <label className="file flex">
-                                            <input
-                                                name="selectedFile"
-                                                className="cursor-pointer"
-                                                type="file"
-                                                value=""
-                                                onChange={(event) => {
-                                                    convertFile(event);
-                                                    setFieldValue(
-                                                        "selectedFile",
-                                                        event.target.files[0].name
-                                                    );
-                                                }}
-                                            />
-                                            {selectedFile && (
-                                                <img
-                                                    className="w-100 h-100"
-                                                    src={selectedFile}
-                                                    alt="preview"
-                                                />
-                                            )}
-                                            {!selectedFile &&
-                                                errors.selectedFile &&
-                                                touched.selectedFile && (
-                                                    <p className="error mt-1 errorFile mb-0">
-                                                        {errors.selectedFile}
-                                                    </p>
-                                                )}
-                                        </label>
-
-                                        <div className="flex textarea">
-                                            <textarea
-                                                type="text"
-                                                raws="5"
-                                                autoComplete="off"
-                                                placeholder="Correction..."
-                                                className="correction p-2"
-                                                name="correction"
-                                                value={values.correction}
+                                    <div className="select-wrapper">
+                                        <div className="select">
+                                            <span>workcenter</span>
+                                            <select
+                                                className="select"
+                                                name="workcenter"
+                                                value={values.workcenter}
                                                 onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            />
-                                            {errors.correction && touched.correction && (
-                                                <p className="error mt-1 mb-0">
-                                                    {errors.correction}
-                                                </p>
-                                            )}
+                                            >
+                                                {!isLoadingWorkCenter &&
+                                                    workCenter.map((wc) => (
+                                                        <option key={wc.id}>{wc.number}</option>
+                                                    ))}
+                                            </select>
                                         </div>
                                     </div>
-                                    <button className="button submmit" type="submit">
-                                        Submit
-                                    </button>
-                                </form>
-                            </div>
-                        );
-                    }}
-                </Formik>
-                <Link to="/" className="close">
-                    <strong>&times;</strong>
-                </Link>
+                                    <div className="damagedItem-wrapper">
+                                        <input
+                                            name="damaged-accident"
+                                            type="text"
+                                            placeholder="Assembly table"
+                                            autoComplete="off"
+                                            className="input-text"
+                                        />
+                                        <span className="damagedItem">damaged item</span>
+                                    </div>
+                                </div>
+                                <div className="wrap-file">
+                                    <label className="file flex">
+                                        <input
+                                            name="selectedFile"
+                                            className="cursor-pointer"
+                                            type="file"
+                                            value=""
+                                            onChange={(event) => {
+                                                convertFile(event);
+                                                setFieldValue(
+                                                    "selectedFile",
+                                                    event.target.files[0].name
+                                                );
+                                            }}
+                                        />
+                                        {selectedFile && (
+                                            <img
+                                                className="w-100 h-100 borderRounded"
+                                                src={selectedFile}
+                                                alt="preview"
+                                            />
+                                        )}
+                                        {!selectedFile &&
+                                            errors.selectedFile &&
+                                            touched.selectedFile && (
+                                                <p className="error mt-1 errorFile mb-0">
+                                                    {errors.selectedFile}
+                                                </p>
+                                            )}
+                                    </label>
 
-                <Link to="/health" className="vectorPrev">
-                    <img src={vectorPrev} alt="next" className=" d-block mx-auto mb-2 mt-2" />
-                </Link>
-            </Container>
+                                    <div className="flex textarea">
+                                        <textarea
+                                            type="text"
+                                            raws="5"
+                                            autoComplete="off"
+                                            placeholder="Correction..."
+                                            className="correction p-2"
+                                            name="correction"
+                                            value={values.correction}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        />
+                                        {errors.correction && touched.correction && (
+                                            <p className="error mt-1 mb-0">{errors.correction}</p>
+                                        )}
+                                    </div>
+                                </div>
+                                <button className="button submmit my-3" type="submit">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                    );
+                }}
+            </Formik>
+            <Link to="/" className="close">
+                <strong>&times;</strong>
+            </Link>
+
+            <Link to="/health" className="vectorPrev">
+                <img src={vectorPrev} alt="next" className=" d-block mx-auto mb-2 mt-2" />
+            </Link>
         </div>
     );
 };

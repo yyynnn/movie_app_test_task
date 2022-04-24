@@ -18,7 +18,7 @@
 }
 
 .form-wrap {
-    height: 460px;
+    height: 100%;
 }
 
 .title {
@@ -30,11 +30,13 @@
 .title-text {
     margin-bottom: 150px;
     font-size: 35px;
+    line-height: 43px;
+    font-family: "HelveticaNeue";
     font-weight: 900;
 }
 
 .title-text-form {
-    margin-bottom: 90px;
+    margin-bottom: 50px;
 }
 
 .title img {
@@ -78,7 +80,7 @@
 
 @media (max-width: 720px) {
     .wrap {
-        height: 600px;
+        height: 100%;
     }
 
     .btn-wrap {
@@ -125,7 +127,7 @@ input {
 }
 
 input[type="date"] {
-    width: 165px;
+    max-width: 175px;
     height: 31px;
     font-size: 100;
     font-size: 26px;
@@ -141,7 +143,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 input[type="time"] {
-    width: 115px;
+    /* width: 115px; */
     height: 31px;
 
     font-size: 26px;
@@ -189,7 +191,7 @@ input[type="text"] {
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
-    width: 210px;
+    width: 180px;
     height: 31px;
     position: relative;
     border: none;
@@ -252,6 +254,7 @@ input[type="file"] {
     background: url("../img/file.png") center/cover no-repeat;
     display: block;
     cursor: pointer;
+    margin: 10px;
 }
 .errorFile {
     position: absolute;
@@ -261,12 +264,14 @@ input[type="file"] {
 .wrap-info {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     /* margin-bottom: 40px; */
 }
 
 .wrap-file {
     width: 80%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     margin: 0 auto;
     padding-top: 40px;
@@ -308,4 +313,8 @@ input[type="file"] {
 
 .textarea {
     height: 230px;
+    margin: 10px;
+}
+.borderRounded {
+    border-radius: 1rem;
 }

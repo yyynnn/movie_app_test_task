@@ -20,6 +20,7 @@ const Tickets = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     const handleClick = (event) => {
+        event.preventDefault();
         event.target.name === "Health&Safety"
             ? setBtnClassYellow((prevState) => (prevState = !prevState))
             : event.target.name === "environment"
