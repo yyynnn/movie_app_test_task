@@ -1,7 +1,7 @@
 .button {
     position: relative;
     display: block;
-    margin: auto;
+    /* margin: auto; */
     width: 246px;
     height: 102px;
 
@@ -40,7 +40,7 @@
     height: 50px;
     clear: top;
     float: top;
-
+    margin: auto;
     background: #c4c4c4;
     border-radius: 20px;
 }

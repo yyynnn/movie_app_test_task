@@ -325,3 +325,28 @@ input[type="file"] {
 .borderRounded {
     border-radius: 1rem;
 }
+.modalbgc {
+    background-color: #4a555e;
+}
+
+.modal-header {
+    border: 1px solid #4a555e;
+}
+.modal-body {
+    padding: 0rem;
+}
+
+.btn-close-modal {
+    color: #e6e6e6 !important;
+    font-size: 20px;
+}
+.title-modal {
+    margin: 0px;
+}
+
+@media (min-width: 992px) {
+    .modal-dialog {
+        max-width: 800px;
+        margin-left: 10rem auto;
+    }
+}

@@ -212,7 +212,7 @@ const Nearmiss = () => {
                                         />
                                         {selectedFile && (
                                             <img
-                                                className="w-100 h-100"
+                                                className="w-100 h-100 borderRounded"
                                                 src={selectedFile}
                                                 alt="preview"
                                             />

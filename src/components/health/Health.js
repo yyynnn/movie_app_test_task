@@ -6,37 +6,76 @@ import "../../css/button.css";
 import "../../css/modalAll.css";
 import "./Health.css";
 import { health } from "../../img/indexImage";
+import PossibleAccident from "./PossibleAccident";
 
 const Health = () => {
-	return (
-		<div className="col-lg-12 mx-auto">
-			<div className='wrap'>
-				<div className="title">
-					<div>
-						<img src={health} alt="health" />
-					</div>
-					<h2 className="title-text colorTextLightGray text-updae ">
-						Occupational health and safety
-					</h2>
-				</div>
+    return (
+        <div className="col-lg-12 mx-auto">
+            <div className="wrap">
+                <div className="title">
+                    <div>
+                        <img src={health} alt="health" />
+                    </div>
+                    <h2 className="title-text colorTextLightGray text-updae ">
+                        Occupational health and safety
+                    </h2>
+                </div>
 
-				<div className="d-grid gap-4 d-sm-flex justify-content-sm-center btn-wrap">
-					<Link className="link" to="/accident">
-						<button id="Accident" className="button health">Accident</button>
-					</Link>
-					<Link className="link" to="/nearmiss">
-						<button id="Nearmiss" className="button health">Nearmiss</button>
-					</Link>
-					<Link className="link" to="/possibleAccident">
-						<button id="Possible_accident" className="button health">Possible accident</button>
-					</Link>
-				</div>
-				<Link to="/" className="close">
-					<strong>&times;</strong>
-				</Link>
-			</div>
-		</div>
-	);
+                <div className="d-grid gap-4 d-sm-flex justify-content-sm-center btn-wrap">
+                    <Link className="link" to="/accident">
+                        <button id="Accident" className="button health">
+                            Accident
+                        </button>
+                    </Link>
+                    <Link className="link" to="/nearmiss">
+                        <button id="Nearmiss" className="button health">
+                            Nearmiss
+                        </button>
+                    </Link>
+                    {/* <Link className="link" to="/possibleAccident">
+						<button id="Possible_accident" className="button health" data-bs-target="#exampleModal">Possible accident</button>
+					</Link> */}
+                    <button
+                        id="Possible_accident"
+                        className="button health"
+                        data-bs-target="#exampleModal"
+                        data-bs-toggle="modal"
+                    >
+                        Possible accident
+                    </button>
+                    <div
+                        className="modal"
+                        id="exampleModal"
+                        tabIndex="-1"
+                        aria-labelledby="modalLabel"
+                        aria-hidden="true"
+                    >
+                        <div className="modal-dialog modal-dialog-centered modal-xl ">
+                            <div className="modal-content modalbgc">
+                                <div className="modal-header">
+                                    <button
+                                        type="button"
+                                        className="btn-close btn-close-modal"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+                                    {/* <button data-bs-dismiss="modal" className="btn btn-close-modal">
+                                        &times;
+                                    </button> */}
+                                </div>
+                                <div className="modal-body">
+                                    <PossibleAccident />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <Link to="/" className="close">
+                    <strong>&times;</strong>
+                </Link>
+            </div>
+        </div>
+    );
 };
 
 export default Health;
