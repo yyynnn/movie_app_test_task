@@ -255,6 +255,7 @@ const Accident = () => {
                     );
                 }}
             </Formik>
+
             <Link to="/" className="close">
                 <strong>&times;</strong>
             </Link>

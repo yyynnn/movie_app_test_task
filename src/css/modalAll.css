@@ -1,3 +1,9 @@
+@supports (scrollbar-gutter: stable) {
+    html {
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+    }
+}
 .link {
     text-decoration: none;
 }
@@ -6,15 +12,16 @@
     position: relative;
     border: 1px solid #4a555e;
     background-color: #4a555e;
-
     width: 100%;
     margin: 0 auto;
+
     padding: 0 32px;
     border-radius: 10px;
+    margin-right: 20px;
 }
 
 .btn-wrap {
-    margin-bottom: 20%;
+    margin-bottom: 10rem;
 }
 
 .form-wrap {
