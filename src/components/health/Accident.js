@@ -11,7 +11,7 @@ import { getError } from "../../store/errors";
 import { Spinner } from "react-bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
-import { Container } from "react-bootstrap";
+import imageCompression from "browser-image-compression";
 import { health, vectorPrev } from "../../img/indexImage";
 import { useHistory } from "react-router-dom";
 
@@ -51,19 +51,26 @@ const Accident = () => {
                 ...formData,
                 ticket_class_id: 2,
                 ticket_category_id: 6,
-                selectedFile: selectedFile,
+                photo: selectedFile,
                 workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
 
             history.push("/health");
-            console.log(preparedData);
+            // console.log(preparedData);
             dispatch(createTicket({ ...preparedData }));
         }
     };
 
+    const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 500,
+        useWebWorker: true
+    };
+
     const convertFile = async (event) => {
-        const result = await convertToBase64(event.target.files[0]);
+        const compressedFile = await imageCompression(event.target.files[0], options);
+        const result = await convertToBase64(compressedFile);
         setSelectedFile(result);
     };
 
