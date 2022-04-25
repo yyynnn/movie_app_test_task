@@ -55,13 +55,10 @@ const Health = () => {
                                 <div className="modal-header">
                                     <button
                                         type="button"
-                                        className="btn-close btn-close-modal"
+                                        className="btn-close btn-close-modal btn-close-white"
                                         data-bs-dismiss="modal"
                                         aria-label="Close"
                                     ></button>
-                                    {/* <button data-bs-dismiss="modal" className="btn btn-close-modal">
-                                        &times;
-                                    </button> */}
                                 </div>
                                 <div className="modal-body">
                                     <PossibleAccident />

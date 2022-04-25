@@ -9,7 +9,7 @@ const Database = () => {
             <Container>
                 <div className="d-flex gap-3 mt-3 justify-content-sm-center ">
                     <img src={database} alt="database" />
-                    <h1 className="title-header colorTextLightGray">Database</h1>
+                    <h1 className="title-header colorTextLightGray title-DB">Database</h1>
                 </div>
                 <div className="cardHeight d-flex justify-content-sm-around align-items-center m-5">
                     <Link to="/tickets">
