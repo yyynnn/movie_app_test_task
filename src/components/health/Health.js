@@ -12,8 +12,8 @@ const Health = () => {
     return (
         <div className="col-lg-12 mx-auto">
             <div className="wrap">
-                <div className="title">
-                    <div>
+                <div className="title flex justify-content-center">
+                    <div className="mt-1">
                         <img src={health} alt="health" />
                     </div>
                     <h2 className="title-text colorTextLightGray text-updae ">

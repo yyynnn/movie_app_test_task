@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import bootstrap from "bootstrap";
 import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
@@ -9,7 +8,7 @@ import { Spinner } from "react-bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
 import { Container } from "react-bootstrap";
-import { health, vectorPrev } from "../../img/indexImage";
+import { health } from "../../img/indexImage";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { createTicket } from "../../store/tickets";
@@ -86,7 +85,7 @@ const PossibleAccident = () => {
         <div className="col-lg-12 mx-auto wrap">
             <Container>
                 <div className="title title-modal ">
-                    <div>
+                    <div className="mt-1">
                         <img src={health} alt="health" />
                     </div>
                     <h2 className="title-text title-text-form colorTextLightGray text-center ">
@@ -237,7 +236,11 @@ const PossibleAccident = () => {
                                             )}
                                         </div> */}
                                     </div>
-                                    <button className="button submmit my-3" type="submit">
+                                    <button
+                                        className="button submmit my-3 "
+                                        data-bs-dismiss="modal"
+                                        type="submit"
+                                    >
                                         Submit
                                     </button>
                                 </form>

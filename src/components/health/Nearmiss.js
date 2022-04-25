@@ -11,7 +11,6 @@ import { getError } from "../../store/errors";
 import { Spinner } from "react-bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
-import { Container } from "react-bootstrap";
 import imageCompression from "browser-image-compression";
 import { health, vectorPrev } from "../../img/indexImage";
 import { useHistory } from "react-router-dom";
@@ -104,7 +103,7 @@ const Nearmiss = () => {
     return (
         <div className="col-lg-12 mx-auto wrap">
             <div className="title">
-                <div>
+                <div className="mt-1">
                     <img src={health} alt="health" />
                 </div>
                 <h2 className="title-text title-text-form colorTextLightGray text-center ">

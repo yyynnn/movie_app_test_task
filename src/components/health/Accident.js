@@ -106,7 +106,7 @@ const Accident = () => {
     return (
         <div className="col-lg-12 mx-auto wrap">
             <div className="title">
-                <div>
+                <div className="mt-1">
                     <img src={health} alt="health" />
                 </div>
                 <h2 className="title-text-form title-text colorTextLightGray text-center ">
