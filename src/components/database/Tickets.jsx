@@ -4,8 +4,10 @@ import { useHistory, Link } from "react-router-dom";
 import { getTickets, loadTickets, getTicketsLoadingStatus } from "../../store/tickets";
 import { useSelector, useDispatch } from "react-redux";
 import { getError } from "../../store/errors";
-
+import Accident from "../health/Accident";
+import Nearmiss from "../health/Nearmiss";
 import { Spinner } from "react-bootstrap";
+import PossibleAccident from "../health/PossibleAccident";
 
 const Tickets = () => {
     const state = useSelector(getTickets());
@@ -13,6 +15,7 @@ const Tickets = () => {
     const history = useHistory();
     const isLoading = useSelector(getTicketsLoadingStatus());
     const error = useSelector(getError());
+    const [selectedTicket, setSelectedTicket] = useState();
     const [btnClassYellow, setBtnClassYellow] = useState(false);
     const [btnClassGreen, setBtnClassGreen] = useState(false);
     const [btnClassBlue, setBtnClassBlue] = useState(false);
@@ -148,7 +151,13 @@ const Tickets = () => {
                             ? []
                             : [...filteredTickets]
                         ).map((el) => (
-                            <tr key={el.id} className="table-bg">
+                            <tr
+                                key={el.id}
+                                className="table-bg"
+                                onClick={() => setSelectedTicket(el.category)}
+                                data-bs-target="#ticketModal"
+                                data-bs-toggle="modal"
+                            >
                                 <td>
                                     {el.class === "Environment" ? (
                                         <Icon.CircleFill color="#C9C906" />
@@ -173,6 +182,35 @@ const Tickets = () => {
                         ))}
                     </tbody>
                 </table>
+                <div
+                    className="modal "
+                    id="ticketModal"
+                    tabIndex="-1"
+                    aria-labelledby="modalLabel"
+                    aria-hidden="true"
+                >
+                    <div className="modal-dialog modal-dialog-centered modal-lg">
+                        <div className="modal-content modalbgc">
+                            <div className="modal-header">
+                                <button
+                                    type="button"
+                                    className="btn-close btn-close-modal btn-close-white"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                            <div className="modal-body">
+                                {selectedTicket === "Accident" ? (
+                                    <Accident />
+                                ) : selectedTicket === "Nearmiss" ? (
+                                    <Nearmiss />
+                                ) : (
+                                    <PossibleAccident />
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <button
                     className="btn btn-secondary m-2 p-1"
                     onClick={() => history.push("/database")}

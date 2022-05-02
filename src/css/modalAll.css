@@ -1,7 +1,7 @@
 @supports (scrollbar-gutter: stable) {
     html {
-        overflow-y: auto;
-        scrollbar-gutter: stable;
+        /* overflow-y: auto;
+        scrollbar-gutter: stable; */
     }
 }
 .link {
@@ -38,7 +38,9 @@
     margin-bottom: 150px;
     font-size: 35px;
     line-height: 43px;
+
     font-family: "HelveticaNeueCB";
+    font-weight: lighter;
 }
 
 .title-text-form {
@@ -345,7 +347,7 @@ input[type="file"] {
 
 @media (min-width: 992px) {
     .modal-dialog {
-        max-width: 800px;
-        margin-left: 10rem auto;
+        max-width: 1100px;
+        /* margin-left: 10rem auto; */
     }
 }

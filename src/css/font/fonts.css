@@ -22,3 +22,7 @@
     font-family: "HelveticaNeueCB";
     src: url("./HelveticaNeueCondensedBlack.ttf") format("truetype");
 }
+@font-face {
+    font-family: "HelveticaNeueCBold";
+    src: url("./HelveticaNeueCondensedBold.ttf") format("truetype");
+}

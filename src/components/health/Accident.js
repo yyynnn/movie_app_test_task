@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
+import * as bootstrap from "bootstrap";
 import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
 import { getEmployee, loadEmployee, getEmployeeLoadingStatus } from "../../store/employee";
 import { createTicket } from "../../store/tickets";
@@ -13,7 +14,7 @@ import "../../css/button.css";
 import "../../css/modalAll.css";
 import imageCompression from "browser-image-compression";
 import { health, vectorPrev } from "../../img/indexImage";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const initialForm = {
     date_created: "",
@@ -21,14 +22,17 @@ const initialForm = {
     foreman: "Ivan Petrov",
     workcenter: "C201",
     selectedFile: "",
-    correction: ""
+    correction: "",
+    damaged_item: ""
 };
 
 const Accident = () => {
     const [formData, setFormData] = useState(initialForm);
     const [selectedFile, setSelectedFile] = useState("");
     const dispatch = useDispatch();
-    const history = useHistory();
+    // const history = useHistory();
+    // const location = useLocation();
+    // console.log(location);
     const workCenter = useSelector(getWorkCenter());
     const employee = useSelector(getEmployee());
     const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
@@ -42,7 +46,8 @@ const Accident = () => {
             .string()
             .max(256, "Description is too long")
             .required("Correction description is required"),
-        selectedFile: yup.mixed("not format").required("Photo is required")
+        selectedFile: yup.mixed("not format").required("Photo is required"),
+        damaged_item: yup.string().required("Damaged item is required")
     });
 
     const handleSubmitForm = () => {
@@ -50,21 +55,28 @@ const Accident = () => {
             const preparedData = {
                 ...formData,
                 ticket_class_id: 2,
-                ticket_category_id: 6,
+                ticket_category_id: 5,
                 photo: selectedFile,
                 workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
 
-            history.push("/health");
-            // console.log(preparedData);
-            dispatch(createTicket({ ...preparedData }));
+            console.log(preparedData);
+
+            // dispatch(createTicket({ ...preparedData }));
+            handleCloseModal();
         }
     };
+    function handleCloseModal() {
+        const elementModal = document.getElementById("accident");
+        const modal = bootstrap.Modal.getInstance(elementModal);
+        modal.hide();
+        setSelectedFile("");
+    }
 
     const options = {
         maxSizeMB: 1,
-        maxWidthOrHeight: 500,
+        maxWidthOrHeight: 1024,
         useWebWorker: true
     };
 
@@ -105,7 +117,7 @@ const Accident = () => {
 
     return (
         <div className="col-lg-12 mx-auto wrap">
-            <div className="title">
+            <div className="title title-modal">
                 <div className="mt-1">
                     <img src={health} alt="health" />
                 </div>
@@ -116,7 +128,10 @@ const Accident = () => {
 
             <Formik
                 initialValues={initialForm}
-                onSubmit={(values) => setFormData({ ...formData, ...values })}
+                onSubmit={(values, { resetForm }) => {
+                    setFormData({ ...formData, ...values });
+                    resetForm({ values: "" });
+                }}
                 validationSchema={accidentSchema}
             >
                 {(props) => {
@@ -197,11 +212,14 @@ const Accident = () => {
                                     </div>
                                     <div className="damagedItem-wrapper">
                                         <input
-                                            name="damaged-accident"
+                                            name="damaged_item"
                                             type="text"
                                             placeholder="Assembly table"
                                             autoComplete="off"
                                             className="input-text"
+                                            value={values.damaged_item}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
                                         />
                                         <span className="damagedItem">damaged item</span>
                                     </div>
@@ -254,7 +272,11 @@ const Accident = () => {
                                         )}
                                     </div>
                                 </div>
-                                <button className="button submmit my-3" type="submit">
+                                <button
+                                    className="button submmit my-3"
+                                    type="submit"
+                                    data-bs-dismmiss="modal"
+                                >
                                     Submit
                                 </button>
                             </form>
@@ -263,13 +285,13 @@ const Accident = () => {
                 }}
             </Formik>
 
-            <Link to="/" className="close">
+            {/* <Link to="/" className="close">
                 <strong>&times;</strong>
             </Link>
 
             <Link to="/health" className="vectorPrev">
                 <img src={vectorPrev} alt="next" className=" d-block mx-auto mb-2 mt-2" />
-            </Link>
+            </Link> */}
         </div>
     );
 };
