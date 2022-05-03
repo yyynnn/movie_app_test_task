@@ -1,7 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
+import { Portal } from "react-portal";
+import * as bootstrap from "bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import { useHistory, Link } from "react-router-dom";
-import { getTickets, loadTickets, getTicketsLoadingStatus } from "../../store/tickets";
+import {
+    getTickets,
+    loadTickets,
+    getTicketsLoadingStatus,
+    getTicket,
+    loadTicket
+} from "../../store/tickets";
 import { useSelector, useDispatch } from "react-redux";
 import { getError } from "../../store/errors";
 import Accident from "../health/Accident";
@@ -15,12 +23,22 @@ const Tickets = () => {
     const history = useHistory();
     const isLoading = useSelector(getTicketsLoadingStatus());
     const error = useSelector(getError());
+    const ticket = useSelector(getTicket());
     const [selectedTicket, setSelectedTicket] = useState();
+    const [selectedTicketData, setSelectedTicketData] = useState();
     const [btnClassYellow, setBtnClassYellow] = useState(false);
     const [btnClassGreen, setBtnClassGreen] = useState(false);
     const [btnClassBlue, setBtnClassBlue] = useState(false);
     const [filteredTickets, setFilteredTickets] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
+
+    const handleRowClick = async ({ category, id }) => {
+        setSelectedTicket(category);
+        if (id) {
+            const res = await loadTicket(id);
+            setSelectedTicketData(res);
+        }
+    };
 
     const handleClick = (event) => {
         event.preventDefault();
@@ -154,7 +172,7 @@ const Tickets = () => {
                             <tr
                                 key={el.id}
                                 className="table-bg"
-                                onClick={() => setSelectedTicket(el.category)}
+                                onClick={() => handleRowClick({ category: el.category, id: el.id })}
                                 data-bs-target="#ticketModal"
                                 data-bs-toggle="modal"
                             >
@@ -182,6 +200,7 @@ const Tickets = () => {
                         ))}
                     </tbody>
                 </table>
+
                 <div
                     className="modal "
                     id="ticketModal"
@@ -195,13 +214,14 @@ const Tickets = () => {
                                 <button
                                     type="button"
                                     className="btn-close btn-close-modal btn-close-white"
+                                    onClick={() => setSelectedTicketData(null)}
                                     data-bs-dismiss="modal"
                                     aria-label="Close"
                                 ></button>
                             </div>
                             <div className="modal-body">
                                 {selectedTicket === "Accident" ? (
-                                    <Accident />
+                                    <Accident selectedTicketData={selectedTicketData} />
                                 ) : selectedTicket === "Nearmiss" ? (
                                     <Nearmiss />
                                 ) : (
@@ -211,6 +231,7 @@ const Tickets = () => {
                         </div>
                     </div>
                 </div>
+
                 <button
                     className="btn btn-secondary m-2 p-1"
                     onClick={() => history.push("/database")}

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import * as bootstrap from "bootstrap";
 import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
 import { getEmployee, loadEmployee, getEmployeeLoadingStatus } from "../../store/employee";
-import { createTicket } from "../../store/tickets";
+import { createTicket, loadTicket, getTicket, setTicketId } from "../../store/tickets";
+
 import { useSelector, useDispatch } from "react-redux";
 import * as yup from "yup";
 import { Formik } from "formik";
@@ -14,29 +15,46 @@ import "../../css/button.css";
 import "../../css/modalAll.css";
 import imageCompression from "browser-image-compression";
 import { health, vectorPrev } from "../../img/indexImage";
-import { useHistory, useLocation } from "react-router-dom";
+// import { useHistory, useLocation } from "react-router-dom";
 
-const initialForm = {
-    date_created: "",
-    time_created: "",
-    foreman: "Ivan Petrov",
-    workcenter: "C201",
-    selectedFile: "",
-    correction: "",
-    damaged_item: ""
-};
-
-const Accident = () => {
-    const [formData, setFormData] = useState(initialForm);
-    const [selectedFile, setSelectedFile] = useState("");
-    const dispatch = useDispatch();
-    // const history = useHistory();
-    // const location = useLocation();
-    // console.log(location);
+const Accident = ({ selectedTicketData }) => {
+    console.log(selectedTicketData);
     const workCenter = useSelector(getWorkCenter());
     const employee = useSelector(getEmployee());
     const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
     const isLoadingEmployee = useSelector(getEmployeeLoadingStatus());
+
+    const initialForm = selectedTicketData
+        ? {
+              date_created: selectedTicketData.date_created,
+              time_created: selectedTicketData.time_created,
+              foreman:
+                  !isLoadingEmployee &&
+                  `${employee.find((e) => e.id === selectedTicketData.foreman_id).name} ${
+                      employee.find((e) => e.id === selectedTicketData.foreman_id).surname
+                  }`,
+              workcenter:
+                  !isLoadingWorkCenter &&
+                  workCenter.find((e) => e.id === selectedTicketData.workcenter_id).number,
+              selectedFile: "",
+              correction: selectedTicketData.correction,
+              damaged_item: selectedTicketData.damaged_item
+          }
+        : {
+              date_created: "",
+              time_created: "",
+              foreman: "Ivan Petrov",
+              workcenter: "C201",
+              selectedFile: "",
+              correction: "",
+              damaged_item: ""
+          };
+    const [formData, setFormData] = useState(initialForm);
+
+    const [selectedFile, setSelectedFile] = useState("");
+
+    const dispatch = useDispatch();
+
     const error = useSelector(getError());
 
     const accidentSchema = yup.object().shape({
@@ -56,14 +74,14 @@ const Accident = () => {
                 ...formData,
                 ticket_class_id: 2,
                 ticket_category_id: 5,
-                photo: selectedFile,
+                image: selectedFile,
                 workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
 
-            console.log(preparedData);
+            // console.log(preparedData);
 
-            // dispatch(createTicket({ ...preparedData }));
+            dispatch(createTicket({ ...preparedData }));
             handleCloseModal();
         }
     };
@@ -94,6 +112,11 @@ const Accident = () => {
     useEffect(() => {
         handleSubmitForm();
     }, [formData]);
+
+    // useEffect(() => {
+    //     setFormData(initialForm);
+    //     console.log("effect");
+    // }, [selectedTicketData]);
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -128,6 +151,7 @@ const Accident = () => {
 
             <Formik
                 initialValues={initialForm}
+                enableReinitialize={true}
                 onSubmit={(values, { resetForm }) => {
                     setFormData({ ...formData, ...values });
                     resetForm({ values: "" });

@@ -1,9 +1,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "http://heqs.trydev.ru/api/";
-axios.defaults.headers.post["X-CSRF-TOKEN"] = "";
 
-// document.getElementsByName("csrf-token")[0].content;
 // http://heqs.trydev.ru/api/readEmployees
 // http://heqs.trydev.ru/api/readWorkCenters
 //  http://heqs.trydev.ru/api/readTicketsList
