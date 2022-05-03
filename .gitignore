@@ -42,3 +42,5 @@ yarn-error.log*
 /nohup.out
 /server.php
 /phpunit.xml
+/public/img_tickets
+/vendor
