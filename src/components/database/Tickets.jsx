@@ -194,15 +194,15 @@ const Tickets = () => {
                 </table>
 
                 <div
-                    className="modal fade"
+                    className="modal fade "
                     id="ticketModal"
                     tabIndex="-1"
                     aria-labelledby="modalLabel"
                     aria-hidden="true"
                 >
                     <div className="modal-dialog modal-dialog-centered modal-lg">
-                        <div className="modal-content modalbgc">
-                            <div className="modal-header">
+                        <div className="modal-content modalbgc border-radius">
+                            <div className="modal-header border-radius">
                                 <button
                                     type="button"
                                     className="btn-close btn-close-modal btn-close-white"
@@ -211,7 +211,7 @@ const Tickets = () => {
                                     aria-label="Close"
                                 ></button>
                             </div>
-                            <div className="modal-body">
+                            <div className="modal-body ">
                                 {selectedTicket === "Accident" ? (
                                     <Accident selectedTicketData={selectedTicketData} />
                                 ) : selectedTicket === "Nearmiss" ? (

@@ -362,6 +362,10 @@ input[type="file"] {
 .modal.show .modal-dialog {
     transform: translate3d(0, 8%, 0);
 }
+.border-radius {
+    border-radius: 10px !important;
+}
+
 .root-cause {
     left: -50% !important;
 }
