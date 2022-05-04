@@ -14,6 +14,7 @@ import "../../css/button.css";
 import "../../css/modalAll.css";
 import imageCompression from "browser-image-compression";
 import { health, vectorPrev } from "../../img/indexImage";
+import { data } from "./file";
 
 const Nearmiss = ({ selectedTicketData }) => {
     // console.log(selectedTicketData);
@@ -38,7 +39,7 @@ const Nearmiss = ({ selectedTicketData }) => {
               workcenter:
                   !isLoadingWorkCenter &&
                   workCenter.find((e) => e.id === selectedTicketData.workcenter_id).number,
-              selectedFile: "",
+              selectedFile: data,
               correction: selectedTicketData.correction,
               damaged_item: selectedTicketData.damaged_item,
               corrective_action: selectedTicketData.corrective_actions
@@ -52,7 +53,7 @@ const Nearmiss = ({ selectedTicketData }) => {
               correction: "",
               damaged_item: ""
           };
-
+    // console.log(initialForm);
     const [formData, setFormData] = useState(initialForm);
     const accidentSchema = yup.object().shape({
         date_created: yup.string().required("Date is required"),
@@ -74,8 +75,8 @@ const Nearmiss = ({ selectedTicketData }) => {
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
 
-            // console.log(preparedData);
-            dispatch(createTicket({ ...preparedData }));
+            console.log(preparedData);
+            //dispatch(createTicket({ ...preparedData }));
             handleCloseModal();
         }
     };
@@ -320,20 +321,18 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                         );
                                                     }}
                                                 />
-                                                {selectedFile && (
+                                                {values.selectedFile && (
                                                     <img
                                                         className="w-100 h-100 borderRounded"
-                                                        src={selectedFile}
+                                                        // src={
+                                                        //     selectedTicketData
+                                                        //         ? selectedTicketData.selectedFile
+                                                        //         : selectedFile
+                                                        // }
+                                                        src={values.selectedFile}
                                                         alt="preview"
                                                     />
                                                 )}
-                                                {!selectedFile &&
-                                                    errors.selectedFile &&
-                                                    touched.selectedFile && (
-                                                        <p className="error mt-1 mb-0 errorFile">
-                                                            {errors.selectedFile}
-                                                        </p>
-                                                    )}
                                             </label>
                                         </div>
 

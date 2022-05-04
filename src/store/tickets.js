@@ -13,10 +13,6 @@ const ticketSlice = createSlice({
             state.entities = action.payload;
             state.isLoading = false;
         },
-        receivedTicket(state, action) {
-            state.ticket = action.payload;
-            state.isLoading = false;
-        },
 
         loadTicketsRequested(state) {
             state.isLoading = true;
@@ -32,8 +28,7 @@ const ticketSlice = createSlice({
 });
 
 const { actions, reducer: ticketReducer } = ticketSlice;
-const { received, loadTicketsRequested, ticketsRequestFailed, ticketAdded, receivedTicket } =
-    actions;
+const { received, loadTicketsRequested, ticketsRequestFailed, ticketAdded } = actions;
 const ticketRequested = createAction("ticket/ticketRequested");
 
 export const loadTickets = () => async (dispatch) => {
@@ -47,16 +42,6 @@ export const loadTickets = () => async (dispatch) => {
     }
 };
 
-// export const loadTicket = (id) => async (dispatch) => {
-//     dispatch(loadTicketsRequested());
-//     try {
-//         const data = await ticketsService.fetchTicket(id);
-//         dispatch(receivedTicket(data));
-//     } catch (error) {
-//         dispatch(ticketsRequestFailed(error.message));
-//         dispatch(setError(error.message));
-//     }
-// };
 export const loadTicket = async (id) => {
     try {
         const data = await ticketsService.fetchTicket(id);

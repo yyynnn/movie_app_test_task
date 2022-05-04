@@ -17,7 +17,7 @@ import { health, vectorPrev } from "../../img/indexImage";
 // import { useHistory, useLocation } from "react-router-dom";
 
 const Accident = ({ selectedTicketData }) => {
-    console.log(selectedTicketData);
+    // console.log(selectedTicketData);
     const workCenter = useSelector(getWorkCenter());
     const employee = useSelector(getEmployee());
     const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
