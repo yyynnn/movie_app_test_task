@@ -76,7 +76,7 @@ const Nearmiss = ({ selectedTicketData }) => {
             };
 
             console.log(preparedData);
-            //dispatch(createTicket({ ...preparedData }));
+            dispatch(createTicket({ ...preparedData }));
             handleCloseModal();
         }
     };
