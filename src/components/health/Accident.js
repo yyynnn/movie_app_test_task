@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import * as bootstrap from "bootstrap";
 import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
 import { getEmployee, loadEmployee, getEmployeeLoadingStatus } from "../../store/employee";
-
+import { createTicket } from "../../store/tickets";
 import { useSelector, useDispatch } from "react-redux";
 import * as yup from "yup";
 import { Formik } from "formik";
@@ -78,9 +78,9 @@ const Accident = ({ selectedTicketData }) => {
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
 
-            console.log(preparedData);
+            // console.log(preparedData);
 
-            // dispatch(createTicket({ ...preparedData }));
+            dispatch(createTicket({ ...preparedData }));
             handleCloseModal();
         }
     };

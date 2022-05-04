@@ -16,13 +16,13 @@ import imageCompression from "browser-image-compression";
 import { health, vectorPrev } from "../../img/indexImage";
 
 const Nearmiss = ({ selectedTicketData }) => {
-    console.log(selectedTicketData);
+    // console.log(selectedTicketData);
 
     const [selectedFile, setSelectedFile] = useState("");
     const workCenter = useSelector(getWorkCenter());
     const employee = useSelector(getEmployee());
     const dispatch = useDispatch();
-    // const history = useHistory();
+
     const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
     const isLoadingEmployee = useSelector(getEmployeeLoadingStatus());
     const error = useSelector(getError());
@@ -40,7 +40,8 @@ const Nearmiss = ({ selectedTicketData }) => {
                   workCenter.find((e) => e.id === selectedTicketData.workcenter_id).number,
               selectedFile: "",
               correction: selectedTicketData.correction,
-              damaged_item: selectedTicketData.damaged_item
+              damaged_item: selectedTicketData.damaged_item,
+              corrective_action: selectedTicketData.corrective_actions
           }
         : {
               date_created: "",
@@ -73,8 +74,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
 
-            // history.push("/health");
-            console.log(preparedData);
+            // console.log(preparedData);
             dispatch(createTicket({ ...preparedData }));
             handleCloseModal();
         }
@@ -88,7 +88,7 @@ const Nearmiss = ({ selectedTicketData }) => {
 
     const options = {
         maxSizeMB: 1,
-        maxWidthOrHeight: 500,
+        maxWidthOrHeight: 1024,
         useWebWorker: true
     };
 
@@ -233,54 +233,154 @@ const Nearmiss = ({ selectedTicketData }) => {
                                         <span className="damagedItem">damaged item</span>
                                     </div>
                                 </div>
-                                <div className="wrap-file">
-                                    <label className="file flex">
-                                        <input
-                                            name="selectedFile"
-                                            className="cursor-pointer"
-                                            type="file"
-                                            value=""
-                                            onChange={(event) => {
-                                                convertFile(event);
-                                                setFieldValue(
-                                                    "selectedFile",
-                                                    event.target.files[0].name
-                                                );
-                                            }}
-                                        />
-                                        {selectedFile && (
-                                            <img
-                                                className="w-100 h-100 borderRounded"
-                                                src={selectedFile}
-                                                alt="preview"
-                                            />
-                                        )}
-                                        {!selectedFile &&
-                                            errors.selectedFile &&
-                                            touched.selectedFile && (
-                                                <p className="error mt-1 mb-0 errorFile">
-                                                    {errors.selectedFile}
-                                                </p>
-                                            )}
-                                    </label>
-
-                                    <div className="flex textarea">
-                                        <textarea
-                                            type="text"
-                                            raws="5"
-                                            autoComplete="off"
-                                            placeholder="Correction..."
-                                            className="correction p-2"
-                                            name="correction"
-                                            value={values.correction}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                        />
-                                        {errors.correction && touched.correction && (
-                                            <p className="error mt-1">{errors.correction}</p>
-                                        )}
+                                {selectedTicketData && (
+                                    <div className="select-wrapper d-flex justify-content-center mt-5 ">
+                                        <div className="select">
+                                            <span className="root-cause">root cause (why?)</span>
+                                            <select
+                                                className="select "
+                                                id="rootcause"
+                                                name="rootcause"
+                                                value={values.rootcause}
+                                                onChange={handleChange}
+                                            >
+                                                {!isLoadingEmployee &&
+                                                    selectedTicketData.rootCauses.map((e) => (
+                                                        <option
+                                                            key={e.id}
+                                                        >{`${e.root_cause_category}`}</option>
+                                                    ))}
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
+                                {!selectedTicketData ? (
+                                    <div className="wrap-file">
+                                        <label className="file flex">
+                                            <input
+                                                name="selectedFile"
+                                                className="cursor-pointer"
+                                                type="file"
+                                                value=""
+                                                onChange={(event) => {
+                                                    convertFile(event);
+                                                    setFieldValue(
+                                                        "selectedFile",
+                                                        event.target.files[0].name
+                                                    );
+                                                }}
+                                            />
+                                            {selectedFile && (
+                                                <img
+                                                    className="w-100 h-100 borderRounded"
+                                                    src={selectedFile}
+                                                    alt="preview"
+                                                />
+                                            )}
+                                            {!selectedFile &&
+                                                errors.selectedFile &&
+                                                touched.selectedFile && (
+                                                    <p className="error mt-1 mb-0 errorFile">
+                                                        {errors.selectedFile}
+                                                    </p>
+                                                )}
+                                        </label>
+
+                                        <div className="flex textarea">
+                                            <textarea
+                                                type="text"
+                                                raws="5"
+                                                autoComplete="off"
+                                                placeholder="Correction..."
+                                                className="correction p-2"
+                                                name="correction"
+                                                value={values.correction}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                            />
+                                            {errors.correction && touched.correction && (
+                                                <p className="error mt-1">{errors.correction}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="wrap-file wrap-edit">
+                                        <div className="mt-4">
+                                            <label className="file d-flex file-edit">
+                                                <input
+                                                    name="selectedFile"
+                                                    className="cursor-pointer "
+                                                    type="file"
+                                                    value=""
+                                                    onChange={(event) => {
+                                                        convertFile(event);
+                                                        setFieldValue(
+                                                            "selectedFile",
+                                                            event.target.files[0].name
+                                                        );
+                                                    }}
+                                                />
+                                                {selectedFile && (
+                                                    <img
+                                                        className="w-100 h-100 borderRounded"
+                                                        src={selectedFile}
+                                                        alt="preview"
+                                                    />
+                                                )}
+                                                {!selectedFile &&
+                                                    errors.selectedFile &&
+                                                    touched.selectedFile && (
+                                                        <p className="error mt-1 mb-0 errorFile">
+                                                            {errors.selectedFile}
+                                                        </p>
+                                                    )}
+                                            </label>
+                                        </div>
+
+                                        <div className="d-flex flex-row">
+                                            <div className="d-flex flex-column textarea mx-3">
+                                                <span className="text-position">Correction:</span>
+                                                <textarea
+                                                    type="text"
+                                                    raws="5"
+                                                    autoComplete="off"
+                                                    placeholder="Correction..."
+                                                    className="correction-edit p-2"
+                                                    name="correction"
+                                                    value={values.correction}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                />
+                                                {errors.correction && touched.correction && (
+                                                    <p className="error mt-1">
+                                                        {errors.correction}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            <div className="d-flex flex-column textarea mx-3">
+                                                <span className="text-position">
+                                                    Corrective action:
+                                                </span>
+                                                <textarea
+                                                    type="text"
+                                                    raws="5"
+                                                    autoComplete="off"
+                                                    placeholder="Corrective action..."
+                                                    className="corrective-action p-2"
+                                                    name="corrective_action"
+                                                    value={values.corrective_action}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                />
+                                                {errors.correction && touched.correction && (
+                                                    <p className="error mt-1">
+                                                        {errors.correction}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                                 <button className="button submmit my-3" type="submit">
                                     Submit
                                 </button>
