@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
 import { getEmployee, loadEmployee, getEmployeeLoadingStatus } from "../../store/employee";
@@ -9,31 +9,50 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { getError } from "../../store/errors";
 import { Spinner } from "react-bootstrap";
+import * as bootstrap from "bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
 import imageCompression from "browser-image-compression";
 import { health, vectorPrev } from "../../img/indexImage";
-import { useHistory } from "react-router-dom";
 
-const initialForm = {
-    date_created: "",
-    time_created: "",
-    foreman: "Ivan Petrov",
-    workcenter: "C201",
-    selectedFile: "",
-    correction: ""
-};
-const Nearmiss = () => {
-    const [formData, setFormData] = useState(initialForm);
+const Nearmiss = ({ selectedTicketData }) => {
+    console.log(selectedTicketData);
+
     const [selectedFile, setSelectedFile] = useState("");
     const workCenter = useSelector(getWorkCenter());
     const employee = useSelector(getEmployee());
     const dispatch = useDispatch();
-    const history = useHistory();
+    // const history = useHistory();
     const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
     const isLoadingEmployee = useSelector(getEmployeeLoadingStatus());
     const error = useSelector(getError());
+    const initialForm = selectedTicketData
+        ? {
+              date_created: selectedTicketData.date_created,
+              time_created: selectedTicketData.time_created,
+              foreman:
+                  !isLoadingEmployee &&
+                  `${employee.find((e) => e.id === selectedTicketData.foreman_id).name} ${
+                      employee.find((e) => e.id === selectedTicketData.foreman_id).surname
+                  }`,
+              workcenter:
+                  !isLoadingWorkCenter &&
+                  workCenter.find((e) => e.id === selectedTicketData.workcenter_id).number,
+              selectedFile: "",
+              correction: selectedTicketData.correction,
+              damaged_item: selectedTicketData.damaged_item
+          }
+        : {
+              date_created: "",
+              time_created: "",
+              foreman: "Ivan Petrov",
+              workcenter: "C201",
+              selectedFile: "",
+              correction: "",
+              damaged_item: ""
+          };
 
+    const [formData, setFormData] = useState(initialForm);
     const accidentSchema = yup.object().shape({
         date_created: yup.string().required("Date is required"),
         time_created: yup.string().required("Time is required"),
@@ -48,17 +67,25 @@ const Nearmiss = () => {
             const preparedData = {
                 ...formData,
                 ticket_class_id: 2,
-                ticket_category_id: 7,
-                photo: selectedFile,
+                ticket_category_id: 6,
+                image: selectedFile,
                 workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
 
-            history.push("/health");
-            //console.log(preparedData);
+            // history.push("/health");
+            console.log(preparedData);
             dispatch(createTicket({ ...preparedData }));
+            handleCloseModal();
         }
     };
+    function handleCloseModal() {
+        const elementModal = document.getElementById("nearmiss");
+        const modal = bootstrap.Modal.getInstance(elementModal);
+        modal.hide();
+        setSelectedFile("");
+    }
+
     const options = {
         maxSizeMB: 1,
         maxWidthOrHeight: 500,
@@ -102,7 +129,7 @@ const Nearmiss = () => {
 
     return (
         <div className="col-lg-12 mx-auto wrap">
-            <div className="title">
+            <div className="title title-modal">
                 <div className="mt-1">
                     <img src={health} alt="health" />
                 </div>
@@ -112,6 +139,7 @@ const Nearmiss = () => {
             </div>
             <Formik
                 initialValues={initialForm}
+                enableReinitialize={true}
                 onSubmit={(values) => setFormData({ ...formData, ...values })}
                 validationSchema={accidentSchema}
             >
@@ -176,10 +204,10 @@ const Nearmiss = () => {
                                         </div>
                                     </div>
                                     <div className="select-wrapper">
-                                        <div className="select">
+                                        <div className="select workcenter">
                                             <span>workcenter</span>
                                             <select
-                                                className="select"
+                                                className="select workcenter"
                                                 name="workcenter"
                                                 value={values.workcenter}
                                                 onChange={handleChange}
@@ -193,11 +221,14 @@ const Nearmiss = () => {
                                     </div>
                                     <div className="damagedItem-wrapper">
                                         <input
-                                            name="damaged-accident"
+                                            name="damaged_item"
                                             type="text"
                                             placeholder="Assembly table"
                                             autoComplete="off"
                                             className="input-text"
+                                            value={values.damaged_item}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
                                         />
                                         <span className="damagedItem">damaged item</span>
                                     </div>
@@ -258,71 +289,14 @@ const Nearmiss = () => {
                     );
                 }}
             </Formik>
-            {/* <div className="form-wrap">
-                        <form>
-                            <div className="wrap-info">
-                                <input type="date" name="date-nearmiss" />
-                                <input type="time" name="time-nearmiss" />
-
-                                <div className="select-wrapper">
-                                    <label className="select">
-                                        <span>workcenter</span>
-                                        <select className="select" name="workcenter-nearmiss">
-                                            {!isLoadingWorkCenter &&
-                                                workCenter.map((wc) => (
-                                                    <option value="" key={wc.id}>
-                                                        {wc.number}
-                                                    </option>
-                                                ))}
-                                        </select>
-                                    </label>
-                                </div>
-
-                                <div className="select-wrapper">
-                                    <label className="select">
-                                        <span>foreman</span>
-                                        <select
-                                            className="select"
-                                            id="foreman"
-                                            name="foreman-nearmiss"
-                                        >
-                                            {!isLoadingEmployee &&
-                                                employee.map((e) => (
-                                                    <option value="first-accident" key={e.id}>
-                                                        {`${e.name}  ${e.surname}`}
-                                                    </option>
-                                                ))}
-                                        </select>
-                                    </label>
-                                </div>
-
-                                <label className="input-text">
-                                    <span>damaged item</span>
-                                    <input
-                                        type="text"
-                                        name="text-nearmiss"
-                                        placeholder="Combilift 12t"
-                                    />
-                                </label>
-                            </div>
-
-                            <div className="wrap-file">
-                                <label className="file">
-                                    <input name="file-nearmiss" type="file" />
-                                </label>
-                                <img src={correctionUse} alt="correction" />
-                            </div>
-                            <button className="button submmit">Submit</button>
-                        </form>
-                    </div> */}
-
+            {/*            
             <Link to="/" className="close">
                 <strong>&times;</strong>
             </Link>
 
             <Link to="/health" className="vectorPrev">
                 <img src={vectorPrev} alt="next" className=" d-block mx-auto mb-2 mt-2" />
-            </Link>
+            </Link> */}
         </div>
     );
 };

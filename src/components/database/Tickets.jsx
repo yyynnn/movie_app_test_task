@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { Portal } from "react-portal";
-import * as bootstrap from "bootstrap";
+import React, { useEffect, useState } from "react";
+
 import * as Icon from "react-bootstrap-icons";
 import { useHistory, Link } from "react-router-dom";
 import {
@@ -23,7 +22,7 @@ const Tickets = () => {
     const history = useHistory();
     const isLoading = useSelector(getTicketsLoadingStatus());
     const error = useSelector(getError());
-    const ticket = useSelector(getTicket());
+
     const [selectedTicket, setSelectedTicket] = useState();
     const [selectedTicketData, setSelectedTicketData] = useState();
     const [btnClassYellow, setBtnClassYellow] = useState(false);
@@ -77,14 +76,6 @@ const Tickets = () => {
                         )
                     ];
                 }
-                // console.log(
-                //     Object.assign(
-                //         {},
-                //         state.filter(
-                //             (ticket) => ticket.class.toLowerCase() === category.toLowerCase()
-                //         )
-                //     )
-                // );
             }
 
             setFilteredTickets(...result);
@@ -141,7 +132,7 @@ const Tickets = () => {
                     </div>
                 </div>
 
-                <table className="table table-hover colorTextLightGray table-borderless ">
+                <table className="table table-hover colorTextLightGray table-borderless hide-scroll table-height ">
                     <thead className="table-th-font-weight table-group-separator-color">
                         <tr>
                             <th className="fw-normal fs-5 th-sm" scope="col">
@@ -162,7 +153,8 @@ const Tickets = () => {
                             </th>
                         </tr>
                     </thead>
-                    <tbody className="table-color">
+
+                    <tbody className="table-color ">
                         {(!selectedCategories.length
                             ? state
                             : !filteredTickets
@@ -202,7 +194,7 @@ const Tickets = () => {
                 </table>
 
                 <div
-                    className="modal "
+                    className="modal fade"
                     id="ticketModal"
                     tabIndex="-1"
                     aria-labelledby="modalLabel"
@@ -223,7 +215,7 @@ const Tickets = () => {
                                 {selectedTicket === "Accident" ? (
                                     <Accident selectedTicketData={selectedTicketData} />
                                 ) : selectedTicket === "Nearmiss" ? (
-                                    <Nearmiss />
+                                    <Nearmiss selectedTicketData={selectedTicketData} />
                                 ) : (
                                     <PossibleAccident />
                                 )}

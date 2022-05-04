@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import * as bootstrap from "bootstrap";
 import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
 import { getEmployee, loadEmployee, getEmployeeLoadingStatus } from "../../store/employee";
-import { createTicket, loadTicket, getTicket, setTicketId } from "../../store/tickets";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as yup from "yup";
@@ -79,9 +78,9 @@ const Accident = ({ selectedTicketData }) => {
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
 
-            // console.log(preparedData);
+            console.log(preparedData);
 
-            dispatch(createTicket({ ...preparedData }));
+            // dispatch(createTicket({ ...preparedData }));
             handleCloseModal();
         }
     };
@@ -112,11 +111,6 @@ const Accident = ({ selectedTicketData }) => {
     useEffect(() => {
         handleSubmitForm();
     }, [formData]);
-
-    // useEffect(() => {
-    //     setFormData(initialForm);
-    //     console.log("effect");
-    // }, [selectedTicketData]);
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -200,7 +194,7 @@ const Accident = ({ selectedTicketData }) => {
                                         )}
                                     </div>
                                     <div className="select-wrapper">
-                                        <div className="select">
+                                        <div className="select ">
                                             <span>foreman</span>
                                             <select
                                                 className="select"
@@ -218,11 +212,11 @@ const Accident = ({ selectedTicketData }) => {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="select-wrapper">
-                                        <div className="select">
+                                    <div className="select-wrapper ">
+                                        <div className="select workcenter">
                                             <span>workcenter</span>
                                             <select
-                                                className="select"
+                                                className="select workcenter"
                                                 name="workcenter"
                                                 value={values.workcenter}
                                                 onChange={handleChange}

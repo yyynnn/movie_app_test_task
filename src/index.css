@@ -1,3 +1,16 @@
+/* Hide scrollbar for Chrome,
+Safari and Opera .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+} */
+::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+}
+
 body {
     margin: 0 auto;
     background-color: #333f48;
@@ -21,7 +34,7 @@ code {
     text-align: center;
     width: 100px;
     height: 30px;
-
+    border-color: #ffcc33;
     box-sizing: content-box;
 }
 
@@ -40,7 +53,7 @@ code {
     text-align: center;
     width: 200px;
     height: 30px;
-
+    border-color: #c9c906;
     box-sizing: content-box;
 }
 
@@ -59,7 +72,7 @@ code {
     text-align: center;
     width: 100px;
     height: 30px;
-
+    border-color: #589bbc;
     box-sizing: content-box;
 }
 
@@ -82,6 +95,9 @@ code {
 
 .table-color {
     background-color: rgba(196, 196, 196, 0.3);
+}
+.table-height {
+    height: 100px !important;
 }
 
 .weightText {
@@ -106,4 +122,28 @@ code {
 }
 .title-DB {
     font-family: "HelveticaNeueCB";
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scroll {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+tbody {
+    display: block;
+    overflow-y: auto;
+    table-layout: fixed;
+    max-height: 300px;
 }

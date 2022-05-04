@@ -8,6 +8,7 @@ import "./Health.css";
 import { health } from "../../img/indexImage";
 import PossibleAccident from "./PossibleAccident";
 import Accident from "./Accident";
+import Nearmiss from "./Nearmiss";
 
 const Health = () => {
     return (
@@ -38,7 +39,7 @@ const Health = () => {
                         Accident
                     </button>
                     <div
-                        className="modal"
+                        className="modal fade"
                         id="accident"
                         tabIndex="-1"
                         aria-labelledby="modalLabel"
@@ -60,11 +61,42 @@ const Health = () => {
                             </div>
                         </div>
                     </div>
-                    <Link className="link" to="/nearmiss">
+                    <button
+                        id="Accident"
+                        className="button health"
+                        data-bs-target="#nearmiss"
+                        data-bs-toggle="modal"
+                    >
+                        Nearmiss
+                    </button>
+                    <div
+                        className="modal fade"
+                        id="nearmiss"
+                        tabIndex="-1"
+                        aria-labelledby="modalLabel"
+                        aria-hidden="true"
+                    >
+                        <div className="modal-dialog modal-dialog-centered modal-xl ">
+                            <div className="modal-content modalbgc">
+                                <div className="modal-header">
+                                    <button
+                                        type="button"
+                                        className="btn-close btn-close-modal btn-close-white"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+                                </div>
+                                <div className="modal-body">
+                                    <Nearmiss />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* <Link className="link" to="/nearmiss">
                         <button id="Nearmiss" className="button health">
                             Nearmiss
                         </button>
-                    </Link>
+                    </Link> */}
 
                     {/* <Link className="link" to="/possibleAccident">
 						<button id="Possible_accident" className="button health" data-bs-target="#exampleModal">Possible accident</button>
