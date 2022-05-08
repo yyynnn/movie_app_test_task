@@ -235,7 +235,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                                     </div>
                                 </div>
                                 {selectedTicketData && (
-                                    <div className="select-wrapper d-flex justify-content-center mt-5 ">
+                                    <div className="select-wrapper d-flex justify-content-center mt-2 ">
                                         <div className="select">
                                             <span className="root-cause">root cause (why?)</span>
                                             <select
@@ -337,7 +337,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                                         </div>
 
                                         <div className="d-flex flex-row">
-                                            <div className="d-flex flex-column textarea mx-3">
+                                            <div className="d-flex flex-column textarea ">
                                                 <span className="text-position">Correction:</span>
                                                 <textarea
                                                     type="text"
@@ -356,7 +356,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                     </p>
                                                 )}
                                             </div>
-                                            <div className="d-flex flex-column textarea mx-3">
+                                            <div className="d-flex flex-column textarea ">
                                                 <span className="text-position">
                                                     Corrective action:
                                                 </span>
@@ -380,7 +380,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                                         </div>
                                     </div>
                                 )}
-                                <button className="button submmit my-3" type="submit">
+                                <button className="button submmit my-1" type="submit">
                                     Submit
                                 </button>
                             </form>
