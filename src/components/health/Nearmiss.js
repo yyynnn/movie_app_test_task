@@ -14,7 +14,6 @@ import "../../css/button.css";
 import "../../css/modalAll.css";
 import imageCompression from "browser-image-compression";
 import { health, vectorPrev } from "../../img/indexImage";
-import { data } from "./file";
 
 const Nearmiss = ({ selectedTicketData }) => {
     // console.log(selectedTicketData);
@@ -39,10 +38,10 @@ const Nearmiss = ({ selectedTicketData }) => {
               workcenter:
                   !isLoadingWorkCenter &&
                   workCenter.find((e) => e.id === selectedTicketData.workcenter_id).number,
-              selectedFile: data,
+              selectedFile: selectedTicketData.photo,
               correction: selectedTicketData.correction,
               damaged_item: selectedTicketData.damaged_item,
-              corrective_action: selectedTicketData.corrective_actions
+              corrective_actions: selectedTicketData.corrective_actions
           }
         : {
               date_created: "",
@@ -70,7 +69,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                 ...formData,
                 ticket_class_id: 2,
                 ticket_category_id: 6,
-                image: selectedFile,
+                photo: selectedFile,
                 workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
@@ -326,7 +325,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                         className="w-100 h-100 borderRounded"
                                                         // src={
                                                         //     selectedTicketData
-                                                        //         ? selectedTicketData.selectedFile
+                                                        //         ? selectedTicketData.photo
                                                         //         : selectedFile
                                                         // }
                                                         src={values.selectedFile}
@@ -367,7 +366,15 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                     placeholder="Corrective action..."
                                                     className="corrective-action p-2"
                                                     name="corrective_action"
-                                                    value={values.corrective_action}
+                                                    // value={
+                                                    //     values.corrective_actions > 0
+                                                    //         ? values.corrective_actions[0]
+                                                    //               .corrective_action
+                                                    //         : values.corrective_actions
+                                                    // }
+                                                    value={values.corrective_actions?.map(
+                                                        (a) => a.corrective_action
+                                                    )}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                 />

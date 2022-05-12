@@ -73,7 +73,7 @@ const Accident = ({ selectedTicketData }) => {
                 ...formData,
                 ticket_class_id: 2,
                 ticket_category_id: 5,
-                image: selectedFile,
+                photo: selectedFile,
                 workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };

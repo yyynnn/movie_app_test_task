@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import * as Icon from "react-bootstrap-icons";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getTickets, loadTickets, getTicketsLoadingStatus, loadTicket } from "../../store/tickets";
 import { useSelector, useDispatch } from "react-redux";
 import { getError } from "../../store/errors";
@@ -13,7 +13,7 @@ import PossibleAccident from "../health/PossibleAccident";
 const Tickets = () => {
     const state = useSelector(getTickets());
     const dispatch = useDispatch();
-    const history = useHistory();
+
     const isLoading = useSelector(getTicketsLoadingStatus());
     const error = useSelector(getError());
 
