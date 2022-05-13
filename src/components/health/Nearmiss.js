@@ -328,7 +328,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                         //         ? selectedTicketData.photo
                                                         //         : selectedFile
                                                         // }
-                                                        src={values.selectedFile}
+                                                        src={`data:image/${selectedTicketData.extension};base64,${values.selectedFile}`}
                                                         alt="preview"
                                                     />
                                                 )}

@@ -55,6 +55,7 @@ export const createTicket = (ticket) => async (dispatch) => {
     dispatch(ticketRequested());
     try {
         const data = await ticketsService.create(ticket);
+        console.log(data);
         dispatch(ticketAdded(data));
     } catch (error) {
         dispatch(ticketsRequestFailed(error.message));
