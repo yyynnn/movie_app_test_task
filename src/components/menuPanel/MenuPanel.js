@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { People, Reports, Rows, Settings, Works, World, listicon } from "../../img/Icons/indexIcon";
+import {Link} from "react-router-dom";
+import {People, Reports, Rows, Settings, Works, World, listicon} from "../../img/Icons/indexIcon";
 
 const MenuPanel = () => {
     return (
         <div className="colorBg">
-            <div className=" text-center">
+            <div className="text-center">
                 <div className="col-lg-12 mx-auto mt-3">
                     <Link to="/" className="p-3" title="Personal Tasks">
                         <img

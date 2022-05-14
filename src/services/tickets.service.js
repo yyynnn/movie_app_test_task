@@ -8,15 +8,17 @@ const ticketsService = {
                 _limit: 10
             }
         });
-        return data;
+        console.log(data);
+        return data.data;
     },
     create: async (payload) => {
         const { data } = await httpService.post("tickets", payload);
+        console.log(data);
         return data;
     },
     fetchTicket: async (id) => {
         const { data } = await httpService.get(`tickets/${id}`);
-        return data;
+        return data.data;
     }
 };
 

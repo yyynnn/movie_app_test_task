@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
 import "../../css/button.css";
 import "../../css/modalAll.css";
 import "./Health.css";
-import { health } from "../../img/indexImage";
+import {health} from "../../img/indexImage";
 import PossibleAccident from "./PossibleAccident";
 import Accident from "./Accident";
 import Nearmiss from "./Nearmiss";
@@ -16,9 +16,9 @@ const Health = () => {
             <div className="wrap">
                 <div className="title flex justify-content-center">
                     <div className="mt-1">
-                        <img src={health} alt="health" />
+                        <img src={health} alt="health"/>
                     </div>
-                    <h2 className="title-text colorTextLightGray text-updae ">
+                    <h2 className="title-text colorTextLightGray text-update">
                         Occupational health and safety
                     </h2>
                 </div>
@@ -56,7 +56,7 @@ const Health = () => {
                                     ></button>
                                 </div>
                                 <div className="modal-body">
-                                    <Accident />
+                                    <Accident/>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ const Health = () => {
                                     ></button>
                                 </div>
                                 <div className="modal-body">
-                                    <Nearmiss />
+                                    <Nearmiss/>
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@ const Health = () => {
                                     ></button>
                                 </div>
                                 <div className="modal-body">
-                                    <PossibleAccident />
+                                    <PossibleAccident/>
                                 </div>
                             </div>
                         </div>

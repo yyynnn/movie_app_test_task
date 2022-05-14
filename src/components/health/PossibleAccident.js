@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import bootstrap from "bootstrap";
-import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
-import { useSelector, useDispatch } from "react-redux";
-import { getError } from "../../store/errors";
-import { Spinner } from "react-bootstrap";
+import {getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus} from "../../store/workCenter";
+import {useSelector, useDispatch} from "react-redux";
+import {getError} from "../../store/errors";
+import {Spinner} from "react-bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
 
-import { health } from "../../img/indexImage";
+import {health} from "../../img/indexImage";
 import * as yup from "yup";
-import { Formik } from "formik";
-import { createTicket } from "../../store/tickets";
-import { useHistory } from "react-router-dom";
+import {Formik} from "formik";
+import {createTicket} from "../../store/tickets";
+import {useHistory} from "react-router-dom";
 
 const initialForm = {
     date_created: "",
@@ -76,24 +76,25 @@ const PossibleAccident = () => {
     };
 
     if (isLoadingWorkCenter) {
-        return <Spinner animation="border" variant="light" />;
+        return <Spinner animation="border" variant="light"/>;
     }
     if (error) {
         return <p>{error}</p>;
     }
     return (
         <div className="col-lg-12 mx-auto wrap">
-            <div className="title title-modal ">
+            <div className="title title-modal">
                 <div className="mt-1">
-                    <img src={health} alt="health" />
+                    <img src={health} alt="health"/>
                 </div>
-                <h2 className="title-text title-text-form colorTextLightGray text-center ">
+                <h2 className="title-text-form title-text colorTextLightGray text-center">
                     Possible accident
                 </h2>
             </div>
+
             <Formik
                 initialValues={initialForm}
-                onSubmit={(values) => setFormData({ ...formData, ...values })}
+                onSubmit={(values) => setFormData({...formData, ...values})}
                 validationSchema={accidentSchema}
             >
                 {(props) => {
@@ -148,9 +149,9 @@ const PossibleAccident = () => {
                                                 onChange={handleChange}
                                             >
                                                 {!isLoadingWorkCenter &&
-                                                    workCenter.map((wc) => (
-                                                        <option key={wc.id}>{wc.number}</option>
-                                                    ))}
+                                                workCenter.map((wc) => (
+                                                    <option key={wc.id}>{wc.number}</option>
+                                                ))}
                                             </select>
                                         </div>
                                     </div>
@@ -188,12 +189,12 @@ const PossibleAccident = () => {
                                             />
                                         )}
                                         {!selectedFile &&
-                                            errors.selectedFile &&
-                                            touched.selectedFile && (
-                                                <p className="error mt-1 mb-0 errorFile">
-                                                    {errors.selectedFile}
-                                                </p>
-                                            )}
+                                        errors.selectedFile &&
+                                        touched.selectedFile && (
+                                            <p className="error mt-1 mb-0 errorFile">
+                                                {errors.selectedFile}
+                                            </p>
+                                        )}
                                     </label>
                                 </div>
                                 <button

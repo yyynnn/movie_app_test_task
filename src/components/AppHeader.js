@@ -1,17 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { logo } from "../img/indexImage";
+import {Link} from "react-router-dom";
+import {logo} from "../img/indexImage";
 import "../css/AppHeader.css";
 
 const AppHeader = () => {
     return (
         <>
-            <div className="">
+            <div className="header">
                 <div className="username">
                     <p className="mb-0">George Danilyants</p>
                     <p className="mb-0">Peikko Russia</p>
                 </div>
-                <div className="text-center" to="/">
+                <div className="logo" to="/">
                     <Link to="/">
                         <img
                             className="d-block mx-auto mb-3 mt-2"
