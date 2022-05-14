@@ -67,24 +67,6 @@ const Accident = ({ selectedTicketData }) => {
         damaged_item: yup.string().required("Damaged item is required")
     });
 
-    const handleSubmitForm = () => {
-        if (formData.date_created) {
-            const preparedData = {
-                ...formData,
-                ticket_class_id: 2,
-                ticket_category_id: 6,
-                photo: selectedFile,
-                workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
-                foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
-            };
-
-            console.log(preparedData);
-
-            dispatch(createTicket({ ...preparedData }));
-            handleCloseModal();
-        }
-    };
-
     function handleCloseModal() {
         const elementModal = document.getElementById("accident");
         const modal = bootstrap.Modal.getInstance(elementModal);
@@ -110,6 +92,24 @@ const Accident = ({ selectedTicketData }) => {
     }, [dispatch]);
 
     useEffect(() => {
+        const handleSubmitForm = () => {
+            if (formData.date_created) {
+                const preparedData = {
+                    ...formData,
+                    ticket_class_id: 2,
+                    ticket_category_id: 5,
+                    photo: selectedFile,
+                    workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
+                    foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman)
+                        .id
+                };
+
+                // console.log(preparedData);
+
+                dispatch(createTicket({ ...preparedData }));
+                handleCloseModal();
+            }
+        };
         handleSubmitForm();
     }, [formData]);
 

@@ -62,22 +62,6 @@ const Nearmiss = ({ selectedTicketData }) => {
             .required("Correction description is required"),
         selectedFile: yup.mixed("not format").required("Photo is required")
     });
-    const handleSubmitForm = () => {
-        if (formData.date_created) {
-            const preparedData = {
-                ...formData,
-                ticket_class_id: 2,
-                ticket_category_id: 6,
-                photo: selectedFile,
-                workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
-                foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
-            };
-
-            // console.log(preparedData);
-            dispatch(createTicket({ ...preparedData }));
-            handleCloseModal();
-        }
-    };
 
     function handleCloseModal() {
         const elementModal = document.getElementById("nearmiss");
@@ -106,6 +90,24 @@ const Nearmiss = ({ selectedTicketData }) => {
     }, [dispatch]);
 
     useEffect(() => {
+        const handleSubmitForm = () => {
+            if (formData.date_created) {
+                const preparedData = {
+                    ...formData,
+                    ticket_class_id: 2,
+                    ticket_category_id: 6,
+                    photo: selectedFile,
+                    workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
+                    foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman)
+                        .id
+                };
+
+                // console.log(preparedData);
+                dispatch(createTicket({ ...preparedData }));
+                handleCloseModal();
+            }
+        };
+
         handleSubmitForm();
     }, [formData]);
 
