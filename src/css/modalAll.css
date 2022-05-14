@@ -13,11 +13,10 @@
     border: 1px solid #4a555e;
     background-color: #4a555e;
     width: 100%;
-    margin: 0 auto;
-
     padding: 0 32px;
     border-radius: 10px;
-    margin-right: 20px;
+    margin: 0 auto;
+    float: left;
 }
 
 .btn-wrap {
@@ -38,8 +37,7 @@
     margin-bottom: 150px;
     font-size: 35px;
     line-height: 43px;
-
-    font-family: "HelveticaNeueCB";
+    font-family: "HelveticaNeueCB", serif;
     font-weight: lighter;
 }
 
@@ -137,7 +135,6 @@ input {
 input[type="date"] {
     max-width: 175px;
     height: 31px;
-    font-size: 100;
     font-size: 26px;
     line-height: 31px;
     text-align: center;
@@ -146,14 +143,11 @@ input[type="date"] {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-    /* display: none; */
     background-color: #b4b2b2;
 }
 
 input[type="time"] {
-    /* width: 115px; */
     height: 31px;
-
     font-size: 26px;
     line-height: 31px;
     text-align: center;
@@ -162,7 +156,6 @@ input[type="time"] {
 }
 
 input[type="time"]::-webkit-calendar-picker-indicator {
-    /* display: none; */
     background-color: #b4b2b2;
 }
 
@@ -190,7 +183,7 @@ input[type="text"] {
     right: 50%;
     width: 100%;
     transform: translate(50%);
-    font-family: "HelveticaNeueUL";
+    font-family: "HelveticaNeueUL", serif;
     font-weight: 500;
     font-size: 16px;
 }
@@ -241,7 +234,7 @@ input[type="text"] {
     top: 35px;
     right: 50%;
     transform: translate(50%);
-    font-family: "HelveticaNeueUL";
+    font-family: "HelveticaNeueUL", serif;
     font-weight: 500;
     font-size: 16px;
 }
@@ -257,9 +250,9 @@ input[type="text"] {
 }
 
 .workcenter::after {
-    /* transform: translateY(-50%); */
     pointer-events: none;
 }
+
 input[type="file"] {
     display: none;
 }
@@ -273,6 +266,7 @@ input[type="file"] {
     cursor: pointer;
     margin: 10px;
 }
+
 .errorFile {
     position: absolute;
     margin-top: 210px !important;
@@ -282,7 +276,6 @@ input[type="file"] {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    /* margin-bottom: 40px; */
 }
 
 .wrap-file {
@@ -293,12 +286,14 @@ input[type="file"] {
     margin: 0 auto;
     padding-top: 40px;
 }
+
 .error {
     color: #e6e6e6;
     font-family: "HelveticaNeueUL", serif;
     font-size: 16px;
     font-weight: 100;
 }
+
 .correction {
     border: 1px solid #e6e6e6;
     border-radius: 1rem;
@@ -316,13 +311,14 @@ input[type="file"] {
 .damagedItem-wrapper {
     position: relative;
 }
+
 .damagedItem {
     position: absolute;
     color: #e6e6e6;
     top: 35px;
     right: 50%;
     transform: translate(50%);
-    font-family: "HelveticaNeueUL";
+    font-family: "HelveticaNeueUL", serif;
     font-weight: 500;
     font-size: 16px;
     width: 100%;
@@ -332,28 +328,31 @@ input[type="file"] {
     height: 230px;
     margin: 10px;
 }
+
 .borderRounded {
     border-radius: 1rem;
 }
+
 .modalbgc {
     background-color: #4a555e;
-
-    margin: 0 auto;
+    margin: 0 auto !important;
 }
 
 .modal-header {
     border: 1px solid #4a555e;
 }
+
 .modal-body {
-    padding: 0rem;
+    padding: 0;
 }
 
 .btn-close-modal {
     color: #e6e6e6 !important;
     font-size: 20px;
 }
+
 .title-modal {
-    margin: 0px;
+    margin: 0;
 }
 
 .modal.fade .modal-dialog {
@@ -361,9 +360,11 @@ input[type="file"] {
     transition: transform 0.9s ease-out;
     overflow: hidden;
 }
+
 .modal.show .modal-dialog {
-    transform: translate3d(0, 5%, 0);
+    transform: translate3d(0, 0, 0);
 }
+
 .border-radius {
     border-radius: 10px !important;
 }
@@ -371,10 +372,10 @@ input[type="file"] {
 .root-cause {
     left: -50% !important;
 }
+
 @media (min-width: 992px) {
     .modal-dialog {
-        max-width: 1100px;
-        /* margin-left: 10rem auto; */
+        max-width: 1120px;
     }
 }
 
@@ -390,6 +391,7 @@ input[type="file"] {
     line-height: 24px;
     text-align: center;
 }
+
 .corrective-action {
     border-bottom: 1px solid #e6e6e6;
     border-top-color: #4a555e;

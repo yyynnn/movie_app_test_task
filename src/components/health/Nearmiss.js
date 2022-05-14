@@ -78,6 +78,7 @@ const Nearmiss = ({ selectedTicketData }) => {
             handleCloseModal();
         }
     };
+
     function handleCloseModal() {
         const elementModal = document.getElementById("nearmiss");
         const modal = bootstrap.Modal.getInstance(elementModal);
@@ -133,7 +134,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                 <div className="mt-1">
                     <img src={health} alt="health" />
                 </div>
-                <h2 className="title-text title-text-form colorTextLightGray text-center ">
+                <h2 className="title-text-form title-text colorTextLightGray text-center">
                     Nearmiss
                 </h2>
             </div>
@@ -395,7 +396,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                     );
                 }}
             </Formik>
-            {/*            
+            {/*
             <Link to="/" className="close">
                 <strong>&times;</strong>
             </Link>
