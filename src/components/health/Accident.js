@@ -1,22 +1,22 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import * as bootstrap from "bootstrap";
-import {getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus} from "../../store/workCenter";
-import {getEmployee, loadEmployee, getEmployeeLoadingStatus} from "../../store/employee";
-import {createTicket} from "../../store/tickets";
-import {useSelector, useDispatch} from "react-redux";
+import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
+import { getEmployee, loadEmployee, getEmployeeLoadingStatus } from "../../store/employee";
+import { createTicket } from "../../store/tickets";
+import { useSelector, useDispatch } from "react-redux";
 import * as yup from "yup";
-import {Formik} from "formik";
-import {getError} from "../../store/errors";
-import {Spinner} from "react-bootstrap";
+import { Formik } from "formik";
+import { getError } from "../../store/errors";
+import { Spinner } from "react-bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
 import imageCompression from "browser-image-compression";
-import {health, vectorPrev} from "../../img/indexImage";
+import { health, vectorPrev } from "../../img/indexImage";
 // import { useHistory, useLocation } from "react-router-dom";
 
-const Accident = ({selectedTicketData}) => {
+const Accident = ({ selectedTicketData }) => {
     // console.log(selectedTicketData);
     const workCenter = useSelector(getWorkCenter());
     const employee = useSelector(getEmployee());
@@ -25,29 +25,29 @@ const Accident = ({selectedTicketData}) => {
 
     const initialForm = selectedTicketData
         ? {
-            date_created: selectedTicketData.date_created,
-            time_created: selectedTicketData.time_created,
-            foreman:
-                !isLoadingEmployee &&
-                `${employee.find((e) => e.id === selectedTicketData.foreman_id).name} ${
-                    employee.find((e) => e.id === selectedTicketData.foreman_id).surname
-                }`,
-            workcenter:
-                !isLoadingWorkCenter &&
-                workCenter.find((e) => e.id === selectedTicketData.workcenter_id).number,
-            selectedFile: "",
-            correction: selectedTicketData.correction,
-            damaged_item: selectedTicketData.damaged_item
-        }
+              date_created: selectedTicketData.date_created,
+              time_created: selectedTicketData.time_created,
+              foreman:
+                  !isLoadingEmployee &&
+                  `${employee.find((e) => e.id === selectedTicketData.foreman_id).name} ${
+                      employee.find((e) => e.id === selectedTicketData.foreman_id).surname
+                  }`,
+              workcenter:
+                  !isLoadingWorkCenter &&
+                  workCenter.find((e) => e.id === selectedTicketData.workcenter_id).number,
+              selectedFile: "",
+              correction: selectedTicketData.correction,
+              damaged_item: selectedTicketData.damaged_item
+          }
         : {
-            date_created: "",
-            time_created: "",
-            foreman: "Ivan Petrov",
-            workcenter: "C201",
-            selectedFile: "",
-            correction: "",
-            damaged_item: ""
-        };
+              date_created: "",
+              time_created: "",
+              foreman: "Ivan Petrov",
+              workcenter: "C201",
+              selectedFile: "",
+              correction: "",
+              damaged_item: ""
+          };
     const [formData, setFormData] = useState(initialForm);
 
     const [selectedFile, setSelectedFile] = useState("");
@@ -78,9 +78,9 @@ const Accident = ({selectedTicketData}) => {
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
 
-            // console.log(preparedData);
+            console.log(preparedData);
 
-            dispatch(createTicket({...preparedData}));
+            dispatch(createTicket({ ...preparedData }));
             handleCloseModal();
         }
     };
@@ -111,7 +111,7 @@ const Accident = ({selectedTicketData}) => {
 
     useEffect(() => {
         handleSubmitForm();
-    }, [formData, handleSubmitForm]);
+    }, [formData]);
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -127,7 +127,7 @@ const Accident = ({selectedTicketData}) => {
     };
 
     if (isLoadingWorkCenter || isLoadingEmployee) {
-        return <Spinner animation="border" variant="light"/>;
+        return <Spinner animation="border" variant="light" />;
     }
     if (error) {
         return <p>{error}</p>;
@@ -137,7 +137,7 @@ const Accident = ({selectedTicketData}) => {
         <div className="col-lg-12 mx-auto wrap">
             <div className="title title-modal">
                 <div className="mt-1">
-                    <img src={health} alt="health"/>
+                    <img src={health} alt="health" />
                 </div>
                 <h2 className="title-text-form title-text colorTextLightGray text-center">
                     Accident
@@ -147,9 +147,9 @@ const Accident = ({selectedTicketData}) => {
             <Formik
                 initialValues={initialForm}
                 enableReinitialize={true}
-                onSubmit={(values, {resetForm}) => {
-                    setFormData({...formData, ...values});
-                    resetForm({values: ""});
+                onSubmit={(values, { resetForm }) => {
+                    setFormData({ ...formData, ...values });
+                    resetForm({ values: "" });
                 }}
                 validationSchema={accidentSchema}
             >
@@ -205,11 +205,11 @@ const Accident = ({selectedTicketData}) => {
                                                 onChange={handleChange}
                                             >
                                                 {!isLoadingEmployee &&
-                                                employee.map((e) => (
-                                                    <option key={e.id}>
-                                                        {`${e.name} ${e.surname}`}
-                                                    </option>
-                                                ))}
+                                                    employee.map((e) => (
+                                                        <option key={e.id}>
+                                                            {`${e.name} ${e.surname}`}
+                                                        </option>
+                                                    ))}
                                             </select>
                                         </div>
                                     </div>
@@ -223,9 +223,9 @@ const Accident = ({selectedTicketData}) => {
                                                 onChange={handleChange}
                                             >
                                                 {!isLoadingWorkCenter &&
-                                                workCenter.map((wc) => (
-                                                    <option key={wc.id}>{wc.number}</option>
-                                                ))}
+                                                    workCenter.map((wc) => (
+                                                        <option key={wc.id}>{wc.number}</option>
+                                                    ))}
                                             </select>
                                         </div>
                                     </div>
@@ -266,12 +266,12 @@ const Accident = ({selectedTicketData}) => {
                                             />
                                         )}
                                         {!selectedFile &&
-                                        errors.selectedFile &&
-                                        touched.selectedFile && (
-                                            <p className="error mt-1 errorFile mb-0">
-                                                {errors.selectedFile}
-                                            </p>
-                                        )}
+                                            errors.selectedFile &&
+                                            touched.selectedFile && (
+                                                <p className="error mt-1 errorFile mb-0">
+                                                    {errors.selectedFile}
+                                                </p>
+                                            )}
                                     </label>
 
                                     <div className="flex textarea">
