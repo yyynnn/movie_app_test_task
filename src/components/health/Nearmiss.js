@@ -4,10 +4,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
 import { getEmployee, loadEmployee, getEmployeeLoadingStatus } from "../../store/employee";
 import { useSelector, useDispatch } from "react-redux";
-import { createTicket } from "../../store/tickets";
+import { createTicket, getError } from "../../store/tickets";
 import * as yup from "yup";
 import { Formik } from "formik";
-import { getError } from "../../store/errors";
+// import { getError } from "../../store/errors";
 import { Spinner } from "react-bootstrap";
 import * as bootstrap from "bootstrap";
 import "../../css/button.css";
@@ -22,7 +22,6 @@ const Nearmiss = ({ selectedTicketData }) => {
     const workCenter = useSelector(getWorkCenter());
     const employee = useSelector(getEmployee());
     const dispatch = useDispatch();
-
     const isLoadingWorkCenter = useSelector(getWorkCenterLoadingStatus());
     const isLoadingEmployee = useSelector(getEmployeeLoadingStatus());
     const error = useSelector(getError());
@@ -69,12 +68,12 @@ const Nearmiss = ({ selectedTicketData }) => {
                 ...formData,
                 ticket_class_id: 2,
                 ticket_category_id: 6,
-                photo: selectedFile,
+                //photo: selectedFile,
                 workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
                 foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman).id
             };
 
-            console.log(preparedData);
+            // console.log(preparedData);
             dispatch(createTicket({ ...preparedData }));
             handleCloseModal();
         }
@@ -82,6 +81,7 @@ const Nearmiss = ({ selectedTicketData }) => {
     function handleCloseModal() {
         const elementModal = document.getElementById("nearmiss");
         const modal = bootstrap.Modal.getInstance(elementModal);
+
         modal.hide();
         setSelectedFile("");
     }
@@ -328,7 +328,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                         //         ? selectedTicketData.photo
                                                         //         : selectedFile
                                                         // }
-                                                        src={`data:image/${selectedTicketData.extension};base64,${values.selectedFile}`}
+                                                        src={values.selectedFile}
                                                         alt="preview"
                                                     />
                                                 )}
