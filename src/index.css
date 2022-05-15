@@ -165,3 +165,7 @@ tbody {
     table-layout: fixed;
     max-height: 280px;
 }
+
+.ticket-item {
+    cursor: pointer;
+}
