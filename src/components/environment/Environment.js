@@ -8,23 +8,27 @@ import "./Environment.css";
 
 const Environment = () => {
     return (
-        <div className="col-lg-9 mx-auto wrap">
-            <Container>
-                <div className="title">
-                    <div>
-                        <img src={environment} alt="health"/>
+        <div className="Main">
+            <div className="popup col-lg-12">
+                <Container>
+                    <div className="wrap">
+                        <div className="title">
+                            <div>
+                                <img src={environment} alt="health"/>
+                            </div>
+                            <h2 className="title-text colorTextLightGray text-center ">Environment</h2>
+                        </div>
+                        <div className="d-grid gap-4 d-sm-flex justify-content-sm-center btn-wrap">
+                            <button id="Accident" className="button environment">Accident</button>
+                            <button id="Nearmiss" className="button environment">Nearmiss</button>
+                            <button id="Possible_accident" className="button environment">Possible accident</button>
+                        </div>
+                        <Link to="/" className="close">
+                            <strong>&times;</strong>
+                        </Link>
                     </div>
-                    <h2 className="title-text colorTextLightGray text-center ">Environment</h2>
-                </div>
-                <div className="d-grid gap-4 d-sm-flex justify-content-sm-center btn-wrap">
-                    <button id="Accident" className="button environment">Accident</button>
-                    <button id="Nearmiss" className="button environment">Nearmiss</button>
-                    <button id="Possible_accident" className="button environment">Possible accident</button>
-                </div>
-                <Link to="/" className="close">
-                    <strong>&times;</strong>
-                </Link>
-            </Container>
+                </Container>
+            </div>
         </div>
     );
 };

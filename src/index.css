@@ -26,7 +26,12 @@ body {
 
 #root, .App, .header {
     width: 100%;
-    float: left;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 header {

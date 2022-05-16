@@ -21,7 +21,6 @@ const AppHeader = () => {
                             height="79"
                         />
                     </Link>
-
                     <p className="appheader">Build the statistics. Improve yourself.</p>
                 </div>
             </div>

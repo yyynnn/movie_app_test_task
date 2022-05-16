@@ -83,15 +83,6 @@ const PossibleAccident = () => {
     }
     return (
         <div className="col-lg-12 mx-auto wrap">
-            <div className="title title-modal">
-                <div className="mt-1">
-                    <img src={health} alt="health"/>
-                </div>
-                <h2 className="title-text-form title-text colorTextLightGray text-center">
-                    Possible accident
-                </h2>
-            </div>
-
             <Formik
                 initialValues={initialForm}
                 onSubmit={(values) => setFormData({...formData, ...values})}

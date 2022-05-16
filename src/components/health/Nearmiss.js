@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 // import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
-import { getEmployee, loadEmployee, getEmployeeLoadingStatus } from "../../store/employee";
-import { useSelector, useDispatch } from "react-redux";
-import { createTicket, getError } from "../../store/tickets";
+import {getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus} from "../../store/workCenter";
+import {getEmployee, loadEmployee, getEmployeeLoadingStatus} from "../../store/employee";
+import {useSelector, useDispatch} from "react-redux";
+import {createTicket, getError} from "../../store/tickets";
 import * as yup from "yup";
-import { Formik } from "formik";
+import {Formik} from "formik";
 // import { getError } from "../../store/errors";
-import { Spinner } from "react-bootstrap";
+import {Spinner} from "react-bootstrap";
 import * as bootstrap from "bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
 import imageCompression from "browser-image-compression";
-import { health, vectorPrev } from "../../img/indexImage";
+import {health, vectorPrev} from "../../img/indexImage";
 
-const Nearmiss = ({ selectedTicketData }) => {
+const Nearmiss = ({selectedTicketData}) => {
     // console.log(selectedTicketData);
 
     const [selectedFile, setSelectedFile] = useState("");
@@ -27,30 +27,30 @@ const Nearmiss = ({ selectedTicketData }) => {
     const error = useSelector(getError());
     const initialForm = selectedTicketData
         ? {
-              date_created: selectedTicketData.date_created,
-              time_created: selectedTicketData.time_created,
-              foreman:
-                  !isLoadingEmployee &&
-                  `${employee.find((e) => e.id === selectedTicketData.foreman_id).name} ${
-                      employee.find((e) => e.id === selectedTicketData.foreman_id).surname
-                  }`,
-              workcenter:
-                  !isLoadingWorkCenter &&
-                  workCenter.find((e) => e.id === selectedTicketData.workcenter_id).number,
-              selectedFile: selectedTicketData.photo,
-              correction: selectedTicketData.correction,
-              damaged_item: selectedTicketData.damaged_item,
-              corrective_actions: selectedTicketData.corrective_actions
-          }
+            date_created: selectedTicketData.date_created,
+            time_created: selectedTicketData.time_created,
+            foreman:
+                !isLoadingEmployee &&
+                `${employee.find((e) => e.id === selectedTicketData.foreman_id).name} ${
+                    employee.find((e) => e.id === selectedTicketData.foreman_id).surname
+                }`,
+            workcenter:
+                !isLoadingWorkCenter &&
+                workCenter.find((e) => e.id === selectedTicketData.workcenter_id).number,
+            selectedFile: selectedTicketData.photo,
+            correction: selectedTicketData.correction,
+            damaged_item: selectedTicketData.damaged_item,
+            corrective_actions: selectedTicketData.corrective_actions
+        }
         : {
-              date_created: "",
-              time_created: "",
-              foreman: "Ivan Petrov",
-              workcenter: "C201",
-              selectedFile: "",
-              correction: "",
-              damaged_item: ""
-          };
+            date_created: "",
+            time_created: "",
+            foreman: "Ivan Petrov",
+            workcenter: "C201",
+            selectedFile: "",
+            correction: "",
+            damaged_item: ""
+        };
     // console.log(initialForm);
     const [formData, setFormData] = useState(initialForm);
     const accidentSchema = yup.object().shape({
@@ -103,7 +103,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                 };
 
                 // console.log(preparedData);
-                dispatch(createTicket({ ...preparedData }));
+                dispatch(createTicket({...preparedData}));
                 handleCloseModal();
             }
         };
@@ -124,7 +124,7 @@ const Nearmiss = ({ selectedTicketData }) => {
         });
     };
     if (isLoadingWorkCenter || isLoadingEmployee) {
-        return <Spinner animation="border" variant="light" />;
+        return <Spinner animation="border" variant="light"/>;
     }
     if (error) {
         return <p>{error}</p>;
@@ -132,18 +132,10 @@ const Nearmiss = ({ selectedTicketData }) => {
 
     return (
         <div className="col-lg-12 mx-auto wrap">
-            <div className="title title-modal">
-                <div className="mt-1">
-                    <img src={health} alt="health" />
-                </div>
-                <h2 className="title-text-form title-text colorTextLightGray text-center">
-                    Nearmiss
-                </h2>
-            </div>
             <Formik
                 initialValues={initialForm}
                 enableReinitialize={true}
-                onSubmit={(values) => setFormData({ ...formData, ...values })}
+                onSubmit={(values) => setFormData({...formData, ...values})}
                 validationSchema={accidentSchema}
             >
                 {(props) => {
@@ -198,11 +190,11 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                 onChange={handleChange}
                                             >
                                                 {!isLoadingEmployee &&
-                                                    employee.map((e) => (
-                                                        <option key={e.id}>
-                                                            {`${e.name} ${e.surname}`}
-                                                        </option>
-                                                    ))}
+                                                employee.map((e) => (
+                                                    <option key={e.id}>
+                                                        {`${e.name} ${e.surname}`}
+                                                    </option>
+                                                ))}
                                             </select>
                                         </div>
                                     </div>
@@ -216,9 +208,9 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                 onChange={handleChange}
                                             >
                                                 {!isLoadingWorkCenter &&
-                                                    workCenter.map((wc) => (
-                                                        <option key={wc.id}>{wc.number}</option>
-                                                    ))}
+                                                workCenter.map((wc) => (
+                                                    <option key={wc.id}>{wc.number}</option>
+                                                ))}
                                             </select>
                                         </div>
                                     </div>
@@ -248,11 +240,11 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                 onChange={handleChange}
                                             >
                                                 {!isLoadingEmployee &&
-                                                    selectedTicketData.rootCauses.map((e) => (
-                                                        <option
-                                                            key={e.id}
-                                                        >{`${e.root_cause_category}`}</option>
-                                                    ))}
+                                                selectedTicketData.rootCauses.map((e) => (
+                                                    <option
+                                                        key={e.id}
+                                                    >{`${e.root_cause_category}`}</option>
+                                                ))}
                                             </select>
                                         </div>
                                     </div>
@@ -281,12 +273,12 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                 />
                                             )}
                                             {!selectedFile &&
-                                                errors.selectedFile &&
-                                                touched.selectedFile && (
-                                                    <p className="error mt-1 mb-0 errorFile">
-                                                        {errors.selectedFile}
-                                                    </p>
-                                                )}
+                                            errors.selectedFile &&
+                                            touched.selectedFile && (
+                                                <p className="error mt-1 mb-0 errorFile">
+                                                    {errors.selectedFile}
+                                                </p>
+                                            )}
                                         </label>
 
                                         <div className="flex textarea">
