@@ -58,6 +58,7 @@ const Nearmiss = ({ selectedTicketData }) => {
     const accidentSchema = yup.object().shape({
         date_created: yup.string().required("Date is required"),
         time_created: yup.string().required("Time is required"),
+        damaged_item: yup.string().required("Damaged item is required"),
         correction: yup
             .string()
             .max(256, "Description is too long")
