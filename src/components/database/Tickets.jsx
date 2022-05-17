@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import { health } from "../../img/indexImage";
 import _ from "lodash";
 import * as Icon from "react-bootstrap-icons";
-import {Link} from "react-router-dom";
-import {getTickets, loadTickets, getTicketsLoadingStatus, loadTicket} from "../../store/tickets";
-import {useSelector, useDispatch} from "react-redux";
-import {getError} from "../../store/errors";
+import { Link } from "react-router-dom";
+import { getTickets, loadTickets, getTicketsLoadingStatus, loadTicket } from "../../store/tickets";
+import { useSelector, useDispatch } from "react-redux";
+import { getError } from "../../store/errors";
 import Accident from "../health/Accident";
 import Nearmiss from "../health/Nearmiss";
-import {Spinner} from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import PossibleAccident from "../health/PossibleAccident";
 
 const Tickets = () => {
@@ -25,7 +26,7 @@ const Tickets = () => {
     const [filteredTickets, setFilteredTickets] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
 
-    const handleRowClick = async ({category, id}) => {
+    const handleRowClick = async ({ category, id }) => {
         setSelectedTicket(category);
         if (id) {
             const res = await loadTicket(id);
@@ -86,10 +87,10 @@ const Tickets = () => {
 
     useEffect(() => {
         filterTickets();
-    }, [filterTickets, selectedCategories]);
+    }, [selectedCategories]);
 
     if (isLoading) {
-        return <Spinner animation="border" variant="light"/>;
+        return <Spinner animation="border" variant="light" />;
     }
     if (error) {
         return <p>{error}</p>;
@@ -131,62 +132,62 @@ const Tickets = () => {
 
                 <table className="table table-hover colorTextLightGray table-borderless hide-scroll table-height ">
                     <thead className="table-th-font-weight table-group-separator-color">
-                    <tr>
-                        <th className="fw-normal fs-5 th-sm" scope="col">
-                            Class
-                        </th>
-                        <th className="fw-normal fs-5" scope="col">
-                            Date
-                        </th>
-                        <th className="fw-normal fs-5 " scope="col">
-                            Category
-                        </th>
-                        <th className="fw-normal fs-5" scope="col">
-                            Workcenter
-                        </th>
+                        <tr>
+                            <th className="fw-normal fs-5 th-sm" scope="col">
+                                Class
+                            </th>
+                            <th className="fw-normal fs-5" scope="col">
+                                Date
+                            </th>
+                            <th className="fw-normal fs-5 " scope="col">
+                                Category
+                            </th>
+                            <th className="fw-normal fs-5" scope="col">
+                                Workcenter
+                            </th>
 
-                        <th className="fw-normal fs-5" scope="col">
-                            Corrective Actions
-                        </th>
-                    </tr>
+                            <th className="fw-normal fs-5" scope="col">
+                                Corrective Actions
+                            </th>
+                        </tr>
                     </thead>
 
                     <tbody className="table-color ">
-                    {(!selectedCategories.length
+                        {(!selectedCategories.length
                             ? _.orderBy(state, ["date_created"], ["desc"])
                             : !filteredTickets
-                                ? []
-                                : [...filteredTickets]
-                    ).map((el) => (
-                        <tr
-                            key={el.id}
-                            className="ticket-item table-bg"
-                            onClick={() => handleRowClick({category: el.category, id: el.id})}
-                            data-bs-target="#ticketModal"
-                            data-bs-toggle="modal"
-                        >
-                            <td>
-                                {el.class === "Environment" ? (
-                                    <Icon.CircleFill color="#C9C906"/>
-                                ) : el.class === "Health&Safety" ? (
-                                    <Icon.CircleFill color="#FFCC33"/>
-                                ) : (
-                                    <Icon.CircleFill color="#589BBC"/>
-                                )}
-                            </td>
-                            <td>{el.date_created}</td>
-                            <td>{el.category}</td>
-                            <td>{el.workcenter}</td>
+                            ? []
+                            : [...filteredTickets]
+                        ).map((el) => (
+                            <tr
+                                key={el.id}
+                                className="ticket-item table-bg"
+                                onClick={() => handleRowClick({ category: el.category, id: el.id })}
+                                data-bs-target="#ticketModal"
+                                data-bs-toggle="modal"
+                            >
+                                <td>
+                                    {el.class === "Environment" ? (
+                                        <Icon.CircleFill color="#C9C906" />
+                                    ) : el.class === "Health&Safety" ? (
+                                        <Icon.CircleFill color="#FFCC33" />
+                                    ) : (
+                                        <Icon.CircleFill color="#589BBC" />
+                                    )}
+                                </td>
+                                <td>{el.date_created}</td>
+                                <td>{el.category}</td>
+                                <td>{el.workcenter}</td>
 
-                            <td>
-                                {el.correctiveActions ? (
-                                    <Icon.CircleFill color="#60BC58"/>
-                                ) : (
-                                    <Icon.Circle color="#60BC58"/>
-                                )}
-                            </td>
-                        </tr>
-                    ))}
+                                <td>
+                                    {el.correctiveActions ? (
+                                        <Icon.CircleFill color="#60BC58" />
+                                    ) : (
+                                        <Icon.Circle color="#60BC58" />
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
 
@@ -200,6 +201,18 @@ const Tickets = () => {
                     <div className="modal-dialog modal-dialog-centered modal-lg">
                         <div className="modal-content modalbgc border-radius">
                             <div className="modal-header border-radius">
+                                <div className="title title-modal">
+                                    <div className="mt-1">
+                                        <img src={health} alt="health" />
+                                    </div>
+                                    <h2 className="title-text-form title-text colorTextLightGray text-center">
+                                        {selectedTicket === "Accident"
+                                            ? "Accident"
+                                            : selectedTicket === "Nearmiss"
+                                            ? "Nearmiss"
+                                            : "PossibleAccident"}
+                                    </h2>
+                                </div>
                                 <button
                                     type="button"
                                     className="btn-close btn-close-modal btn-close-white"
@@ -210,11 +223,11 @@ const Tickets = () => {
                             </div>
                             <div className="modal-body ">
                                 {selectedTicket === "Accident" ? (
-                                    <Accident selectedTicketData={selectedTicketData}/>
+                                    <Accident selectedTicketData={selectedTicketData} />
                                 ) : selectedTicket === "Nearmiss" ? (
-                                    <Nearmiss selectedTicketData={selectedTicketData}/>
+                                    <Nearmiss selectedTicketData={selectedTicketData} />
                                 ) : (
-                                    <PossibleAccident/>
+                                    <PossibleAccident />
                                 )}
                             </div>
                         </div>
