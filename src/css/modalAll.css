@@ -439,12 +439,29 @@ input[type="file"] {
 
 .file-edit {
     align-items: baseline;
+    width: 200px;
+    height: 200px;
+    margin-top: 10px;
 }
 
 .text-position {
-    transform: translate3d(0, -2vh, 0);
+    transform: translate3d(0, -1vh, 0);
 }
 
 .modal-content {
     border-radius: 10px;
+}
+
+.corrective-actions-text {
+    font-size: 16px !important;
+    outline: none;
+    width: 100px;
+    text-justify: auto;
+    word-wrap: normal;
+    white-space: normal;
+    color: #e6e6e6;
+}
+.corrective-actions-circle {
+    width: 13px;
+    height: 13px;
 }

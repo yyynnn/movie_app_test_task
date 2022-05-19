@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.css";
 import { getWorkCenter, loadWorkCenter, getWorkCenterLoadingStatus } from "../../store/workCenter";
 import { getEmployee, loadEmployee, getEmployeeLoadingStatus } from "../../store/employee";
@@ -7,13 +7,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { createTicket, getError } from "../../store/tickets";
 import * as yup from "yup";
 import { Formik } from "formik";
-// import { getError } from "../../store/errors";
+
 import { Spinner } from "react-bootstrap";
 import * as bootstrap from "bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
 import imageCompression from "browser-image-compression";
 import { health, vectorPrev } from "../../img/indexImage";
+import CorrectiveActions from "./CorrectiveActions";
 
 const Nearmiss = ({ selectedTicketData }) => {
     // console.log(selectedTicketData);
@@ -42,7 +43,7 @@ const Nearmiss = ({ selectedTicketData }) => {
               correction: selectedTicketData.correction,
               damaged_item: selectedTicketData.damaged_item,
 
-              corrective_actions: selectedTicketData.corrective_actions
+              corrective_actions: selectedTicketData.corrective_action
           }
         : {
               date_created: "",
@@ -108,14 +109,14 @@ const Nearmiss = ({ selectedTicketData }) => {
                 if (selectedTicketData) {
                     console.log({
                         rootcause: formData.rootcause,
-                        corrective_actions: formData.corrective_actions
+                        corrective_actions: selectedTicketData.corrective_actions,
+                        ticketId: selectedTicketData.id
                     });
                 } else {
-                    //console.log(preparedData);
+                    console.log(formData);
                     dispatch(createTicket({ ...preparedData }));
                 }
-                //
-                //
+
                 handleCloseModal();
             }
         };
@@ -314,19 +315,11 @@ const Nearmiss = ({ selectedTicketData }) => {
                                 ) : (
                                     <div className="wrap-file wrap-edit">
                                         <div className="mt-4">
-                                            <label className="file d-flex file-edit">
+                                            <label className="d-flex file-edit">
                                                 <input
                                                     name="selectedFile"
                                                     className="cursor-pointer "
                                                     type="file"
-                                                    value=""
-                                                    onChange={(event) => {
-                                                        convertFile(event);
-                                                        setFieldValue(
-                                                            "selectedFile",
-                                                            event.target.files[0].name
-                                                        );
-                                                    }}
                                                 />
                                                 {values.selectedFile && (
                                                     <img
@@ -363,8 +356,10 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                     </p>
                                                 )}
                                             </div>
-                                            <div className="d-flex flex-column textarea ">
-                                                <span className="text-position">
+                                            <div className="d-flex flex-column">
+                                                <CorrectiveActions />
+
+                                                {/* <span className="text-position">
                                                     Corrective action:
                                                 </span>
                                                 <textarea
@@ -385,12 +380,7 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                     )}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                />
-                                                {errors.correction && touched.correction && (
-                                                    <p className="error mt-1">
-                                                        {errors.correction}
-                                                    </p>
-                                                )}
+                                                /> */}
                                             </div>
                                         </div>
                                     </div>
