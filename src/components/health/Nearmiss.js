@@ -7,18 +7,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { createTicket, getError } from "../../store/tickets";
 import * as yup from "yup";
 import { Formik } from "formik";
-
+import * as Icon from "react-bootstrap-icons";
 import { Spinner } from "react-bootstrap";
 import * as bootstrap from "bootstrap";
 import "../../css/button.css";
 import "../../css/modalAll.css";
 import imageCompression from "browser-image-compression";
 import { health, vectorPrev } from "../../img/indexImage";
-import CorrectiveActions from "./CorrectiveActions";
+import CorrectiveAction from "./CorrectiveAction";
 
 const Nearmiss = ({ selectedTicketData }) => {
     // console.log(selectedTicketData);
-
+    const [correctiveActions, setCorrectiveActions] = useState([
+        { description: "", name: "", date: "" }
+    ]);
     const [selectedFile, setSelectedFile] = useState("");
     const workCenter = useSelector(getWorkCenter());
     const employee = useSelector(getEmployee());
@@ -109,9 +111,10 @@ const Nearmiss = ({ selectedTicketData }) => {
                 if (selectedTicketData) {
                     console.log({
                         rootcause: formData.rootcause,
-                        corrective_actions: selectedTicketData.corrective_actions,
+                        corrective_actions: correctiveActions,
                         ticketId: selectedTicketData.id
                     });
+                    setCorrectiveActions([{ description: "", name: "", date: "" }]);
                 } else {
                     console.log(formData);
                     dispatch(createTicket({ ...preparedData }));
@@ -142,6 +145,32 @@ const Nearmiss = ({ selectedTicketData }) => {
     if (error) {
         return <p>{error}</p>;
     }
+
+    const handleChangeInput = (index, event) => {
+        const values = [...correctiveActions];
+
+        if (event.target.name === "corrective_actions_name") {
+            values[index].name = event.target.value;
+        }
+        if (event.target.name === "corrective_actions_descr") {
+            values[index].description = event.target.value;
+        }
+        if (event.target.name === "corrective_actions_date") {
+            values[index].date = event.target.value;
+        }
+
+        setCorrectiveActions(values);
+    };
+    const handlePlus = (e) => {
+        e.preventDefault();
+        setCorrectiveActions([...correctiveActions, { description: "", name: "", date: "" }]);
+    };
+    const handleMinus = (index, event) => {
+        event.preventDefault();
+        const values = [...correctiveActions];
+        values.splice(index, 1);
+        setCorrectiveActions(values);
+    };
 
     return (
         <div className="col-lg-12 mx-auto wrap">
@@ -357,30 +386,25 @@ const Nearmiss = ({ selectedTicketData }) => {
                                                 )}
                                             </div>
                                             <div className="d-flex flex-column">
-                                                <CorrectiveActions />
-
-                                                {/* <span className="text-position">
-                                                    Corrective action:
-                                                </span>
-                                                <textarea
-                                                    type="text"
-                                                    raws="5"
-                                                    autoComplete="off"
-                                                    placeholder="Corrective action..."
-                                                    className="corrective-action p-2"
-                                                    name="corrective_action"
-                                                    // value={
-                                                    //     values.corrective_actions > 0
-                                                    //         ? values.corrective_actions[0]
-                                                    //               .corrective_action
-                                                    //         : values.corrective_actions
-                                                    // }
-                                                    value={values.corrective_actions?.map(
-                                                        (a) => a.corrective_action
-                                                    )}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                /> */}
+                                                <div className="d-flex mb-2 justify-content-around">
+                                                    <div>Corrective actions</div>
+                                                    <div>Responsible</div>
+                                                    <div>Due Date</div>
+                                                    <div></div>
+                                                </div>
+                                                {correctiveActions.map((action, index) => (
+                                                    <CorrectiveAction
+                                                        key={index}
+                                                        correctiveAction={action}
+                                                        handleChangeInput={(event) =>
+                                                            handleChangeInput(index, event)
+                                                        }
+                                                        handlePlus={handlePlus}
+                                                        handleMinus={(event) =>
+                                                            handleMinus(index, event)
+                                                        }
+                                                    />
+                                                ))}
                                             </div>
                                         </div>
                                     </div>

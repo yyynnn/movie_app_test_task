@@ -44,6 +44,33 @@
     background: #c4c4c4;
     border-radius: 20px;
 }
+.buttonCorrective {
+    margin: auto;
+    width: 15px;
+    height: 20px;
+    background: #c4c4c4;
+    border: none;
+    padding: 0.2rem;
+}
+.buttonCorrective:hover {
+    opacity: 0.8;
+    transition: 0.8s;
+    background: #c4c4c4;
+}
+.buttonCorrectiveText {
+    color: black;
+    text-align: center;
+    margin-top: -6px;
+    margin-left: -1px;
+}
+.buttonCorrective:hover {
+    opacity: 0.8;
+    transition: 0.8s;
+    background: #c4c4c4;
+}
+.buttonCorrectiveText:hover {
+    color: white;
+}
 
 @media (max-width: 960px) {
     .button {

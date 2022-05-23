@@ -68,7 +68,9 @@ const Accident = ({ selectedTicketData }) => {
     });
 
     function handleCloseModal() {
-        const elementModal = document.getElementById("accident");
+        const elementModal = document.getElementById(
+            selectedTicketData ? "ticketModal" : "accident"
+        );
         const modal = bootstrap.Modal.getInstance(elementModal);
         modal.hide();
         setSelectedFile("");
