@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
     employee: employeeReducer
 });
 
-function createStore() {
+export function createStore() {
     return configureStore({
         reducer: rootReducer
     });

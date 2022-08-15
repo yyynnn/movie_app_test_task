@@ -392,6 +392,9 @@ input[type="file"] {
     .modal-dialog {
         max-width: 1120px;
     }
+    .modal-dialog-login {
+        max-width: 500px;
+    }
 }
 
 .wrap-edit {
@@ -464,4 +467,45 @@ input[type="file"] {
 .corrective-actions-circle {
     width: 13px;
     height: 13px;
+}
+
+.loginInput {
+    border-bottom: 1px solid #e6e6e6;
+    border-top-color: #4a555e;
+    border-left-color: #4a555e;
+    border-right-color: #4a555e;
+    width: 300px !important;
+    height: 50px !important;
+    text-align: start !important;
+    background-color: #4a555e;
+    font-size: 20px !important;
+    color: #e6e6e6;
+}
+.loginInput:focus {
+    border-bottom: 1px solid #e6e6e6;
+    border-top-color: #4a555e;
+    border-left-color: #4a555e;
+    border-right-color: #4a555e;
+    outline: none;
+    background-color: #4a555e;
+    font-family: "HelveticaNeueUL", serif;
+    box-shadow: none;
+    color: #e6e6e6;
+    font-size: 20px !important;
+}
+.loginForm {
+    padding-top: 20px;
+}
+
+.loginIcon {
+    width: 30px;
+    height: 30px;
+}
+.loginLabel {
+    font-family: "HelveticaNeueUL", serif;
+    font-weight: 500;
+    font-size: 20px;
+}
+.passwordInputWidth {
+    width: 265px !important;
 }

@@ -7,13 +7,19 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 import "./css/font/fonts.css";
 
+import { createStore } from "./store/store";
+import { Provider } from "react-redux";
+
 const history = createBrowserHistory();
+const store = createStore();
 
 ReactDOM.render(
-	<React.StrictMode>
-		<Router history={history}>
-			<App />
-		</Router>
-	</React.StrictMode>,
-	document.getElementById("root")
+    <React.StrictMode>
+        <Router history={history}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </Router>
+    </React.StrictMode>,
+    document.getElementById("root")
 );

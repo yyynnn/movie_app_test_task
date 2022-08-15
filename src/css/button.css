@@ -71,6 +71,18 @@
 .buttonCorrectiveText:hover {
     color: white;
 }
+.buttonLogin {
+    width: 40px;
+    height: 40px;
+    background: hsla(0, 0%, 100%, 0.753);
+    border-radius: 10px;
+    border: none;
+}
+.buttonLogin:hover {
+    opacity: 0.8;
+    transition: 0.8s;
+    background: #c4c4c4;
+}
 
 @media (max-width: 960px) {
     .button {
