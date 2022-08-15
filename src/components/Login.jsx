@@ -89,7 +89,7 @@ const Login = () => {
                     const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
                         props;
                     return (
-                        <form className="" onSubmit={handleSubmit}>
+                        <form className="" onSubmit={handleSubmit} autoComplete="off">
                             <div className="d-flex justify-content-center align-items-center flex-column">
                                 <div className="form-floating loginForm mb-3">
                                     <input
