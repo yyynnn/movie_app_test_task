@@ -74,9 +74,19 @@
 .buttonLogin {
     width: 40px;
     height: 40px;
-    background: hsla(0, 0%, 100%, 0.753);
+    background: #c4c4c4;
     border-radius: 10px;
     border: none;
+}
+.buttonLoginColor {
+    background: #78786f !important;
+}
+.buttonLoginTextColor {
+    color: white;
+    font-family: "HelveticaNeueUL", serif;
+    letter-spacing: 3px;
+    width: 18rem;
+    height: 2.5rem;
 }
 .buttonLogin:hover {
     opacity: 0.8;

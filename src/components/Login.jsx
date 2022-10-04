@@ -134,7 +134,7 @@ const Login = () => {
                                         </label>
                                     </div>
                                     <button
-                                        className="buttonLogin"
+                                        className="buttonLogin buttonLoginColor"
                                         type="button"
                                         onClick={handleClickShowPassword}
                                     >
@@ -150,9 +150,12 @@ const Login = () => {
                                 <p className="">{errors.password}</p>
                             )}
 
-                            <div className="mb-2 text-center">
-                                <button className="button submmit" type="submit">
-                                    Login
+                            <div className="m-4 text-center">
+                                <button
+                                    className="button submmit buttonLoginColor buttonLoginTextColor"
+                                    type="submit"
+                                >
+                                    LOGIN
                                 </button>
                             </div>
                             {/* <GoogleLogin

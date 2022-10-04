@@ -15,7 +15,7 @@
     font-family: "HelveticaNeueUL";
     src: url("./HelveticaNeueCyr-UltraLight.woff2") format("woff2"),
         url("./HelveticaNeueCyr-UltraLight.woff") format("woff");
-    font-weight: 200;
+    font-weight: 300;
 }
 
 @font-face {

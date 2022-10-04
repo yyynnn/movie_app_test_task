@@ -41,15 +41,15 @@ const AppHeader = () => {
                                 </svg>
                             </button>
                             <div
-                                className="modal fade"
+                                className="modal fade modal-backdrop-bg"
                                 id="login"
                                 tabIndex="-1"
                                 aria-labelledby="modalLabel"
                                 aria-hidden="true"
                             >
-                                <div className="modal-dialog modal-dialog-centered modal-dialog-login">
+                                <div className="modal-dialog modal-dialog-centered modal-dialog-login ">
                                     <Container>
-                                        <div className="modal-content modalbgc">
+                                        <div className="modal-content modal-content-bg">
                                             <div className="modal-header">
                                                 {/* <div className="title title-modal">
                                                     <h2 className="title-text-form title-text colorTextLightGray text-center">

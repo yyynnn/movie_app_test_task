@@ -362,7 +362,7 @@ input[type="file"] {
 
 .modal-header .btn-close {
     padding: 0.5rem;
-    margin: 0;
+
     position: absolute;
     right: 1rem;
     top: 1rem;
@@ -393,7 +393,7 @@ input[type="file"] {
         max-width: 1120px;
     }
     .modal-dialog-login {
-        max-width: 500px;
+        max-width: 400px;
     }
 }
 
@@ -470,24 +470,24 @@ input[type="file"] {
 }
 
 .loginInput {
-    border-bottom: 1px solid #e6e6e6;
-    border-top-color: #4a555e;
-    border-left-color: #4a555e;
-    border-right-color: #4a555e;
+    border-bottom: 1px solid #9fa3a2;
+    border-top-color: rgb(34, 41, 48, 0);
+    border-left-color: rgb(34, 41, 48, 0);
+    border-right-color: rgb(34, 41, 48, 0);
     width: 300px !important;
     height: 50px !important;
     text-align: start !important;
-    background-color: #4a555e;
+    background-color: rgb(34, 41, 48, 0);
     font-size: 20px !important;
     color: #e6e6e6;
 }
 .loginInput:focus {
-    border-bottom: 1px solid #e6e6e6;
-    border-top-color: #4a555e;
-    border-left-color: #4a555e;
-    border-right-color: #4a555e;
+    border-bottom: 1px solid #9fa3a2;
+    border-top-color: rgb(34, 41, 48, 0);
+    border-left-color: rgb(34, 41, 48, 0);
+    border-right-color: rgb(34, 41, 48, 0);
     outline: none;
-    background-color: #4a555e;
+    background-color: rgb(34, 41, 48, 0);
     font-family: "HelveticaNeueUL", serif;
     box-shadow: none;
     color: #e6e6e6;
@@ -500,12 +500,23 @@ input[type="file"] {
 .loginIcon {
     width: 30px;
     height: 30px;
+    color: #9fa3a2;
 }
 .loginLabel {
     font-family: "HelveticaNeueUL", serif;
     font-weight: 500;
     font-size: 20px;
+    color: #e6e6e6;
 }
 .passwordInputWidth {
     width: 265px !important;
+}
+
+.modal-backdrop-bg {
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(25px);
+}
+.modal-content-bg {
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 50px;
 }
