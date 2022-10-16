@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "useDefineForClassFields": true,
+      "lib": ["DOM", "DOM.Iterable", "ESNext"],
+      "allowJs": false,
+      "skipLibCheck": true,
+      "esModuleInterop": false,
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": true,
+      "jsx": "react-jsx",
+      "baseUrl": "./",
+      "paths": {
+        "react": ["node_modules/@types/react"],
+        "@heqs/heqs-ui-app/*": ["packages/heqs-ui-app/src/*"],
+        "@heqs/heqs-ui-app": ["packages/heqs-ui-app/src"],
+        "@heqs/heqs-ui-old-app/*": ["packages/heqs-ui-old-app/src/*"],
+        "@heqs/heqs-ui-old-app": ["packages/heqs-ui-old-app/src"],
+        "@heqs/uikit/*": ["packages/uikit/src/*"],
+        "@heqs/uikit": ["packages/uikit/src"]
+      }
+    },
+    "include": [
+      "packages/heqs-ui-old-app/**/*.ts",
+      "packages/heqs-ui-old-app/**/*.tsx",
+      "packages/heqs-ui-app/**/*.ts",
+      "packages/heqs-ui-app/**/*.tsx",
+      "packages/uikit/**/*.ts",
+      "packages/uikit/**/*.tsx"
+    ]
+  }
+  

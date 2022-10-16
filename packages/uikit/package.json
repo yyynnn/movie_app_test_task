@@ -1,0 +1,15 @@
+{
+  "name": "@heqs/uikit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "module": "src/index.tsx",
+  "license": "MIT",
+  "sideEffects": false,
+  "private": true,
+  "devDependencies": {
+    "@emotion/styled": "^11.3.0"
+  },
+  "peerDependencies": {
+    "@emotion/styled": "^11.3.0"
+  }
+}
