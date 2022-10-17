@@ -1,11 +1,14 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
+
 import { ROUTES } from '../../consts/routes'
+import { useLocalStorage } from '../../hooks/useLocalStorage'
 
 interface AuthContextType {
   user: any
+  token: string | null
   signin: (user: string, callback: VoidFunction) => void
-  signout: (callback: VoidFunction) => void
+  signout: (callback?: VoidFunction) => void
 }
 
 export const fakeAuthData = {
@@ -20,26 +23,29 @@ export const fakeAuthData = {
   }
 }
 
-let AuthContext = React.createContext<AuthContextType>(null!)
+const AuthContext = React.createContext<AuthContextType>(null!)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  let [user, setUser] = React.useState<any>(null)
+  const [user, setUser] = useLocalStorage('')
+  const [token, setToken] = useLocalStorage('token')
 
-  let signin = (newUser: string, callback: VoidFunction) => {
+  const signin = (newUser: string, callback: VoidFunction) => {
     return fakeAuthData.signin(() => {
       setUser(newUser)
+      setToken('faketoken')
       callback()
     })
   }
 
-  let signout = (callback: VoidFunction) => {
+  const signout = (callback?: VoidFunction) => {
     return fakeAuthData.signout(() => {
       setUser(null)
-      callback()
+      setToken('')
+      callback?.()
     })
   }
 
-  let value = { user, signin, signout }
+  const value = { user, signin, signout, token }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
@@ -49,10 +55,10 @@ export const useAuth = () => {
 }
 
 export function RequireAuth({ children }: { children: JSX.Element }) {
-  let auth = useAuth()
-  let location = useLocation()
+  const auth = useAuth()
+  const location = useLocation()
 
-  if (!auth.user) {
+  if (!auth.token) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience

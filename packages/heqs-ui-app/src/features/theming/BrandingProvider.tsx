@@ -17,7 +17,6 @@ interface BrandingProviderProps {
 }
 
 export default function BrandingProvider({ children, mode: modeProp }: BrandingProviderProps) {
-  const upperTheme = useTheme()
   const themeModeFromLF: 'light' | 'dark' = (localStorage.getItem('themeMode') as any) || 'dark'
   const [mode, setMode] = React.useState<PaletteMode>(modeProp || themeModeFromLF)
 

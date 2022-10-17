@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from '@emotion/styled'
 
 import { Flex, TFlexProps } from './Flex'
 
@@ -23,22 +23,18 @@ export type TPadProps = {
 }
 
 export const Pad = styled(Flex)<TFlexProps & TPadProps>`
-  ${({ pad, padding, padMobile, useMobile = true }) => {
+  ${({ pad, padding, padMobile, useMobile = false }) => {
     const data = pad || padding
     const padMobileFinal = padMobile || data
-    return css`
+    return `
       padding: ${data ? (typeof data === 'number' ? `${data}px` : data) : '20px'};
-      ${useMobile
-        ? `@media (max-width: 991px) {
-        padding: ${
-          data
-            ? typeof padMobileFinal === 'number'
-              ? `${padMobile || Number(data) / 2}px`
-              : neganteString(padMobileFinal)
-            : '20px'
-        };
+      ${
+        useMobile
+          ? `@media (max-width: 991px) {
+        padding: ${data ? (typeof padMobileFinal === 'number' ? `${padMobile || Number(data) / 2}px` : neganteString(padMobileFinal)) : '20px'};
       }`
-        : null}
+          : null
+      }
     `
   }};
 `

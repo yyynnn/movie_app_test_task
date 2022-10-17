@@ -34,6 +34,7 @@ module.exports = {
   plugins: ['simple-import-sort', 'prettier'],
   rules: {
     'max-len': ['error', { code: 200 }],
+    '@typescript-eslint/ban-ts-comment': 'off',
     'react/self-closing-comp': 'error',
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'react/react-in-jsx-scope': 'off',

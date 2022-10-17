@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "module": "src/index.tsx",
+  "files": [
+    "src"
+  ],
   "license": "MIT",
   "sideEffects": false,
   "private": true,

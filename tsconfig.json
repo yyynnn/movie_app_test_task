@@ -18,10 +18,6 @@
       "baseUrl": "./",
       "paths": {
         "react": ["node_modules/@types/react"],
-        "@heqs/heqs-ui-app/*": ["packages/heqs-ui-app/src/*"],
-        "@heqs/heqs-ui-app": ["packages/heqs-ui-app/src"],
-        "@heqs/heqs-ui-old-app/*": ["packages/heqs-ui-old-app/src/*"],
-        "@heqs/heqs-ui-old-app": ["packages/heqs-ui-old-app/src"],
         "@heqs/uikit/*": ["packages/uikit/src/*"],
         "@heqs/uikit": ["packages/uikit/src"]
       }
