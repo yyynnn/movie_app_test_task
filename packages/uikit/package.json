@@ -1,5 +1,5 @@
 {
-  "name": "@heqs/uikit",
+  "name": "@heqs-ui/uikit",
   "version": "1.0.0",
   "main": "index.js",
   "module": "src/index.tsx",

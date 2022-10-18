@@ -1,5 +1,5 @@
 {
-  "name": "@heqs/heqs-ui-app",
+  "name": "@heqs-ui/heqs-ui-app",
   "version": "1.0.0",
   "description": "form page",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@heqs/uikit": "1.0.0",
+    "@heqs-ui/uikit": "1.0.0",
     "@mui/material": "^5.10.9",
     "@mui/icons-material": "5.10.9",
     "@fontsource/plus-jakarta-sans": "4.5.10",

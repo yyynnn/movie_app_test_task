@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Flex, Pad, Spacer } from '@heqs/uikit'
+import { Flex, Pad, Spacer } from '@heqs-ui/uikit'
 import CloseRounded from '@mui/icons-material/CloseRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import { Button, Drawer, IconButton, Typography } from '@mui/material'

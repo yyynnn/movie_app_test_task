@@ -1,4 +1,4 @@
-import { Pad, Spacer } from '@heqs/uikit'
+import { Pad, Spacer } from '@heqs-ui/uikit'
 import { Paper, Typography } from '@mui/material'
 import { Col, Row } from 'react-grid-system'
 

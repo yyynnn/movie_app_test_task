@@ -1,5 +1,5 @@
 {
-    "name": "@heqs/heqs-ui-old-app",
+    "name": "@heqs-ui/heqs-ui-old-app",
     "version": "1.0.0",
     "private": true,
     "dependencies": {

@@ -1,5 +1,5 @@
 {
-  "name": "heqs",
+  "name": "heqs-ui",
   "version": "1.0.0",
   "description": "heqs monorepo",
   "private": true,
@@ -9,10 +9,10 @@
     ]
   },
   "scripts": {
-    "dev:old": "yarn workspace @heqs/heqs-ui-old-app start",
-    "dev:new": "yarn workspace @heqs/heqs-ui-app start",
-    "build:old": "yarn workspace @heqs/heqs-ui-old-app build",
-    "build:new": "yarn workspace @heqs/heqs-ui-app build"
+    "dev:old": "yarn workspace @heqs-ui/heqs-ui-old-app start",
+    "dev:new": "yarn workspace @heqs-ui/heqs-ui-app start",
+    "build:old": "yarn workspace @heqs-ui/heqs-ui-old-app build",
+    "build:new": "yarn workspace @heqs-ui/heqs-ui-app build"
   },
   "repository": {
     "type": "git",

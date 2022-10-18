@@ -16,7 +16,7 @@ import { ForgotPasswordPage } from './features/login/ForgotPasswordPage'
 import { LoginPage } from './features/login/LoginPage'
 import BrandingProvider from './features/theming/BrandingProvider'
 
-setConfiguration({ breakpoints: [576, 600, 900, 1200, 1600], containerWidths: [540, 740, 960, 1280, 1540, 1810] })
+setConfiguration({ breakpoints: [576, 600, 900, 1200, 1600], containerWidths: [540, 740, 1100, 1280, 1540, 1810] })
 
 export const App = () => {
   return (

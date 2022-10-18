@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Flex, Spacer } from '@heqs/uikit'
+import { Flex, Spacer } from '@heqs-ui/uikit'
 import { Alert, Button, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'

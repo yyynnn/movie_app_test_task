@@ -18,8 +18,8 @@
       "baseUrl": "./",
       "paths": {
         "react": ["node_modules/@types/react"],
-        "@heqs/uikit/*": ["packages/uikit/src/*"],
-        "@heqs/uikit": ["packages/uikit/src"]
+        "@heqs-ui/uikit/*": ["packages/uikit/src/*"],
+        "@heqs-ui/uikit": ["packages/uikit/src"]
       }
     },
     "include": [
