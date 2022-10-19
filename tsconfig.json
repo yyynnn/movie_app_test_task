@@ -17,18 +17,14 @@
       "jsx": "react-jsx",
       "baseUrl": "./",
       "paths": {
-        "react": ["node_modules/@types/react"],
-        "@heqs-ui/uikit/*": ["packages/uikit/src/*"],
-        "@heqs-ui/uikit": ["packages/uikit/src"]
+        "react": ["node_modules/@types/react"]
       }
     },
     "include": [
       "packages/heqs-ui-old-app/**/*.ts",
       "packages/heqs-ui-old-app/**/*.tsx",
       "packages/heqs-ui-app/**/*.ts",
-      "packages/heqs-ui-app/**/*.tsx",
-      "packages/uikit/**/*.ts",
-      "packages/uikit/**/*.tsx"
+      "packages/heqs-ui-app/**/*.tsx"
     ]
   }
   

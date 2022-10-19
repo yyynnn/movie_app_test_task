@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
-import { Flex, Spacer } from '@heqs-ui/uikit'
 import { Alert, Button, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
+import { Flex, Spacer } from '../../primitives'
 import { useAuth } from '../auth/AuthProvider'
 import { Logo } from '../navigation/Logo'
 
@@ -82,7 +82,7 @@ export const LoginPage = () => {
 }
 
 const Form = styled.form`
-  max-width: 380px;
+  max-width: 480px;
   width: 100%;
   margin: 0 auto;
 `

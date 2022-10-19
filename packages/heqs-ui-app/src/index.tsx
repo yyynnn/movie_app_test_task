@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom/client'
 import { setConfiguration } from 'react-grid-system'
 import { BrowserRouter, createBrowserRouter, Outlet, Route, Router, RouterProvider, Routes } from 'react-router-dom'
 
+import { BREAKPOINTS } from './consts/common'
 import { ROUTES } from './consts/routes'
 import { AuthProvider, RequireAuth } from './features/auth/AuthProvider'
 import { NotFound } from './features/errors/NotFound'
@@ -16,7 +17,7 @@ import { ForgotPasswordPage } from './features/login/ForgotPasswordPage'
 import { LoginPage } from './features/login/LoginPage'
 import BrandingProvider from './features/theming/BrandingProvider'
 
-setConfiguration({ breakpoints: [576, 600, 900, 1200, 1600], containerWidths: [540, 740, 1100, 1280, 1540, 1810] })
+setConfiguration({ gutterWidth: 20, breakpoints: BREAKPOINTS, containerWidths: [540, 740, 1100, 1280, 1540, 1810] })
 
 export const App = () => {
   return (
