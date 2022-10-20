@@ -1,8 +1,11 @@
+import axios from 'axios'
 import React from 'react'
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
+
+axios.defaults.baseURL = ''
 
 interface AuthContextType {
   user: any
@@ -28,6 +31,7 @@ const AuthContext = React.createContext<AuthContextType>(null!)
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useLocalStorage('')
   const [token, setToken] = useLocalStorage('token')
+  const navigate = useNavigate()
 
   const signin = (newUser: string, callback: VoidFunction) => {
     return fakeAuthData.signin(() => {
@@ -41,6 +45,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return fakeAuthData.signout(() => {
       setUser(null)
       setToken('')
+      navigate(ROUTES.LOGIN)
       callback?.()
     })
   }

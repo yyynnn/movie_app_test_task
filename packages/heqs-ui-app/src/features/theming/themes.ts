@@ -3,6 +3,8 @@ import ArrowDropDownRounded from '@mui/icons-material/ArrowDropDownRounded'
 import { alpha, createTheme, Theme, ThemeOptions } from '@mui/material/styles'
 import { deepmerge } from '@mui/utils'
 
+import { BREAKPOINTS } from '../../consts/common'
+
 declare module '@mui/material/styles/createPalette' {
   interface ColorRange {
     50: string
@@ -105,6 +107,16 @@ export const getMetaThemeColor = (mode: 'light' | 'dark') => {
 
 export const getDesignTokens = (mode: 'light' | 'dark') =>
   ({
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: BREAKPOINTS[1],
+        md: BREAKPOINTS[2],
+        lg: BREAKPOINTS[3],
+        xl: BREAKPOINTS[4],
+        xxl: BREAKPOINTS[5]
+      }
+    },
     palette: {
       primary: {
         ...blue,
@@ -190,7 +202,7 @@ export const getDesignTokens = (mode: 'light' | 'dark') =>
       }
     },
     shape: {
-      borderRadius: 50
+      borderRadius: 30
     },
     spacing: 10,
     typography: {
@@ -504,7 +516,7 @@ export function getThemedComponents(theme: Theme): { components: Theme['componen
             },
             '&.Mui-selected': {
               color: theme.palette.mode === 'dark' ? '#fff' : theme.palette.primary[500],
-              borderRadius: 50,
+              borderRadius: 30,
               border: '1px solid',
               borderColor: theme.palette.mode === 'dark' ? `${theme.palette.primary[700]} !important` : `${theme.palette.primary[500]} !important`,
               backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primaryDark[700] : theme.palette.primary[50],

@@ -4,7 +4,9 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { Button, Drawer, IconButton, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-grid-system'
+import { useNavigate } from 'react-router-dom'
 
+import { ROUTES } from '../../consts/routes'
 import { Flex, Pad, Spacer } from '../../primitives'
 import { Visibility } from '../../primitives/Visibility'
 import { useAuth } from '../auth/AuthProvider'
@@ -13,6 +15,7 @@ import { Logo } from './Logo'
 
 export const Navbar = () => {
   const auth = useAuth()
+  const navigate = useNavigate()
   const [drawerOpen, toggleDrawer] = useState(false)
 
   return (
@@ -21,7 +24,13 @@ export const Navbar = () => {
         <Row>
           <Col>
             <Pad padding={'40px 0'} alignItems="center" justifyContent="space-between">
-              {auth.token ? <Logo /> : <div />}
+              {auth.token ? (
+                <button onClick={() => navigate(ROUTES.HOME)}>
+                  <Logo />
+                </button>
+              ) : (
+                <div />
+              )}
               <Flex alignItems="center">
                 <Spacer width={10} />
                 <Visibility visibleAt={['md', 'lg', 'xl', 'xxl']}>
@@ -78,4 +87,6 @@ export const Navbar = () => {
   )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  width: 100%;
+`

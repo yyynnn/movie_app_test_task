@@ -13,7 +13,7 @@ export const HomePage = () => {
   return (
     <div>
       <Row>
-        <Col xl={6}>
+        <Col lg={6}>
           <Typography variant="h3">
             <b>Create ticket</b>
           </Typography>
@@ -34,7 +34,7 @@ export const HomePage = () => {
                 </Stack>
               </Card>
             </Col>
-            <Col xl={12}>
+            {/* <Col xl={12}>
               <Card heading="Enviornment" bgColor="#fff" bgColorDark="#0849ff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ENV.ACCIDENT.CREATE)}>
@@ -48,8 +48,8 @@ export const HomePage = () => {
                   </Button>
                 </Stack>
               </Card>
-            </Col>
-            <Col>
+            </Col> */}
+            {/* <Col>
               <Card heading="Quality" bgColor="#fff" bgColorDark="#0849ff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.QUALITY.AUDIT.CREATE)}>
@@ -63,10 +63,10 @@ export const HomePage = () => {
                   </Button>
                 </Stack>
               </Card>
-            </Col>
+            </Col> */}
           </Row>
         </Col>
-        <Col xl={6}>
+        <Col lg={6}>
           <Typography variant="h3">
             <b>Explore</b>
           </Typography>
