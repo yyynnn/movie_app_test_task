@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const jsonServer = require('json-server')
 const server = jsonServer.create()
 const middlewares = jsonServer.defaults({
-  static: './build'
+  static: './packages/heqs-ui-app/public'
 })
 
 const PORT = process.env.PORT || 3001
