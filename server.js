@@ -1,14 +1,22 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const jsonServer = require('json-server')
-const server = jsonServer.create()
-const middlewares = jsonServer.defaults({
-  static: './packages/heqs-ui-app/public'
+var express = require('express')
+var app = express()
+var fs = require('fs')
+
+app.set('port', 3000)
+app.use(express.static(__dirname + '/packages/heqs-ui-app/dist'))
+app.engine('html', require('ejs').renderFile)
+app.set('view engine', 'ejs')
+app.set('views', __dirname + '/packages/heqs-ui-app/dist')
+
+app.get('/', function (request, response) {
+  response.render('index.html')
 })
 
-const PORT = process.env.PORT || 3001
-
-server.use(middlewares)
-
-server.listen(PORT, () => {
-  console.log('Server is running')
+app.listen(app.get('port'), function () {
+  if (process.env.DYNO) {
+    console.log('This is on Heroku..!!')
+    fs.openSync('/tmp/app-initialized', 'w')
+  }
+  console.log('Node app is running on port', app.get('port'))
 })
