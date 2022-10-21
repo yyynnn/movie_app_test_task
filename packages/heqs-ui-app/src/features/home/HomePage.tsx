@@ -66,7 +66,7 @@ export const HomePage = () => {
             </Col> */}
           </Row>
         </Col>
-        <Col lg={6}>
+        <Col lg={12}>
           <Typography variant="h3">
             <b>Explore</b>
           </Typography>

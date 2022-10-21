@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "heqs monorepo",
   "private": true,
+  "engines": {
+    "node": "^16",
+    "yarn": "^1"
+  },
   "workspaces": {
     "packages": [
       "packages/*"

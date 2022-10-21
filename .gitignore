@@ -1,7 +1,6 @@
 .idea
 .git
 /site/__MACOSX/
-yarn.lock
 
 # dependencies
 /node_modules
