@@ -44,7 +44,7 @@ export const TicketConstructor = ({
     },
     onError: (error: any) => {
       console.log('🐸 Pepe said => error', error)
-      toast(`Network error: ${error.response.data.message}`)
+      toast.error(`Network error: ${error.response.data.message}`)
     }
   })
 
