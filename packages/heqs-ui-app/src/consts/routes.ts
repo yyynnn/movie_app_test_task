@@ -8,6 +8,7 @@ export const ROUTES = {
   KPI: '/kpi',
   WORKSTATIONS: '/workstations',
   ALL_CORRECTIVE_ACTIONS: '/all_corrective_actions',
+  TICKET_SUCCESS: '/ticket_success',
   ENV: {
     ACCIDENT: {
       CREATE: '/env/accident/create'

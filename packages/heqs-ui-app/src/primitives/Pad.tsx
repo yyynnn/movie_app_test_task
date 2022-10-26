@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 import { Flex, TFlexProps } from './Flex'
 
-const neganteString = (str: string | undefined) =>
+const negateString = (str: string | undefined) =>
   str
     ? str
         .split('px')
@@ -31,7 +31,7 @@ export const Pad = styled(Flex)<TFlexProps & TPadProps>`
       ${
         useMobile
           ? `@media (max-width: 991px) {
-        padding: ${data ? (typeof padMobileFinal === 'number' ? `${padMobile || Number(data) / 2}px` : neganteString(padMobileFinal)) : '20px'};
+        padding: ${data ? (typeof padMobileFinal === 'number' ? `${padMobile || Number(data) / 2}px` : negateString(padMobileFinal)) : '20px'};
       }`
           : null
       }

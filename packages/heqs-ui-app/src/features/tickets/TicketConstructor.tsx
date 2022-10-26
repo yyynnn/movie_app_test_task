@@ -1,65 +1,103 @@
 import styled from '@emotion/styled'
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
-import { Badge, Breadcrumbs, Button, Divider, FormControl, Icon, IconButton, InputLabel, LinearProgress, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material'
-import { TimePicker } from '@mui/x-date-pickers'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LoadingButton } from '@mui/lab'
+import { Alert, AlertTitle, Badge, Breadcrumbs, Button, Divider, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material'
+import { DatePicker, TimePicker } from '@mui/x-date-pickers'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
-import dayjs, { Dayjs } from 'dayjs'
+import imageCompression from 'browser-image-compression'
 import React, { useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Col, Row } from 'react-grid-system'
-import { Link } from 'react-router-dom'
+import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
+import { Link, useNavigate } from 'react-router-dom'
 
+import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
+import { useBasicMutation } from '../../hooks/useBasicMutation'
+import { useBasicQuery } from '../../hooks/useBasicQuery'
 import { Flex, Pad, Spacer } from '../../primitives'
 import { LinearProgressBuffer } from '../../primitives/LinearProgressBuffer'
+import { Employees, Tickets, Workcenters } from '../../types/api'
+import { convertToBase64 } from '../../utils'
 
-export const TicketConstructor = ({ heading = 'Ticket', hasTime = true, hasDate = true, hasForeman = true, hasDamagedItem = true, hasShortDescription = true, hasComment = true }) => {
-  // form
-  const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()))
-  const [files, setFiles] = useState([])
-  const formRef = useRef()
-
-  const { getRootProps, getInputProps, isDragAccept, ...props } = useDropzone({
-    onDrop: (acceptedFiles: any) => {
-      setFiles(
-        acceptedFiles.map((file: any) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file)
-          })
-        )
-      )
+export const TicketConstructor = ({
+  heading = 'Ticket',
+  ticketType = '',
+  hasTime = true,
+  hasDate = true,
+  hasForeman = true,
+  hasWorkscenter = true,
+  hasDamagedItem = true,
+  hasShortDescription = false
+}) => {
+  const {
+    mutate: addTicket,
+    isLoading: isAddingTicket,
+    isError: ticketAdditionError
+  } = useBasicMutation<any>({
+    apiPath: API.MUTATE.ADD_TICKET,
+    onSuccess: () => {
+      navigate(ROUTES.TICKET_SUCCESS)
     },
-    accept: { 'image/*': ['.jpeg', '.png'] },
+    onError: (error: any) => {
+      console.log('🐸 Pepe said => error', error)
+      toast(`Network error: ${error.response.data.message}`)
+    }
+  })
+
+  const { data: employees } = useBasicQuery<Employees>({
+    apiPath: API.GET.EMPLOYEES
+  })
+
+  const { data: workcenters } = useBasicQuery<Workcenters>({
+    apiPath: API.GET.WORK_CENTERS
+  })
+
+  const { handleSubmit, control, formState, getValues, watch, setValue } = useForm()
+  const navigate = useNavigate()
+  const { getRootProps, getInputProps } = useDropzone({
+    onDropAccepted: async (acceptedFiles: any) => {
+      const compressedFile = await imageCompression(acceptedFiles[0], {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1024,
+        useWebWorker: true
+      })
+      const pic = await convertToBase64(compressedFile)
+
+      setValue('photo', pic, { shouldValidate: true })
+      setValue('selectedFile', acceptedFiles[0].name, { shouldValidate: true })
+    },
+    accept: { 'image/*': ['.jpeg', '.png', '.jpg'] },
     multiple: false,
     disabled: false
   })
 
-  const handleChange = (newValue: Dayjs | null) => {
-    setValue(newValue)
-  }
-
   const removeAllFiles = (e: any) => {
     e.stopPropagation()
-
-    setFiles([])
+    setValue('photo', null, { shouldValidate: true })
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    const formData = new FormData(event.currentTarget)
-    console.log('🐸 Pepe said => handleSubmit => formData', formData.getAll('foreman'))
+  const onSubmit = (data: any) => {
+    addTicket({
+      data: {
+        ...data,
+        ticket_class_id: 2,
+        ticket_category_id: 6,
+        foreman: employees?.find((employee) => employee.id === data.foreman_id)?.name,
+        workcenter: workcenters?.find((employee) => employee.id === data.workcenter_id)?.number
+      }
+    })
   }
 
-  const fileReady = !!files[0]
-  // const fileReady = true
+  const errors = formState.errors
+  const formValues = getValues()
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <form onSubmit={handleSubmit}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <form>
         <Typography variant="h4">
           <b>{heading}</b>
         </Typography>
@@ -72,85 +110,181 @@ export const TicketConstructor = ({ heading = 'Ticket', hasTime = true, hasDate 
         <Spacer space={50} />
 
         <Stack direction={{ md: 'column', lg: 'row' }} divider={<Divider orientation="vertical" flexItem />} spacing={{ xs: 1, sm: 1, md: 1, lg: 2 }}>
-          {hasDate && <MobileDatePicker label="Date mobile" inputFormat="MM/DD/YYYY" value={value} onChange={handleChange} renderInput={(params) => <TextField {...params} fullWidth />} />}
-          {hasTime && <TimePicker label="Time" value={value} onChange={handleChange} renderInput={(params) => <TextField {...params} fullWidth />} />}
-          {hasForeman && (
-            <FormControl fullWidth>
-              <InputLabel id="foreman-label">Foreman</InputLabel>
-              <Select labelId="foreman-label" id="foreman" name="foreman" label="Foreman">
-                <MenuItem value={'Vasya'}>Vasya</MenuItem>
-                <MenuItem value={'Lesha'}>Lesha</MenuItem>
-                <MenuItem value={'Cherep'}>Cherep</MenuItem>
-              </Select>
-            </FormControl>
+          {hasDate && (
+            <Controller
+              control={control}
+              name="date_created"
+              rules={{ required: 'Ошибка' }}
+              render={({ field: { onChange, ref, value, name } }) => {
+                return (
+                  <DatePicker
+                    ref={ref}
+                    label="Date"
+                    value={value || ''}
+                    onChange={onChange}
+                    renderInput={(params) => {
+                      return <TextField {...params} error={!!errors[name]} fullWidth />
+                    }}
+                  />
+                )
+              }}
+            />
           )}
-          {hasForeman && (
-            <FormControl fullWidth>
-              <InputLabel id="workcenter-label">Workcenter</InputLabel>
-              <Select labelId="workcenter-label" id="workcenter" name="workcenter" label="Workcenter">
-                <MenuItem value={'C101'}>C101</MenuItem>
-                <MenuItem value={'C911'}>C911</MenuItem>
-                <MenuItem value={'C666'}>C666</MenuItem>
-              </Select>
-            </FormControl>
+
+          {hasTime && (
+            <Controller
+              control={control}
+              name="time_created"
+              rules={{ required: 'Ошибка' }}
+              render={({ field: { onChange, ref, value, name } }) => {
+                return <TimePicker label="Time" value={value || ''} onChange={onChange} renderInput={(params) => <TextField {...params} error={!!errors[name]} fullWidth />} />
+              }}
+            />
           )}
-          {hasDamagedItem && <TextField name="damagedItem" fullWidth label="Damaged Item" />}
-          {hasShortDescription && <TextField name="shortDescription" fullWidth label="Short description" />}
+
+          {hasForeman && (
+            <Controller
+              control={control}
+              name="foreman_id"
+              rules={{ required: 'Ошибка' }}
+              render={({ field: { onChange, ref, value, name } }) => {
+                return (
+                  <FormControl fullWidth>
+                    <InputLabel id="foreman-label">Foreman</InputLabel>
+                    <Select value={value || ''} onChange={onChange} labelId="foreman-label" label="Foreman" error={!!errors[name]}>
+                      {employees?.map((employee) => {
+                        return (
+                          //@ts-ignore - necessary to load object into value
+                          <MenuItem key={employee.id} value={employee.id}>
+                            {employee.name + ' ' + employee.surname}
+                          </MenuItem>
+                        )
+                      })}
+                    </Select>
+                  </FormControl>
+                )
+              }}
+            />
+          )}
+
+          {hasWorkscenter && (
+            <Controller
+              control={control}
+              name="workcenter_id"
+              rules={{ required: 'Ошибка' }}
+              render={({ field: { onChange, ref, value, name } }) => {
+                return (
+                  <FormControl fullWidth>
+                    <InputLabel id="workcenter-label">Workcenter</InputLabel>
+                    <Select value={value || ''} onChange={onChange} labelId="workcenter-label" label="Workcenter" error={!!errors[name]}>
+                      {workcenters?.map((workcenter) => {
+                        return (
+                          //@ts-ignore - necessary to load object into value
+                          <MenuItem key={workcenter.id} value={workcenter.id}>
+                            {workcenter.name}
+                          </MenuItem>
+                        )
+                      })}
+                    </Select>
+                  </FormControl>
+                )
+              }}
+            />
+          )}
+
+          {hasDamagedItem && (
+            <Controller
+              control={control}
+              name="damaged_item"
+              rules={{ required: 'Ошибка' }}
+              render={({ field: { onChange, ref, value, name } }) => {
+                return <TextField onChange={onChange} value={value} fullWidth label="Damaged Item" error={!!errors[name]} />
+              }}
+            />
+          )}
+
+          {hasShortDescription && (
+            <Controller
+              control={control}
+              name="correction"
+              rules={{ required: 'Ошибка' }}
+              render={({ field: { onChange, ref, value, name } }) => {
+                return <TextField onChange={onChange} value={value} fullWidth label="Short description" error={!!errors[name]} />
+              }}
+            />
+          )}
         </Stack>
         <Spacer />
 
         <Row>
           <Col md={6}>
-            <DropzoneWrapper variant="outlined">
-              <Pad>
-                <Dropzone
-                  {...getRootProps({
-                    //+ converts true -> 1, false -> 0
-                    accepted: +isDragAccept,
-                    disabled: false
-                  })}
-                >
-                  <div>
-                    <input {...getInputProps()} />
-                    {fileReady ? (
-                      <div>
-                        {(files as any).map((file: any) => (
-                          <DropzoneThumb key={file.name}>
-                            <LinearProgressBuffer />
-                            <IconWrapper>
-                              <Button color="error" variant="contained" onClick={removeAllFiles}>
-                                <DeleteForeverRoundedIcon />
-                              </Button>
-                            </IconWrapper>
-                            <img src={file.preview} alt={file.name} />
-                          </DropzoneThumb>
-                        ))}
-                      </div>
-                    ) : (
-                      <Flex justifyContent="center" alignItems="center">
-                        <UploadFileRoundedIcon />
-                        <Spacer width={10} />
-                        <Typography variant="h6">Click or drag to upload</Typography>
-                      </Flex>
-                    )}
-                  </div>
-                </Dropzone>
-              </Pad>
-            </DropzoneWrapper>
+            <Controller
+              name="photo"
+              rules={{ required: 'Ошибка' }}
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, ref, value, name } }) => {
+                return (
+                  <DropzoneWrapper variant="outlined">
+                    <Pad>
+                      <Dropzone {...getRootProps()}>
+                        <div>
+                          <input type="text" {...getInputProps()} name={name} />
+                          {formValues.photo ? (
+                            <div>
+                              <DropzoneThumb>
+                                <LinearProgressBuffer />
+                                <IconWrapper>
+                                  <Button color="error" variant="contained" onClick={removeAllFiles}>
+                                    <DeleteForeverRoundedIcon />
+                                  </Button>
+                                </IconWrapper>
+                                <img src={formValues.photo} alt="thumb" />
+                              </DropzoneThumb>
+                            </div>
+                          ) : (
+                            <Flex justifyContent="center" alignItems="center">
+                              <UploadFileRoundedIcon />
+                              <Spacer width={10} />
+                              <Typography variant="h6">Click or drag to upload</Typography>
+                            </Flex>
+                          )}
+                        </div>
+                      </Dropzone>
+                    </Pad>
+                  </DropzoneWrapper>
+                )
+              }}
+            />
+
             <Spacer />
           </Col>
           <Col md={6}>
-            <div>{hasComment && <TextField fullWidth name="comment" label="Comment" multiline rows={16} defaultValue="" />}</div>
+            {!hasShortDescription && (
+              <Controller
+                control={control}
+                name="correction"
+                rules={{ required: 'Ошибка' }}
+                render={({ field: { onChange, ref, value, name } }) => {
+                  return <TextField onChange={onChange} value={value} fullWidth label="Correction" error={!!errors[name]} multiline rows={16} defaultValue="" />
+                }}
+              />
+            )}
             <Spacer />
           </Col>
         </Row>
 
+        {!!Object.keys(errors).length && (
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            Please fill out these fields: {Object.keys(errors).join(', ')}
+          </Alert>
+        )}
+
         <Spacer />
-        <Flex justifyContent="center">
-          <Button fullWidth size="large" variant="contained" type="submit">
-            SUBMIT
-          </Button>
-        </Flex>
+        <LoadingButton loading={isAddingTicket} fullWidth size="large" variant="contained" onClick={handleSubmit((data) => onSubmit(data))}>
+          SUBMIT
+        </LoadingButton>
       </form>
     </LocalizationProvider>
   )

@@ -39,7 +39,7 @@ export const LinearProgressBuffer = () => {
 
   return loaded ? null : (
     <Box sx={{ width: '100%' }}>
-      <LinearProgress variant="buffer" value={progress} />
+      <LinearProgress variant="determinate" value={progress} />
     </Box>
   )
 }

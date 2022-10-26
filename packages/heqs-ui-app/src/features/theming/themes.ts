@@ -1,5 +1,6 @@
 // @ts-nocheck
 import ArrowDropDownRounded from '@mui/icons-material/ArrowDropDownRounded'
+import type {} from '@mui/lab/themeAugmentation'
 import { alpha, createTheme, Theme, ThemeOptions } from '@mui/material/styles'
 import { deepmerge } from '@mui/utils'
 

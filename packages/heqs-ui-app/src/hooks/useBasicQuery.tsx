@@ -16,7 +16,7 @@ export const useBasicQuery = <T,>({ apiPath, params = {}, options = {}, enabled,
   const { data: queryDataResp, ...queryRest } = useQuery(
     [apiPath],
     async () => {
-      const resp = await axios({ method: 'get', url: apiPath, params, ...rest })
+      const resp = await axios({ method: 'GET', url: apiPath, params, ...rest })
       return resp
     },
     { enabled: typeof enabled === 'boolean' ? enabled : !!token, ...options }
