@@ -10,7 +10,7 @@ import { ROUTES } from '../../consts/routes'
 import { Flex, Pad, Spacer } from '../../primitives'
 import { Visibility } from '../../primitives/Visibility'
 import { useAuth } from '../auth/AuthProvider'
-import { ThemeSwitcher } from '../theming/ThemeSwitcher'
+import { ThemeSwitcher } from '../themingAndStyling/ThemeSwitcher'
 import { Logo } from './Logo'
 
 export const Navbar = () => {

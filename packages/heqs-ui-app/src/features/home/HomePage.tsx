@@ -72,7 +72,7 @@ export const HomePage = () => {
           </Typography>
           <Spacer space={30} />
           <Row>
-            <Col xl={6}>
+            <Col md={6} xl={3}>
               <Card heading="All tickets" bgColor="#FF8A00" bgColorDark="#FF8A00">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={125} />
@@ -82,7 +82,7 @@ export const HomePage = () => {
                 </Stack>
               </Card>
             </Col>
-            <Col xl={6}>
+            <Col md={6} xl={3}>
               <Card heading="All corrective actions" bgColor="#ff606d" bgColorDark="#ff606d">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="error" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ALL_CORRECTIVE_ACTIONS)}>
@@ -91,24 +91,26 @@ export const HomePage = () => {
                 </Stack>
               </Card>
             </Col>
-            <Col xl={6}>
-              <Card heading="Workstations" bgColor="#005fff" bgColorDark="#005fff">
+            <Col md={6} xl={3}>
+              <Card fillHeight heading="Personal stats" bgColor="#005fff" bgColorDark="#005fff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.WORKSTATIONS)}>
+                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.PERSONAL_STATS)}>
                     Go
                   </Button>
                 </Stack>
               </Card>
             </Col>
-            <Col xl={6}>
-              <Card fillHeight={false} heading="Global KPI" bgColor="#005fff" bgColorDark="#005fff">
+            <Col md={6} xl={3}>
+              <Card fillHeight={true} heading="Global KPI" bgColor="#005fff" bgColorDark="#005fff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.GLOBAL_KPI)}>
                     Go
                   </Button>
                 </Stack>
               </Card>
-              <Card fillHeight={false} heading="KPI" bgColor="#005fff" bgColorDark="#005fff">
+            </Col>
+            <Col md={6} xl={6}>
+              <Card fillHeight={true} heading="KPI" bgColor="#005fff" bgColorDark="#005fff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.KPI)}>
                     Go
@@ -116,10 +118,11 @@ export const HomePage = () => {
                 </Stack>
               </Card>
             </Col>
-            <Col xl={12}>
-              <Card fillHeight={false} heading="Personal stats" bgColor="#005fff" bgColorDark="#005fff">
+
+            <Col md={6} xl={6}>
+              <Card heading="Workstations" bgColor="#005fff" bgColorDark="#005fff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.PERSONAL_STATS)}>
+                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.WORKSTATIONS)}>
                     Go
                   </Button>
                 </Stack>

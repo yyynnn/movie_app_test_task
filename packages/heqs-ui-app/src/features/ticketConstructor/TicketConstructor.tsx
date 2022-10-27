@@ -7,7 +7,7 @@ import { DatePicker, TimePicker } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import imageCompression from 'browser-image-compression'
-import React, { useRef, useState } from 'react'
+import React, { MouseEventHandler, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Col, Row } from 'react-grid-system'
 import { Controller, useForm } from 'react-hook-form'
@@ -25,19 +25,17 @@ import { convertToBase64 } from '../../utils'
 
 export const TicketConstructor = ({
   heading = 'Ticket',
-  ticketType = '',
+  ticketClass = 2,
+  ticketCategory = 6,
   hasTime = true,
   hasDate = true,
   hasForeman = true,
   hasWorkscenter = true,
   hasDamagedItem = true,
-  hasShortDescription = false
+  hasShortDescription = false,
+  readOnly = false
 }) => {
-  const {
-    mutate: addTicket,
-    isLoading: isAddingTicket,
-    isError: ticketAdditionError
-  } = useBasicMutation<any>({
+  const { mutate: addTicket, isLoading: isAddingTicket } = useBasicMutation<any>({
     apiPath: API.MUTATE.ADD_TICKET,
     onSuccess: () => {
       navigate(ROUTES.TICKET_SUCCESS)
@@ -75,7 +73,7 @@ export const TicketConstructor = ({
     disabled: false
   })
 
-  const removeAllFiles = (e: any) => {
+  const removeAllFiles: MouseEventHandler = (e) => {
     e.stopPropagation()
     setValue('photo', null, { shouldValidate: true })
   }
@@ -84,8 +82,8 @@ export const TicketConstructor = ({
     addTicket({
       data: {
         ...data,
-        ticket_class_id: 2,
-        ticket_category_id: 6,
+        ticket_class_id: ticketClass,
+        ticket_category_id: ticketCategory,
         foreman: employees?.find((employee) => employee.id === data.foreman_id)?.name,
         workcenter: workcenters?.find((employee) => employee.id === data.workcenter_id)?.number
       }
@@ -97,7 +95,7 @@ export const TicketConstructor = ({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <form>
+      <Form readOnly={readOnly}>
         <Typography variant="h4">
           <b>{heading}</b>
         </Typography>
@@ -208,7 +206,7 @@ export const TicketConstructor = ({
               control={control}
               name="correction"
               rules={{ required: 'Ошибка' }}
-              render={({ field: { onChange, ref, value, name } }) => {
+              render={({ field: { onChange, value, name } }) => {
                 return <TextField onChange={onChange} value={value} fullWidth label="Short description" error={!!errors[name]} />
               }}
             />
@@ -223,9 +221,9 @@ export const TicketConstructor = ({
               rules={{ required: 'Ошибка' }}
               control={control}
               defaultValue=""
-              render={({ field: { onChange, ref, value, name } }) => {
+              render={({ field: { name } }) => {
                 return (
-                  <DropzoneWrapper variant="outlined">
+                  <DropzoneWrapper variant="outlined" error={!!errors[name]}>
                     <Pad>
                       <Dropzone {...getRootProps()}>
                         <div>
@@ -265,7 +263,7 @@ export const TicketConstructor = ({
                 control={control}
                 name="correction"
                 rules={{ required: 'Ошибка' }}
-                render={({ field: { onChange, ref, value, name } }) => {
+                render={({ field: { onChange, value, name } }) => {
                   return <TextField onChange={onChange} value={value} fullWidth label="Correction" error={!!errors[name]} multiline rows={16} defaultValue="" />
                 }}
               />
@@ -282,18 +280,27 @@ export const TicketConstructor = ({
         )}
 
         <Spacer />
-        <LoadingButton loading={isAddingTicket} fullWidth size="large" variant="contained" onClick={handleSubmit((data) => onSubmit(data))}>
-          SUBMIT
-        </LoadingButton>
-      </form>
+
+        {!readOnly && (
+          <LoadingButton loading={isAddingTicket} fullWidth size="large" variant="contained" onClick={handleSubmit((data) => onSubmit(data))}>
+            SUBMIT
+          </LoadingButton>
+        )}
+      </Form>
     </LocalizationProvider>
   )
 }
 
-const DropzoneWrapper = styled(Paper)`
+const Form = styled.form<{ readOnly: boolean }>`
+  & * {
+    pointer-events: ${({ readOnly }) => (readOnly ? 'none' : '')};
+  }
+`
+
+const DropzoneWrapper = styled(Paper)<any>`
   height: 400px;
   width: 100%;
-  border: 1px solid #52729457;
+  border: ${({ error }) => (error ? `1px solid #ff0000` : `1px solid #52729457`)};
 
   & > * {
     height: 100%;

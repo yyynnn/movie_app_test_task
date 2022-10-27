@@ -5,7 +5,7 @@ import { Link, Outlet } from 'react-router-dom'
 import { Spacer } from '../../primitives'
 import { useAuth } from '../auth/AuthProvider'
 import { Navbar } from '../navigation/Navbar'
-import { ThemeSwitcher } from '../theming/ThemeSwitcher'
+import { ThemeSwitcher } from '../themingAndStyling/ThemeSwitcher'
 
 export const GlobalLayout = () => {
   const auth = useAuth()

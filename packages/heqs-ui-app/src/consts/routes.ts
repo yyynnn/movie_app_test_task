@@ -4,10 +4,10 @@ export const ROUTES = {
   LOGIN: '/login',
   PERSONAL_STATS: '/personal_stats',
   ALL_TICKETS: '/all_tickets',
+  ALL_CORRECTIVE_ACTIONS: '/all_corrective_actions',
   GLOBAL_KPI: '/global_kpi',
   KPI: '/kpi',
   WORKSTATIONS: '/workstations',
-  ALL_CORRECTIVE_ACTIONS: '/all_corrective_actions',
   TICKET_SUCCESS: '/ticket_success',
   ENV: {
     ACCIDENT: {

@@ -35,6 +35,7 @@ module.exports = {
   rules: {
     'max-len': ['error', { code: 200 }],
     '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'react/self-closing-comp': 'error',
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'react/react-in-jsx-scope': 'off',
