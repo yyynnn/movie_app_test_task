@@ -4,44 +4,37 @@ export const ROUTES = {
   LOGIN: '/login',
   PERSONAL_STATS: '/personal_stats',
   ALL_TICKETS: '/all_tickets',
+  TICKET: '/ticket/:id',
   ALL_CORRECTIVE_ACTIONS: '/all_corrective_actions',
   GLOBAL_KPI: '/global_kpi',
   KPI: '/kpi',
   WORKSTATIONS: '/workstations',
   TICKET_SUCCESS: '/ticket_success',
-  ENV: {
-    ACCIDENT: {
-      CREATE: '/env/accident/create'
-    },
-    NEAR_MISS: {
-      CREATE: '/env/miss/create'
-    },
-    POSIBLE_ACCIDENT: {
-      CREATE: '/env/posible_accident/create'
-    }
-  },
-  QUALITY: {
-    AUDIT: {
-      CREATE: '/quality/audit/create'
-    },
-    PRODUCT: {
-      CREATE: '/quality/product/create'
-    },
-    OTD: {
-      CREATE: '/quality/pootdsible_accident/create'
-    }
-  },
-  HEALTH: {
-    ACCIDENT: {
-      CREATE: '/health/accident/create'
-    },
-    NEAR_MISS: {
-      CREATE: '/health/miss/create'
-    },
-    POSIBLE_ACCIDENT: {
-      CREATE: '/health/posible_accident/create'
-    }
-  },
-
+  HEALTH_AND_SAFETY_ACCIDENT: '/health/accident/create',
+  HEALTH_AND_SAFETY_NEAR_MISS: '/health/near_miss/create',
+  HEALTH_AND_SAFETY_POSIBLE_ACCIDENT: '/health/posible_accident/create',
   FORGOT_PASSWORD: '/forgot'
 }
+
+// ENV: {
+//   ACCIDENT: {
+//     CREATE: '/env/accident/create'
+//   },
+//   NEAR_MISS: {
+//     CREATE: '/env/miss/create'
+//   },
+//   POSIBLE_ACCIDENT: {
+//     CREATE: '/env/posible_accident/create'
+//   }
+// },
+// QUALITY: {
+//   AUDIT: {
+//     CREATE: '/quality/audit/create'
+//   },
+//   PRODUCT: {
+//     CREATE: '/quality/product/create'
+//   },
+//   OTD: {
+//     CREATE: '/quality/pootdsible_accident/create'
+//   }
+// },

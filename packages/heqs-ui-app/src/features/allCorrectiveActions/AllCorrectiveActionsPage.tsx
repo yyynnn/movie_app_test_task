@@ -19,18 +19,6 @@ export const AllCorrectiveActionsPage = () => {
 
   return (
     <div>
-      <Typography variant="h4">
-        <b>All Corrective Actions</b>
-      </Typography>
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link color="inherit" to={ROUTES.HOME}>
-          Home
-        </Link>
-        <Typography color="text.primary">All corrective actions</Typography>
-      </Breadcrumbs>
-
-      <Spacer space={50} />
-
       <Wrapper>
         {tickets?.length ? (
           <DataGrid rows={tickets} columns={columns} pageSize={50} checkboxSelection disableSelectionOnClick experimentalFeatures={{ newEditingApi: true }} />

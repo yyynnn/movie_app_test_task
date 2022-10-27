@@ -22,13 +22,13 @@ export const HomePage = () => {
             <Col xl={12}>
               <Card heading="Occupational health and safety" bgColor="#fff" bgColorDark="#0849ff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH.ACCIDENT.CREATE)}>
+                  <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_ACCIDENT)}>
                     Accident
                   </Button>
-                  <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH.NEAR_MISS.CREATE)}>
+                  <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_NEAR_MISS)}>
                     Nearmiss
                   </Button>
-                  <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH.POSIBLE_ACCIDENT.CREATE)}>
+                  <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT)}>
                     Possible accident
                   </Button>
                 </Stack>

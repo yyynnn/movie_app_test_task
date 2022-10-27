@@ -24,6 +24,7 @@ import { LoginPage } from './features/login/LoginPage'
 import BrandingProvider from './features/themingAndStyling/BrandingProvider'
 import { TicketConstructor } from './features/ticketConstructor/TicketConstructor'
 import { TicketSuccess } from './features/ticketConstructor/TicketSuccess'
+import { routes } from './routes'
 
 setConfiguration({ gutterWidth: 20, breakpoints: BREAKPOINTS, containerWidths: [540, 740, 1100, 1280, 1540, 1810] })
 
@@ -34,75 +35,6 @@ const queryClient = new QueryClient({
     }
   }
 })
-
-const routes = [
-  {
-    element: <LoginPage />,
-    path: ROUTES.LOGIN,
-    privatePage: false,
-    featureActive: true
-  },
-  {
-    element: <ForgotPasswordPage />,
-    path: ROUTES.FORGOT_PASSWORD,
-    privatePage: false,
-    featureActive: true
-  },
-  {
-    element: <AllTicketsPage />,
-    path: ROUTES.ALL_TICKETS,
-    privatePage: true,
-    featureActive: true
-  },
-  {
-    element: <AllCorrectiveActionsPage />,
-    path: ROUTES.ALL_CORRECTIVE_ACTIONS,
-    privatePage: true,
-    featureActive: true
-  },
-  {
-    element: <TicketConstructor heading="Accident" hasShortDescription={false} />,
-    path: ROUTES.HEALTH.ACCIDENT.CREATE,
-    privatePage: true,
-    featureActive: false
-  },
-  {
-    element: <TicketConstructor heading="Nearmiss (Occupational health and safety)" hasShortDescription={false} />,
-    path: ROUTES.HEALTH.NEAR_MISS.CREATE,
-    privatePage: true,
-    featureActive: true
-  },
-  {
-    element: <TicketConstructor heading="Posible accident" hasShortDescription={false} />,
-    path: ROUTES.HEALTH.POSIBLE_ACCIDENT.CREATE,
-    privatePage: true,
-    featureActive: false
-  },
-  {
-    element: <ExampleFeaturePage />,
-    path: '/example',
-    privatePage: true,
-    featureActive: true
-  },
-  {
-    element: <TicketSuccess />,
-    path: ROUTES.TICKET_SUCCESS,
-    privatePage: true,
-    featureActive: true
-  },
-  {
-    element: <HomePage />,
-    path: ROUTES.HOME,
-    privatePage: true,
-    featureActive: true
-  },
-  {
-    element: <HomePage />,
-    path: ROUTES.ROOT,
-    privatePage: true,
-    featureActive: true
-  }
-]
 
 export const App = () => {
   return (

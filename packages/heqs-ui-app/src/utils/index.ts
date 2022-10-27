@@ -10,3 +10,10 @@ export const convertToBase64 = (file: Blob) => {
     }
   })
 }
+
+export const extractNumber = (string: string): number => {
+  const numArray = string.split('').map((item) => {
+    if (typeof +item === 'number' && !isNaN(+item)) return +item
+  })
+  return +numArray.join('')
+}

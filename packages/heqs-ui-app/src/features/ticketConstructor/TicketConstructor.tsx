@@ -20,10 +20,25 @@ import { useBasicMutation } from '../../hooks/useBasicMutation'
 import { useBasicQuery } from '../../hooks/useBasicQuery'
 import { Flex, Pad, Spacer } from '../../primitives'
 import { LinearProgressBuffer } from '../../primitives/LinearProgressBuffer'
-import { Employees, Tickets, Workcenters } from '../../types/api'
+import { Employees, Ticket, Tickets, Workcenters } from '../../types/api'
+import { RFCC } from '../../types/react'
 import { convertToBase64 } from '../../utils'
 
-export const TicketConstructor = ({
+type TicketConstructorType = {
+  heading?: string | undefined
+  ticketClass?: number | undefined
+  ticketCategory?: number | undefined
+  hasTime?: boolean | undefined
+  hasDate?: boolean | undefined
+  hasForeman?: boolean | undefined
+  hasWorkscenter?: boolean | undefined
+  hasDamagedItem?: boolean | undefined
+  hasShortDescription?: boolean | undefined
+  readOnly?: boolean | undefined
+  initialData?: any
+}
+
+export const TicketConstructor: RFCC<TicketConstructorType> = ({
   heading = 'Ticket',
   ticketClass = 2,
   ticketCategory = 6,
@@ -33,7 +48,8 @@ export const TicketConstructor = ({
   hasWorkscenter = true,
   hasDamagedItem = true,
   hasShortDescription = false,
-  readOnly = false
+  readOnly = false,
+  initialData
 }) => {
   const { mutate: addTicket, isLoading: isAddingTicket } = useBasicMutation<any>({
     apiPath: API.MUTATE.ADD_TICKET,
@@ -54,7 +70,9 @@ export const TicketConstructor = ({
     apiPath: API.GET.WORK_CENTERS
   })
 
-  const { handleSubmit, control, formState, getValues, watch, setValue } = useForm()
+  const { handleSubmit, control, formState, getValues, watch, setValue } = useForm({
+    defaultValues: initialData
+  })
   const navigate = useNavigate()
   const { getRootProps, getInputProps } = useDropzone({
     onDropAccepted: async (acceptedFiles: any) => {
@@ -95,18 +113,7 @@ export const TicketConstructor = ({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Form readOnly={readOnly}>
-        <Typography variant="h4">
-          <b>{heading}</b>
-        </Typography>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link color="inherit" to={ROUTES.HOME}>
-            Home
-          </Link>
-          <Typography color="text.primary">{heading}</Typography>
-        </Breadcrumbs>
-        <Spacer space={50} />
-
+      <Form $readOnly={readOnly}>
         <Stack direction={{ md: 'column', lg: 'row' }} divider={<Divider orientation="vertical" flexItem />} spacing={{ xs: 1, sm: 1, md: 1, lg: 2 }}>
           {hasDate && (
             <Controller
@@ -114,12 +121,11 @@ export const TicketConstructor = ({
               name="date_created"
               rules={{ required: 'Ошибка' }}
               render={({ field: { onChange, ref, value, name } }) => {
-                console.log('🐸 Pepe said => value', value)
                 return (
                   <DatePicker
                     ref={ref}
                     label="Date"
-                    value={value ? value.toISOString() : ''}
+                    value={value && typeof value !== 'string' ? value.toISOString() : value || ''}
                     onChange={onChange}
                     renderInput={(params) => {
                       return <TextField {...params} error={!!errors[name]} fullWidth />
@@ -136,7 +142,14 @@ export const TicketConstructor = ({
               name="time_created"
               rules={{ required: 'Ошибка' }}
               render={({ field: { onChange, ref, value, name } }) => {
-                return <TimePicker label="Time" value={value ? value.toTimeString() : ''} onChange={onChange} renderInput={(params) => <TextField {...params} error={!!errors[name]} fullWidth />} />
+                return (
+                  <TimePicker
+                    label="Time"
+                    value={value && typeof value !== 'string' ? value.toISOString() : value || ''}
+                    onChange={onChange}
+                    renderInput={(params) => <TextField {...params} error={!!errors[name]} fullWidth />}
+                  />
+                )
               }}
             />
           )}
@@ -217,48 +230,50 @@ export const TicketConstructor = ({
 
         <Row>
           <Col md={6}>
-            <Controller
-              name="photo"
-              rules={{ required: 'Ошибка' }}
-              control={control}
-              defaultValue=""
-              render={({ field: { name } }) => {
-                return (
-                  <DropzoneWrapper variant="outlined" error={!!errors[name]}>
-                    <Pad>
-                      <Dropzone {...getRootProps()}>
-                        <div>
-                          <input type="text" {...getInputProps()} name={name} />
-                          {formValues.photo ? (
-                            <div>
-                              <DropzoneThumb>
-                                <LinearProgressBuffer />
-                                <IconWrapper>
-                                  <Button color="error" variant="contained" onClick={removeAllFiles}>
-                                    <DeleteForeverRoundedIcon />
-                                  </Button>
-                                </IconWrapper>
-                                <img src={formValues.photo} alt="thumb" />
-                              </DropzoneThumb>
-                            </div>
-                          ) : (
-                            <Flex justifyContent="center" alignItems="center">
-                              <UploadFileRoundedIcon />
-                              <Spacer width={10} />
-                              <Typography variant="h6">Click or drag to upload</Typography>
-                            </Flex>
-                          )}
-                        </div>
-                      </Dropzone>
-                    </Pad>
-                  </DropzoneWrapper>
-                )
-              }}
-            />
+            {!readOnly && (
+              <Controller
+                name="photo"
+                rules={{ required: 'Ошибка' }}
+                control={control}
+                defaultValue=""
+                render={({ field: { name } }) => {
+                  return (
+                    <DropzoneWrapper variant="outlined" $haserrors={errors[name] ? 'true' : null}>
+                      <Pad>
+                        <Dropzone {...getRootProps()}>
+                          <div>
+                            <input type="text" {...getInputProps()} name={name} />
+                            {formValues.photo ? (
+                              <div>
+                                <DropzoneThumb>
+                                  <LinearProgressBuffer />
+                                  <IconWrapper>
+                                    <Button color="error" variant="contained" onClick={removeAllFiles}>
+                                      <DeleteForeverRoundedIcon />
+                                    </Button>
+                                  </IconWrapper>
+                                  <img src={formValues.photo} alt="thumb" />
+                                </DropzoneThumb>
+                              </div>
+                            ) : (
+                              <Flex justifyContent="center" alignItems="center">
+                                <UploadFileRoundedIcon />
+                                <Spacer width={10} />
+                                <Typography variant="h6">Click or drag to upload</Typography>
+                              </Flex>
+                            )}
+                          </div>
+                        </Dropzone>
+                      </Pad>
+                    </DropzoneWrapper>
+                  )
+                }}
+              />
+            )}
 
             <Spacer />
           </Col>
-          <Col md={6}>
+          <Col md={readOnly ? 12 : 6}>
             {!hasShortDescription && (
               <Controller
                 control={control}
@@ -292,16 +307,20 @@ export const TicketConstructor = ({
   )
 }
 
-const Form = styled.form<{ readOnly: boolean }>`
+const Form = styled.form<{ $readOnly: boolean }>`
   & * {
-    pointer-events: ${({ readOnly }) => (readOnly ? 'none' : '')};
+    pointer-events: ${({ $readOnly }) => ($readOnly ? 'none' : '')};
   }
 `
 
-const DropzoneWrapper = styled(Paper)<any>`
+const DropzoneWrapper = styled.div<any>`
   height: 400px;
   width: 100%;
-  border: ${({ error }) => (error ? `1px solid #ff0000` : `1px solid #52729457`)};
+  border: ${({ $haserrors }) => ($haserrors ? `1px solid #ff0000` : `1px solid #52729457`)};
+  border-radius: 30px;
+  :hover {
+    border: 1px solid ${({ theme }) => (theme.palette.mode === 'light' ? '#000' : '#fff')};
+  }
 
   & > * {
     height: 100%;

@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { Box, Breadcrumbs, CircularProgress, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
@@ -14,27 +14,27 @@ export const AllTicketsPage = () => {
   const { data: ticketList, isLoading } = useBasicQuery<{ data: Tickets }>({
     apiPath: API.GET.TICKETS_LIST
   })
+  const navigate = useNavigate()
   // @ts-ignore
   const { data: tickets } = ticketList || {}
-  console.log('🐸 Pepe said => AllTicketsPage => tickets', tickets)
 
   return (
     <div>
-      <Typography variant="h4">
-        <b>All tickets</b>
-      </Typography>
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link color="inherit" to={ROUTES.HOME}>
-          Home
-        </Link>
-        <Typography color="text.primary">All tickets</Typography>
-      </Breadcrumbs>
-
-      <Spacer space={50} />
-
       <Wrapper>
         {tickets?.length ? (
-          <DataGrid rows={tickets} columns={columns} pageSize={50} checkboxSelection disableSelectionOnClick experimentalFeatures={{ newEditingApi: true }} />
+          <DataGrid
+            autoPageSize
+            density="comfortable"
+            onRowClick={(row) => {
+              // @ts-ignore
+              navigate(ROUTES.TICKET.replace(':id', row.id))
+            }}
+            headerHeight={70}
+            rows={tickets}
+            columns={columns}
+            pageSize={50}
+            experimentalFeatures={{ newEditingApi: true }}
+          />
         ) : (
           <Flex width="100%" height="100%" flexDirection="column" alignItems="center" justifyContent="center">
             <CircularProgress />
@@ -54,47 +54,66 @@ const Wrapper = styled(Flex)`
 `
 
 const columns: GridColDef[] = [
+  {
+    field: 'status',
+    headerName: 'Status',
+    editable: true
+  },
+  {
+    field: 'due_date',
+    headerName: 'Due Date',
+    editable: true
+  },
+  {
+    field: 'description',
+    headerName: 'Description',
+    editable: true
+  },
+  {
+    field: 'responsible',
+    headerName: 'Responsible',
+    editable: true
+  },
   { field: 'id', headerName: 'ID', width: 90 },
   {
     field: 'date_created',
     headerName: 'Creation Date',
-    width: 150,
+    minWidth: 150,
     editable: true
   },
   {
     field: 'time_created',
     headerName: 'Creation Time',
-    width: 150,
+    minWidth: 150,
     editable: true
   },
   {
     field: 'correction',
     headerName: 'Correction',
-    width: 150,
+    minWidth: 150,
     editable: true
   },
   {
     field: 'extension',
     headerName: 'Extension',
-    width: 150,
+    minWidth: 150,
     editable: true
   },
   {
     field: 'class',
     headerName: 'Class',
-    width: 150,
+    minWidth: 150,
     editable: true
   },
   {
     field: 'category',
     headerName: 'Category',
-    width: 150,
+    minWidth: 150,
     editable: true
   },
   {
     field: 'workcenter',
     headerName: 'Workcenter',
-    width: 150,
     editable: true
   }
 ]

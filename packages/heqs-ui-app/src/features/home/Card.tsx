@@ -53,7 +53,6 @@ const OuterWrapper = styled.div<any>`
 const Wrapper = styled(Pad)<any>`
   background-color: ${({ theme, bgColor, bgColorDark }) => (theme.palette.mode === 'light' ? bgColor : bgColorDark)};
   border-radius: 10px;
-  cursor: pointer;
   transition: all 0.2s ease-in-out;
   border: 1px solid #0000001a;
   height: ${({ fillHeight }) => fillHeight && 'calc(100% - 20px)'};
