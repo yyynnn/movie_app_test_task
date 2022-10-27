@@ -114,11 +114,12 @@ export const TicketConstructor = ({
               name="date_created"
               rules={{ required: 'Ошибка' }}
               render={({ field: { onChange, ref, value, name } }) => {
+                console.log('🐸 Pepe said => value', value)
                 return (
                   <DatePicker
                     ref={ref}
                     label="Date"
-                    value={value || ''}
+                    value={value ? value.toISOString() : ''}
                     onChange={onChange}
                     renderInput={(params) => {
                       return <TextField {...params} error={!!errors[name]} fullWidth />
@@ -135,7 +136,7 @@ export const TicketConstructor = ({
               name="time_created"
               rules={{ required: 'Ошибка' }}
               render={({ field: { onChange, ref, value, name } }) => {
-                return <TimePicker label="Time" value={value || ''} onChange={onChange} renderInput={(params) => <TextField {...params} error={!!errors[name]} fullWidth />} />
+                return <TimePicker label="Time" value={value ? value.toTimeString() : ''} onChange={onChange} renderInput={(params) => <TextField {...params} error={!!errors[name]} fullWidth />} />
               }}
             />
           )}
