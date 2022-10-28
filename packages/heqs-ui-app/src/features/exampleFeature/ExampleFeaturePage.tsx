@@ -19,7 +19,7 @@ import { useBasicQuery } from '../../hooks/useBasicQuery'
 // Spacer - для любых пробелов, теперь не нужно вкорячивать margin
 // по уполчанию 20px в высоту, в ширь через width
 import { Flex, Pad, Spacer } from '../../primitives'
-import { Employees, Ticket, Tickets } from '../../types/api'
+import { Employees, Ticket, Tickets, Workcenters } from '../../types/api'
 
 export const ExampleFeaturePage = () => {
   const [newTicket, setNewTicket] = useState({
@@ -55,7 +55,7 @@ export const ExampleFeaturePage = () => {
     apiPath: API.GET.TICKETS_LIST
   })
 
-  const { data: workcenters } = useBasicQuery<{ data: any }>({
+  const { data: workcenters } = useBasicQuery<{ data: Workcenters }>({
     apiPath: API.GET.WORK_CENTERS
   })
 
