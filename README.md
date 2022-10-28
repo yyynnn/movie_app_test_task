@@ -1,7 +1,4 @@
-HEQS monorepo
-
-
-HEQS new app
+HEQS UI monorepo
 
 1. сетка через https://github.com/sealninja/react-grid-system (бутстрап подобная сетка container/row/col)
 2. компоненты через mui
@@ -10,3 +7,6 @@ HEQS new app
 5. стили styled через emotion (по минималу)
 6. напор на использование примитивов packages/uikit. Например все отстпуты можно делать через <Spacer space={20} />, позиционирование через <Flex />
 7. автоимпорты работают
+
+SWAGGER 
+https://dev.heqsapp.com/api/documentation#/

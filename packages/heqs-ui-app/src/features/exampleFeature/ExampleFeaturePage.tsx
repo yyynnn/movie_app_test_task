@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { Button, TextField } from '@mui/material'
 import { string } from 'prop-types'
 import React, { useEffect, useState } from 'react'
+import { Col, Row } from 'react-grid-system'
 
 // импорты путей из API -> ../../consts/api
 import { API } from '../../consts/api'
@@ -82,6 +83,21 @@ export const ExampleFeaturePage = () => {
           </Button>
         </Flex>
       </Pad>
+
+      <Row>
+        <Col sm={12} md={6} lg={3}>
+          Grid example
+        </Col>
+        <Col sm={12} md={6} lg={3}>
+          Grid example
+        </Col>
+        <Col sm={12} md={6} lg={3}>
+          Grid example
+        </Col>
+        <Col sm={12} md={6} lg={3}>
+          Grid example
+        </Col>
+      </Row>
     </Wrapper>
   )
 }
