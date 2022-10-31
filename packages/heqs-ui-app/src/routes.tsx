@@ -13,6 +13,7 @@ import { LoginPage } from './features/login/LoginPage'
 import { TicketConstructor } from './features/ticketConstructor/TicketConstructor'
 import { TicketReadOnly } from './features/ticketConstructor/TicketReadOnly'
 import { TicketSuccess } from './features/ticketConstructor/TicketSuccess'
+import { WorkstationsPage } from './features/workstations/WorkstationsPage'
 
 export const routes = [
   {
@@ -20,6 +21,12 @@ export const routes = [
     path: ROUTES.LOGIN,
     privatePage: false,
     featureActive: true
+  },
+  {
+    element: <WorkstationsPage />,
+    path: ROUTES.WORKSTATIONS,
+    privatePage: true,
+    featureActive: false
   },
   {
     element: <ForgotPasswordPage />,

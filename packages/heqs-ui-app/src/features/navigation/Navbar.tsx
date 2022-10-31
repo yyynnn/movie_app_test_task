@@ -20,37 +20,36 @@ export const Navbar = () => {
 
   return (
     <Wrapper>
-      <Container>
-        <Row>
-          <Col>
-            <Pad padding={'40px 0'} alignItems="center" justifyContent="space-between">
-              {auth.token ? (
-                <button onClick={() => navigate(ROUTES.HOME)}>
-                  <Logo />
-                </button>
-              ) : (
-                <div />
+      <Row>
+        <Col>
+          <Pad padding={'40px 0'} alignItems="center" justifyContent="space-between">
+            {auth.token ? (
+              <button onClick={() => navigate(ROUTES.HOME)}>
+                <Logo />
+              </button>
+            ) : (
+              <div />
+            )}
+            <Flex alignItems="center">
+              <Spacer width={10} />
+              <Visibility visibleAt={['md', 'lg', 'xl', 'xxl']}>
+                <Typography>
+                  <b>{auth.user}</b>
+                </Typography>
+              </Visibility>
+              <Spacer width={20} />
+              <ThemeSwitcher />
+              <Spacer width={20} />
+              {!!auth.token && (
+                <IconButton onClick={() => toggleDrawer(true)} size="large" aria-label="menu" sx={{ p: 0 }}>
+                  <MenuIcon />
+                </IconButton>
               )}
-              <Flex alignItems="center">
-                <Spacer width={10} />
-                <Visibility visibleAt={['md', 'lg', 'xl', 'xxl']}>
-                  <Typography>
-                    <b>{auth.user}</b>
-                  </Typography>
-                </Visibility>
-                <Spacer width={20} />
-                <ThemeSwitcher />
-                <Spacer width={20} />
-                {!!auth.token && (
-                  <IconButton onClick={() => toggleDrawer(true)} size="large" aria-label="menu" sx={{ p: 0 }}>
-                    <MenuIcon />
-                  </IconButton>
-                )}
-              </Flex>
-            </Pad>
-          </Col>
-        </Row>
-      </Container>
+            </Flex>
+          </Pad>
+        </Col>
+      </Row>
+
       <Drawer
         PaperProps={{
           sx: { maxWidth: '666px', width: '100%' }
@@ -89,4 +88,9 @@ export const Navbar = () => {
 
 const Wrapper = styled.div`
   width: 100%;
+
+  & button {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 `

@@ -15,23 +15,22 @@ export const GlobalLayout = () => {
   return (
     <>
       {auth.token ? (
-        <Navbar />
-      ) : (
-        <TSwrapper>
-          <ThemeSwitcher />
-        </TSwrapper>
-      )}
-      {auth.token ? (
         <Container>
           <Row>
             <Col>
-              {location.pathname !== ROUTES.HOME && location.pathname !== ROUTES.ROOT && <BreadNav />}
+              <div>
+                <Navbar />
+                {location.pathname !== ROUTES.HOME && location.pathname !== ROUTES.ROOT && <BreadNav />}
+              </div>
               <Outlet />
             </Col>
           </Row>
         </Container>
       ) : (
         <OutletWrapper>
+          <TSwrapper>
+            <ThemeSwitcher />
+          </TSwrapper>
           <Outlet />
         </OutletWrapper>
       )}

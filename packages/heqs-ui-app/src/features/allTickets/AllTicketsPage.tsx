@@ -15,7 +15,7 @@ export const AllTicketsPage = () => {
     apiPath: API.GET.TICKETS_LIST
   })
   const navigate = useNavigate()
-  // @ts-ignore
+
   const { data: tickets } = ticketList || {}
 
   return (

@@ -14,7 +14,7 @@ export const AllCorrectiveActionsPage = () => {
   const { data: ticketList, isLoading } = useBasicQuery<{ data: Tickets }>({
     apiPath: API.GET.TICKETS_LIST
   })
-  // @ts-ignore
+
   const { data: tickets } = ticketList || {}
 
   return (

@@ -20,7 +20,7 @@ export const HomePage = () => {
           <Spacer space={30} />
           <Row>
             <Col xl={12}>
-              <Card heading="Occupational health and safety" bgColor="#fff" bgColorDark="#0849ff">
+              <Card fillHeight heading="Occupational health and safety" bgColor="#fff" bgColorDark="#0849ff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_ACCIDENT)}>
                     Accident
@@ -66,31 +66,42 @@ export const HomePage = () => {
             </Col> */}
           </Row>
         </Col>
-        <Col lg={12}>
+
+        <Col lg={6}>
           <Typography variant="h3">
-            <b>Explore</b>
+            <b>Database</b>
           </Typography>
           <Spacer space={30} />
           <Row>
-            <Col md={6} xl={3}>
+            <Col md={6} xl={6}>
               <Card heading="All tickets" bgColor="#FF8A00" bgColorDark="#FF8A00">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Spacer space={125} />
+                  <Spacer space={84} />
                   <Button color="warning" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ALL_TICKETS)}>
                     Go
                   </Button>
                 </Stack>
               </Card>
             </Col>
-            <Col md={6} xl={3}>
+            <Col md={6} xl={6}>
               <Card heading="All corrective actions" bgColor="#ff606d" bgColorDark="#ff606d">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
+                  <Spacer space={84} />
                   <Button color="error" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ALL_CORRECTIVE_ACTIONS)}>
                     Go
                   </Button>
                 </Stack>
               </Card>
             </Col>
+          </Row>
+        </Col>
+
+        <Col lg={12}>
+          <Typography variant="h3">
+            <b>Explore</b>
+          </Typography>
+          <Spacer space={30} />
+          <Row>
             <Col md={6} xl={3}>
               <Card fillHeight heading="Personal stats" bgColor="#005fff" bgColorDark="#005fff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
@@ -109,7 +120,7 @@ export const HomePage = () => {
                 </Stack>
               </Card>
             </Col>
-            <Col md={6} xl={6}>
+            <Col md={6} xl={3}>
               <Card fillHeight={true} heading="KPI" bgColor="#005fff" bgColorDark="#005fff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.KPI)}>
@@ -119,7 +130,7 @@ export const HomePage = () => {
               </Card>
             </Col>
 
-            <Col md={6} xl={6}>
+            <Col md={6} xl={3}>
               <Card heading="Workstations" bgColor="#005fff" bgColorDark="#005fff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.WORKSTATIONS)}>
