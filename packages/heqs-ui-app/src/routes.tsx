@@ -26,7 +26,7 @@ export const routes = [
     element: <WorkstationsPage />,
     path: ROUTES.WORKSTATIONS,
     privatePage: true,
-    featureActive: false
+    featureActive: true
   },
   {
     element: <ForgotPasswordPage />,
