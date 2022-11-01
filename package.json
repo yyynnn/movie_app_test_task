@@ -13,10 +13,13 @@
     ]
   },
   "scripts": {
+    "dev": "yarn workspace @heqs-ui/heqs-ui-app start",
+    "build": "yarn workspace @heqs-ui/heqs-ui-app build",
     "dev:old": "yarn workspace @heqs-ui/heqs-ui-old-app start",
     "dev:new": "yarn workspace @heqs-ui/heqs-ui-app start",
     "build:old": "yarn workspace @heqs-ui/heqs-ui-old-app build",
-    "build:new": "yarn workspace @heqs-ui/heqs-ui-app build"
+    "build:new": "yarn workspace @heqs-ui/heqs-ui-app build",
+    "orval": "npx orval && npx prettier --config ./.prettierrc --write ./packages/heqs-ui-app/src/features/api/generated/index.ts && npx eslint --fix ./packages/heqs-ui-app/src/features/api/generated/index.ts"
   },
   "repository": {
     "type": "git",

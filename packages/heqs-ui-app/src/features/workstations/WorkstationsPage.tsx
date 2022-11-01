@@ -1,84 +1,50 @@
-// install (please make sure versions match peerDependencies)
-// yarn add @nivo/core @nivo/bar
 import styled from '@emotion/styled'
-import { ResponsiveBar } from '@nivo/bar'
+import { Paper, Typography, useTheme } from '@mui/material'
+import { Bar } from '@nivo/bar'
+import { BasicTooltip } from '@nivo/tooltip'
 
+import { Flex, Pad, Spacer } from '../../primitives'
 import { data } from './fakeData'
+import { WorkstationGraph } from './WorkstationGraph'
 
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
+// {
+//     "index": 8,
+//     "x": 423,
+//     "y": 21,
+//     "absX": 463,
+//     "absY": 21,
+//     "width": 35,
+//     "height": 158,
+//     "color": "#FF8A00",
+//     "label": "bar_part2 - C198",
+//     "id": "bar_part2",
+//     "value": 2966.02,
+//     "formattedValue": "2966.02",
+//     "hidden": false,
+//     "indexValue": "C198",
+//     "data": {
+//         "bar_part1": 2469.29,
+//         "bar_part2": 2966.02,
+//         "bar_part3": 404.05,
+//         "workstation": "C198"
+//     }
+// }
+
 export const WorkstationsPage = (props: any) => {
+  const theme = useTheme()
+  const isDark = theme.palette.mode === 'dark'
+
   return (
-    <Wrapper>
-      <ResponsiveBar
-        data={data}
-        keys={['bar_part1', 'bar_part2', 'bar_part3']}
-        indexBy="workstation"
-        margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-        padding={0.3}
-        valueScale={{ type: 'linear' }}
-        colors={['#CC0101', '#FF8A00', '#013ecc']}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'Workstation',
-          legendPosition: 'middle',
-          legendOffset: 32
-        }}
-        axisLeft={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'OHS',
-          legendPosition: 'middle',
-          legendOffset: -40
-        }}
-        labelSkipWidth={12}
-        labelSkipHeight={12}
-        enableLabel={false}
-        legends={[
-          {
-            dataFrom: 'keys',
-            anchor: 'bottom-right',
-            direction: 'column',
-            justify: false,
-            translateX: 120,
-            translateY: 0,
-            itemsSpacing: 2,
-            itemWidth: 100,
-            itemHeight: 20,
-            itemDirection: 'left-to-right',
-            itemOpacity: 0.85,
-            symbolSize: 20,
-            effects: [
-              {
-                on: 'hover',
-                style: {
-                  itemOpacity: 1
-                }
-              }
-            ]
-          }
-        ]}
-        role="application"
-        borderRadius={6}
-        enableGridX={false}
-        enableGridY={false}
-        barAriaLabel={function (e) {
-          return e.id + ': ' + e.formattedValue + ' in workstation: ' + e.indexValue
-        }}
-        theme={{ textColor: '#fff' }}
-      />
-    </Wrapper>
+    <div>
+      <Flex width="100%" justifyContent="space-between">
+        <Typography variant="h6">
+          <b>OHS</b>
+        </Typography>
+
+        <Typography variant="h6">08.08.1991</Typography>
+      </Flex>
+      <Spacer />
+      <WorkstationGraph />
+    </div>
   )
 }
-
-const Wrapper = styled.div`
-  height: 400px;
-`
