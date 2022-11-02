@@ -14,6 +14,7 @@ import { TicketConstructor } from './features/ticketConstructor/TicketConstructo
 import { TicketReadOnly } from './features/ticketConstructor/TicketReadOnly'
 import { TicketSuccess } from './features/ticketConstructor/TicketSuccess'
 import { WorkstationsPage } from './features/workstations/WorkstationsPage'
+import { KpiPage } from './features/kpi/KpiPage'
 
 export const routes = [
   {
@@ -25,6 +26,12 @@ export const routes = [
   {
     element: <WorkstationsPage />,
     path: ROUTES.WORKSTATIONS,
+    privatePage: true,
+    featureActive: true
+  },
+  {
+    element: <KpiPage />,
+    path: ROUTES.KPI,
     privatePage: true,
     featureActive: true
   },
