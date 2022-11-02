@@ -3,7 +3,7 @@ import { Paper, Typography, useTheme } from '@mui/material'
 import { Bar } from '@nivo/bar'
 import { BasicTooltip } from '@nivo/tooltip'
 
-import { Flex, Pad, Spacer } from '../../primitives'
+import { Flex, Pad, Spacer } from '../primitives'
 import { data } from './fakeData'
 import { WorkstationGraph } from './WorkstationGraph'
 

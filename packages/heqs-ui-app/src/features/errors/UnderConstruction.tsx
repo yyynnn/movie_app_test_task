@@ -3,9 +3,9 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Flex, Spacer } from '../../primitives'
 import { NotFoundPic } from '../illustrations/NotFoundPic'
 import { UnderConstrPik } from '../illustrations/UnderConstrPik'
+import { Flex, Spacer } from '../primitives'
 
 export const UnderConstruction = () => {
   const navigate = useNavigate()

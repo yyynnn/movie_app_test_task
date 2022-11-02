@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 
-import { BREAKPOINTS, BREAKPOINTS_NAMES } from '../consts/common'
-import { RFCC } from '../types/react'
+import { BREAKPOINTS, BREAKPOINTS_NAMES } from '../../consts/common'
+import { RFCC } from '../../types/react'
 import { Flex } from './Flex'
 
 export const Visibility: RFCC = ({ children, visibleAt = ['md', 'lg', 'xl', 'xxl'], hiddenAt = [''], ...rest }) => {

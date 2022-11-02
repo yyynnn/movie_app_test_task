@@ -3,7 +3,7 @@ import { Paper, Typography, useTheme } from '@mui/material'
 import { Bar } from '@nivo/bar'
 import { BasicTooltip } from '@nivo/tooltip'
 
-import { Pad } from '../../primitives'
+import { Pad } from '../primitives'
 import { data } from './fakeData'
 
 const BarTooltip: React.FunctionComponent<any> = (props, idx) => {

@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
-import { useBasicQuery } from '../../hooks/useBasicQuery'
-import { Flex, Spacer } from '../../primitives'
+import { useBasicQuery } from '../hooks/useBasicQuery'
+import { Flex, Spacer } from '../primitives'
 import { Tickets } from '../../types/api'
 
 export const AllCorrectiveActionsPage = () => {

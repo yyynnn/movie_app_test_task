@@ -4,7 +4,7 @@ import { Button, Typography } from '@mui/material'
 import { useTheme } from '@mui/system'
 import { useNavigate } from 'react-router-dom'
 
-import { Pad, Spacer } from '../../primitives'
+import { Pad, Spacer } from '../primitives'
 import { RFCC } from '../../types/react'
 
 interface CardProps {

@@ -4,7 +4,7 @@ import { Col, Row } from 'react-grid-system'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Spacer } from '../../primitives'
+import { Spacer } from '../primitives'
 import { Card } from './Card'
 
 export const HomePage = () => {

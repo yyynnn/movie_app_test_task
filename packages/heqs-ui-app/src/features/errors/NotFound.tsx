@@ -3,8 +3,8 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Flex, Spacer } from '../../primitives'
 import { NotFoundPic } from '../illustrations/NotFoundPic'
+import { Flex, Spacer } from '../primitives'
 
 export const NotFound = () => {
   const navigate = useNavigate()
