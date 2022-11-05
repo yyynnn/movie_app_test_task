@@ -6,6 +6,7 @@ import { Col, Row } from 'react-grid-system'
 
 // импорты путей из API -> ../../consts/api
 import { API } from '../../consts/api'
+import { Employees, Ticket, Tickets, Workcenters } from '../../types/api'
 // useBasicMutation для POST/PUT (враппер над useMutation https://tanstack.com/query/v4/docs/reference/useMutation)
 import { useBasicMutation } from '../hooks/useBasicMutation'
 // useBasicQuery для GET (враппер над useQuery https://tanstack.com/query/v4/docs/reference/useQuery)
@@ -19,7 +20,6 @@ import { useBasicQuery } from '../hooks/useBasicQuery'
 // Spacer - для любых пробелов, теперь не нужно вкорячивать margin
 // по уполчанию 20px в высоту, в ширь через width
 import { Flex, Pad, Spacer } from '../primitives'
-import { Employees, Ticket, Tickets, Workcenters } from '../../types/api'
 
 export const ExampleFeaturePage = () => {
   const [newTicket, setNewTicket] = useState({

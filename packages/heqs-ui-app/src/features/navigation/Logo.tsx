@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material'
 export const Logo = () => {
   return (
     <div>
-      {true ? (
+      {false ? (
         <LogoPath />
       ) : (
         <Svg viewBox="0 0 2932 619" fill="none" xmlns="http://www.w3.org/2000/svg">

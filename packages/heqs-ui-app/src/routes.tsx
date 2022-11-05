@@ -13,7 +13,7 @@ import { LoginPage } from './features/login/LoginPage'
 import { TicketConstructor } from './features/ticketConstructor/TicketConstructor'
 import { TicketReadOnly } from './features/ticketConstructor/TicketReadOnly'
 import { TicketSuccess } from './features/ticketConstructor/TicketSuccess'
-import { WorkstationsPage } from './features/workstations/WorkstationsPage'
+import { WorkcentersPage } from './features/workcenters/WorkcentersPage'
 
 export const routes = [
   {
@@ -23,8 +23,8 @@ export const routes = [
     featureActive: true
   },
   {
-    element: <WorkstationsPage />,
-    path: ROUTES.WORKSTATIONS,
+    element: <WorkcentersPage />,
+    path: ROUTES.WORKCENTERS,
     privatePage: true,
     featureActive: true
   },
