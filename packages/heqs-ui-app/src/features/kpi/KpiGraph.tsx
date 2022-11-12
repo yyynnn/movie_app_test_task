@@ -1,10 +1,14 @@
 import styled from '@emotion/styled'
 import { Paper, Typography, useTheme } from '@mui/material'
 import { Bar } from '@nivo/bar'
+import { Pie } from '@nivo/pie'
 import { BasicTooltip } from '@nivo/tooltip'
+import { Tickets } from '../../types/api'
+import _ from 'lodash'
 
-import { Pad } from '../../primitives'
-import { data } from './fakeData'
+import { Flex, Pad, Spacer } from '../primitives'
+
+import { dataPieAFC } from './fakeData'
 
 const BarTooltip: React.FunctionComponent<any> = (props, idx) => {
   return (
@@ -21,7 +25,36 @@ const BarTooltip: React.FunctionComponent<any> = (props, idx) => {
   )
 }
 
-export const KpiGraph = () => {
+export const KpiGraph = ({ data }: { data?: Tickets }) => {
+  const groupedByMonth = _.groupBy(data, ({ date_created }) => new Date(date_created).getMonth())
+  let result: { month: string; OHS: number; QUAL: number; ENV: number }[] = []
+
+  Object.entries(groupedByMonth).forEach(([key, array]) => {
+    const month = new Date(array[0].date_created).toLocaleString('en-US', { month: 'long' })
+    let OHS = 0
+    let ENV = 0
+    let QUAL = 0
+    array.forEach((value, innerIndex) => {
+      switch (value.category) {
+        case 'OHS':
+          OHS++
+          break
+        case 'ENV':
+          ENV++
+          break
+        case 'QUAL':
+          QUAL++
+          break
+        default:
+          OHS = 0
+          ENV = 0
+          QUAL = 0
+      }
+    })
+
+    result.push({ month: month, OHS: OHS, QUAL: QUAL, ENV: ENV })
+  })
+  // console.log(result)
   const theme = useTheme()
   const isDark = theme.palette.mode === 'dark'
 
@@ -30,13 +63,13 @@ export const KpiGraph = () => {
       <Paper variant="outlined">
         <Wrapper>
           <Bar
-            data={data}
+            data={result}
             keys={['OHS', 'ENV', 'QUAL']}
             indexBy="month"
             margin={{ top: 0, right: 130, bottom: 30, left: 40 }}
             padding={0.3}
             valueScale={{ type: 'linear' }}
-            colors={['#CC0101', '#FF8A00', '#013ecc']}
+            colors={['#FF8A00', '#2ca02c', '#1f77b4']}
             axisTop={null}
             axisRight={null}
             axisBottom={{
@@ -82,9 +115,93 @@ export const KpiGraph = () => {
             enableGridX={false}
             enableGridY={false}
             barAriaLabel={function (e) {
-              return e.id + ': ' + e.formattedValue + ' in workstation: ' + e.indexValue
+              return e.id + ': ' + e.formattedValue + ' in incidents: ' + e.indexValue
             }}
             theme={{ textColor: isDark ? '#fff' : '#000' }}
+          />
+        </Wrapper>
+      </Paper>
+      <Spacer />
+      <Paper variant="outlined">
+        <Wrapper>
+          <Pie
+            data={dataPieAFC}
+            width={600}
+            height={350}
+            margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+            colors={['#CC0101', '#013ecc']}
+            padAngle={0.7}
+            cornerRadius={3}
+            activeOuterRadiusOffset={8}
+            borderWidth={1}
+            borderColor={{
+              from: 'color',
+              modifiers: [['darker', 2]]
+            }}
+            arcLinkLabelsSkipAngle={10}
+            arcLinkLabelsThickness={2}
+            arcLinkLabelsColor={{ from: 'color' }}
+            arcLabelsSkipAngle={10}
+            arcLabelsTextColor={{
+              from: 'color',
+              modifiers: [['darker', 2]]
+            }}
+            tooltip={({ datum: { id, value, color } }) => (
+              <div
+                style={{
+                  padding: 8,
+                  color,
+                  background: isDark ? '#000' : '#fff'
+                }}
+              >
+                <strong>
+                  {id}: {value}
+                </strong>
+              </div>
+            )}
+            theme={{
+              textColor: isDark ? '#fff' : '#000'
+            }}
+          />
+
+          <Pie
+            data={dataPieAFC}
+            width={600}
+            height={350}
+            margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+            colors={['#CC0101', '#013ecc']}
+            padAngle={0.7}
+            cornerRadius={3}
+            activeOuterRadiusOffset={8}
+            borderWidth={1}
+            borderColor={{
+              from: 'color',
+              modifiers: [['darker', 2]]
+            }}
+            arcLinkLabelsSkipAngle={10}
+            arcLinkLabelsThickness={2}
+            arcLinkLabelsColor={{ from: 'color' }}
+            arcLabelsSkipAngle={10}
+            arcLabelsTextColor={{
+              from: 'color',
+              modifiers: [['darker', 2]]
+            }}
+            tooltip={({ datum: { id, value, color } }) => (
+              <div
+                style={{
+                  padding: 8,
+                  color,
+                  background: isDark ? '#000' : '#fff'
+                }}
+              >
+                <strong>
+                  {id}: {value}
+                </strong>
+              </div>
+            )}
+            theme={{
+              textColor: isDark ? '#fff' : '#000'
+            }}
           />
         </Wrapper>
       </Paper>

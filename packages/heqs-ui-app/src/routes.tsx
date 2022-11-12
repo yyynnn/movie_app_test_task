@@ -30,6 +30,12 @@ export const routes = [
     featureActive: true
   },
   {
+    element: <KpiPage />,
+    path: ROUTES.KPI,
+    privatePage: true,
+    featureActive: true
+  },
+  {
     element: <ForgotPasswordPage />,
     path: ROUTES.FORGOT_PASSWORD,
     privatePage: false,

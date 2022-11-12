@@ -32,6 +32,7 @@
     "@nivo/bar": "0.80.0",
     "@nivo/core": "0.80.0",
     "@nivo/tooltip": "0.80.0",
+    "@nivo/pie": "0.80.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "6.4.2",
     "react-hook-form": "7.36.1",
