@@ -1,7 +1,7 @@
 import { QueryFunction, useQuery, UseQueryResult } from '@tanstack/react-query'
 import axios from 'axios'
 
-import { useAuth } from '../features/auth/AuthProvider'
+import { useAuth } from '../auth/AuthProvider'
 
 interface IProps {
   apiPath: string

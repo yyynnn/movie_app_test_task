@@ -3,7 +3,7 @@ import React from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 axios.defaults.baseURL = ''
 

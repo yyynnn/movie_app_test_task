@@ -8,7 +8,7 @@ export const ROUTES = {
   ALL_CORRECTIVE_ACTIONS: '/all_corrective_actions',
   GLOBAL_KPI: '/global_kpi',
   KPI: '/kpi',
-  WORKSTATIONS: '/workstations',
+  WORKCENTERS: '/workcenters',
   TICKET_SUCCESS: '/ticket_success',
   HEALTH_AND_SAFETY_ACCIDENT: '/health/accident/create',
   HEALTH_AND_SAFETY_NEAR_MISS: '/health/near_miss/create',

@@ -13,7 +13,7 @@ import { LoginPage } from './features/login/LoginPage'
 import { TicketConstructor } from './features/ticketConstructor/TicketConstructor'
 import { TicketReadOnly } from './features/ticketConstructor/TicketReadOnly'
 import { TicketSuccess } from './features/ticketConstructor/TicketSuccess'
-import { WorkstationsPage } from './features/workstations/WorkstationsPage'
+import { WorkcentersPage } from './features/workcenters/WorkcentersPage'
 import { KpiPage } from './features/kpi/KpiPage'
 
 export const routes = [
@@ -24,14 +24,8 @@ export const routes = [
     featureActive: true
   },
   {
-    element: <WorkstationsPage />,
-    path: ROUTES.WORKSTATIONS,
-    privatePage: true,
-    featureActive: true
-  },
-  {
-    element: <KpiPage />,
-    path: ROUTES.KPI,
+    element: <WorkcentersPage />,
+    path: ROUTES.WORKCENTERS,
     privatePage: true,
     featureActive: true
   },

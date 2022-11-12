@@ -4,8 +4,8 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Spacer } from '../../primitives'
 import { extractNumber } from '../../utils'
+import { Spacer } from '../primitives'
 
 export const BreadNav = () => {
   const location = useLocation()

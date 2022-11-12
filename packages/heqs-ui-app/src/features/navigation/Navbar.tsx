@@ -7,9 +7,9 @@ import { Col, Container, Row } from 'react-grid-system'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Flex, Pad, Spacer } from '../../primitives'
-import { Visibility } from '../../primitives/Visibility'
 import { useAuth } from '../auth/AuthProvider'
+import { Flex, Pad, Spacer } from '../primitives'
+import { Visibility } from '../primitives/Visibility'
 import { ThemeSwitcher } from '../themingAndStyling/ThemeSwitcher'
 import { Logo } from './Logo'
 

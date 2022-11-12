@@ -9,4 +9,12 @@
 /**
  * Workcenter model
  */
-export type Workcenter = unknown
+export type Workcenter = {
+  workcenter: string
+  bar_part1: number
+  bar_part2: number
+  bar_part3: number
+  date: string
+}
+
+export type Workcenters = Workcenter[]

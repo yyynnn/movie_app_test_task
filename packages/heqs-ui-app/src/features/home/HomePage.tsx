@@ -4,7 +4,7 @@ import { Col, Row } from 'react-grid-system'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Spacer } from '../../primitives'
+import { Spacer } from '../primitives'
 import { Card } from './Card'
 
 export const HomePage = () => {
@@ -102,9 +102,9 @@ export const HomePage = () => {
             </Col>
 
             <Col md={6} xl={3}>
-              <Card heading="Workstations" bgColor="#005fff" bgColorDark="#005fff">
+              <Card heading="Workcenters" bgColor="#005fff" bgColorDark="#005fff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.WORKSTATIONS)}>
+                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.WORKCENTERS)}>
                     Go
                   </Button>
                 </Stack>

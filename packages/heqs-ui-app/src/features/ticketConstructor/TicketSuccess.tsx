@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Flex, Spacer } from '../../primitives'
+import { Flex, Spacer } from '../primitives'
 import { SuccessPic } from '../illustrations/SuccessPic'
 
 export const TicketSuccess = () => {
