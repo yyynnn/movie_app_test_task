@@ -6,9 +6,9 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
+import { Tickets } from '../../types/api'
 import { useBasicQuery } from '../hooks/useBasicQuery'
 import { Flex, Spacer } from '../primitives'
-import { Tickets } from '../../types/api'
 
 export const AllTicketsPage = () => {
   const { data: ticketList, isLoading } = useBasicQuery<{ data: Tickets }>({

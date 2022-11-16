@@ -1,0 +1,412 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "OpenApi Documentation",
+    "description": "Документация для микро сервиса",
+    "contact": {
+      "email": "idem84@me.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://dev.heqsapp.com",
+      "description": "Основной API"
+    },
+    {
+      "url": "https://dev.heqsapp.com",
+      "description": "Для Логирования"
+    }
+  ],
+  "paths": {
+    "/php": {
+      "get": {
+        "tags": ["Phps"],
+        "summary": "Получение информации о настройках php на сервере",
+        "description": "Получение информации о настройках php на сервере",
+        "operationId": "php",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Регистрация",
+        "description": "Регистрация нового пользователя",
+        "operationId": "register",
+        "requestBody": {
+          "description": "Описание передаваемых параметров",
+          "required": true,
+          "content": {
+            "multipart/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "description": "Имя",
+                    "type": "string",
+                    "example": "Дмитрий"
+                  },
+                  "surname": {
+                    "description": "Фамилия",
+                    "type": "string",
+                    "example": "Алексеев"
+                  },
+                  "email": {
+                    "description": "E-mail адрес",
+                    "type": "string",
+                    "example": "test@mail.ru"
+                  },
+                  "password": {
+                    "description": "Пароль",
+                    "type": "string",
+                    "example": "12345678"
+                  },
+                  "password_confirmation": {
+                    "description": "Подтверждение пароля",
+                    "type": "string",
+                    "example": "12345678"
+                  },
+                  "user_position_id": {
+                    "description": "Идентификатор должности",
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "factory_id": {
+                    "description": "Идентификатор фабрики",
+                    "type": "integer",
+                    "example": 1
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Удачная регистрация",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "token": {
+                      "description": "Токен авторизации",
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "example": {
+                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5N2JhN2NmZS1hNWQ4LTQ2NDAtYmE3MC02OTU3NDhkMmZhYTYiL..."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Ошибка регистрации пользователя",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "errors": {
+                      "description": "Ошибка регистрации",
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "example": {
+                    "errors": ["The email has already been taken."]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Авторизация",
+        "description": "Авторизация",
+        "operationId": "login",
+        "requestBody": {
+          "description": "Описание передаваемых параметров",
+          "required": true,
+          "content": {
+            "multipart/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "description": "E-mail адрес",
+                    "type": "string",
+                    "example": "test@mail.ru"
+                  },
+                  "password": {
+                    "description": "Пароль",
+                    "type": "string",
+                    "example": "12345678"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Удачная авторизация",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "token": {
+                      "description": "Токен авторизации",
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "example": {
+                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5N2JhN2NmZS1hNWQ4LTQ2NDAtYmE3MC02OTU3NDhkMmZhYTYiL..."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Ошибка авторизации пользователя",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "errors": {
+                      "description": "Ошибка авторизации",
+                      "type": "object"
+                    }
+                  },
+                  "type": "object",
+                  "example": {
+                    "errors": ["User has already been logged in"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Выход",
+        "description": "Выход",
+        "operationId": "logout",
+        "responses": {
+          "200": {
+            "description": "Удачный выход",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "description": "Сообщение",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object",
+                  "example": {
+                    "message": ["You have been successfully logged out!"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tickets": {
+      "post": {
+        "tags": ["Tickets"],
+        "summary": "Сохранение тикета",
+        "description": "Сохранение тикета",
+        "operationId": "createTicket",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readTicketsList": {
+      "get": {
+        "tags": ["Tickets"],
+        "summary": "Получение списка тикетов",
+        "description": "Получение списка тикетов",
+        "operationId": "readTicketsList",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readEmployees": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Получение списка сотрудников",
+        "description": "Получение списка сотрудников",
+        "operationId": "readUsers",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readWorkCenters": {
+      "get": {
+        "tags": ["Workcenters"],
+        "summary": "Получение списка рабочих мест",
+        "description": "Получение списка рабочих мест",
+        "operationId": "readWorkCenters",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workcenter"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Ticket": {
+        "title": "Ticket",
+        "description": "Ticket model",
+        "properties": {
+          "id": {
+            "title": "ID",
+            "description": "ID",
+            "type": "integer",
+            "format": "bigint20",
+            "example": 1
+          },
+          "ticket_class_id": {
+            "title": "ticket_class_id",
+            "description": "ticket_class_id",
+            "type": "integer",
+            "format": "bigint20",
+            "example": 1
+          },
+          "photo": {
+            "title": "photo",
+            "description": "photo",
+            "type": "string",
+            "format": "string",
+            "example": "/photos/1.jpg"
+          },
+          "rootCauses": {
+            "title": "rootCauses",
+            "description": "rootCauses",
+            "type": "array",
+            "format": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "ticket_class_id": {
+                  "type": "integer",
+                  "example": 2
+                },
+                "root_cause_category": {
+                  "type": "string",
+                  "example": "People"
+                },
+                "created_at": {
+                  "type": "timestamp"
+                },
+                "updated_at": {
+                  "type": "timestamp"
+                },
+                "deleted_at": {
+                  "type": "timestamp"
+                }
+              },
+              "type": "object"
+            },
+            "example": []
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "Ticket"
+        }
+      },
+      "User": {
+        "title": "User",
+        "description": "User model",
+        "xml": {
+          "name": "User"
+        }
+      },
+      "Workcenter": {
+        "title": "Workcenter",
+        "description": "Workcenter model",
+        "xml": {
+          "name": "Workcenter"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Tickets",
+      "description": "Работа с тикетами"
+    },
+    {
+      "name": "Users",
+      "description": "Работа с юзерами"
+    },
+    {
+      "name": "Workcenters",
+      "description": "Работа с ворк центрами"
+    },
+    {
+      "name": "Phps",
+      "description": "Получение информации о настройках php на сервере"
+    }
+  ]
+}

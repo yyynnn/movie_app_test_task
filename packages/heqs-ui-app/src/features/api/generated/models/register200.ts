@@ -5,8 +5,9 @@
  * Документация для микро сервиса
  * OpenAPI spec version: 1.0.0
  */
+import type { Register200Token } from './register200Token'
 
-/**
- * User model
- */
-export type User = unknown
+export type Register200 = {
+  /** Токен авторизации */
+  token?: Register200Token
+}

@@ -7,6 +7,6 @@
  */
 
 /**
- * User model
+ * Ошибка регистрации
  */
-export type User = unknown
+export type Register422Errors = { [key: string]: any }

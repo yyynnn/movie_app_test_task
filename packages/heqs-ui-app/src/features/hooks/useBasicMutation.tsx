@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { QueryFunction, useMutation, UseMutationResult, useQuery, UseQueryResult } from '@tanstack/react-query'
+import { QueryFunction, useMutation, UseMutationResult } from '@tanstack/react-query'
 import axios from 'axios'
-
-import { useAuth } from '../auth/AuthProvider'
 
 interface IProps {
   apiPath: string

@@ -1,6 +1,7 @@
+/* eslint-disable no-extra-boolean-cast */
 import styled from '@emotion/styled'
 import { Col, Container, Row } from 'react-grid-system'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
 import { useAuth } from '../auth/AuthProvider'
@@ -12,9 +13,10 @@ import { ThemeSwitcher } from '../themingAndStyling/ThemeSwitcher'
 export const GlobalLayout = () => {
   const auth = useAuth()
   const location = useLocation()
+
   return (
     <>
-      {auth.token ? (
+      {!!auth.token ? (
         <Container>
           <Row>
             <Col>
@@ -28,9 +30,8 @@ export const GlobalLayout = () => {
         </Container>
       ) : (
         <OutletWrapper>
-          <TSwrapper>
-            <ThemeSwitcher />
-          </TSwrapper>
+          <Navbar />
+
           <Outlet />
         </OutletWrapper>
       )}
@@ -48,7 +49,7 @@ const TSwrapper = styled.div`
 
 const OutletWrapper = styled.div`
   height: -webkit-fill-available;
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
   height: calc(100% - 120px);
 `

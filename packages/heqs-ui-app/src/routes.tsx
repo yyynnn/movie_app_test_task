@@ -1,15 +1,11 @@
-import { BREAKPOINTS } from './consts/common'
 import { ROUTES } from './consts/routes'
 import { AllCorrectiveActionsPage } from './features/allCorrectiveActions/AllCorrectiveActionsPage'
 import { AllTicketsPage } from './features/allTickets/AllTicketsPage'
-import { AuthProvider, RequireAuth } from './features/auth/AuthProvider'
-import { NotFound } from './features/errors/NotFound'
-import { UnderConstruction } from './features/errors/UnderConstruction'
 import { ExampleFeaturePage } from './features/exampleFeature/ExampleFeaturePage'
 import { HomePage } from './features/home/HomePage'
-import { GlobalLayout } from './features/layouts/GlobalLayout'
 import { ForgotPasswordPage } from './features/login/ForgotPasswordPage'
 import { LoginPage } from './features/login/LoginPage'
+import { RegPage } from './features/reg/RegPage'
 import { TicketConstructor } from './features/ticketConstructor/TicketConstructor'
 import { TicketReadOnly } from './features/ticketConstructor/TicketReadOnly'
 import { TicketSuccess } from './features/ticketConstructor/TicketSuccess'
@@ -19,6 +15,12 @@ export const routes = [
   {
     element: <LoginPage />,
     path: ROUTES.LOGIN,
+    privatePage: false,
+    featureActive: true
+  },
+  {
+    element: <RegPage />,
+    path: ROUTES.REG,
     privatePage: false,
     featureActive: true
   },
@@ -67,6 +69,12 @@ export const routes = [
   {
     element: <TicketConstructor heading="Posible accident" hasShortDescription={false} />,
     path: ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT,
+    privatePage: true,
+    featureActive: false
+  },
+  {
+    element: <div />,
+    path: ROUTES.UNDER_CONSTRUCTION,
     privatePage: true,
     featureActive: false
   },

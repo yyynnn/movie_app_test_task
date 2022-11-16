@@ -4,8 +4,8 @@ import { Button, Typography } from '@mui/material'
 import { useTheme } from '@mui/system'
 import { useNavigate } from 'react-router-dom'
 
-import { Pad, Spacer } from '../primitives'
 import { RFCC } from '../../types/react'
+import { Pad, Spacer } from '../primitives'
 
 interface CardProps {
   bgColor?: string
@@ -56,6 +56,10 @@ const Wrapper = styled(Pad)<any>`
   transition: all 0.2s ease-in-out;
   border: 1px solid #0000001a;
   height: ${({ fillHeight }) => fillHeight && 'calc(100% - 20px)'};
+
+  button {
+    background-color: ${({ theme, bgColor, bgColorDark }) => (theme.palette.mode !== 'light' ? '#ffffff46' : '#0000003c')} !important;
+  }
 
   &:hover {
     box-shadow: 0px 7px 20px -7px #0009;

@@ -6,7 +6,9 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * User model
- */
-export type User = unknown
+export type LoginBody = {
+  /** E-mail адрес */
+  email?: string
+  /** Пароль */
+  password?: string
+}

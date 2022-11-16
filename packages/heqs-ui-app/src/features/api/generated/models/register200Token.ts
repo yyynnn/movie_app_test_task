@@ -7,6 +7,6 @@
  */
 
 /**
- * User model
+ * Токен авторизации
  */
-export type User = unknown
+export type Register200Token = { [key: string]: any }

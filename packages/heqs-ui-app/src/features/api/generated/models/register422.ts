@@ -5,8 +5,9 @@
  * Документация для микро сервиса
  * OpenAPI spec version: 1.0.0
  */
+import type { Register422Errors } from './register422Errors'
 
-/**
- * User model
- */
-export type User = unknown
+export type Register422 = {
+  /** Ошибка регистрации */
+  errors?: Register422Errors
+}

@@ -2,6 +2,7 @@ export const ROUTES = {
   ROOT: '/',
   HOME: '/home',
   LOGIN: '/login',
+  REG: '/register',
   PERSONAL_STATS: '/personal_stats',
   ALL_TICKETS: '/all_tickets',
   TICKET: '/ticket/:id',
@@ -13,7 +14,8 @@ export const ROUTES = {
   HEALTH_AND_SAFETY_ACCIDENT: '/health/accident/create',
   HEALTH_AND_SAFETY_NEAR_MISS: '/health/near_miss/create',
   HEALTH_AND_SAFETY_POSIBLE_ACCIDENT: '/health/posible_accident/create',
-  FORGOT_PASSWORD: '/forgot'
+  FORGOT_PASSWORD: '/forgot',
+  UNDER_CONSTRUCTION: '/under_construction'
 }
 
 // ENV: {

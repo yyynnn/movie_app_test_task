@@ -7,6 +7,6 @@
  */
 
 /**
- * User model
+ * Ошибка авторизации
  */
-export type User = unknown
+export type Login422Errors = { [key: string]: any }

@@ -6,7 +6,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * User model
- */
-export type User = unknown
+export type Logout200 = {
+  /** Сообщение */
+  message?: string
+}

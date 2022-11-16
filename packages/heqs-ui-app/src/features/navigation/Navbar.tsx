@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import styled from '@emotion/styled'
 import CloseRounded from '@mui/icons-material/CloseRounded'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -19,11 +20,11 @@ export const Navbar = () => {
   const [drawerOpen, toggleDrawer] = useState(false)
 
   return (
-    <Wrapper>
+    <Wrapper id="main_navbar">
       <Row>
         <Col>
           <Pad padding={'40px 0'} alignItems="center" justifyContent="space-between">
-            {auth.token ? (
+            {!!auth.token ? (
               <button onClick={() => navigate(ROUTES.HOME)}>
                 <Logo />
               </button>
@@ -34,7 +35,7 @@ export const Navbar = () => {
               <Spacer width={10} />
               <Visibility visibleAt={['md', 'lg', 'xl', 'xxl']}>
                 <Typography>
-                  <b>{auth.user}</b>
+                  <b>{auth.loginName}</b>
                 </Typography>
               </Visibility>
               <Spacer width={20} />
@@ -61,7 +62,7 @@ export const Navbar = () => {
         <Pad flexDirection="column" justifyContent="center">
           <Flex width="100%" alignItems="center" justifyContent="space-between">
             <Typography variant="h6">
-              <b>{auth.user}</b>
+              <b>{auth.loginName}</b>
             </Typography>
             <IconButton onClick={() => toggleDrawer(false)} size="large" aria-label="menu" sx={{ p: 0 }}>
               <CloseRounded />

@@ -37,6 +37,7 @@
     "react-hook-form": "7.36.1",
     "react-grid-system": "8.1.6",
     "@tanstack/react-query": "4.12.0",
+    "react-scrollbars-custom": "4.1.1",
     "react-imask": "^6.4.3",
     "react-dropzone": "14.2.3",
     "react-hot-toast": "2.4.0",

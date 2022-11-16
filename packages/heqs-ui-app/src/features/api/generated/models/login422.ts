@@ -5,8 +5,9 @@
  * Документация для микро сервиса
  * OpenAPI spec version: 1.0.0
  */
+import type { Login422Errors } from './login422Errors'
 
-/**
- * User model
- */
-export type User = unknown
+export type Login422 = {
+  /** Ошибка авторизации */
+  errors?: Login422Errors
+}
