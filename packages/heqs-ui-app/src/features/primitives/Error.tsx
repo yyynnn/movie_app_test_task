@@ -13,35 +13,20 @@ interface Props {
   render?: any
 }
 
-export const Error: RFCC<Props> = ({ as, arbitError = false, name, message = '', render, ...rest }) => {
+export const Error: RFCC<Props> = ({ as, arbitError = false, name, message = '', ...rest }) => {
   const methods = useFormContext()
   const errorByErrState = get(methods?.formState?.errors, name)
   const errorByEmptyValue = methods?.getValues()[name] === ''
   const error = errorByErrState || errorByEmptyValue
 
   const { message: messageFromRegister, types } = error || {}
-  const props = Object.assign({}, rest, {
-    children: messageFromRegister || message
-  })
 
-  return arbitError || error ? (
-    <Wrapper>
-      {React.isValidElement(as)
-        ? React.cloneElement(as, props)
-        : render
-        ? render({
-            message: messageFromRegister || message,
-            messages: types
-          })
-        : React.createElement(as || React.Fragment, props)}
-    </Wrapper>
-  ) : (
-    <Spacer />
-  )
+  return error && (messageFromRegister || message) ? <Wrapper>{messageFromRegister || message}</Wrapper> : <Spacer space={30} mobSpace={30} />
 }
 
 const Wrapper = styled.div`
   color: #ff8787;
   padding-left: 20px;
   padding-bottom: 10px;
+  min-height: 30px;
 `

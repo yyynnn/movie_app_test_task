@@ -41,42 +41,46 @@ export const RegPage = () => {
   }
 
   useEffect(() => {
-    trigger('password_confirmation')
+    if (formState.isDirty) {
+      trigger('password_confirmation')
+    }
   }, [password, trigger])
 
   useEffect(() => {
-    trigger('password')
+    if (formState.isDirty) {
+      trigger('password')
+    }
   }, [password_confirmation, trigger])
 
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Flex flexDirection="column" alignItems="center" justifyContent="center">
-          <Logo />
-          <Spacer />
-          <Typography variant="h2" textAlign="center">
-            <b>Hi there!</b>
-            <br />
-            <b>Let&apos;s register!</b>
-          </Typography>
-          <Spacer />
+        <Logo />
+        <Spacer />
+        <Typography variant="h2" textAlign="center">
+          <b>Hi there!</b>
+          <br />
+          <b>Let&apos;s register!</b>
+        </Typography>
+        <Spacer />
 
-          <Row>
-            <Col>
-              <TextField {...register('name', { required: 'Fill out name' })} label="Username/login" variant="outlined" fullWidth autoComplete="username" error={!!errors.name} />
-              <Error name="name" />
-            </Col>
-            <Col>
-              <TextField {...register('surname', { required: 'Fill out surname' })} label="Surname" variant="outlined" fullWidth autoComplete="surname" error={!!errors.surname} />
-              <Error name="surname" />
-            </Col>
-          </Row>
+        <Row>
+          <Col lg={6}>
+            <TextField {...register('name', { required: 'Fill out name' })} label="Name" variant="outlined" fullWidth error={!!errors.name} />
+            <Error name="name" />
+          </Col>
+          <Col lg={6}>
+            <TextField {...register('surname', { required: 'Fill out surname' })} label="Surname" variant="outlined" fullWidth autoComplete="surname" error={!!errors.surname} />
+            <Error name="surname" />
+          </Col>
+        </Row>
 
-          <TextField {...register('email', { required: 'Fill out email' })} label="E-mail" variant="outlined" fullWidth autoComplete="email" error={!!errors.email} />
-          <Error name="email" />
+        <TextField {...register('email', { required: 'Fill out email' })} label="E-mail" variant="outlined" fullWidth autoComplete="email" error={!!errors.email} />
+        <Error name="email" />
 
-          <Row>
-            <Col>
+        <Row>
+          <Col lg={6}>
+            <div>
               <TextField
                 {...register('password', { required: 'Fill out password', validate: (value) => value === formValues.password_confirmation || 'The passwords do not match' })}
                 error={!!errors.password}
@@ -87,92 +91,92 @@ export const RegPage = () => {
                 fullWidth
               />
               <Error name="password" />
-            </Col>
-            <Col>
-              <TextField
-                {...register('password_confirmation', { required: 'Fill out password confirmation', validate: (value) => value === formValues.password || 'The passwords do not match' })}
-                error={!!errors.password_confirmation}
-                label="Password confirmation"
-                variant="outlined"
-                type="password"
-                autoComplete="current-password"
-                fullWidth
-              />
-              <Error name="password_confirmation" />
-            </Col>
-          </Row>
+            </div>
+          </Col>
+          <Col lg={6}>
+            <TextField
+              {...register('password_confirmation', { required: 'Fill out password confirmation', validate: (value) => value === formValues.password || 'The passwords do not match' })}
+              error={!!errors.password_confirmation}
+              label="Password confirmation"
+              variant="outlined"
+              type="password"
+              autoComplete="current-password"
+              fullWidth
+            />
+            <Error name="password_confirmation" />
+          </Col>
+        </Row>
 
-          <Row>
-            <Col md={6}>
-              <Controller
-                control={control}
-                name="user_position_id"
-                rules={{ required: 'Fill out user position' }}
-                render={({ field: { onChange, value, name } }) => {
-                  return (
-                    <FormControl fullWidth>
-                      <InputLabel id="user_position_id-label">User Position</InputLabel>
-                      <Select value={value || ''} onChange={onChange} labelId="user_position_id-label" label="User Position" error={!!errors[name]}>
-                        {workerPositions.map((workerPosition, idx) => {
-                          return (
-                            <MenuItem key={idx} value={idx}>
-                              {workerPosition.replaceAll('_', '')}
-                            </MenuItem>
-                          )
-                        })}
-                      </Select>
-                    </FormControl>
-                  )
-                }}
-              />
-              <Error name="user_position_id" />
-            </Col>
-            <Col md={6}>
-              <Controller
-                control={control}
-                name="factory_id"
-                rules={{ required: 'Fill out factory' }}
-                render={({ field: { onChange, ref, value, name } }) => {
-                  return (
-                    <FormControl fullWidth>
-                      <InputLabel id="Factory-label">Factory</InputLabel>
-                      <Select value={value || ''} onChange={onChange} labelId="Factory-label" label="Factory" error={!!errors[name]}>
-                        {factories.map((factory, idx) => {
-                          return (
-                            <MenuItem key={idx} value={idx}>
-                              {factory.replaceAll('_', '')}
-                            </MenuItem>
-                          )
-                        })}
-                      </Select>
-                    </FormControl>
-                  )
-                }}
-              />
-              <Error name="factory_id" />
-            </Col>
-          </Row>
+        <Row>
+          <Col md={6}>
+            <Controller
+              control={control}
+              name="user_position_id"
+              rules={{ required: 'Fill out user position' }}
+              render={({ field: { onChange, value, name } }) => {
+                return (
+                  <FormControl fullWidth>
+                    <InputLabel id="user_position_id-label">User Position</InputLabel>
+                    <Select value={value || ''} onChange={onChange} labelId="user_position_id-label" label="User Position" error={!!errors[name]}>
+                      {workerPositions.map((workerPosition, idx) => {
+                        return (
+                          <MenuItem key={idx} value={idx}>
+                            {workerPosition.replaceAll('_', '')}
+                          </MenuItem>
+                        )
+                      })}
+                    </Select>
+                  </FormControl>
+                )
+              }}
+            />
+            <Error name="user_position_id" />
+          </Col>
+          <Col md={6}>
+            <Controller
+              control={control}
+              name="factory_id"
+              rules={{ required: 'Fill out factory' }}
+              render={({ field: { onChange, value, name } }) => {
+                return (
+                  <FormControl fullWidth>
+                    <InputLabel id="Factory-label">Factory</InputLabel>
+                    <Select value={value || ''} onChange={onChange} labelId="Factory-label" label="Factory" error={!!errors[name]}>
+                      {factories.map((factory, idx) => {
+                        return (
+                          <MenuItem key={idx} value={idx}>
+                            {factory.replaceAll('_', '')}
+                          </MenuItem>
+                        )
+                      })}
+                    </Select>
+                  </FormControl>
+                )
+              }}
+            />
+            <Error name="factory_id" />
+          </Col>
+        </Row>
 
-          {/* {!!Object.keys(errors).length && (
+        {/* {!!Object.keys(errors).length && (
             <Alert severity="error">
               <AlertTitle>Error</AlertTitle>
               Please fill out these fields: {Object.keys(errors).join(', ')}
             </Alert>
           )} */}
 
-          <Spacer space={20} />
+        <Spacer space={20} />
 
-          <Button variant="contained" fullWidth size="large" type="submit">
-            REGISTER
-          </Button>
-          <Spacer />
-          <Flex>
-            {formError && (
-              <Alert variant="filled" severity="error">
-                Wrong login and/or password
-              </Alert>
-            )}
-          </Flex>
+        <Button variant="contained" fullWidth size="large" type="submit">
+          REGISTER
+        </Button>
+        <Spacer />
+        <Flex>
+          {formError && (
+            <Alert variant="filled" severity="error">
+              Wrong login and/or password
+            </Alert>
+          )}
         </Flex>
       </Form>
     </FormProvider>
