@@ -31,7 +31,6 @@ export const GlobalLayout = () => {
       ) : (
         <OutletWrapper>
           <Navbar />
-
           <Outlet />
         </OutletWrapper>
       )}

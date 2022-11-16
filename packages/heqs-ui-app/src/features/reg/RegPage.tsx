@@ -5,11 +5,11 @@ import { Col, Row } from 'react-grid-system'
 import { Controller, FieldValues, FormProvider, useForm } from 'react-hook-form'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
+import { ROUTES } from '../../consts/routes'
 import { useRegister } from '../api/generated/endpoints'
 import { RegisterBody } from '../api/generated/models'
 import { Factories, WorkerPositions } from '../api/mocks'
 import { useAuth } from '../auth/AuthProvider'
-import { Logo } from '../navigation/Logo'
 import { Error, Flex, Spacer } from '../primitives'
 
 type WorkerPositionsKeys = keyof typeof WorkerPositions
@@ -23,7 +23,13 @@ export const RegPage = () => {
   const location = useLocation()
   const auth = useAuth()
   const [formError, setFormError] = useState(false)
-  const { mutate } = useRegister()
+  const { mutate } = useRegister({
+    mutation: {
+      onSuccess: () => {
+        navigate(ROUTES.HOME)
+      }
+    }
+  })
   const methods = useForm()
   const { handleSubmit, control, formState, getValues, register, watch, trigger } = methods
 
@@ -36,7 +42,6 @@ export const RegPage = () => {
   const onSubmit = (data: FieldValues) => {
     const _data: RegisterBody = data
     mutate({ data: _data })
-    // navigate(from, { replace: true })
     return console.log(data)
   }
 
@@ -55,12 +60,9 @@ export const RegPage = () => {
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Logo />
         <Spacer />
         <Typography variant="h2" textAlign="center">
-          <b>Hi there!</b>
-          <br />
-          <b>Let&apos;s register!</b>
+          <b>Hi there! Let&apos;s register!</b>
         </Typography>
         <Spacer />
 
@@ -171,6 +173,9 @@ export const RegPage = () => {
           REGISTER
         </Button>
         <Spacer />
+        <Button variant="outlined" fullWidth size="large" onClick={() => navigate(ROUTES.LOGIN)}>
+          LOGIN
+        </Button>
         <Flex>
           {formError && (
             <Alert variant="filled" severity="error">

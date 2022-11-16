@@ -11,7 +11,11 @@ import { useBasicQuery } from '../hooks/useBasicQuery'
 import { Flex, Spacer } from '../primitives'
 
 export const AllTicketsPage = () => {
-  const { data: ticketList, isLoading } = useBasicQuery<{ data: Tickets }>({
+  const {
+    data: ticketList,
+    isLoading,
+    isSuccess
+  } = useBasicQuery<{ data: Tickets }>({
     apiPath: API.GET.TICKETS_LIST
   })
   const navigate = useNavigate()
@@ -21,7 +25,7 @@ export const AllTicketsPage = () => {
   return (
     <div>
       <Wrapper>
-        {tickets?.length ? (
+        {!isLoading && isSuccess ? (
           <DataGrid
             autoPageSize
             density="comfortable"
@@ -30,7 +34,7 @@ export const AllTicketsPage = () => {
               navigate(ROUTES.TICKET.replace(':id', row.id))
             }}
             headerHeight={70}
-            rows={tickets}
+            rows={tickets || []}
             columns={columns}
             pageSize={50}
             experimentalFeatures={{ newEditingApi: true }}

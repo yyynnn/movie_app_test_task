@@ -15,6 +15,7 @@ export const API = {
   },
   MUTATE: {
     ADD_TICKET: `${API_PATH_PREFIX}/tickets`,
-    LOGIN: '/logout'
+    LOGIN: '/login',
+    REGISTER: '/login'
   }
 }

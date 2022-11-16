@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import * as React from 'react'
 import { FieldError, FieldErrorsImpl, get, Merge, Message, useFormContext } from 'react-hook-form'
 
 import { RFCC } from '../../types/react'

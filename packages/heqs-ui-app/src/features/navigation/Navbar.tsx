@@ -29,7 +29,7 @@ export const Navbar = () => {
                 <Logo />
               </button>
             ) : (
-              <div />
+              <Logo />
             )}
             <Flex alignItems="center">
               <Spacer width={10} />

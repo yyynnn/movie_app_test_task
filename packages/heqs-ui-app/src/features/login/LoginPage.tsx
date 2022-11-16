@@ -1,13 +1,12 @@
 import styled from '@emotion/styled'
 import { Alert, Button, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { FieldValues, useForm } from 'react-hook-form'
+import { Controller, FieldValues, useForm } from 'react-hook-form'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
 import { useLogin } from '../api/generated/endpoints'
 import { useAuth } from '../auth/AuthProvider'
-import { Logo } from '../navigation/Logo'
 import { Flex, Spacer } from '../primitives'
 
 export const LoginPage = () => {
@@ -16,7 +15,7 @@ export const LoginPage = () => {
   const auth = useAuth()
 
   const methods = useForm()
-  const { handleSubmit, setError, formState, getValues, register, trigger } = methods
+  const { handleSubmit, setError, formState, getValues, register, control } = methods
   const formValues = getValues()
   const errors = formState.errors
 
@@ -24,7 +23,7 @@ export const LoginPage = () => {
     mutation: {
       onSuccess: ({ data }) => {
         const formValues = getValues()
-        auth.signin({ token: data.token, loginName: formValues.email }, () => {
+        auth.signin({ token: data.token, loginName: formValues.email, rememberMe: formValues.rememberMe }, () => {
           navigate(from, { replace: true })
         })
       },
@@ -64,7 +63,6 @@ export const LoginPage = () => {
         </Flex>
       ) : (
         <Flex flexDirection="column" alignItems="center" justifyContent="center">
-          <Logo />
           <Spacer />
           <Typography variant="h2" textAlign="center">
             <b>Hi there!</b>
@@ -73,14 +71,28 @@ export const LoginPage = () => {
           </Typography>
           <Spacer />
 
-          <TextField {...register('email', { required: 'Fill out email' })} label="E-mail" variant="outlined" fullWidth autoComplete="email" />
+          <TextField {...register('email', { required: 'Fill out email' })} label="E-mail" variant="outlined" fullWidth autoComplete="email" error={!!errors.email} />
           <Spacer />
-          <TextField {...register('password', { required: 'Fill out password' })} label="Password" variant="outlined" type="password" autoComplete="current-password" fullWidth />
+          <TextField
+            {...register('password', { required: 'Fill out password' })}
+            label="Password"
+            variant="outlined"
+            type="password"
+            autoComplete="current-password"
+            fullWidth
+            error={!!errors.password}
+          />
           <Spacer space={4} />
           <Flex alignItems="center" justifyContent="space-between" width="100%">
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" />
-            <Link to={ROUTES.FORGOT_PASSWORD}>I forgot password</Link>
+            <Controller
+              control={control}
+              name="rememberMe"
+              defaultValue={true}
+              render={({ field: { onChange, value } }) => <FormControlLabel label="Remember me" control={<Checkbox checked={value} onChange={onChange} />} />}
+            />
+            {/* <Link to={ROUTES.FORGOT_PASSWORD}>I forgot password</Link> */}
           </Flex>
+
           <Spacer space={20} />
           <Button variant="contained" fullWidth size="large" type="submit">
             LOGIN
