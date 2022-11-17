@@ -39,16 +39,7 @@ export const GlobalLayout = () => {
   )
 }
 
-const TSwrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 20px;
-`
-
 const OutletWrapper = styled.div`
   height: -webkit-fill-available;
-  /* display: flex; */
-  /* align-items: center; */
   height: calc(100% - 120px);
 `

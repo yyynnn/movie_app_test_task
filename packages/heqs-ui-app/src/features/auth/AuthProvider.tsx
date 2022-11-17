@@ -25,12 +25,9 @@ const AuthContext = React.createContext<AuthContextType>(null!)
 
 const interceptorsInit = () => {
   const requestHeaders = (config: any) => {
-    console.log('🐸 Pepe said => requestHeaders => config', config.url)
     const lstoken = localStorage.getItem('token')?.replaceAll('"', '')
 
-    if (lstoken && config && config?.url !== API.MUTATE.LOGIN && config?.url !== API.MUTATE.REGISTER) {
-      console.log('🐸 Pepe said => requestHeaders => lstoken', lstoken)
-
+    if (lstoken && config && !config?.url.includes(API.MUTATE.LOGIN) && !config?.url.includes(API.MUTATE.REGISTER)) {
       config.headers.Authorization = `Bearer ${lstoken}`
     }
 
@@ -40,9 +37,9 @@ const interceptorsInit = () => {
   const responseHeaders = (config: any) => {
     const newResponseToken = config?.headers?.AccessToken?.replace('Bearer ', '')
 
-    if (newResponseToken && config && config?.url !== API.MUTATE.LOGIN && config?.url !== API.MUTATE.REGISTER) {
+    if (newResponseToken && config && !config?.url.includes(API.MUTATE.LOGIN) && !config?.url.includes(API.MUTATE.REGISTER)) {
       localStorage.setItem('token', newResponseToken)
-      config.headers.AccessToken = `${newResponseToken}`
+      config.headers.AccessToken = `Bearer ${newResponseToken}`
     }
     return config
   }

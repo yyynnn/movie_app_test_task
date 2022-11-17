@@ -1,49 +1,91 @@
 import styled from '@emotion/styled'
-import { Box, Breadcrumbs, CircularProgress, Typography } from '@mui/material'
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import { Box, Breadcrumbs, CircularProgress, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
 import { Tickets } from '../../types/api'
+import { useReadTicketsList } from '../api/generated/endpoints'
 import { useBasicQuery } from '../hooks/useBasicQuery'
 import { Flex, Spacer } from '../primitives'
+import { Max } from '../primitives/Max'
 
 export const AllTicketsPage = () => {
+  const navigate = useNavigate()
+  const [searchAttrib, setSearchAttrib] = useState('')
+  const [searchString, setSearchString] = useState('')
+
   const {
     data: ticketList,
     isLoading,
-    isSuccess
-  } = useBasicQuery<{ data: Tickets }>({
-    apiPath: API.GET.TICKETS_LIST
+    refetch
+  } = useReadTicketsList({
+    axios: {
+      params: {
+        searchAttrib,
+        searchString
+      }
+    }
   })
-  const navigate = useNavigate()
-
   const { data: tickets } = ticketList || {}
+
+  useEffect(() => {
+    refetch()
+  }, [searchString, searchAttrib])
 
   return (
     <div>
+      <Max maxWidth={600}>
+        <TextField
+          variant="outlined"
+          fullWidth
+          label="Search query"
+          value={searchString}
+          onChange={(e) => setSearchString(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchRoundedIcon />
+              </InputAdornment>
+            )
+          }}
+        />
+        <Spacer width={10} />
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Col attribute</InputLabel>
+          <Select labelId="demo-simple-select-label" id="demo-simple-select" value={searchAttrib} displayEmpty label="Col attribute" onChange={(e) => setSearchAttrib(e.target.value)}>
+            {[...columns, { field: 'any', selected: false }].map((col, idx) => {
+              return (
+                <MenuItem key={idx} value={col.field} selected={!!col.selected}>
+                  {col.field}
+                </MenuItem>
+              )
+            })}
+          </Select>
+        </FormControl>
+      </Max>
+
+      <Spacer />
+
       <Wrapper>
-        {!isLoading && isSuccess ? (
-          <DataGrid
-            autoPageSize
-            density="comfortable"
-            onRowClick={(row) => {
-              // @ts-ignore
-              navigate(ROUTES.TICKET.replace(':id', row.id))
-            }}
-            headerHeight={70}
-            rows={tickets || []}
-            columns={columns}
-            pageSize={50}
-            experimentalFeatures={{ newEditingApi: true }}
-          />
-        ) : (
-          <Flex width="100%" height="100%" flexDirection="column" alignItems="center" justifyContent="center">
-            <CircularProgress />
-          </Flex>
-        )}
+        <DataGrid
+          autoPageSize
+          density="comfortable"
+          onRowClick={(row) => {
+            // @ts-ignore
+            navigate(ROUTES.TICKET.replace(':id', row.id))
+          }}
+          headerHeight={70}
+          // @ts-ignore
+          rows={tickets?.data || []}
+          columns={columns}
+          pageSize={50}
+          loading={isLoading}
+          experimentalFeatures={{ newEditingApi: true }}
+        />
       </Wrapper>
     </div>
   )
@@ -57,68 +99,86 @@ const Wrapper = styled(Flex)`
   }
 `
 
-const columns: GridColDef[] = [
+const columns: {
+  field: string
+  headerName: string
+  editable: boolean
+  selected: boolean
+  width?: number
+  minWidth?: number
+}[] = [
   {
     field: 'status',
     headerName: 'Status',
-    editable: true
+    editable: true,
+    selected: false
   },
   {
     field: 'due_date',
     headerName: 'Due Date',
-    editable: true
+    editable: true,
+    selected: false
   },
   {
     field: 'description',
     headerName: 'Description',
-    editable: true
+    editable: true,
+    selected: false
   },
   {
     field: 'responsible',
     headerName: 'Responsible',
-    editable: true
+    editable: true,
+    selected: false
   },
-  { field: 'id', headerName: 'ID', width: 90 },
+  { field: 'id', headerName: 'ID', width: 90, minWidth: 90, editable: true, selected: false },
   {
     field: 'date_created',
     headerName: 'Creation Date',
     minWidth: 150,
-    editable: true
+    editable: true,
+    selected: false
   },
   {
     field: 'time_created',
     headerName: 'Creation Time',
     minWidth: 150,
-    editable: true
+    editable: true,
+    selected: false
   },
   {
     field: 'correction',
     headerName: 'Correction',
     minWidth: 150,
-    editable: true
+    editable: true,
+    selected: false
   },
   {
     field: 'extension',
     headerName: 'Extension',
     minWidth: 150,
-    editable: true
+    editable: true,
+    selected: false
   },
   {
     field: 'class',
     headerName: 'Class',
     minWidth: 150,
-    editable: true
+    editable: true,
+    selected: false
   },
   {
     field: 'category',
     headerName: 'Category',
     minWidth: 150,
-    editable: true
+    editable: true,
+    selected: false
   },
   {
     field: 'workcenter',
     headerName: 'Workcenter',
-    editable: true
+    editable: true,
+    selected: false
   }
 ]
 

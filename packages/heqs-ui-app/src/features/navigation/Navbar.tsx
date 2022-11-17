@@ -23,7 +23,7 @@ export const Navbar = () => {
     <Wrapper id="main_navbar">
       <Row>
         <Col>
-          <Pad padding={'40px 0'} alignItems="center" justifyContent="space-between">
+          <Pad padding="40px 0" alignItems="center" justifyContent="space-between">
             {!!auth.token ? (
               <button onClick={() => navigate(ROUTES.HOME)}>
                 <Logo />

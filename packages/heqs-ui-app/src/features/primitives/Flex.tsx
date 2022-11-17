@@ -5,6 +5,7 @@ export type TFlexProps = {
   width?: number | string
   flexDirection?: 'row' | 'column' | 'row-reverse' | 'column-reverse' | 'inherit' | 'initial' | 'unset'
   wrap?: 'wrap' | 'nowrap' | 'wrap-reverse'
+  gap?: number
   justifyContent?:
     | 'start'
     | 'end'
@@ -37,6 +38,7 @@ export const Flex = styled.div<TFlexProps>`
     justify-content: ${props.justifyContent ?? 'stretch'};
     ${props.alignContent ? `align-content: ${props.alignContent};` : ''}
     align-items: ${props.alignItems ?? 'stretch'};
+    ${props.gap ? `grid-gap: ${props.gap}px;` : ''}
     ${props.flexShrink || typeof props.flexShrink === 'number' ? `flex-shrink: ${typeof props.flexShrink === 'number' ? `${props.flexShrink}` : props.flexShrink};` : ''}
     ${props.flexGrow || typeof props.flexGrow === 'number' ? `flex-grow: ${typeof props.flexGrow === 'number' ? `${props.flexGrow}` : props.flexGrow};` : ''}
   `}

@@ -21,6 +21,7 @@ import { useBasicMutation } from '../hooks/useBasicMutation'
 import { useBasicQuery } from '../hooks/useBasicQuery'
 import { Flex, Pad, Spacer } from '../primitives'
 import { LinearProgressBuffer } from '../primitives/LinearProgressBuffer'
+import { CorrectiveActions } from './CorrectiveActions'
 
 type TicketConstructorType = {
   heading?: string | undefined
@@ -33,6 +34,7 @@ type TicketConstructorType = {
   hasDamagedItem?: boolean | undefined
   hasShortDescription?: boolean | undefined
   readOnly?: boolean | undefined
+  hasCorrectiveActions?: boolean | undefined
   initialData?: any
 }
 
@@ -47,6 +49,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
   hasDamagedItem = true,
   hasShortDescription = false,
   readOnly = false,
+  hasCorrectiveActions = true,
   initialData
 }) => {
   const { mutate: addTicket, isLoading: isAddingTicket } = useBasicMutation<any>({
@@ -283,7 +286,16 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
           )}
           <Spacer />
         </Col>
+
+        {hasCorrectiveActions && (
+          <Col>
+            <Spacer />
+            <CorrectiveActions />
+          </Col>
+        )}
       </Row>
+
+      <Spacer />
 
       {!!Object.keys(errors).length && (
         <Alert severity="error">

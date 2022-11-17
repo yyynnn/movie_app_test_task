@@ -9,7 +9,6 @@ import { Spacer } from '../primitives'
 
 export const BreadNav = () => {
   const location = useLocation()
-  console.log('🐸 Pepe said => BreadNav => location', location)
   const isTicket = location.pathname.includes('/ticket/')
   const ticketId = extractNumber(location.pathname)
 

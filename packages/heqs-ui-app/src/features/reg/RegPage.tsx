@@ -22,11 +22,16 @@ export const RegPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const auth = useAuth()
-  const [formError, setFormError] = useState(false)
+  const [formError, setFormError] = useState('')
   const { mutate } = useRegister({
     mutation: {
       onSuccess: () => {
         navigate(ROUTES.HOME)
+      },
+      onError: (error) => {
+        const errorMgs = JSON.parse(error.request.responseText)
+        // @ts-ignore
+        setFormError(errorMgs?.errors[0] || '')
       }
     }
   })
@@ -160,26 +165,24 @@ export const RegPage = () => {
           </Col>
         </Row>
 
-        {/* {!!Object.keys(errors).length && (
-            <Alert severity="error">
-              <AlertTitle>Error</AlertTitle>
-              Please fill out these fields: {Object.keys(errors).join(', ')}
-            </Alert>
-          )} */}
-
         <Spacer space={20} />
 
         <Button variant="contained" fullWidth size="large" type="submit">
           REGISTER
         </Button>
+
         <Spacer />
+
         <Button variant="outlined" fullWidth size="large" onClick={() => navigate(ROUTES.LOGIN)}>
           LOGIN
         </Button>
-        <Flex>
+
+        <Spacer />
+
+        <Flex justifyContent="center" alignItems="center">
           {formError && (
             <Alert variant="filled" severity="error">
-              Wrong login and/or password
+              {formError || 'Network error'}
             </Alert>
           )}
         </Flex>
