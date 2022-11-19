@@ -5,18 +5,18 @@
  * Документация для микро сервиса
  * OpenAPI spec version: 1.0.0
  */
-import type { TicketRootCausesItem } from './ticketRootCausesItem'
+import type { TicketRootCausesItem } from './ticketRootCausesItem';
 
 /**
  * Ticket model
  */
 export interface Ticket {
-  /** ID */
-  id?: number
+  /** id */
+  id?: number;
   /** ticket_class_id */
-  ticket_class_id?: number
+  ticket_class_id?: number;
   /** photo */
-  photo?: string
+  photo?: string;
   /** rootCauses */
-  rootCauses?: TicketRootCausesItem[]
+  rootCauses?: TicketRootCausesItem[];
 }

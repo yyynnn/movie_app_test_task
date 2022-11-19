@@ -95,7 +95,7 @@
                   "properties": {
                     "token": {
                       "description": "Токен авторизации",
-                      "type": "object"
+                      "type": "string"
                     }
                   },
                   "type": "object",
@@ -166,12 +166,23 @@
                   "properties": {
                     "token": {
                       "description": "Токен авторизации",
+                      "type": "string"
+                    },
+                    "user": {
+                      "description": "Данные пользователя",
                       "type": "object"
                     }
                   },
                   "type": "object",
                   "example": {
-                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5N2JhN2NmZS1hNWQ4LTQ2NDAtYmE3MC02OTU3NDhkMmZhYTYiL..."
+                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5N2JhN2NmZS1hNWQ4LTQ2NDAtYmE3MC02OTU3NDhkMmZhYTYiL...",
+                    "user": {
+                      "name": "Dmitriy",
+                      "surname": "Aleskeev",
+                      "user_position_id": 1,
+                      "factory_id": 1,
+                      "email": "test@mail.ru"
+                    }
                   }
                 }
               }
@@ -228,6 +239,57 @@
         }
       }
     },
+    "/readFactorie": {
+      "get": {
+        "tags": ["UserPositions"],
+        "summary": "Получение списка фабрик",
+        "description": "Получение списка фабрик",
+        "operationId": "readFactorie",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Factory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tickets/{ticket}": {
+      "get": {
+        "tags": ["Tickets"],
+        "summary": "Получение отдельного тикета",
+        "description": "Получение отдельного тикета",
+        "operationId": "readTicket",
+        "parameters": [
+          {
+            "name": "ticket",
+            "in": "path",
+            "description": "Идентификатор тикета",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tickets": {
       "post": {
         "tags": ["Tickets"],
@@ -261,6 +323,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readUsersPositions": {
+      "get": {
+        "tags": ["UserPositions"],
+        "summary": "Получение списка должностей",
+        "description": "Получение списка должностей",
+        "operationId": "readUsersPositions",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPosition"
                 }
               }
             }
@@ -311,13 +393,51 @@
   },
   "components": {
     "schemas": {
+      "Factory": {
+        "title": "Factory",
+        "description": "Factory",
+        "properties": {
+          "id": {
+            "title": "id",
+            "description": "id",
+            "type": "integer",
+            "format": "bigint20",
+            "example": 1
+          },
+          "factory_number": {
+            "title": "factory_number",
+            "description": "factory_number",
+            "type": "string",
+            "format": "varchar",
+            "example": "04"
+          },
+          "title": {
+            "title": "title",
+            "description": "title",
+            "type": "string",
+            "format": "varchar",
+            "example": "Peikko Norway"
+          },
+          "country_id": {
+            "title": "country_id",
+            "description": "country_id",
+            "type": "integer",
+            "format": "bigint20",
+            "example": 1
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "Factory"
+        }
+      },
       "Ticket": {
         "title": "Ticket",
         "description": "Ticket model",
         "properties": {
           "id": {
-            "title": "ID",
-            "description": "ID",
+            "title": "id",
+            "description": "id",
             "type": "integer",
             "format": "bigint20",
             "example": 1
@@ -380,6 +500,37 @@
         "description": "User model",
         "xml": {
           "name": "User"
+        }
+      },
+      "UserPosition": {
+        "title": "UserPosition",
+        "description": "UserPosition model",
+        "properties": {
+          "id": {
+            "title": "id",
+            "description": "id",
+            "type": "integer",
+            "format": "bigint20",
+            "example": 1
+          },
+          "title": {
+            "title": "ID",
+            "description": "ID",
+            "type": "string",
+            "format": "varchar",
+            "example": "Worker"
+          },
+          "user_role_id": {
+            "title": "user_role_id",
+            "description": "user_role_id",
+            "type": "integer",
+            "format": "integer11",
+            "example": 1
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "UserPosition"
         }
       },
       "Workcenter": {

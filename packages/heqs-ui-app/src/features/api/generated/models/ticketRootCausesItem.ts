@@ -7,10 +7,10 @@
  */
 
 export type TicketRootCausesItem = {
-  id?: number
-  ticket_class_id?: number
-  root_cause_category?: string
-  created_at?: unknown
-  updated_at?: unknown
-  deleted_at?: unknown
-}
+  id?: number;
+  ticket_class_id?: number;
+  root_cause_category?: string;
+  created_at?: unknown;
+  updated_at?: unknown;
+  deleted_at?: unknown;
+};

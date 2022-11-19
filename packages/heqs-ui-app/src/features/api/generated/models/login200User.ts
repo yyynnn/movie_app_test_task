@@ -7,6 +7,12 @@
  */
 
 /**
- * User model
+ * Данные пользователя
  */
-export type User = unknown;
+export type Login200User = {
+  email: string
+  factory_id: number
+  name: string
+  surname: string
+  user_position_id: number
+}

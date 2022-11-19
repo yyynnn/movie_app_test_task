@@ -7,6 +7,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
+import { Login200User } from '../api/generated/models'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { Absolute, Flex, Pointer, Spacer } from '../primitives'
 
@@ -122,19 +123,21 @@ const resInterceptor = axios.interceptors.response.use(interceptorsInit().respon
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   // @ts-ignore
-  const [user, setUser] = useLocalStorage('user')
+  const [_user, setUser] = useLocalStorage('user')
   const [token, setToken] = useLocalStorage('token')
   const [loginName, setLoginName] = useLocalStorage('loginName')
   const [isOnetimeAuth, setOnetimeAuth] = useState(false)
   const navigate = useNavigate()
+  const user = typeof _user === 'string' ? JSON.parse(_user) : _user
+  console.log('🐸 Pepe said => AuthProvider => user', user)
 
-  const signin = (newUser: { token: string; loginName: string; rememberMe: boolean }, callback: VoidFunction) => {
+  const signin = (newUser: { token: string; loginName: string; rememberMe: ConstrainBooleanParameters; user: Login200User }, callback: VoidFunction) => {
     if (newUser.rememberMe) {
       setToken(newUser.token)
     } else {
       setOnetimeAuth(true)
     }
-    setUser({ loginName })
+    setUser(typeof newUser.user === 'string' ? JSON.stringify(newUser.user) : newUser.user)
     setLoginName(newUser.loginName)
 
     callback?.()
@@ -148,8 +151,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     callback?.()
   }
 
-  const value = { user, signin, signout, token, loginName, isOnetimeAuth }
-
   useEffect(() => {
     return () => {
       // remove all intercepts when done
@@ -157,6 +158,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       axios.interceptors.response.eject(resInterceptor)
     }
   }, [])
+
+  const value = { user, signin, signout, token, loginName, isOnetimeAuth }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

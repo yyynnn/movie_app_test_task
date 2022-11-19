@@ -7,6 +7,15 @@
  */
 
 /**
- * User model
+ * Factory
  */
-export type User = unknown;
+export interface Factory {
+  /** id */
+  id?: number
+  /** factory_number */
+  factory_number?: string
+  /** title */
+  title?: string
+  /** country_id */
+  country_id?: number
+}

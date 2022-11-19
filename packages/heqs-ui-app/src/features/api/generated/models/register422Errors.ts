@@ -9,4 +9,4 @@
 /**
  * Ошибка регистрации
  */
-export type Register422Errors = { [key: string]: any }
+export type Register422Errors = { [key: string]: any };

@@ -6,39 +6,14 @@ import { Link } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
+import { Tickets } from '../../types/api'
+import { AllTicketsPage } from '../allTickets/AllTicketsPage'
 import { useBasicQuery } from '../hooks/useBasicQuery'
 import { Flex, Spacer } from '../primitives'
-import { Tickets } from '../../types/api'
 
 export const AllCorrectiveActionsPage = () => {
-  const { data: ticketList, isLoading } = useBasicQuery<{ data: Tickets }>({
-    apiPath: API.GET.TICKETS_LIST
-  })
-
-  const { data: tickets } = ticketList || {}
-
-  return (
-    <div>
-      <Wrapper>
-        {tickets?.length ? (
-          <DataGrid rows={tickets} columns={columns} pageSize={50} checkboxSelection disableSelectionOnClick experimentalFeatures={{ newEditingApi: true }} />
-        ) : (
-          <Flex width="100%" height="100%" flexDirection="column" alignItems="center" justifyContent="center">
-            <CircularProgress />
-          </Flex>
-        )}
-      </Wrapper>
-    </div>
-  )
+  return <AllTicketsPage />
 }
-
-const Wrapper = styled(Flex)`
-  height: 666px;
-
-  div.MuiDataGrid-root {
-    border-radius: 10px !important;
-  }
-`
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 90 },

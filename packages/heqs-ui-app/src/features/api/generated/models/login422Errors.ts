@@ -9,4 +9,4 @@
 /**
  * Ошибка авторизации
  */
-export type Login422Errors = { [key: string]: any }
+export type Login422Errors = { [key: string]: any };

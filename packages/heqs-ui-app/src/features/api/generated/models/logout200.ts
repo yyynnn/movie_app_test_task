@@ -8,5 +8,5 @@
 
 export type Logout200 = {
   /** Сообщение */
-  message?: string
-}
+  message?: string;
+};

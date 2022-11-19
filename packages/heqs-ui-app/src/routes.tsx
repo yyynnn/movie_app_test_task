@@ -25,6 +25,12 @@ export const routes = [
     featureActive: true
   },
   {
+    element: <AllCorrectiveActionsPage />,
+    path: ROUTES.PERSONAL_TASKS,
+    privatePage: true,
+    featureActive: true
+  },
+  {
     element: <WorkcentersPage />,
     path: ROUTES.WORKCENTERS,
     privatePage: true,

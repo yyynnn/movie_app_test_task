@@ -7,6 +7,13 @@
  */
 
 /**
- * User model
+ * UserPosition model
  */
-export type User = unknown;
+export interface UserPosition {
+  /** id */
+  id?: number;
+  /** ID */
+  title?: string;
+  /** user_role_id */
+  user_role_id?: number;
+}

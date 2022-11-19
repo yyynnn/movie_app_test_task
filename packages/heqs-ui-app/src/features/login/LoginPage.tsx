@@ -23,7 +23,7 @@ export const LoginPage = () => {
     mutation: {
       onSuccess: ({ data }) => {
         const formValues = getValues()
-        auth.signin({ token: data.token, loginName: formValues.email, rememberMe: formValues.rememberMe }, () => {
+        auth.signin({ token: data.token, loginName: formValues.email, rememberMe: formValues.rememberMe, user: data.user }, () => {
           navigate(from, { replace: true })
         })
       },

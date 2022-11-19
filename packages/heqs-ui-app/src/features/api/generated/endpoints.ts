@@ -10,7 +10,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
 
-import type { Login200, Login422, LoginBody, Logout200, Register200, Register422, RegisterBody, Ticket, User, Workcenter } from './models'
+import type { Factory, Login200, Login422, LoginBody, Logout200, Register200, Register422, RegisterBody, Ticket, User, UserPosition, Workcenter } from './models'
 
 /**
  * Получение информации о настройках php на сервере
@@ -127,6 +127,66 @@ export const useLogout = <TData = Awaited<ReturnType<typeof logout>>, TError = A
 }
 
 /**
+ * Получение списка фабрик
+ * @summary Получение списка фабрик
+ */
+export const readFactorie = (options?: AxiosRequestConfig): Promise<AxiosResponse<Factory>> => {
+  return axios.get(`/readFactorie`, options)
+}
+
+export const getReadFactorieQueryKey = () => [`/readFactorie`]
+
+export type ReadFactorieQueryResult = NonNullable<Awaited<ReturnType<typeof readFactorie>>>
+export type ReadFactorieQueryError = AxiosError<unknown>
+
+export const useReadFactorie = <TData = Awaited<ReturnType<typeof readFactorie>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof readFactorie>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getReadFactorieQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readFactorie>>> = ({ signal }) => readFactorie({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof readFactorie>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * Получение отдельного тикета
+ * @summary Получение отдельного тикета
+ */
+export const readTicket = (ticket: number, options?: AxiosRequestConfig): Promise<AxiosResponse<Ticket>> => {
+  return axios.get(`/tickets/${ticket}`, options)
+}
+
+export const getReadTicketQueryKey = (ticket: number) => [`/tickets/${ticket}`]
+
+export type ReadTicketQueryResult = NonNullable<Awaited<ReturnType<typeof readTicket>>>
+export type ReadTicketQueryError = AxiosError<unknown>
+
+export const useReadTicket = <TData = Awaited<ReturnType<typeof readTicket>>, TError = AxiosError<unknown>>(
+  ticket: number,
+  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof readTicket>>, TError, TData>; axios?: AxiosRequestConfig }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getReadTicketQueryKey(ticket)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readTicket>>> = ({ signal }) => readTicket(ticket, { signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof readTicket>>, TError, TData>(queryKey, queryFn, { enabled: !!ticket, ...queryOptions }) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
  * Сохранение тикета
  * @summary Сохранение тикета
  */
@@ -175,6 +235,36 @@ export const useReadTicketsList = <TData = Awaited<ReturnType<typeof readTickets
   const queryFn: QueryFunction<Awaited<ReturnType<typeof readTicketsList>>> = ({ signal }) => readTicketsList({ signal, ...axiosOptions })
 
   const query = useQuery<Awaited<ReturnType<typeof readTicketsList>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * Получение списка должностей
+ * @summary Получение списка должностей
+ */
+export const readUsersPositions = (options?: AxiosRequestConfig): Promise<AxiosResponse<UserPosition>> => {
+  return axios.get(`/readUsersPositions`, options)
+}
+
+export const getReadUsersPositionsQueryKey = () => [`/readUsersPositions`]
+
+export type ReadUsersPositionsQueryResult = NonNullable<Awaited<ReturnType<typeof readUsersPositions>>>
+export type ReadUsersPositionsQueryError = AxiosError<unknown>
+
+export const useReadUsersPositions = <TData = Awaited<ReturnType<typeof readUsersPositions>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof readUsersPositions>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getReadUsersPositionsQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readUsersPositions>>> = ({ signal }) => readUsersPositions({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof readUsersPositions>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 

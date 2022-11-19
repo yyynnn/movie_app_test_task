@@ -1,23 +1,23 @@
 body {
-    font-family: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif!important;
-    background-color: inherit !important;
-    color: inherit !important;
-    font-size: 16px;
-    font-weight: 400;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%;
-    padding: 0 20px;
-    min-height: 100vh;
-    display: flex;
-    /* align-items: center; */
-    justify-content: center;
+  font-family: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif !important;
+  background-color: inherit !important;
+  color: inherit !important;
+  font-size: 16px;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  padding: 0 20px;
+  min-height: 100vh;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
 }
 
 * {
-  font-family: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif!important;
+  font-family: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif !important;
 }
 
 #root {
@@ -49,6 +49,11 @@ a:visited {
 }
 
 .MuiDataGrid-main > div:nth-child(3) {
-  display: none!important;
-  visibility: hidden!important;
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.MuiBackdrop-root {
+  backdrop-filter: blur(16px);
+  background-color: #f0f8ff00 !important;
 }
