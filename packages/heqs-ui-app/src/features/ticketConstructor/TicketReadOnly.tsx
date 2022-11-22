@@ -3,8 +3,8 @@ import React from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
 import { API } from '../../consts/api'
-import { useBasicQuery } from '../hooks/useBasicQuery'
 import { Ticket } from '../../types/api'
+import { useBasicQuery } from '../hooks/useBasicQuery'
 import { TicketConstructor } from './TicketConstructor'
 
 export const TicketReadOnly = () => {

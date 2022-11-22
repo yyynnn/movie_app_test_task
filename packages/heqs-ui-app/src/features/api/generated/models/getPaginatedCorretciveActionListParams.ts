@@ -6,7 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Workcenter model
- */
-export type Workcenter = unknown;
+export type GetPaginatedCorretciveActionListParams = { page?: number; per_page?: number };

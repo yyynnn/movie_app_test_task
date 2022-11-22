@@ -101,10 +101,10 @@ export const Navbar = () => {
           open={drawerOpen}
           onClose={() => toggleDrawer(false)}
         >
-          <Pad width="100%" height="100%" flexDirection="column" justifyContent="space-between">
+          <Pad pad="40px" width="100%" height="100%" flexDirection="column">
             <Absolute right={0} top={0} onClick={() => toggleDrawer(false)}>
               <div>
-                <Pad pad={50}>
+                <Pad pad={20}>
                   <CloseRounded />
                 </Pad>
               </div>
@@ -124,9 +124,21 @@ export const Navbar = () => {
                   <Typography>{workersKeys[auth?.user?.user_position_id]?.replaceAll('_', ' ')}</Typography>
                 </div>
               </Flex>
+            </AvatarBlock>
 
-              <Spacer />
+            <Spacer />
 
+            <AvatarBlock>
+              <Typography variant="h4">
+                <b>Factory</b>
+              </Typography>
+              <Spacer space={4} />
+              <Typography>ID: {auth?.user?.factory_id}</Typography>
+            </AvatarBlock>
+
+            <Spacer />
+
+            <AvatarBlock>
               <Link to={ROUTES.SYSTEM_PREFERENCE}>
                 <Flex
                   gap={4}
@@ -136,22 +148,27 @@ export const Navbar = () => {
                   }}
                 >
                   <SettingsRoundedIcon />
-                  <Typography variant="h6">System preferences</Typography>
+                  <Typography variant="h4">System preferences</Typography>
                 </Flex>
               </Link>
-              <Spacer space={4} />
-              <MLink
-                onClick={() => {
-                  toggleDrawer(false)
-                  return auth.signout()
-                }}
-              >
-                <Flex gap={4} alignItems="center">
-                  <MeetingRoomRoundedIcon />
-                  <Typography variant="h6">Logout</Typography>
-                </Flex>
-              </MLink>
             </AvatarBlock>
+
+            <Spacer />
+
+            <Button
+              variant="contained"
+              size="large"
+              fullWidth
+              onClick={() => {
+                toggleDrawer(false)
+                return auth.signout()
+              }}
+            >
+              <Flex gap={4} alignItems="center">
+                <MeetingRoomRoundedIcon />
+                <Typography variant="h6">Logout</Typography>
+              </Flex>
+            </Button>
           </Pad>
         </Drawer>
       </Wrapper>
@@ -162,13 +179,15 @@ export const Navbar = () => {
 
 const Avatar = styled.div`
   height: 100px;
+  min-height: 100px;
   width: 100px;
+  min-width: 100px;
   background-color: #3300ff;
   font-weight: 900;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 6px;
+  border-radius: 60px;
   font-size: 40px;
 `
 

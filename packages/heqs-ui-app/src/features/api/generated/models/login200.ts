@@ -5,11 +5,11 @@
  * Документация для микро сервиса
  * OpenAPI spec version: 1.0.0
  */
-import type { Login200User } from './login200User'
+import type { Login200User } from './login200User';
 
 export type Login200 = {
   /** Токен авторизации */
-  token?: string
+  token?: string;
   /** Данные пользователя */
-  user?: Login200User
-}
+  user?: Login200User;
+};

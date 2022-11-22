@@ -3,7 +3,7 @@
 //  http://heqs.trydev.ru/api/readTicketsList
 // http://heqs.trydev.ru/api/tickets
 
-export const API_PATH_PREFIX = 'https://dev.heqsapp.com/api'
+export const API_PATH_PREFIX = 'https://heqs-services-dev.onrender.com/api/'
 
 export const API = {
   GET: {

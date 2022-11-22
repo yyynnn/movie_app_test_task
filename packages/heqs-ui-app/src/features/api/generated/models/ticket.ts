@@ -5,18 +5,29 @@
  * Документация для микро сервиса
  * OpenAPI spec version: 1.0.0
  */
-import type { TicketRootCausesItem } from './ticketRootCausesItem';
 
 /**
  * Ticket model
  */
 export interface Ticket {
-  /** id */
-  id?: number;
   /** ticket_class_id */
   ticket_class_id?: number;
-  /** photo */
-  photo?: string;
-  /** rootCauses */
-  rootCauses?: TicketRootCausesItem[];
+  /** ticket_category_id */
+  ticket_category_id?: number;
+  /** workcenter_id */
+  workcenter_id?: number;
+  /** ticket_status_id */
+  ticket_status_id?: number;
+  /** user_id */
+  user_id?: number;
+  /** date_created */
+  date_created?: string;
+  /** time_created */
+  time_created?: string;
+  /** correction */
+  correction?: string;
+  /** extension */
+  extension?: string;
+  /** damaged_item */
+  damaged_item?: string;
 }

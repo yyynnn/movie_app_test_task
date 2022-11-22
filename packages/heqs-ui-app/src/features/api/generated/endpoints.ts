@@ -10,7 +10,23 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
 
-import type { Factory, Login200, Login422, LoginBody, Logout200, Register200, Register422, RegisterBody, Ticket, User, UserPosition, Workcenter } from './models'
+import type {
+  CorrectiveAction,
+  Factory,
+  GetPaginatedCorretciveActionListParams,
+  GetPaginatedTicketListParams,
+  Login200,
+  Login422,
+  LoginBody,
+  Logout200,
+  Register200,
+  Register422,
+  RegisterBody,
+  Ticket,
+  User,
+  UserPosition,
+  Workcenter
+} from './models'
 
 /**
  * Получение информации о настройках php на сервере
@@ -40,6 +56,289 @@ export const usePhp = <TData = Awaited<ReturnType<typeof php>>, TError = AxiosEr
   query.queryKey = queryKey
 
   return query
+}
+
+/**
+ * @summary Get Paginated Corretcive Action List
+ */
+export const getPaginatedCorretciveActionList = (params?: GetPaginatedCorretciveActionListParams, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/corretcive_actions`, {
+    ...options,
+    params: { ...params, ...options?.params }
+  })
+}
+
+export const getGetPaginatedCorretciveActionListQueryKey = (params?: GetPaginatedCorretciveActionListParams) => [`/corretcive_actions`, ...(params ? [params] : [])]
+
+export type GetPaginatedCorretciveActionListQueryResult = NonNullable<Awaited<ReturnType<typeof getPaginatedCorretciveActionList>>>
+export type GetPaginatedCorretciveActionListQueryError = AxiosError<unknown>
+
+export const useGetPaginatedCorretciveActionList = <TData = Awaited<ReturnType<typeof getPaginatedCorretciveActionList>>, TError = AxiosError<unknown>>(
+  params?: GetPaginatedCorretciveActionListParams,
+  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof getPaginatedCorretciveActionList>>, TError, TData>; axios?: AxiosRequestConfig }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetPaginatedCorretciveActionListQueryKey(params)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPaginatedCorretciveActionList>>> = ({ signal }) => getPaginatedCorretciveActionList(params, { signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getPaginatedCorretciveActionList>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Create New Corretcive Action
+ */
+export const createNewCorretciveAction = (correctiveAction: CorrectiveAction, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.post(`/corretcive_actions`, correctiveAction, options)
+}
+
+export type CreateNewCorretciveActionMutationResult = NonNullable<Awaited<ReturnType<typeof createNewCorretciveAction>>>
+export type CreateNewCorretciveActionMutationBody = CorrectiveAction
+export type CreateNewCorretciveActionMutationError = AxiosError<unknown>
+
+export const useCreateNewCorretciveAction = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<Awaited<ReturnType<typeof createNewCorretciveAction>>, TError, { data: CorrectiveAction }, TContext>
+  axios?: AxiosRequestConfig
+}) => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof createNewCorretciveAction>>, { data: CorrectiveAction }> = (props) => {
+    const { data } = props ?? {}
+
+    return createNewCorretciveAction(data, axiosOptions)
+  }
+
+  return useMutation<Awaited<ReturnType<typeof createNewCorretciveAction>>, TError, { data: CorrectiveAction }, TContext>(mutationFn, mutationOptions)
+}
+
+/**
+ * @summary Read Corretcive Action By ID
+ */
+export const readCorretciveActionByID = (corretciveActionId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<CorrectiveAction>> => {
+  return axios.get(`/corretcive_actions/${corretciveActionId}`, options)
+}
+
+export const getReadCorretciveActionByIDQueryKey = (corretciveActionId: number) => [`/corretcive_actions/${corretciveActionId}`]
+
+export type ReadCorretciveActionByIDQueryResult = NonNullable<Awaited<ReturnType<typeof readCorretciveActionByID>>>
+export type ReadCorretciveActionByIDQueryError = AxiosError<unknown>
+
+export const useReadCorretciveActionByID = <TData = Awaited<ReturnType<typeof readCorretciveActionByID>>, TError = AxiosError<unknown>>(
+  corretciveActionId: number,
+  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof readCorretciveActionByID>>, TError, TData>; axios?: AxiosRequestConfig }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getReadCorretciveActionByIDQueryKey(corretciveActionId)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readCorretciveActionByID>>> = ({ signal }) => readCorretciveActionByID(corretciveActionId, { signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof readCorretciveActionByID>>, TError, TData>(queryKey, queryFn, { enabled: !!corretciveActionId, ...queryOptions }) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Update Corretcive Action By ID
+ */
+export const updateCorretciveActionByID = (corretciveActionId: number, correctiveAction: CorrectiveAction, options?: AxiosRequestConfig): Promise<AxiosResponse<CorrectiveAction>> => {
+  return axios.put(`/corretcive_actions/${corretciveActionId}`, correctiveAction, options)
+}
+
+export type UpdateCorretciveActionByIDMutationResult = NonNullable<Awaited<ReturnType<typeof updateCorretciveActionByID>>>
+export type UpdateCorretciveActionByIDMutationBody = CorrectiveAction
+export type UpdateCorretciveActionByIDMutationError = AxiosError<unknown>
+
+export const useUpdateCorretciveActionByID = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<Awaited<ReturnType<typeof updateCorretciveActionByID>>, TError, { corretciveActionId: number; data: CorrectiveAction }, TContext>
+  axios?: AxiosRequestConfig
+}) => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateCorretciveActionByID>>, { corretciveActionId: number; data: CorrectiveAction }> = (props) => {
+    const { corretciveActionId, data } = props ?? {}
+
+    return updateCorretciveActionByID(corretciveActionId, data, axiosOptions)
+  }
+
+  return useMutation<Awaited<ReturnType<typeof updateCorretciveActionByID>>, TError, { corretciveActionId: number; data: CorrectiveAction }, TContext>(mutationFn, mutationOptions)
+}
+
+/**
+ * @summary Delete Corretcive Action By ID
+ */
+export const deleteCorretciveActionByID = (corretciveActionId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.delete(`/corretcive_actions/${corretciveActionId}`, options)
+}
+
+export type DeleteCorretciveActionByIDMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCorretciveActionByID>>>
+
+export type DeleteCorretciveActionByIDMutationError = AxiosError<unknown>
+
+export const useDeleteCorretciveActionByID = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteCorretciveActionByID>>, TError, { corretciveActionId: number }, TContext>
+  axios?: AxiosRequestConfig
+}) => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCorretciveActionByID>>, { corretciveActionId: number }> = (props) => {
+    const { corretciveActionId } = props ?? {}
+
+    return deleteCorretciveActionByID(corretciveActionId, axiosOptions)
+  }
+
+  return useMutation<Awaited<ReturnType<typeof deleteCorretciveActionByID>>, TError, { corretciveActionId: number }, TContext>(mutationFn, mutationOptions)
+}
+
+/**
+ * @summary Get Paginated Ticket List
+ */
+export const getPaginatedTicketList = (params?: GetPaginatedTicketListParams, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/tickets`, {
+    ...options,
+    params: { ...params, ...options?.params }
+  })
+}
+
+export const getGetPaginatedTicketListQueryKey = (params?: GetPaginatedTicketListParams) => [`/tickets`, ...(params ? [params] : [])]
+
+export type GetPaginatedTicketListQueryResult = NonNullable<Awaited<ReturnType<typeof getPaginatedTicketList>>>
+export type GetPaginatedTicketListQueryError = AxiosError<unknown>
+
+export const useGetPaginatedTicketList = <TData = Awaited<ReturnType<typeof getPaginatedTicketList>>, TError = AxiosError<unknown>>(
+  params?: GetPaginatedTicketListParams,
+  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof getPaginatedTicketList>>, TError, TData>; axios?: AxiosRequestConfig }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetPaginatedTicketListQueryKey(params)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPaginatedTicketList>>> = ({ signal }) => getPaginatedTicketList(params, { signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getPaginatedTicketList>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Create New Ticket
+ */
+export const createNewTicket = (ticket: Ticket, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.post(`/tickets`, ticket, options)
+}
+
+export type CreateNewTicketMutationResult = NonNullable<Awaited<ReturnType<typeof createNewTicket>>>
+export type CreateNewTicketMutationBody = Ticket
+export type CreateNewTicketMutationError = AxiosError<unknown>
+
+export const useCreateNewTicket = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<Awaited<ReturnType<typeof createNewTicket>>, TError, { data: Ticket }, TContext>
+  axios?: AxiosRequestConfig
+}) => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof createNewTicket>>, { data: Ticket }> = (props) => {
+    const { data } = props ?? {}
+
+    return createNewTicket(data, axiosOptions)
+  }
+
+  return useMutation<Awaited<ReturnType<typeof createNewTicket>>, TError, { data: Ticket }, TContext>(mutationFn, mutationOptions)
+}
+
+/**
+ * @summary Read Ticket By ID
+ */
+export const readTicketByID = (ticketId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<Ticket>> => {
+  return axios.get(`/tickets/${ticketId}`, options)
+}
+
+export const getReadTicketByIDQueryKey = (ticketId: number) => [`/tickets/${ticketId}`]
+
+export type ReadTicketByIDQueryResult = NonNullable<Awaited<ReturnType<typeof readTicketByID>>>
+export type ReadTicketByIDQueryError = AxiosError<unknown>
+
+export const useReadTicketByID = <TData = Awaited<ReturnType<typeof readTicketByID>>, TError = AxiosError<unknown>>(
+  ticketId: number,
+  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof readTicketByID>>, TError, TData>; axios?: AxiosRequestConfig }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getReadTicketByIDQueryKey(ticketId)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readTicketByID>>> = ({ signal }) => readTicketByID(ticketId, { signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof readTicketByID>>, TError, TData>(queryKey, queryFn, { enabled: !!ticketId, ...queryOptions }) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey
+  }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Update Ticket By ID
+ */
+export const updateTicketByID = (ticketId: number, ticket: Ticket, options?: AxiosRequestConfig): Promise<AxiosResponse<Ticket>> => {
+  return axios.put(`/tickets/${ticketId}`, ticket, options)
+}
+
+export type UpdateTicketByIDMutationResult = NonNullable<Awaited<ReturnType<typeof updateTicketByID>>>
+export type UpdateTicketByIDMutationBody = Ticket
+export type UpdateTicketByIDMutationError = AxiosError<unknown>
+
+export const useUpdateTicketByID = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<Awaited<ReturnType<typeof updateTicketByID>>, TError, { ticketId: number; data: Ticket }, TContext>
+  axios?: AxiosRequestConfig
+}) => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateTicketByID>>, { ticketId: number; data: Ticket }> = (props) => {
+    const { ticketId, data } = props ?? {}
+
+    return updateTicketByID(ticketId, data, axiosOptions)
+  }
+
+  return useMutation<Awaited<ReturnType<typeof updateTicketByID>>, TError, { ticketId: number; data: Ticket }, TContext>(mutationFn, mutationOptions)
+}
+
+/**
+ * @summary Delete Ticket By ID
+ */
+export const deleteTicketByID = (ticketId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.delete(`/tickets/${ticketId}`, options)
+}
+
+export type DeleteTicketByIDMutationResult = NonNullable<Awaited<ReturnType<typeof deleteTicketByID>>>
+
+export type DeleteTicketByIDMutationError = AxiosError<unknown>
+
+export const useDeleteTicketByID = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteTicketByID>>, TError, { ticketId: number }, TContext>
+  axios?: AxiosRequestConfig
+}) => {
+  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteTicketByID>>, { ticketId: number }> = (props) => {
+    const { ticketId } = props ?? {}
+
+    return deleteTicketByID(ticketId, axiosOptions)
+  }
+
+  return useMutation<Awaited<ReturnType<typeof deleteTicketByID>>, TError, { ticketId: number }, TContext>(mutationFn, mutationOptions)
 }
 
 /**
@@ -150,91 +449,6 @@ export const useReadFactorie = <TData = Awaited<ReturnType<typeof readFactorie>>
   const queryFn: QueryFunction<Awaited<ReturnType<typeof readFactorie>>> = ({ signal }) => readFactorie({ signal, ...axiosOptions })
 
   const query = useQuery<Awaited<ReturnType<typeof readFactorie>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
-
-  query.queryKey = queryKey
-
-  return query
-}
-
-/**
- * Получение отдельного тикета
- * @summary Получение отдельного тикета
- */
-export const readTicket = (ticket: number, options?: AxiosRequestConfig): Promise<AxiosResponse<Ticket>> => {
-  return axios.get(`/tickets/${ticket}`, options)
-}
-
-export const getReadTicketQueryKey = (ticket: number) => [`/tickets/${ticket}`]
-
-export type ReadTicketQueryResult = NonNullable<Awaited<ReturnType<typeof readTicket>>>
-export type ReadTicketQueryError = AxiosError<unknown>
-
-export const useReadTicket = <TData = Awaited<ReturnType<typeof readTicket>>, TError = AxiosError<unknown>>(
-  ticket: number,
-  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof readTicket>>, TError, TData>; axios?: AxiosRequestConfig }
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {}
-
-  const queryKey = queryOptions?.queryKey ?? getReadTicketQueryKey(ticket)
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof readTicket>>> = ({ signal }) => readTicket(ticket, { signal, ...axiosOptions })
-
-  const query = useQuery<Awaited<ReturnType<typeof readTicket>>, TError, TData>(queryKey, queryFn, { enabled: !!ticket, ...queryOptions }) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
-
-  query.queryKey = queryKey
-
-  return query
-}
-
-/**
- * Сохранение тикета
- * @summary Сохранение тикета
- */
-export const createTicket = (options?: AxiosRequestConfig): Promise<AxiosResponse<Ticket>> => {
-  return axios.post(`/tickets`, undefined, options)
-}
-
-export type CreateTicketMutationResult = NonNullable<Awaited<ReturnType<typeof createTicket>>>
-
-export type CreateTicketMutationError = AxiosError<unknown>
-
-export const useCreateTicket = <TError = AxiosError<unknown>, TVariables = void, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<Awaited<ReturnType<typeof createTicket>>, TError, TVariables, TContext>
-  axios?: AxiosRequestConfig
-}) => {
-  const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
-
-  const mutationFn: MutationFunction<Awaited<ReturnType<typeof createTicket>>, TVariables> = () => {
-    return createTicket(axiosOptions)
-  }
-
-  return useMutation<Awaited<ReturnType<typeof createTicket>>, TError, TVariables, TContext>(mutationFn, mutationOptions)
-}
-
-/**
- * Получение списка тикетов
- * @summary Получение списка тикетов
- */
-export const readTicketsList = (options?: AxiosRequestConfig): Promise<AxiosResponse<Ticket>> => {
-  return axios.get(`/readTicketsList`, options)
-}
-
-export const getReadTicketsListQueryKey = () => [`/readTicketsList`]
-
-export type ReadTicketsListQueryResult = NonNullable<Awaited<ReturnType<typeof readTicketsList>>>
-export type ReadTicketsListQueryError = AxiosError<unknown>
-
-export const useReadTicketsList = <TData = Awaited<ReturnType<typeof readTicketsList>>, TError = AxiosError<unknown>>(options?: {
-  query?: UseQueryOptions<Awaited<ReturnType<typeof readTicketsList>>, TError, TData>
-  axios?: AxiosRequestConfig
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const { query: queryOptions, axios: axiosOptions } = options ?? {}
-
-  const queryKey = queryOptions?.queryKey ?? getReadTicketsListQueryKey()
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof readTicketsList>>> = ({ signal }) => readTicketsList({ signal, ...axiosOptions })
-
-  const query = useQuery<Awaited<ReturnType<typeof readTicketsList>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 

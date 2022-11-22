@@ -8,8 +8,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
 import { Tickets } from '../../types/api'
-import { useReadTicketsList } from '../api/generated/endpoints'
-import { useBasicQuery } from '../hooks/useBasicQuery'
+import { useGetPaginatedTicketList } from '../api/generated/endpoints'
 import { Flex, Spacer } from '../primitives'
 import { Max } from '../primitives/Max'
 
@@ -18,18 +17,7 @@ export const AllTicketsPage = () => {
   const [searchAttrib, setSearchAttrib] = useState('')
   const [searchString, setSearchString] = useState('')
 
-  const {
-    data: ticketList,
-    isLoading,
-    refetch
-  } = useReadTicketsList({
-    axios: {
-      params: {
-        searchAttrib,
-        searchString
-      }
-    }
-  })
+  const { data: ticketList, isLoading, refetch } = useGetPaginatedTicketList()
   const { data: tickets } = ticketList || {}
 
   useEffect(() => {
