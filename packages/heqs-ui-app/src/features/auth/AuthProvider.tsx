@@ -1,17 +1,19 @@
 import CloseIcon from '@mui/icons-material/CloseRounded'
 import { Typography } from '@mui/material'
 import axios from 'axios'
+import jwtDecode, { JwtPayload } from 'jwt-decode'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
+import { parseJwt } from '../../utils'
 import { Login200User } from '../api/generated/models'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { Absolute, Flex, Pointer, Spacer } from '../primitives'
 
-axios.defaults.baseURL = 'https://dev.heqsapp.com/api/'
+axios.defaults.baseURL = 'https://heqs-services-dev.onrender.com/api/'
 
 interface AuthContextType {
   user: any
@@ -24,102 +26,10 @@ interface AuthContextType {
 
 const AuthContext = React.createContext<AuthContextType>(null!)
 
-const interceptorsInit = () => {
-  const requestHeaders = (config: any) => {
-    const lstoken = localStorage.getItem('token')?.replaceAll('"', '')
-
-    if (lstoken && config && !config?.url.includes(API.MUTATE.LOGIN) && !config?.url.includes(API.MUTATE.REGISTER)) {
-      config.headers.Authorization = `Bearer ${lstoken}`
-    }
-
-    return config
-  }
-
-  const responseHeaders = (config: any) => {
-    const newResponseToken = config?.headers?.AccessToken?.replace('Bearer ', '')
-
-    if (newResponseToken && config && !config?.url.includes(API.MUTATE.LOGIN) && !config?.url.includes(API.MUTATE.REGISTER)) {
-      localStorage.setItem('token', newResponseToken)
-      config.headers.AccessToken = `Bearer ${newResponseToken}`
-    }
-    return config
-  }
-
-  const errors = (error: any) => {
-    const whatError =
-      error?.response?.status === 401
-        ? 'Ошибка авторизации'
-        : error?.response?.status === 404
-        ? 'Ошибка ui'
-        : error?.response?.status === 400
-        ? 'Ошибка авторизации'
-        : error?.response?.status === 504
-        ? 'Ошибка сети'
-        : 'Возможная ошибка сервиса'
-
-    if (!(error?.response?.status === 400) && !(error?.response?.status === 401)) {
-      toast.error((t) => (
-        <div>
-          <Typography>
-            <>{error?.response?.data?.errorCode}</>
-          </Typography>
-          <div>
-            <Typography>
-              <>{whatError}</>
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="caption">Сервис: {error?.request?.responseURL?.replace('http://localhost:9999/', '')}</Typography>
-          </div>
-          <Flex>
-            <Typography variant="caption">Статус:</Typography>
-            <Spacer width={4} />
-            <Typography variant="caption">{error?.response?.status}</Typography>
-          </Flex>
-          {error?.response?.data?.errorMessage && (
-            <div>
-              <Typography variant="caption">Сообщение: {error?.response?.data?.errorMessage}</Typography>
-            </div>
-          )}
-          <Absolute right={2} top={2}>
-            <Pointer onClick={() => toast.dismiss(t.id)}>
-              <CloseIcon />
-            </Pointer>
-          </Absolute>
-        </div>
-      ))
-    }
-
-    const lstoken = localStorage.getItem('token')?.replaceAll('"', '')
-
-    // if (error?.response?.status === STATUS_CODES.UNAUTHORIZED && lstoken) {
-    //   localStorage.clear()
-    //   window.location.reload()
-    // }
-
-    // if (lstoken) {
-    //   const { exp } = parseJwt(lstoken)
-
-    //   if (exp && exp < Date.now() / 1000) {
-    //     localStorage.clear()
-    //     window.location.reload()
-    //   }
-    // }
-
-    return Promise.reject(error)
-  }
-
-  return {
-    request: (config: any) => (requestHeaders(config), config),
-    errors: (config: any) => errors(config),
-    response: (config: any) => (responseHeaders(config), config)
-  }
-}
-
 // add request interceptors
-const reqInterceptor = axios.interceptors.request.use(interceptorsInit().request)
+let reqInterceptor: any = null
 // add response interceptors
-const resInterceptor = axios.interceptors.response.use(interceptorsInit().response, interceptorsInit().errors)
+let resInterceptor: any = null
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   // @ts-ignore
@@ -129,7 +39,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isOnetimeAuth, setOnetimeAuth] = useState(false)
   const navigate = useNavigate()
   const user = typeof _user === 'string' ? JSON.parse(_user) : _user
-  console.log('🐸 Pepe said => AuthProvider => user', user)
 
   const signin = (newUser: { token: string; loginName: string; rememberMe: ConstrainBooleanParameters; user: Login200User }, callback: VoidFunction) => {
     if (newUser.rememberMe) {
@@ -151,7 +60,101 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     callback?.()
   }
 
+  const interceptorsInit = () => {
+    const requestHeaders = (config: any) => {
+      const lstoken = localStorage.getItem('token')?.replaceAll('"', '')
+
+      if (lstoken && config && !config?.url.includes(API.MUTATE.LOGIN) && !config?.url.includes(API.MUTATE.REGISTER)) {
+        config.headers.Authorization = `Bearer ${lstoken}`
+      }
+
+      return config
+    }
+
+    const responseHeaders = (config: any) => {
+      const newResponseToken = config?.headers?.AccessToken?.replace('Bearer ', '')
+
+      if (newResponseToken && config && !config?.url.includes(API.MUTATE.LOGIN) && !config?.url.includes(API.MUTATE.REGISTER)) {
+        localStorage.setItem('token', newResponseToken)
+        config.headers.AccessToken = `Bearer ${newResponseToken}`
+      }
+      return config
+    }
+
+    const errors = (error: any) => {
+      console.log('🐸 Pepe said => errors => error', error)
+
+      if (error?.response?.status === 401) {
+        signout()
+      }
+
+      const whatError =
+        error?.response?.status === 401
+          ? 'Auth error'
+          : error?.response?.status === 404
+          ? 'UI error'
+          : error?.response?.status === 400
+          ? 'Error'
+          : error?.response?.status === 504
+          ? 'Network error'
+          : 'Posible service error'
+
+      if (!(error?.response?.status === 400) && !(error?.response?.status === 401)) {
+        toast.error((t) => (
+          <div>
+            <Typography>
+              <>{error?.response?.data?.errorCode}</>
+            </Typography>
+            <div>
+              <Typography>
+                <>{whatError}</>
+              </Typography>
+            </div>
+            <div>
+              <Typography variant="caption">Сервис: {error?.request?.responseURL?.replace('http://localhost:9999/', '')}</Typography>
+            </div>
+            <Flex>
+              <Typography variant="caption">Статус:</Typography>
+              <Spacer width={4} />
+              <Typography variant="caption">{error?.response?.status}</Typography>
+            </Flex>
+            {error?.response?.data?.errorMessage && (
+              <div>
+                <Typography variant="caption">Сообщение: {error?.response?.data?.errorMessage}</Typography>
+              </div>
+            )}
+            <Absolute right={2} top={2}>
+              <Pointer onClick={() => toast.dismiss(t.id)}>
+                <CloseIcon />
+              </Pointer>
+            </Absolute>
+          </div>
+        ))
+      }
+
+      return Promise.reject(error)
+    }
+
+    return {
+      request: (config: any) => (requestHeaders(config), config),
+      errors: (config: any) => errors(config),
+      response: (config: any) => (responseHeaders(config), config)
+    }
+  }
+
   useEffect(() => {
+    const tokenData = token ? jwtDecode<JwtPayload>(token) : null
+    const isExpired = Date.now() >= (tokenData?.exp || 1) * 1000
+
+    if (isExpired) {
+      signout()
+    }
+
+    // add request interceptors
+    reqInterceptor = axios.interceptors.request.use(interceptorsInit().request)
+    // add response interceptors
+    resInterceptor = axios.interceptors.response.use(interceptorsInit().response, interceptorsInit().errors)
+
     return () => {
       // remove all intercepts when done
       axios.interceptors.request.eject(reqInterceptor)

@@ -11,23 +11,23 @@
  */
 export interface Ticket {
   /** ticket_class_id */
-  ticket_class_id?: number;
+  ticket_class_id?: number
   /** ticket_category_id */
-  ticket_category_id?: number;
+  ticket_category_id?: number
   /** workcenter_id */
-  workcenter_id?: number;
+  workcenter_id?: number
   /** ticket_status_id */
-  ticket_status_id?: number;
+  ticket_status_id?: number
   /** user_id */
-  user_id?: number;
+  user_id?: number
   /** date_created */
-  date_created?: string;
+  date_created?: string
   /** time_created */
-  time_created?: string;
+  time_created?: string
   /** correction */
-  correction?: string;
+  correction?: string
   /** extension */
-  extension?: string;
+  extension?: string
   /** damaged_item */
-  damaged_item?: string;
+  damaged_item?: string
 }

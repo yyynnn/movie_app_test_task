@@ -9,4 +9,4 @@
 /**
  * Workcenter model
  */
-export type Workcenter = unknown;
+export type Workcenter = unknown

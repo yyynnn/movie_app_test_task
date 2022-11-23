@@ -41,7 +41,7 @@ const LogoPath = () => {
 }
 
 const Svg = styled.svg`
-  max-width: 150px;
+  max-width: 120px;
   width: 100%;
   & path {
     fill: ${({ theme }: any) => (theme.palette.mode === 'dark' ? '#FFF' : '#000')};

@@ -63,35 +63,37 @@ export const Navbar = () => {
   return (
     <div>
       <Wrapper id="main_navbar">
-        <Row>
-          <Col>
-            <Pad padding="40px 0" alignItems="center" justifyContent="space-between">
-              {!!auth.token ? (
-                <button onClick={() => navigate(ROUTES.HOME)}>
+        <Container>
+          <Row>
+            <Col>
+              <Pad padding="20px 0" alignItems="center" justifyContent="space-between">
+                {!!auth.token ? (
+                  <button onClick={() => navigate(ROUTES.HOME)}>
+                    <Logo />
+                  </button>
+                ) : (
                   <Logo />
-                </button>
-              ) : (
-                <Logo />
-              )}
-              <Flex alignItems="center">
-                <Spacer width={10} />
-                <Visibility visibleAt={['md', 'lg', 'xl', 'xxl']}>
-                  <Typography>
-                    <b>{auth.loginName}</b>
-                  </Typography>
-                </Visibility>
-                <Spacer width={20} />
-                <ThemeSwitcher />
-                <Spacer width={20} />
-                {!!auth.token && (
-                  <IconButton onClick={() => toggleDrawer(true)} size="large" aria-label="menu" sx={{ p: 0 }}>
-                    <MenuIcon />
-                  </IconButton>
                 )}
-              </Flex>
-            </Pad>
-          </Col>
-        </Row>
+                <Flex alignItems="center">
+                  <Spacer width={10} />
+                  <Visibility visibleAt={['md', 'lg', 'xl', 'xxl']}>
+                    <Typography>
+                      <b>{auth.loginName}</b>
+                    </Typography>
+                  </Visibility>
+                  <Spacer width={20} />
+                  <ThemeSwitcher />
+                  <Spacer width={20} />
+                  {!!auth.token && (
+                    <IconButton onClick={() => toggleDrawer(true)} size="large" aria-label="menu" sx={{ p: 0 }}>
+                      <MenuIcon />
+                    </IconButton>
+                  )}
+                </Flex>
+              </Pad>
+            </Col>
+          </Row>
+        </Container>
 
         <Drawer
           PaperProps={{
@@ -193,7 +195,7 @@ const Avatar = styled.div`
 
 const Wrapper = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   width: 100%;
   left: 0;
   padding: 0 31px;

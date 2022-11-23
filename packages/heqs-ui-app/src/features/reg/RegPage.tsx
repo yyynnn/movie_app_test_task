@@ -128,7 +128,7 @@ export const RegPage = () => {
                       {workerPositions.map((workerPosition, idx) => {
                         return (
                           <MenuItem key={idx} value={idx}>
-                            {workerPosition.replaceAll('_', '')}
+                            {workerPosition.replaceAll('_', ' ')}
                           </MenuItem>
                         )
                       })}

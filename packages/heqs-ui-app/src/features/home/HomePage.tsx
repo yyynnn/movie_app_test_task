@@ -127,7 +127,7 @@ export const HomePage = () => {
           <Spacer space={10} />
           <Row>
             <Col md={6} xl={3}>
-              <Card fillHeight heading="Personal task" bgColor="#005fff" bgColorDark="#005fff">
+              <Card fillHeight heading="Personal tasks" bgColor="#005fff" bgColorDark="#005fff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.PERSONAL_TASKS)}>
                     Go
