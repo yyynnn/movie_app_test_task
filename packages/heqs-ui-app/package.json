@@ -34,7 +34,7 @@
     "@nivo/tooltip": "0.80.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "6.4.2",
-    "react-hook-form": "7.36.1",
+    "react-hook-form": "7.39.5",
     "react-grid-system": "8.1.6",
     "@tanstack/react-query": "4.12.0",
     "react-scrollbars-custom": "4.1.1",

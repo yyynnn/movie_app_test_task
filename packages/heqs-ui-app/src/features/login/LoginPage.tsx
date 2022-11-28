@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { Alert, Button, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Alert, Button, Checkbox, CircularProgress, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { Controller, FieldValues, useForm } from 'react-hook-form'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
@@ -14,12 +14,13 @@ export const LoginPage = () => {
   const location = useLocation()
   const auth = useAuth()
 
-  const methods = useForm()
-  const { handleSubmit, setError, formState, getValues, register, control } = methods
+  const methods = useForm({ reValidateMode: 'onSubmit' })
+  const { handleSubmit, setError, formState, getValues, register, control, clearErrors, trigger } = methods
   const formValues = getValues()
   const errors = formState.errors
+  console.log('🐸 Pepe said => LoginPage => errors', errors)
 
-  const { mutate } = useLogin({
+  const { mutate, isLoading } = useLogin({
     mutation: {
       onSuccess: ({ data }) => {
         const formValues = getValues()
@@ -27,16 +28,24 @@ export const LoginPage = () => {
           navigate(from, { replace: true })
         })
       },
-      onError: () => {
-        setError('email', {
-          type: 'server',
-          message: 'Something went wrong with email'
-        })
+      onError: (error) => {
+        const errorMessage = error?.response?.data?.errors?.[0]
 
-        setError('password', {
-          type: 'server',
-          message: 'Something went wrong with password'
-        })
+        if (error.response?.status === 422) {
+          setError('network', {
+            type: 'server',
+            message: errorMessage || 'Networ error'
+          })
+        } else {
+          setError('email', {
+            type: 'server',
+            message: 'Wrong email'
+          })
+          setError('password', {
+            type: 'server',
+            message: 'Wrong password'
+          })
+        }
       }
     }
   })
@@ -50,7 +59,17 @@ export const LoginPage = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      onChange={(e) => {
+        console.log('🐸 Pepe said => LoginPage => e', e)
+        clearErrors()
+      }}
+      onBlur={(e) => {
+        console.log('🐸 Pepe said => LoginPage => e', e)
+        clearErrors()
+      }}
+    >
       {auth.token ? (
         <Flex flexDirection="column">
           <Typography variant="h3">
@@ -88,27 +107,33 @@ export const LoginPage = () => {
               control={control}
               name="rememberMe"
               defaultValue={true}
-              render={({ field: { onChange, value } }) => <FormControlLabel label="Remember me" control={<Checkbox checked={value} onChange={onChange} />} />}
+              render={({ field: { onChange, onBlur, value } }) => <FormControlLabel label="Remember me" control={<Checkbox onBlur={onBlur} checked={value} onChange={onChange} />} />}
             />
             {/* <Link to={ROUTES.FORGOT_PASSWORD}>I forgot password</Link> */}
           </Flex>
 
           <Spacer space={20} />
-          <Button variant="contained" fullWidth size="large" type="submit">
-            LOGIN
-          </Button>
-          <Spacer />
-          <Button variant="outlined" fullWidth size="large" onClick={() => navigate(ROUTES.REG)}>
-            REGISTER
-          </Button>
-          <Spacer />
-          <Flex>
-            {(errors.email || errors.password) && (
-              <Alert variant="filled" severity="error">
-                Wrong login and/or password
-              </Alert>
-            )}
-          </Flex>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <>
+              <Button variant="contained" fullWidth size="large" type="submit" onClick={() => clearErrors()}>
+                LOGIN
+              </Button>
+              <Spacer />
+              <Button variant="outlined" fullWidth size="large" onClick={() => navigate(ROUTES.REG)}>
+                REGISTER
+              </Button>
+              <Spacer />
+              <Flex>
+                {(errors.email || errors.password || errors.network) && (
+                  <Alert variant="filled" severity="error">
+                    <div>{errors?.network?.message?.toString() || 'Wrong login and/or password'}</div>
+                  </Alert>
+                )}
+              </Flex>
+            </>
+          )}
         </Flex>
       )}
     </Form>

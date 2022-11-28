@@ -3,7 +3,7 @@ import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import { LoadingButton } from '@mui/lab'
 import { Alert, AlertTitle, Badge, Breadcrumbs, Button, Divider, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material'
-import { DatePicker, TimePicker } from '@mui/x-date-pickers'
+import { DateTimePicker, TimePicker } from '@mui/x-date-pickers'
 import imageCompression from 'browser-image-compression'
 import React, { MouseEventHandler, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
@@ -27,8 +27,7 @@ type TicketConstructorType = {
   heading?: string | undefined
   ticketClass?: number | undefined
   ticketCategory?: number | undefined
-  hasTime?: boolean | undefined
-  hasDate?: boolean | undefined
+  hasDateTime?: boolean | undefined
   hasForeman?: boolean | undefined
   hasWorkscenter?: boolean | undefined
   hasDamagedItem?: boolean | undefined
@@ -42,8 +41,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
   heading = 'Ticket',
   ticketClass = 2,
   ticketCategory = 6,
-  hasTime = true,
-  hasDate = true,
+  hasDateTime = true,
   hasForeman = true,
   hasWorkscenter = true,
   hasDamagedItem = true,
@@ -71,7 +69,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
     apiPath: API.GET.WORK_CENTERS
   })
 
-  const { handleSubmit, control, formState, getValues, watch, setValue } = useForm({
+  const { handleSubmit, control, formState, getValues, setValue } = useForm({
     defaultValues: initialData
   })
   const navigate = useNavigate()
@@ -103,6 +101,8 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
         ...data,
         ticket_class_id: ticketClass,
         ticket_category_id: ticketCategory,
+        ticket_status_id: 1,
+        user_id: 1,
         foreman: employees?.find((employee) => employee.id === data.foreman_id)?.name,
         workcenter: workcenters?.find((employee) => employee.id === data.workcenter_id)?.number
       }
@@ -115,14 +115,14 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
   return (
     <Form $readOnly={readOnly}>
       <Stack direction={{ md: 'column', lg: 'row' }} divider={<Divider orientation="vertical" flexItem />} spacing={{ xs: 1, sm: 1, md: 1, lg: 2 }}>
-        {hasDate && (
+        {hasDateTime && (
           <Controller
             control={control}
             name="date_created"
             rules={{ required: 'Ошибка' }}
             render={({ field: { onChange, ref, value, name } }) => {
               return (
-                <DatePicker
+                <DateTimePicker
                   ref={ref}
                   label="Date"
                   value={value && typeof value !== 'string' ? value.toISOString() : value || ''}
@@ -130,24 +130,6 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
                   renderInput={(params) => {
                     return <TextField {...params} error={!!errors[name]} fullWidth />
                   }}
-                />
-              )
-            }}
-          />
-        )}
-
-        {hasTime && (
-          <Controller
-            control={control}
-            name="time_created"
-            rules={{ required: 'Ошибка' }}
-            render={({ field: { onChange, ref, value, name } }) => {
-              return (
-                <TimePicker
-                  label="Time"
-                  value={value && typeof value !== 'string' ? value.toISOString() : value || ''}
-                  onChange={onChange}
-                  renderInput={(params) => <TextField {...params} error={!!errors[name]} fullWidth />}
                 />
               )
             }}
@@ -162,17 +144,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
             render={({ field: { onChange, ref, value, name } }) => {
               return (
                 <FormControl fullWidth>
-                  <InputLabel id="foreman-label">Foreman</InputLabel>
-                  <Select value={value || ''} onChange={onChange} labelId="foreman-label" label="Foreman" error={!!errors[name]}>
-                    {employees?.map((employee) => {
-                      return (
-                        //@ts-ignore - necessary to load object into value
-                        <MenuItem key={employee.id} value={employee.id}>
-                          {employee.name + ' ' + employee.surname}
-                        </MenuItem>
-                      )
-                    })}
-                  </Select>
+                  <TextField value={value || ''} onChange={onChange} label="Foreman" error={!!errors[name]} />
                 </FormControl>
               )
             }}
@@ -233,7 +205,6 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
           {!readOnly && (
             <Controller
               name="photo"
-              rules={{ required: 'Ошибка' }}
               control={control}
               defaultValue=""
               render={({ field: { name } }) => {
