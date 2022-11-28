@@ -1,7 +1,7 @@
 import CloseIcon from '@mui/icons-material/CloseRounded'
 import { Typography } from '@mui/material'
 import axios from 'axios'
-import jwtDecode, { JwtPayload } from 'jwt-decode'
+import { jwtDecode, jwtVerify, resignJwt } from 'jwt-js-decode'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
@@ -33,12 +33,12 @@ let resInterceptor: any = null
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   // @ts-ignore
-  const [_user, setUser] = useLocalStorage('user')
-  const [token, setToken] = useLocalStorage('token')
-  const [loginName, setLoginName] = useLocalStorage('loginName')
+  const [_user, setUser] = useLocalStorage('user', '')
+  const [token, setToken] = useLocalStorage('token', '')
+  const [loginName, setLoginName] = useLocalStorage('loginName', '')
   const [isOnetimeAuth, setOnetimeAuth] = useState(false)
   const navigate = useNavigate()
-  const user = typeof _user === 'string' ? JSON.parse(_user) : _user
+  const user = typeof _user === 'string' && _user ? JSON.parse(_user) : _user
 
   const signin = (newUser: { token: string; loginName: string; rememberMe: ConstrainBooleanParameters; user: Login200User }, callback: VoidFunction) => {
     if (newUser.rememberMe) {
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else {
       setOnetimeAuth(true)
     }
-    setUser(typeof newUser.user === 'string' ? JSON.stringify(newUser.user) : newUser.user)
+    setUser(typeof newUser.user === 'string' && _user ? JSON.stringify(newUser.user) : newUser.user)
     setLoginName(newUser.loginName)
 
     callback?.()
@@ -143,7 +143,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    const tokenData = token ? jwtDecode<JwtPayload>(token) : null
+    const tokenData: any = token ? jwtDecode(token) : null
+
     const isExpired = Date.now() >= (tokenData?.exp || 1) * 1000
 
     if (isExpired) {
