@@ -78,7 +78,7 @@ export const Navbar = () => {
                   <Spacer width={10} />
                   <Visibility visibleAt={['md', 'lg', 'xl', 'xxl']}>
                     <Typography>
-                      <b>{auth.loginName}</b>
+                      <b>{auth?.user?.email}</b>
                     </Typography>
                   </Visibility>
                   <Spacer width={20} />

@@ -8,6 +8,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
+import { JWTReturn } from '../../types'
 import { parseJwt } from '../../utils'
 import { Login200User } from '../api/generated/models'
 import { useLocalStorage } from '../hooks/useLocalStorage'
@@ -18,7 +19,6 @@ axios.defaults.baseURL = 'https://heqs-services-dev.onrender.com/api/'
 interface AuthContextType {
   user: any
   token: string | null
-  loginName: string
   isOnetimeAuth: boolean
   signin: (userData: any, callback: VoidFunction) => void
   signout: (callback?: VoidFunction) => void
@@ -35,27 +35,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // @ts-ignore
   const [_user, setUser] = useLocalStorage('user', '')
   const [token, setToken] = useLocalStorage('token', '')
-  const [loginName, setLoginName] = useLocalStorage('loginName', '')
   const [isOnetimeAuth, setOnetimeAuth] = useState(false)
   const navigate = useNavigate()
   const user = typeof _user === 'string' && _user ? JSON.parse(_user) : _user
 
-  const signin = (newUser: { token: string; loginName: string; rememberMe: ConstrainBooleanParameters; user: Login200User }, callback: VoidFunction) => {
+  const signin = (newUser: { token: string; rememberMe: ConstrainBooleanParameters; user: Login200User }, callback: VoidFunction) => {
     if (newUser.rememberMe) {
       setToken(newUser.token)
     } else {
       setOnetimeAuth(true)
     }
     setUser(typeof newUser.user === 'string' && _user ? JSON.stringify(newUser.user) : newUser.user)
-    setLoginName(newUser.loginName)
-
     callback?.()
   }
 
   const signout = (callback?: VoidFunction) => {
     setUser(null)
     setToken('')
-    setLoginName('')
     navigate(ROUTES.LOGIN)
     callback?.()
   }
@@ -143,12 +139,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    const tokenData: any = token ? jwtDecode(token) : null
+    if (token && token !== 'null') {
+      const tokenData = jwtDecode(token)
+      const isExpired = Date.now() >= (tokenData?.payload?.exp || 1) * 1000
 
-    const isExpired = Date.now() >= (tokenData?.exp || 1) * 1000
-
-    if (isExpired) {
-      signout()
+      if (isExpired) {
+        signout()
+      }
     }
 
     // add request interceptors
@@ -163,7 +160,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  const value = { user, signin, signout, token, loginName, isOnetimeAuth }
+  const value = { user, signin, signout, token, isOnetimeAuth }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

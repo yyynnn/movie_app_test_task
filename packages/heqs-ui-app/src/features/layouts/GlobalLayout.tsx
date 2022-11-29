@@ -12,6 +12,7 @@ import { ThemeSwitcher } from '../themingAndStyling/ThemeSwitcher'
 
 export const GlobalLayout = () => {
   const auth = useAuth()
+  console.log('🐸 Pepe said => GlobalLayout => auth', auth)
   const location = useLocation()
 
   return (
