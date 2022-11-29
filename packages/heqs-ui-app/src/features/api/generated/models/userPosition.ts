@@ -11,9 +11,9 @@
  */
 export interface UserPosition {
   /** id */
-  id?: number;
+  id?: number
   /** ID */
-  title?: string;
+  title?: string
   /** user_role_id */
-  user_role_id?: number;
+  user_role_id?: number
 }

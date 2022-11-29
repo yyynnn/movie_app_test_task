@@ -18,16 +18,16 @@ export interface Ticket {
   workcenter_id?: number
   /** ticket_status_id */
   ticket_status_id?: number
-  /** user_id */
-  user_id?: number
-  /** date_created */
-  date_created?: string
-  /** time_created */
-  time_created?: string
+  /** created_user_id */
+  created_user_id?: number
+  /** responsible_user_id */
+  responsible_user_id?: number
+  /** root_cause_id */
+  root_cause_id?: number
+  /** date_time_created */
+  date_time_created?: string
   /** correction */
   correction?: string
-  /** extension */
-  extension?: string
   /** damaged_item */
   damaged_item?: string
 }

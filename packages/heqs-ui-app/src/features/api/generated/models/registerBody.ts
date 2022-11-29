@@ -8,17 +8,17 @@
 
 export type RegisterBody = {
   /** Имя */
-  name?: string;
+  name?: string
   /** Фамилия */
-  surname?: string;
+  surname?: string
   /** E-mail адрес */
-  email?: string;
+  email?: string
   /** Пароль */
-  password?: string;
+  password?: string
   /** Подтверждение пароля */
-  password_confirmation?: string;
+  password_confirmation?: string
   /** Идентификатор должности */
-  user_position_id?: number;
+  user_position_id?: number
   /** Идентификатор фабрики */
-  factory_id?: number;
-};
+  factory_id?: number
+}

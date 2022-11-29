@@ -61,19 +61,19 @@ export const routes = [
     featureActive: true
   },
   {
-    element: <TicketConstructor heading="Accident" hasShortDescription={false} />,
+    element: <TicketConstructor hasCorrectiveActions={false} heading="Accident" hasShortDescription={false} />,
     path: ROUTES.HEALTH_AND_SAFETY_ACCIDENT,
     privatePage: true,
     featureActive: false
   },
   {
-    element: <TicketConstructor heading="Nearmiss (Occupational health and safety)" hasShortDescription={false} />,
+    element: <TicketConstructor hasCorrectiveActions={false} heading="Nearmiss (Occupational health and safety)" hasShortDescription={false} />,
     path: ROUTES.HEALTH_AND_SAFETY_NEAR_MISS,
     privatePage: true,
     featureActive: true
   },
   {
-    element: <TicketConstructor heading="Posible accident" hasShortDescription={false} />,
+    element: <TicketConstructor hasCorrectiveActions={false} heading="Posible accident" hasShortDescription={false} />,
     path: ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT,
     privatePage: true,
     featureActive: false

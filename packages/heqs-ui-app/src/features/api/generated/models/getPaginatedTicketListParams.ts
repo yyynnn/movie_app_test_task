@@ -6,4 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetPaginatedTicketListParams = { page?: number; per_page?: number };
+export type GetPaginatedTicketListParams = { page?: number; per_page?: number }

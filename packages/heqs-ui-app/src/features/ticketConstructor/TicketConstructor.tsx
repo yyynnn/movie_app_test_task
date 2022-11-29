@@ -118,13 +118,13 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
         {hasDateTime && (
           <Controller
             control={control}
-            name="date_created"
+            name="date_time_created"
             rules={{ required: 'Ошибка' }}
             render={({ field: { onChange, ref, value, name } }) => {
               return (
                 <DateTimePicker
                   ref={ref}
-                  label="Date"
+                  label="Date and Time"
                   value={value && typeof value !== 'string' ? value.toISOString() : value || ''}
                   onChange={onChange}
                   renderInput={(params) => {
@@ -144,7 +144,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
             render={({ field: { onChange, ref, value, name } }) => {
               return (
                 <FormControl fullWidth>
-                  <TextField value={value || ''} onChange={onChange} label="Foreman" error={!!errors[name]} />
+                  <TextField value={value || ''} onChange={onChange} label="User/worker" error={!!errors[name]} />
                 </FormControl>
               )
             }}

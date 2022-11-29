@@ -8,5 +8,5 @@
 
 export type Register200 = {
   /** Токен авторизации */
-  token?: string;
-};
+  token?: string
+}

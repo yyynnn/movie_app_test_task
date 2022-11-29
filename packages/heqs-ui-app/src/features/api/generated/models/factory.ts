@@ -11,11 +11,11 @@
  */
 export interface Factory {
   /** id */
-  id?: number;
+  id?: number
   /** factory_number */
-  factory_number?: string;
+  factory_number?: string
   /** title */
-  title?: string;
+  title?: string
   /** country_id */
-  country_id?: number;
+  country_id?: number
 }

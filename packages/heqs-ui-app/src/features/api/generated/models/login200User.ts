@@ -9,4 +9,4 @@
 /**
  * Данные пользователя
  */
-export type Login200User = { [key: string]: any };
+export type Login200User = { [key: string]: any }

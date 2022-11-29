@@ -11,13 +11,13 @@
  */
 export interface CorrectiveAction {
   /** ticket_id */
-  ticket_id?: number;
+  ticket_id?: number
   /** user_id */
-  user_id?: number;
+  user_id?: number
   /** ca_status_id */
-  ca_status_id?: number;
+  ca_status_id?: number
   /** corrective_action_due_date */
-  corrective_action_due_date?: string;
+  corrective_action_due_date?: string
   /** corrective_action */
-  corrective_action?: string;
+  corrective_action?: string
 }

@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "yarn workspace @heqs-ui/heqs-ui-app start",
     "build": "yarn workspace @heqs-ui/heqs-ui-app build",
-    "orval": "npx orval && npx prettier --config ./.prettierrc --write ./packages/heqs-ui-app/src/features/api/generated/index.ts && npx eslint --fix ./packages/heqs-ui-app/src/features/api/generated/index.ts",
+    "orval": "npx orval && npx prettier --config ./.prettierrc --write ./packages/heqs-ui-app/src/features/api/generated/* && npx eslint --fix ./packages/heqs-ui-app/src/features/api/generated/*",
     "pinger": "yarn workspace @heqs-ui/paywall-server start"
   },
   "repository": {

@@ -6,4 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetPaginatedCorretciveActionListParams = { page?: number; per_page?: number };
+export type GetPaginatedCorretciveActionListParams = { page?: number; per_page?: number }

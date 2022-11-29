@@ -8,7 +8,7 @@
 
 export type LoginBody = {
   /** E-mail адрес */
-  email?: string;
+  email?: string
   /** Пароль */
-  password?: string;
-};
+  password?: string
+}

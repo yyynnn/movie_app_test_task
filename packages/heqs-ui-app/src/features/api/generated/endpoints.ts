@@ -201,6 +201,326 @@ export const useDeleteCorretciveActionByID = <TError = AxiosError<unknown>, TCon
 }
 
 /**
+ * @summary Get ticket_classes dictionary
+ */
+export const getTicketClassesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/ticket_classes`, options)
+}
+
+export const getGetTicketClassesDictionaryQueryKey = () => [`/dictionary/ticket_classes`]
+
+export type GetTicketClassesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getTicketClassesDictionary>>>
+export type GetTicketClassesDictionaryQueryError = AxiosError<unknown>
+
+export const useGetTicketClassesDictionary = <TData = Awaited<ReturnType<typeof getTicketClassesDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getTicketClassesDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetTicketClassesDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTicketClassesDictionary>>> = ({ signal }) => getTicketClassesDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getTicketClassesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Get ticket_categories dictionary
+ */
+export const getTicketCategoriesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/ticket_categories`, options)
+}
+
+export const getGetTicketCategoriesDictionaryQueryKey = () => [`/dictionary/ticket_categories`]
+
+export type GetTicketCategoriesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getTicketCategoriesDictionary>>>
+export type GetTicketCategoriesDictionaryQueryError = AxiosError<unknown>
+
+export const useGetTicketCategoriesDictionary = <TData = Awaited<ReturnType<typeof getTicketCategoriesDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getTicketCategoriesDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetTicketCategoriesDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTicketCategoriesDictionary>>> = ({ signal }) => getTicketCategoriesDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getTicketCategoriesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Get ticket_statuses dictionary
+ */
+export const getTicketStatusesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/ticket_statuses`, options)
+}
+
+export const getGetTicketStatusesDictionaryQueryKey = () => [`/dictionary/ticket_statuses`]
+
+export type GetTicketStatusesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getTicketStatusesDictionary>>>
+export type GetTicketStatusesDictionaryQueryError = AxiosError<unknown>
+
+export const useGetTicketStatusesDictionary = <TData = Awaited<ReturnType<typeof getTicketStatusesDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getTicketStatusesDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetTicketStatusesDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTicketStatusesDictionary>>> = ({ signal }) => getTicketStatusesDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getTicketStatusesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Get corrective_action_statuses dictionary
+ */
+export const getCorrectiveActionStatusesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/corrective_action_statuses`, options)
+}
+
+export const getGetCorrectiveActionStatusesDictionaryQueryKey = () => [`/dictionary/corrective_action_statuses`]
+
+export type GetCorrectiveActionStatusesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>>
+export type GetCorrectiveActionStatusesDictionaryQueryError = AxiosError<unknown>
+
+export const useGetCorrectiveActionStatusesDictionary = <TData = Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetCorrectiveActionStatusesDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>> = ({ signal }) => getCorrectiveActionStatusesDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Get root_causes dictionary
+ */
+export const getRootCausesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/root_causes`, options)
+}
+
+export const getGetRootCausesDictionaryQueryKey = () => [`/dictionary/root_causes`]
+
+export type GetRootCausesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getRootCausesDictionary>>>
+export type GetRootCausesDictionaryQueryError = AxiosError<unknown>
+
+export const useGetRootCausesDictionary = <TData = Awaited<ReturnType<typeof getRootCausesDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getRootCausesDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetRootCausesDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRootCausesDictionary>>> = ({ signal }) => getRootCausesDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getRootCausesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Get countries dictionary
+ */
+export const getCountriesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/countries`, options)
+}
+
+export const getGetCountriesDictionaryQueryKey = () => [`/dictionary/countries`]
+
+export type GetCountriesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getCountriesDictionary>>>
+export type GetCountriesDictionaryQueryError = AxiosError<unknown>
+
+export const useGetCountriesDictionary = <TData = Awaited<ReturnType<typeof getCountriesDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getCountriesDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetCountriesDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getCountriesDictionary>>> = ({ signal }) => getCountriesDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getCountriesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Get factories dictionary
+ */
+export const getFactoriesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/factories`, options)
+}
+
+export const getGetFactoriesDictionaryQueryKey = () => [`/dictionary/factories`]
+
+export type GetFactoriesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getFactoriesDictionary>>>
+export type GetFactoriesDictionaryQueryError = AxiosError<unknown>
+
+export const useGetFactoriesDictionary = <TData = Awaited<ReturnType<typeof getFactoriesDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getFactoriesDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetFactoriesDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getFactoriesDictionary>>> = ({ signal }) => getFactoriesDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getFactoriesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Get workcenter_groups dictionary
+ */
+export const getWorkcenterGroupsDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/workcenter_groups`, options)
+}
+
+export const getGetWorkcenterGroupsDictionaryQueryKey = () => [`/dictionary/workcenter_groups`]
+
+export type GetWorkcenterGroupsDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>>
+export type GetWorkcenterGroupsDictionaryQueryError = AxiosError<unknown>
+
+export const useGetWorkcenterGroupsDictionary = <TData = Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetWorkcenterGroupsDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>> = ({ signal }) => getWorkcenterGroupsDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Get workcenters dictionary
+ */
+export const getWorkcentersDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/workcenters`, options)
+}
+
+export const getGetWorkcentersDictionaryQueryKey = () => [`/dictionary/workcenters`]
+
+export type GetWorkcentersDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getWorkcentersDictionary>>>
+export type GetWorkcentersDictionaryQueryError = AxiosError<unknown>
+
+export const useGetWorkcentersDictionary = <TData = Awaited<ReturnType<typeof getWorkcentersDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getWorkcentersDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetWorkcentersDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getWorkcentersDictionary>>> = ({ signal }) => getWorkcentersDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getWorkcentersDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Get user_roles dictionary
+ */
+export const getUserRolesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/user_roles`, options)
+}
+
+export const getGetUserRolesDictionaryQueryKey = () => [`/dictionary/user_roles`]
+
+export type GetUserRolesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getUserRolesDictionary>>>
+export type GetUserRolesDictionaryQueryError = AxiosError<unknown>
+
+export const useGetUserRolesDictionary = <TData = Awaited<ReturnType<typeof getUserRolesDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getUserRolesDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetUserRolesDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserRolesDictionary>>> = ({ signal }) => getUserRolesDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getUserRolesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Get user_positions dictionary
+ */
+export const getUserPositionsDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+  return axios.get(`/dictionary/user_positions`, options)
+}
+
+export const getGetUserPositionsDictionaryQueryKey = () => [`/dictionary/user_positions`]
+
+export type GetUserPositionsDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getUserPositionsDictionary>>>
+export type GetUserPositionsDictionaryQueryError = AxiosError<unknown>
+
+export const useGetUserPositionsDictionary = <TData = Awaited<ReturnType<typeof getUserPositionsDictionary>>, TError = AxiosError<unknown>>(options?: {
+  query?: UseQueryOptions<Awaited<ReturnType<typeof getUserPositionsDictionary>>, TError, TData>
+  axios?: AxiosRequestConfig
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetUserPositionsDictionaryQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserPositionsDictionary>>> = ({ signal }) => getUserPositionsDictionary({ signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof getUserPositionsDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * Display a listing of the resource.
  * @summary Get Paginated Ticket List
  */
 export const getPaginatedTicketList = (params?: GetPaginatedTicketListParams, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
@@ -233,6 +553,7 @@ export const useGetPaginatedTicketList = <TData = Awaited<ReturnType<typeof getP
 }
 
 /**
+ * Store a newly created resource in storage.
  * @summary Create New Ticket
  */
 export const createNewTicket = (ticket: Ticket, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
@@ -259,6 +580,7 @@ export const useCreateNewTicket = <TError = AxiosError<unknown>, TContext = unkn
 }
 
 /**
+ * Display the specified resource.
  * @summary Read Ticket By ID
  */
 export const readTicketByID = (ticketId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<Ticket>> => {
@@ -290,6 +612,7 @@ export const useReadTicketByID = <TData = Awaited<ReturnType<typeof readTicketBy
 }
 
 /**
+ * Update the specified resource in storage.
  * @summary Update Ticket By ID
  */
 export const updateTicketByID = (ticketId: number, ticket: Ticket, options?: AxiosRequestConfig): Promise<AxiosResponse<Ticket>> => {
@@ -316,6 +639,7 @@ export const useUpdateTicketByID = <TError = AxiosError<unknown>, TContext = unk
 }
 
 /**
+ * Remove the specified resource from storage.
  * @summary Delete Ticket By ID
  */
 export const deleteTicketByID = (ticketId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {

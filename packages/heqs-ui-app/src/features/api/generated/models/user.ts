@@ -9,4 +9,4 @@
 /**
  * User model
  */
-export type User = unknown;
+export type User = unknown
