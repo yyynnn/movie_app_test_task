@@ -22,7 +22,6 @@ const workersKeys = Object.keys(WorkerPositions)
   .map((key) => {
     return key
   })
-console.log('🐸 Pepe said => workersKeys => workersKeys', workersKeys)
 
 const capitalize = (str: string) => str?.charAt(0)?.toUpperCase() + str?.slice(1)
 
@@ -97,7 +96,7 @@ export const Navbar = () => {
 
         <Drawer
           PaperProps={{
-            sx: { maxWidth: '600px', width: '100%', backgroundColor: 'transparent', boxShadow: 'none' }
+            sx: { maxWidth: '100vw', width: '100%', backgroundColor: 'transparent', boxShadow: 'none' }
           }}
           anchor="right"
           open={drawerOpen}
@@ -112,65 +111,76 @@ export const Navbar = () => {
               </div>
             </Absolute>
 
-            <AvatarBlock>
-              <Flex gap={14} alignItems="center">
-                <Avatar {...stringAvatar(`${capitalize(auth?.user?.name)} ${capitalize(auth?.user?.surname)}`)} />
+            <Row>
+              <Col lg={6}>
+                <Typography variant="h4">Todo</Typography>
+              </Col>
+              <Col lg={6}>
+                <Typography variant="h4">Info</Typography>
 
-                <div>
+                <WidgetBlock>
+                  <Flex gap={14} alignItems="center">
+                    <Avatar {...stringAvatar(`${capitalize(auth?.user?.name)} ${capitalize(auth?.user?.surname)}`)} />
+
+                    <div>
+                      <Typography variant="h4">
+                        <b>
+                          {capitalize(auth?.user?.name)} {capitalize(auth?.user?.surname)}
+                        </b>
+                      </Typography>
+                      <Spacer space={4} />
+                      <Typography>{workersKeys[auth?.user?.user_position_id]?.replaceAll('_', ' ')}</Typography>
+                    </div>
+                  </Flex>
+                </WidgetBlock>
+
+                <Spacer />
+
+                <WidgetBlock>
                   <Typography variant="h4">
-                    <b>
-                      {capitalize(auth?.user?.name)} {capitalize(auth?.user?.surname)}
-                    </b>
+                    <b>Factory</b>
                   </Typography>
                   <Spacer space={4} />
-                  <Typography>{workersKeys[auth?.user?.user_position_id]?.replaceAll('_', ' ')}</Typography>
-                </div>
-              </Flex>
-            </AvatarBlock>
+                  <Typography>ID: {auth?.user?.factory_id}</Typography>
+                </WidgetBlock>
 
-            <Spacer />
+                <Spacer />
 
-            <AvatarBlock>
-              <Typography variant="h4">
-                <b>Factory</b>
-              </Typography>
-              <Spacer space={4} />
-              <Typography>ID: {auth?.user?.factory_id}</Typography>
-            </AvatarBlock>
+                <Link to={ROUTES.SYSTEM_PREFERENCE}>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    onClick={() => {
+                      toggleDrawer(false)
+                      return auth.signout()
+                    }}
+                  >
+                    <Flex gap={4} alignItems="center">
+                      <SettingsRoundedIcon />
+                      <Typography variant="h6">System preferences</Typography>
+                    </Flex>
+                  </Button>
+                </Link>
 
-            <Spacer />
+                <Spacer />
 
-            <AvatarBlock>
-              <Link to={ROUTES.SYSTEM_PREFERENCE}>
-                <Flex
-                  gap={4}
-                  alignItems="center"
+                <Button
+                  variant="contained"
+                  size="large"
+                  fullWidth
                   onClick={() => {
                     toggleDrawer(false)
+                    return auth.signout()
                   }}
                 >
-                  <SettingsRoundedIcon />
-                  <Typography variant="h4">System preferences</Typography>
-                </Flex>
-              </Link>
-            </AvatarBlock>
-
-            <Spacer />
-
-            <Button
-              variant="contained"
-              size="large"
-              fullWidth
-              onClick={() => {
-                toggleDrawer(false)
-                return auth.signout()
-              }}
-            >
-              <Flex gap={4} alignItems="center">
-                <MeetingRoomRoundedIcon />
-                <Typography variant="h6">Logout</Typography>
-              </Flex>
-            </Button>
+                  <Flex gap={4} alignItems="center">
+                    <MeetingRoomRoundedIcon />
+                    <Typography variant="h6">Logout</Typography>
+                  </Flex>
+                </Button>
+              </Col>
+            </Row>
           </Pad>
         </Drawer>
       </Wrapper>
@@ -208,7 +218,7 @@ const Wrapper = styled.div`
   }
 `
 
-const AvatarBlock = styled.div`
+const WidgetBlock = styled.div`
   padding: 30px;
   background-color: #07101ae7;
   border-radius: 30px;

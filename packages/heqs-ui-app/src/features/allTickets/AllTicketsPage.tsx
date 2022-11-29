@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
-import { Box, Breadcrumbs, CircularProgress, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Box, Breadcrumbs, capitalize, CircularProgress, FormControl, InputAdornment, InputLabel, MenuItem, Pagination, PaginationItem, Select, Stack, TextField, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { useDemoData } from '@mui/x-data-grid-generator'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -12,17 +13,33 @@ import { useGetPaginatedTicketList } from '../api/generated/endpoints'
 import { Flex, Spacer } from '../primitives'
 import { Max } from '../primitives/Max'
 
+const createCols = (object: any): { field: string; headerName: string; editable: boolean; selected: boolean; width?: number; minWidth?: number }[] | [] => {
+  const result = !object
+    ? []
+    : Object.keys(object).map((key) => {
+        return { field: key, headerName: capitalize(key.replaceAll('_', ' ')), editable: true, selected: true, minWidth: 140 }
+      })
+  return result
+}
+
 export const AllTicketsPage = () => {
   const navigate = useNavigate()
   const [searchAttrib, setSearchAttrib] = useState('')
   const [searchString, setSearchString] = useState('')
+  const [pageSize, setPageSize] = useState(50)
+  const [page, setPage] = useState<any>(1)
+  const [count, setCount] = useState(10)
 
-  const { data: ticketList, isLoading, refetch } = useGetPaginatedTicketList()
-  const { data: tickets } = ticketList || {}
+  const { data: ticketsData, isLoading } = useGetPaginatedTicketList({ per_page: pageSize, page })
+  const { data: tickets }: any = ticketsData || {}
 
   useEffect(() => {
-    refetch()
-  }, [searchString, searchAttrib])
+    if (tickets?.last_page) {
+      setCount(tickets.last_page)
+    }
+  }, [tickets?.last_page])
+
+  const cols = createCols(tickets?.data[0])
 
   return (
     <div>
@@ -45,10 +62,10 @@ export const AllTicketsPage = () => {
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Col attribute</InputLabel>
           <Select labelId="demo-simple-select-label" id="demo-simple-select" value={searchAttrib} displayEmpty label="Col attribute" onChange={(e) => setSearchAttrib(e.target.value)}>
-            {[...columns, { field: 'any', selected: false }].map((col, idx) => {
+            {[...cols, { field: 'any', selected: false, headerName: 'Any' }].map((col, idx) => {
               return (
                 <MenuItem key={idx} value={col.field} selected={!!col.selected}>
-                  {col.field}
+                  {col.headerName}
                 </MenuItem>
               )
             })}
@@ -58,22 +75,29 @@ export const AllTicketsPage = () => {
 
       <Spacer />
 
-      <Wrapper>
+      <Wrapper flexDirection="column">
         <DataGrid
-          autoPageSize
           density="comfortable"
+          hideFooter
           onRowClick={(row) => {
-            // @ts-ignore
-            navigate(ROUTES.TICKET.replace(':id', row.id))
+            navigate(ROUTES.TICKET.replace(':id', String(row.id)))
           }}
           headerHeight={70}
-          // @ts-ignore
           rows={tickets?.data || []}
-          columns={columns}
-          pageSize={50}
+          columns={cols}
           loading={isLoading}
-          experimentalFeatures={{ newEditingApi: true }}
         />
+        <Spacer />
+        <Stack spacing={2}>
+          <Pagination
+            shape="rounded"
+            page={page}
+            count={count}
+            renderItem={(item) => {
+              return <PaginationItem {...item} onClick={() => setPage(item?.page)} />
+            }}
+          />
+        </Stack>
       </Wrapper>
     </div>
   )
@@ -86,97 +110,3 @@ const Wrapper = styled(Flex)`
     border-radius: 10px !important;
   }
 `
-
-const columns: {
-  field: string
-  headerName: string
-  editable: boolean
-  selected: boolean
-  width?: number
-  minWidth?: number
-}[] = [
-  {
-    field: 'status',
-    headerName: 'Status',
-    editable: true,
-    selected: false
-  },
-  {
-    field: 'due_date',
-    headerName: 'Due Date',
-    editable: true,
-    selected: false
-  },
-  {
-    field: 'description',
-    headerName: 'Description',
-    editable: true,
-    selected: false
-  },
-  {
-    field: 'responsible',
-    headerName: 'Responsible',
-    editable: true,
-    selected: false
-  },
-  { field: 'id', headerName: 'ID', width: 90, minWidth: 90, editable: true, selected: false },
-  {
-    field: 'date_created',
-    headerName: 'Creation Date',
-    minWidth: 150,
-    editable: true,
-    selected: false
-  },
-  {
-    field: 'time_created',
-    headerName: 'Creation Time',
-    minWidth: 150,
-    editable: true,
-    selected: false
-  },
-  {
-    field: 'correction',
-    headerName: 'Correction',
-    minWidth: 150,
-    editable: true,
-    selected: false
-  },
-  {
-    field: 'extension',
-    headerName: 'Extension',
-    minWidth: 150,
-    editable: true,
-    selected: false
-  },
-  {
-    field: 'class',
-    headerName: 'Class',
-    minWidth: 150,
-    editable: true,
-    selected: false
-  },
-  {
-    field: 'category',
-    headerName: 'Category',
-    minWidth: 150,
-    editable: true,
-    selected: false
-  },
-  {
-    field: 'workcenter',
-    headerName: 'Workcenter',
-    editable: true,
-    selected: false
-  }
-]
-
-// {
-//   "id": 32,
-//   "date_created": "2022-05-14",
-//   "time_created": "22:12:00",
-//   "correction": "Использовали сыпучие средства для предотрв.1234",
-//   "extension": "jpg",
-//   "class": "Health&Safety",
-//   "category": "Nearmiss",
-//   "workcenter": "C201"
-// }

@@ -18,7 +18,6 @@ export const LoginPage = () => {
   const { handleSubmit, setError, formState, getValues, register, control, clearErrors, trigger } = methods
   const formValues = getValues()
   const errors = formState.errors
-  console.log('🐸 Pepe said => LoginPage => errors', errors)
 
   const { mutate, isLoading } = useLogin({
     mutation: {

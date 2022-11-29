@@ -102,7 +102,8 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
         ticket_class_id: ticketClass,
         ticket_category_id: ticketCategory,
         ticket_status_id: 1,
-        user_id: 1,
+        created_user_id: 1,
+        responsible_user_id: 1,
         foreman: employees?.find((employee) => employee.id === data.foreman_id)?.name,
         workcenter: workcenters?.find((employee) => employee.id === data.workcenter_id)?.number
       }

@@ -15,7 +15,7 @@ export const HomePage = () => {
       <Row>
         <Col xl={12}>
           <Typography variant="h3">
-            <b>Create ticket</b>
+            <b>Create a ticket</b>
           </Typography>
           <Spacer space={10} />
           <Row>
@@ -104,7 +104,7 @@ export const HomePage = () => {
             </Col>
 
             <Col xl={4}>
-              <Card fillHeight heading="All corrections" bgColor="#FF8A00" bgColorDark="#FF8A00">
+              <Card fillHeight heading="All corrective actions" bgColor="#FF8A00" bgColorDark="#FF8A00">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={74} />
 

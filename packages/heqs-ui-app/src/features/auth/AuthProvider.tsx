@@ -78,8 +78,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     const errors = (error: any) => {
-      console.log('🐸 Pepe said => errors => error', error)
-
       if (error?.response?.status === 401) {
         signout()
       }
@@ -95,38 +93,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           ? 'Network error'
           : 'Posible service error'
 
-      if (!(error?.response?.status === 400) && !(error?.response?.status === 401)) {
-        toast.error((t) => (
-          <div>
-            <Typography>
-              <>{error?.response?.data?.errorCode}</>
-            </Typography>
-            <div>
-              <Typography>
-                <>{whatError}</>
-              </Typography>
-            </div>
-            <div>
-              <Typography variant="caption">Сервис: {error?.request?.responseURL?.replace('http://localhost:9999/', '')}</Typography>
-            </div>
-            <Flex>
-              <Typography variant="caption">Статус:</Typography>
-              <Spacer width={4} />
-              <Typography variant="caption">{error?.response?.status}</Typography>
-            </Flex>
-            {error?.response?.data?.errorMessage && (
-              <div>
-                <Typography variant="caption">Сообщение: {error?.response?.data?.errorMessage}</Typography>
-              </div>
-            )}
-            <Absolute right={2} top={2}>
-              <Pointer onClick={() => toast.dismiss(t.id)}>
-                <CloseIcon />
-              </Pointer>
-            </Absolute>
-          </div>
-        ))
-      }
+      // if (!(error?.response?.status === 400) && !(error?.response?.status === 401)) {
+      //   toast.error((t) => (
+      //     <div>
+      //       <Typography>
+      //         <>{error?.response?.data?.errorCode}</>
+      //       </Typography>
+      //       <div>
+      //         <Typography>
+      //           <>{whatError}</>
+      //         </Typography>
+      //       </div>
+      //       <div>
+      //         <Typography variant="caption">Сервис: {error?.request?.responseURL?.replace('http://localhost:9999/', '')}</Typography>
+      //       </div>
+      //       <Flex>
+      //         <Typography variant="caption">Статус:</Typography>
+      //         <Spacer width={4} />
+      //         <Typography variant="caption">{error?.response?.status}</Typography>
+      //       </Flex>
+      //       {error?.response?.data?.errorMessage && (
+      //         <div>
+      //           <Typography variant="caption">Сообщение: {error?.response?.data?.errorMessage}</Typography>
+      //         </div>
+      //       )}
+      //       <Absolute right={2} top={2}>
+      //         <Pointer onClick={() => toast.dismiss(t.id)}>
+      //           <CloseIcon />
+      //         </Pointer>
+      //       </Absolute>
+      //     </div>
+      //   ))
+      // }
 
       return Promise.reject(error)
     }
