@@ -4,15 +4,20 @@ import CloseRounded from '@mui/icons-material/CloseRounded'
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
-import { Button, Drawer, IconButton, Link as MLink, Typography } from '@mui/material'
+import { Badge, Button, Drawer, IconButton, Link as MLink, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-grid-system'
 import { Link, useNavigate } from 'react-router-dom'
+import { Scrollbar } from 'react-scrollbars-custom'
+import { FixedSizeList } from 'react-window'
 
 import { ROUTES } from '../../consts/routes'
+import { useGetPaginatedCorretciveActionList } from '../api/generated/endpoints'
+import { CorrectiveAction } from '../api/generated/models'
 import { WorkerPositions } from '../api/mocks'
 import { useAuth } from '../auth/AuthProvider'
-import { Absolute, Flex, Pad, Spacer } from '../primitives'
+import { useDictionaries } from '../dictionaries/DictionariesProvider'
+import { Absolute, Flex, Max, Pad, Spacer } from '../primitives'
 import { Visibility } from '../primitives/Visibility'
 import { ThemeSwitcher } from '../themingAndStyling/ThemeSwitcher'
 import { Logo } from './Logo'
@@ -56,8 +61,19 @@ function stringAvatar(name: string) {
 
 export const Navbar = () => {
   const auth = useAuth()
+  const { factories } = useDictionaries()
   const navigate = useNavigate()
   const [drawerOpen, toggleDrawer] = useState(false)
+
+  // requests
+  const { data: corretciveActionsResponse } = useGetPaginatedCorretciveActionList()
+  const { data: corretciveActionsData }: any = corretciveActionsResponse || {}
+  const { data: corretciveActions = [] }: { data: CorrectiveAction[] } = corretciveActionsData || {}
+  console.log('🐸 Pepe said => Navbar => data', corretciveActions)
+
+  const factory = factories?.find((factory) => factory.id === auth.user.factory_id)
+  const totalCorretciveActions = corretciveActionsData?.total
+  console.log('🐸 Pepe said => Navbar => totalCorretciveActions', totalCorretciveActions)
 
   return (
     <div>
@@ -76,17 +92,27 @@ export const Navbar = () => {
                 <Flex alignItems="center">
                   <Spacer width={10} />
                   <Visibility visibleAt={['md', 'lg', 'xl', 'xxl']}>
-                    <Typography>
-                      <b>{auth?.user?.email}</b>
-                    </Typography>
+                    <Flex>
+                      <Typography>
+                        <b>
+                          {auth?.user?.name} {auth?.user.surname}
+                        </b>
+                      </Typography>
+                      <Spacer width={4} />
+                      <Typography>|</Typography>
+                      <Spacer width={4} />
+                      <Typography>{factory?.title}</Typography>
+                    </Flex>
                   </Visibility>
                   <Spacer width={20} />
                   <ThemeSwitcher />
                   <Spacer width={20} />
                   {!!auth.token && (
-                    <IconButton onClick={() => toggleDrawer(true)} size="large" aria-label="menu" sx={{ p: 0 }}>
-                      <MenuIcon />
-                    </IconButton>
+                    <Badge badgeContent={totalCorretciveActions} color="error">
+                      <IconButton onClick={() => toggleDrawer(true)} size="large" aria-label="menu" sx={{ p: 0 }}>
+                        <MenuIcon />
+                      </IconButton>
+                    </Badge>
                   )}
                 </Flex>
               </Pad>
@@ -113,11 +139,41 @@ export const Navbar = () => {
 
             <Row>
               <Col lg={6}>
-                <Typography variant="h4">Todo</Typography>
+                <Flex alignItems="center">
+                  <Badge component="div" anchorOrigin={{ vertical: 'top', horizontal: 'right' }} max={10000} badgeContent={totalCorretciveActions} color="error">
+                    <Typography variant="h4">
+                      <b>Your assigned actions</b>
+                    </Typography>
+                  </Badge>
+                </Flex>
+                <Spacer />
+                <WidgetBlock>
+                  <Max maxHeight={600}>
+                    <Scrollbar style={{ width: '100%', height: 350, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      {corretciveActions.map((action, idx) => {
+                        return (
+                          <Button
+                            key={idx}
+                            onClick={() => {
+                              toggleDrawer(false)
+                              return navigate(ROUTES.TICKET.replace(':id', String(action.ticket_id)))
+                            }}
+                          >
+                            <Typography>{action.corrective_action}</Typography>
+                            <Typography>{action.corrective_action_due_date}</Typography>
+                            <Typography>{action.ca_status_id}</Typography>
+                          </Button>
+                        )
+                      })}
+                    </Scrollbar>
+                  </Max>
+                </WidgetBlock>
               </Col>
               <Col lg={6}>
-                <Typography variant="h4">Info</Typography>
-
+                <Typography variant="h4">
+                  <b>Info</b>
+                </Typography>
+                <Spacer />
                 <WidgetBlock>
                   <Flex gap={14} alignItems="center">
                     <Avatar {...stringAvatar(`${capitalize(auth?.user?.name)} ${capitalize(auth?.user?.surname)}`)} />
@@ -138,10 +194,10 @@ export const Navbar = () => {
 
                 <WidgetBlock>
                   <Typography variant="h4">
-                    <b>Factory</b>
+                    <b>Compound</b>
                   </Typography>
                   <Spacer space={4} />
-                  <Typography>ID: {auth?.user?.factory_id}</Typography>
+                  <Typography>{factory?.title}</Typography>
                 </WidgetBlock>
 
                 <Spacer />
@@ -167,6 +223,7 @@ export const Navbar = () => {
 
                 <Button
                   variant="contained"
+                  color="error"
                   size="large"
                   fullWidth
                   onClick={() => {

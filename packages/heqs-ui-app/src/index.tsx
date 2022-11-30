@@ -12,9 +12,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import { BREAKPOINTS } from './consts/common'
 import { AuthProvider, RequireAuth } from './features/auth/AuthProvider'
+import { DictionariesProvider } from './features/dictionaries/DictionariesProvider'
 import { NotFound } from './features/errors/NotFound'
 import { UnderConstruction } from './features/errors/UnderConstruction'
 import { GlobalLayout } from './features/layouts/GlobalLayout'
+import { ScrollToTop } from './features/navigation/ScrollToTop'
 import BrandingProvider from './features/themingAndStyling/BrandingProvider'
 import { routes } from './routes'
 
@@ -32,36 +34,39 @@ export const App = () => {
   return (
     <BrandingProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Routes>
-                <Route element={<GlobalLayout />}>
-                  {routes.map((route) => {
-                    const isProd = process.env.NODE_ENV === 'production'
-                    const comp = !route.featureActive ? <UnderConstruction /> : route.privatePage ? <RequireAuth>{route.element}</RequireAuth> : route.element
-                    return <Route key={route.path} path={route.path} element={comp} />
-                  })}
-                  <Route path="*" element={<NotFound />} />
-                </Route>
-              </Routes>
-              <Toaster
-                position="bottom-left"
-                reverseOrder={false}
-                gutter={8}
-                containerClassName=""
-                containerStyle={{}}
-                toastOptions={{
-                  // Define default options
-                  className: '',
-                  duration: 5000,
-                  style: {
-                    background: '#1a1e34',
-                    color: '#fff'
-                  }
-                }}
-              />
-            </LocalizationProvider>
+            <DictionariesProvider>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Routes>
+                  <Route element={<GlobalLayout />}>
+                    {routes.map((route) => {
+                      const isProd = process.env.NODE_ENV === 'production'
+                      const comp = !route.featureActive ? <UnderConstruction /> : route.privatePage ? <RequireAuth>{route.element}</RequireAuth> : route.element
+                      return <Route key={route.path} path={route.path} element={comp} />
+                    })}
+                    <Route path="*" element={<NotFound />} />
+                  </Route>
+                </Routes>
+                <Toaster
+                  position="bottom-left"
+                  reverseOrder={false}
+                  gutter={8}
+                  containerClassName=""
+                  containerStyle={{}}
+                  toastOptions={{
+                    // Define default options
+                    className: '',
+                    duration: 5000,
+                    style: {
+                      background: '#1a1e34',
+                      color: '#fff'
+                    }
+                  }}
+                />
+              </LocalizationProvider>
+            </DictionariesProvider>
           </AuthProvider>
         </QueryClientProvider>
       </BrowserRouter>
