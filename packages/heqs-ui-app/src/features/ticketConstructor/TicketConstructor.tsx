@@ -124,6 +124,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
               return (
                 <DateTimePicker
                   ref={ref}
+                  disabled={readOnly}
                   label="Date and Time"
                   value={value && typeof value !== 'string' ? value.toISOString() : value || ''}
                   onChange={onChange}
@@ -144,7 +145,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
             render={({ field: { onChange, ref, value, name } }) => {
               return (
                 <FormControl fullWidth>
-                  <TextField value={value || ''} onChange={onChange} label="User/worker" error={!!errors[name]} />
+                  <TextField disabled={readOnly} value={value || ''} onChange={onChange} label="User/worker" error={!!errors[name]} />
                 </FormControl>
               )
             }}
@@ -160,7 +161,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
               return (
                 <FormControl fullWidth>
                   <InputLabel id="workcenter-label">Workcenter</InputLabel>
-                  <Select value={value || ''} onChange={onChange} labelId="workcenter-label" label="Workcenter" error={!!errors[name]}>
+                  <Select disabled={readOnly} value={value || ''} onChange={onChange} labelId="workcenter-label" label="Workcenter" error={!!errors[name]}>
                     {workcenters?.map((workcenter) => {
                       return (
                         //@ts-ignore - necessary to load object into value
@@ -182,7 +183,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
             name="damaged_item"
             rules={{ required: 'Ошибка' }}
             render={({ field: { onChange, ref, value, name } }) => {
-              return <TextField onChange={onChange} value={value} fullWidth label="Damaged Item" error={!!errors[name]} />
+              return <TextField disabled={readOnly} onChange={onChange} value={value} fullWidth label="Damaged Item" error={!!errors[name]} />
             }}
           />
         )}
@@ -193,7 +194,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
             name="correction"
             rules={{ required: 'Ошибка' }}
             render={({ field: { onChange, value, name } }) => {
-              return <TextField onChange={onChange} value={value} fullWidth label="Short description" error={!!errors[name]} />
+              return <TextField disabled={readOnly} onChange={onChange} value={value} fullWidth label="Short description" error={!!errors[name]} />
             }}
           />
         )}
@@ -201,8 +202,8 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
       <Spacer />
 
       <Row>
-        <Col md={6}>
-          {!readOnly && (
+        {!readOnly && (
+          <Col md={6}>
             <Controller
               name="photo"
               control={control}
@@ -240,11 +241,11 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
                 )
               }}
             />
-          )}
+            <Spacer />
+          </Col>
+        )}
 
-          <Spacer />
-        </Col>
-        <Col md={readOnly ? 12 : 6}>
+        <Col lg={readOnly ? 6 : 6}>
           {!hasShortDescription && (
             <Controller
               control={control}
@@ -259,9 +260,8 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
         </Col>
 
         {hasCorrectiveActions && (
-          <Col>
-            <Spacer />
-            <CorrectiveActions />
+          <Col lg={readOnly ? 6 : 12}>
+            <CorrectiveActions readOnly={readOnly} />
           </Col>
         )}
       </Row>

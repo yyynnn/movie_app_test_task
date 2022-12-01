@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 
 const DEFAULT_SPACE = 20
-const DEFAULT_WIDTH = 0
+const DEFAULT_WIDTH = 10
 
 interface IProps {
   space?: number

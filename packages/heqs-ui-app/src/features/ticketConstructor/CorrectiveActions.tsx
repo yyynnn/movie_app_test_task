@@ -6,6 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import { RFCC } from '../../types/react'
 import { Flex, Pad, Spacer } from '../primitives'
 
 export type TCorrectiveAction = {
@@ -14,7 +15,7 @@ export type TCorrectiveAction = {
   due_date: any
 }
 
-export const CorrectiveActions = () => {
+export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean }> = ({ id, readOnly }) => {
   const [actions, setActions] = useState<TCorrectiveAction[]>([])
   const { control, register, getValues, formState, trigger, watch } = useForm()
   const errors = formState.errors
@@ -24,7 +25,6 @@ export const CorrectiveActions = () => {
     // @ts-ignore
     const newAction: TCorrectiveAction = getValues()
     if (newAction.text && newAction.responsible && newAction.due_date) {
-      console.log('🐸 Pepe said => addItem => newAction.due_date', typeof newAction.due_date)
       // @ts-ignore
       setActions([...actions, { ...newAction, due_date: typeof newAction.due_date === 'object' ? newAction.due_date.toDateString() : newAction.due_date }])
     }
@@ -148,9 +148,11 @@ export const CorrectiveActions = () => {
 
       <Spacer />
 
-      <Button onClick={addItem} fullWidth variant="contained">
-        <AddRoundedIcon /> ADD NEW ACTION
-      </Button>
+      {!readOnly && (
+        <Button onClick={addItem} fullWidth variant="contained">
+          <AddRoundedIcon /> ADD NEW ACTION
+        </Button>
+      )}
     </Wrapper>
   )
 }

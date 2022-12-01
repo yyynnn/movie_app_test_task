@@ -57,3 +57,7 @@ a:visited {
   backdrop-filter: blur(306px);
   background-color: #f0f8ff00 !important;
 }
+
+.MuiBadge-badge {
+  pointer-events: none;
+}

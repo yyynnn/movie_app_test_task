@@ -4,12 +4,11 @@ import CloseRounded from '@mui/icons-material/CloseRounded'
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
-import { Badge, Button, Drawer, IconButton, Link as MLink, Typography } from '@mui/material'
+import { Badge, Button, Chip, Divider, Drawer, IconButton, Link as MLink, List, ListItemButton, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-grid-system'
 import { Link, useNavigate } from 'react-router-dom'
 import { Scrollbar } from 'react-scrollbars-custom'
-import { FixedSizeList } from 'react-window'
 
 import { ROUTES } from '../../consts/routes'
 import { useGetPaginatedCorretciveActionList } from '../api/generated/endpoints'
@@ -18,6 +17,7 @@ import { WorkerPositions } from '../api/mocks'
 import { useAuth } from '../auth/AuthProvider'
 import { useDictionaries } from '../dictionaries/DictionariesProvider'
 import { Absolute, Flex, Max, Pad, Spacer } from '../primitives'
+import { StatusBulb } from '../primitives/StatusBulb'
 import { Visibility } from '../primitives/Visibility'
 import { ThemeSwitcher } from '../themingAndStyling/ThemeSwitcher'
 import { Logo } from './Logo'
@@ -69,11 +69,9 @@ export const Navbar = () => {
   const { data: corretciveActionsResponse } = useGetPaginatedCorretciveActionList()
   const { data: corretciveActionsData }: any = corretciveActionsResponse || {}
   const { data: corretciveActions = [] }: { data: CorrectiveAction[] } = corretciveActionsData || {}
-  console.log('🐸 Pepe said => Navbar => data', corretciveActions)
 
   const factory = factories?.find((factory) => factory.id === auth.user.factory_id)
   const totalCorretciveActions = corretciveActionsData?.total
-  console.log('🐸 Pepe said => Navbar => totalCorretciveActions', totalCorretciveActions)
 
   return (
     <div>
@@ -138,38 +136,65 @@ export const Navbar = () => {
             </Absolute>
 
             <Row>
-              <Col lg={6}>
+              <Col lg={8}>
                 <Flex alignItems="center">
-                  <Badge component="div" anchorOrigin={{ vertical: 'top', horizontal: 'right' }} max={10000} badgeContent={totalCorretciveActions} color="error">
-                    <Typography variant="h4">
-                      <b>Your assigned actions</b>
-                    </Typography>
-                  </Badge>
+                  <Typography variant="h4">
+                    <b>Your assigned actions</b>
+                  </Typography>
+                  <Spacer />
+                  <Chip size="small" label={totalCorretciveActions} color="error" variant="filled" />
                 </Flex>
                 <Spacer />
                 <WidgetBlock>
                   <Max maxHeight={600}>
                     <Scrollbar style={{ width: '100%', height: 350, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                      {corretciveActions.map((action, idx) => {
-                        return (
-                          <Button
-                            key={idx}
-                            onClick={() => {
-                              toggleDrawer(false)
-                              return navigate(ROUTES.TICKET.replace(':id', String(action.ticket_id)))
-                            }}
-                          >
-                            <Typography>{action.corrective_action}</Typography>
-                            <Typography>{action.corrective_action_due_date}</Typography>
-                            <Typography>{action.ca_status_id}</Typography>
-                          </Button>
-                        )
-                      })}
+                      <List>
+                        {corretciveActions.map((action, idx) => {
+                          return (
+                            <ListItemButton
+                              key={idx}
+                              onClick={() => {
+                                toggleDrawer(false)
+                                return navigate(ROUTES.TICKET.replace(':id', String(action.ticket_id)))
+                              }}
+                            >
+                              <Flex width="100%" alignItems="center" justifyContent="space-between">
+                                <Flex>
+                                  <Typography>
+                                    <b>{idx + 1}.</b>
+                                  </Typography>
+                                  <Spacer />
+                                  <Typography>{action.corrective_action}</Typography>
+                                </Flex>
+                                <Spacer />
+                                <StatusBulb statusId={action.ca_status_id} />
+                                {/* <Typography>{action.corrective_action_due_date}</Typography> */}
+                              </Flex>
+                            </ListItemButton>
+                          )
+                        })}
+                      </List>
                     </Scrollbar>
                   </Max>
+                  <Spacer />
+                  <Link to={ROUTES.SYSTEM_PREFERENCE}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      onClick={() => {
+                        toggleDrawer(false)
+                        return auth.signout()
+                      }}
+                    >
+                      <Flex gap={4} alignItems="center">
+                        <Typography variant="h6">All actions</Typography>
+                      </Flex>
+                    </Button>
+                  </Link>
                 </WidgetBlock>
               </Col>
-              <Col lg={6}>
+              <Col lg={4}>
                 <Typography variant="h4">
                   <b>Info</b>
                 </Typography>

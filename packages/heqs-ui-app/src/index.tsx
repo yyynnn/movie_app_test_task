@@ -42,7 +42,6 @@ export const App = () => {
                 <Routes>
                   <Route element={<GlobalLayout />}>
                     {routes.map((route) => {
-                      const isProd = process.env.NODE_ENV === 'production'
                       const comp = !route.featureActive ? <UnderConstruction /> : route.privatePage ? <RequireAuth>{route.element}</RequireAuth> : route.element
                       return <Route key={route.path} path={route.path} element={comp} />
                     })}
