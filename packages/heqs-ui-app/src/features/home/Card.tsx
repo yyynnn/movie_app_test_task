@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
 import { Button, Typography } from '@mui/material'
 import { useTheme } from '@mui/system'
+import Tilt from 'react-parallax-tilt'
 import { useNavigate } from 'react-router-dom'
 
 import { RFCC } from '../../types/react'
@@ -22,25 +23,27 @@ export const Card: RFCC<CardProps> = ({ fillHeight = true, heading, bgColor, bgC
 
   return (
     <OuterWrapper fillHeight={fillHeight}>
-      <Wrapper fillHeight={fillHeight} flexDirection="column" bgColor={bgColor} bgColorDark={bgColorDark} justifyContent="space-between">
-        <Typography variant="h4">
-          <b>{heading}</b>
-        </Typography>
-        <Spacer space={30} />
-        {text && (
-          <div>
-            <Typography variant="h4">
-              <b>{text}</b>
-            </Typography>
-            <Spacer space={30} />
-          </div>
-        )}
-        {children || (
-          <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(link || '/')}>
-            {linkText || 'Go'}
-          </Button>
-        )}
-      </Wrapper>
+      <Tilt tiltReverse transitionSpeed={2000} glareBorderRadius={'10px'} glareEnable={false} tiltMaxAngleY={2} tiltMaxAngleX={5} scale={0.99}>
+        <Wrapper fillHeight={fillHeight} flexDirection="column" bgColor={bgColor} bgColorDark={bgColorDark} justifyContent="space-between">
+          <Typography variant="h4">
+            <b>{heading}</b>
+          </Typography>
+          <Spacer space={30} />
+          {text && (
+            <div>
+              <Typography variant="h4">
+                <b>{text}</b>
+              </Typography>
+              <Spacer space={30} />
+            </div>
+          )}
+          {children || (
+            <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(link || '/')}>
+              {linkText || 'Go'}
+            </Button>
+          )}
+        </Wrapper>
+      </Tilt>
       <Spacer />
     </OuterWrapper>
   )

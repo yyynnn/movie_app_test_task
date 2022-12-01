@@ -23,19 +23,19 @@ export const HomePage = () => {
               <Card fillHeight heading="Occupational health and safety" bgColor="#0849ff" bgColorDark="#0849ff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={32} />
-                  <Tooltip title="Already happened, injuries" aria-label="already happened, injuries">
+                  <Tooltip placement="right" title="Already happened, injuries" aria-label="already happened, injuries">
                     <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_ACCIDENT)}>
                       Accident
                     </Button>
                   </Tooltip>
 
-                  <Tooltip title="Already happened, no injuries" aria-label="already happened, no injuries">
+                  <Tooltip placement="right" title="Already happened, no injuries" aria-label="already happened, no injuries">
                     <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_NEAR_MISS)}>
                       Nearmiss
                     </Button>
                   </Tooltip>
 
-                  <Tooltip title="Threat, violation" aria-label="threat, violation">
+                  <Tooltip placement="right" title="Threat, violation" aria-label="threat, violation">
                     <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT)}>
                       Possible accident
                     </Button>
@@ -48,19 +48,19 @@ export const HomePage = () => {
               <Card fillHeight heading="Quality" bgColor="#ff0835" bgColorDark="#ff0835">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={32} />
-                  <Tooltip title="Non-conformity found during  the audit" aria-label="non-conformity found during  the audit">
+                  <Tooltip placement="right" title="Non-conformity found during  the audit" aria-label="non-conformity found during  the audit">
                     <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
                       Audit non-conformity
                     </Button>
                   </Tooltip>
 
-                  <Tooltip title="External/internal customer claim" aria-label="external/internal customer claim">
+                  <Tooltip placement="right" title="External/internal customer claim" aria-label="external/internal customer claim">
                     <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
                       Non-conforming product
                     </Button>
                   </Tooltip>
 
-                  <Tooltip title="Delivery delays" aria-label="delivery delays">
+                  <Tooltip placement="right" title="Delivery delays" aria-label="delivery delays">
                     <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
                       OTD
                     </Button>
@@ -73,19 +73,19 @@ export const HomePage = () => {
               <Card fillHeight heading="Environment" bgColor="#2dcf58" bgColorDark="#2dcf58">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={32} />
-                  <Tooltip title="Already happened, injuries" aria-label="already happened, injuries">
+                  <Tooltip placement="right" title="Already happened, injuries" aria-label="already happened, injuries">
                     <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
                       Accident
                     </Button>
                   </Tooltip>
 
-                  <Tooltip title="Already happened, no injuries" aria-label="already happened, no injuries">
+                  <Tooltip placement="right" title="Already happened, no injuries" aria-label="already happened, no injuries">
                     <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
                       Nearmiss
                     </Button>
                   </Tooltip>
 
-                  <Tooltip title="Threat, violation" aria-label="threat, violation">
+                  <Tooltip placement="right" title="Threat, violation" aria-label="threat, violation">
                     <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
                       Possible accident
                     </Button>

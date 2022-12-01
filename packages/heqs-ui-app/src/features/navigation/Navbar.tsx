@@ -4,7 +4,7 @@ import CloseRounded from '@mui/icons-material/CloseRounded'
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
-import { Badge, Button, Chip, Divider, Drawer, IconButton, Link as MLink, List, ListItem, ListItemButton, Paper, SwipeableDrawer, Typography } from '@mui/material'
+import { Badge, Button, Chip, Divider, IconButton, Link as MLink, List, ListItem, ListItemButton, Paper, SwipeableDrawer, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-grid-system'
 import { Link, useNavigate } from 'react-router-dom'
@@ -120,7 +120,7 @@ export const Navbar = () => {
           </Row>
         </Container>
 
-        <SwipeableDrawer
+        <Drawer
           PaperProps={{
             sx: { maxWidth: '100vw', width: '100%', backgroundColor: 'transparent', boxShadow: 'none' }
           }}
@@ -129,160 +129,151 @@ export const Navbar = () => {
           onClose={() => toggleDrawer(false)}
           onOpen={() => toggleDrawer(true)}
         >
-          <Pad pad="20px" width="100%" height="100%" flexDirection="column">
-            <Absolute right={0} top={0} onClick={() => toggleDrawer(false)}>
-              <ZIndex zIndex={999}>
-                <Pointer>
-                  <Pad pad={20}>
+          <Row>
+            <Col>
+              <Flex justifyContent="flex-end">
+                <IconButton onClick={() => toggleDrawer(false)}>
+                  <Pad pad={1}>
                     <CloseRounded />
                   </Pad>
-                </Pointer>
-              </ZIndex>
-            </Absolute>
-
-            <Row>
-              <Col lg={8}>
-                <Flex alignItems="center">
-                  <Typography variant="h4">
-                    <b>Your assigned actions</b>
-                  </Typography>
-                  <Spacer />
-                  <Chip size="small" label={totalCorretciveActions} color="error" variant="filled" />
-                </Flex>
+                </IconButton>
+              </Flex>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={8}>
+              <Flex alignItems="center">
+                <Typography variant="h4">
+                  <b>Your assigned actions</b>
+                </Typography>
                 <Spacer />
-                <WidgetBlock>
-                  <Max maxHeight={600} justifyContent="center" alignItems="center">
-                    <Scrollbar style={{ width: '100%', height: 350, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                      <List>
-                        {corretciveActions.map((action, idx) => {
-                          return (
-                            <ListItemButton
-                              key={idx}
-                              onClick={() => {
-                                toggleDrawer(false)
-                                return navigate(ROUTES.TICKET.replace(':id', String(action.ticket_id)))
-                              }}
-                            >
-                              <Flex width="100%" alignItems="center" justifyContent="space-between">
-                                <Flex>
-                                  <Typography>
-                                    <b>{idx + 1}.</b>
-                                  </Typography>
-                                  <Spacer />
-                                  <Typography>{action.corrective_action}</Typography>
-                                </Flex>
+                <Chip size="small" label={totalCorretciveActions} color="error" variant="filled" />
+              </Flex>
+              <Spacer />
+              <WidgetBlock>
+                <Max maxHeight={600} justifyContent="center" alignItems="center">
+                  <Scrollbar style={{ width: '100%', height: 350, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <List>
+                      {corretciveActions.map((action, idx) => {
+                        return (
+                          <ListItemButton
+                            key={idx}
+                            onClick={() => {
+                              toggleDrawer(false)
+                              return navigate(ROUTES.TICKET.replace(':id', String(action.ticket_id)))
+                            }}
+                          >
+                            <Flex width="100%" alignItems="center" justifyContent="space-between">
+                              <Flex>
+                                <Typography>
+                                  <b>{idx + 1}.</b>
+                                </Typography>
                                 <Spacer />
-                                <StatusBulb statusId={action.ca_status_id === 2 ? action.ca_status_id + 1 : action.ca_status_id} />
+                                <Typography>{action.corrective_action}</Typography>
                               </Flex>
-                            </ListItemButton>
-                          )
-                        })}
-                        {totalCorretciveActions > corretciveActions.length && <ListItemButton disabled>...</ListItemButton>}
-                      </List>
-                    </Scrollbar>
-                  </Max>
-                  <Spacer />
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                    onClick={() => {
-                      toggleDrawer(false)
-                      navigate(ROUTES.ALL_CORRECTIVE_ACTIONS)
-                      return auth.signout()
-                    }}
-                  >
-                    <Flex gap={4} alignItems="center">
-                      <Typography variant="h6">All corrective actions</Typography>
-                    </Flex>
-                  </Button>
-                </WidgetBlock>
+                              <Spacer />
+                              <StatusBulb statusId={action.ca_status_id === 2 ? action.ca_status_id + 1 : action.ca_status_id} />
+                            </Flex>
+                          </ListItemButton>
+                        )
+                      })}
+                      {totalCorretciveActions > corretciveActions.length && <ListItemButton disabled>...</ListItemButton>}
+                    </List>
+                  </Scrollbar>
+                </Max>
                 <Spacer />
-              </Col>
-              <Col lg={4}>
-                <Flex flexDirection="column">
+                <Button
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  onClick={() => {
+                    toggleDrawer(false)
+                    navigate(ROUTES.ALL_CORRECTIVE_ACTIONS)
+                    return auth.signout()
+                  }}
+                >
+                  <Flex gap={4} alignItems="center">
+                    <Typography variant="h6">All corrective actions</Typography>
+                  </Flex>
+                </Button>
+              </WidgetBlock>
+              <Spacer />
+            </Col>
+            <Col lg={4}>
+              <Flex flexDirection="column">
+                <Typography variant="h4">
+                  <b>Info</b>
+                </Typography>
+
+                <Spacer />
+
+                <WidgetBlock>
+                  <Flex gap={14} alignItems="center">
+                    <Avatar {...stringAvatar(`${capitalize(auth?.user?.name)} ${capitalize(auth?.user?.surname)}`)} />
+
+                    <div>
+                      <Typography variant="h4">
+                        <b>
+                          {capitalize(auth?.user?.name)} {capitalize(auth?.user?.surname)}
+                        </b>
+                      </Typography>
+                      <Spacer space={4} />
+                      <Typography>{workersKeys[auth?.user?.user_position_id]?.replaceAll('_', ' ')}</Typography>
+                    </div>
+                  </Flex>
+
+                  <Spacer />
+
                   <Typography variant="h4">
-                    <b>Info</b>
+                    <b>Location</b>
                   </Typography>
 
-                  <Spacer />
+                  <Spacer space={4} />
 
-                  <WidgetBlock>
-                    <Flex gap={14} alignItems="center">
-                      <Avatar {...stringAvatar(`${capitalize(auth?.user?.name)} ${capitalize(auth?.user?.surname)}`)} />
+                  <Typography>
+                    {factory?.title}. Timezone: {factory?.timezone || '0.00 UTC'}
+                  </Typography>
 
-                      <div>
-                        <Typography variant="h4">
-                          <b>
-                            {capitalize(auth?.user?.name)} {capitalize(auth?.user?.surname)}
-                          </b>
-                        </Typography>
-                        <Spacer space={4} />
-                        <Typography>{workersKeys[auth?.user?.user_position_id]?.replaceAll('_', ' ')}</Typography>
-                      </div>
-                    </Flex>
+                  <Typography>Your time zone: {timezone}</Typography>
+                </WidgetBlock>
 
-                    <Spacer />
+                <Spacer />
 
-                    <Typography variant="h4">
-                      <b>Location</b>
-                    </Typography>
+                <Button
+                  size="large"
+                  variant="outlined"
+                  onClick={() => {
+                    toggleDrawer(false)
+                    navigate(ROUTES.SYSTEM_PREFERENCES)
+                  }}
+                >
+                  System preferences
+                </Button>
 
-                    <Spacer space={4} />
+                <Spacer />
 
-                    <Typography>
-                      {factory?.title}. Timezone: {factory?.timezone || '0.00 UTC'}
-                    </Typography>
-
-                    <Typography>Your time zone: {timezone}</Typography>
-                  </WidgetBlock>
-
-                  <Spacer />
-
-                  <div>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      onClick={() => {
-                        toggleDrawer(false)
-                        navigate(ROUTES.SYSTEM_PREFERENCES)
-                      }}
-                    >
-                      <Flex gap={4} alignItems="center">
-                        <SettingsRoundedIcon />
-                        <Typography variant="h6">System preferences</Typography>
-                      </Flex>
-                    </Button>
-                  </div>
-
-                  <Spacer />
-
-                  <Button
-                    variant="contained"
-                    color="error"
-                    size="small"
-                    fullWidth
-                    onClick={() => {
-                      toggleDrawer(false)
-                      return auth.signout()
-                    }}
-                  >
-                    <Flex gap={4} alignItems="center">
-                      <MeetingRoomRoundedIcon />
-                      <Typography variant="h6">Logout</Typography>
-                    </Flex>
-                  </Button>
-                </Flex>
-              </Col>
-            </Row>
-          </Pad>
-        </SwipeableDrawer>
+                <Button
+                  size="large"
+                  variant="outlined"
+                  color="error"
+                  onClick={() => {
+                    toggleDrawer(false)
+                    return auth.signout()
+                  }}
+                >
+                  Logout
+                </Button>
+              </Flex>
+            </Col>
+          </Row>
+        </Drawer>
       </Wrapper>
       <Spacer space={80} />
     </div>
   )
 }
+
+const Drawer = styled(SwipeableDrawer)``
 
 const Avatar = styled.div`
   height: 100px;

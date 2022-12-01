@@ -65,3 +65,7 @@ a:visited {
 .MuiAlert-message {
   word-break: break-word;
 }
+
+.MuiDrawer-paper {
+  padding: 20px;
+}

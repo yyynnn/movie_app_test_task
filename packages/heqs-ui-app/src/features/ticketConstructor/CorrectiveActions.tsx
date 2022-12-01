@@ -35,7 +35,9 @@ export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean }> = ({ i
   }
 
   useEffect(() => {
-    watch()
+    if (!readOnly) {
+      watch()
+    }
   }, [])
 
   return (
@@ -88,11 +90,11 @@ export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean }> = ({ i
         <Controller
           control={control}
           name="text"
-          rules={{ required: 'Enter text' }}
+          rules={readOnly ? {} : { required: readOnly ? false : 'Enter text' }}
           render={({ field: { onChange, value } }) => {
             return (
               <TextField
-                error={!value}
+                error={readOnly ? false : !value}
                 onChange={(v) => {
                   trigger()
                   onChange(v)
@@ -108,11 +110,11 @@ export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean }> = ({ i
         <Controller
           control={control}
           name="responsible"
-          rules={{ required: 'Enter name' }}
+          rules={readOnly ? {} : { required: readOnly ? false : 'Enter name' }}
           render={({ field: { onChange, value } }) => {
             return (
               <TextField
-                error={!value}
+                error={readOnly ? false : !value}
                 onChange={(v) => {
                   trigger()
                   onChange(v)
@@ -128,7 +130,7 @@ export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean }> = ({ i
         <Controller
           control={control}
           name="due_date"
-          rules={{ required: 'Enter date' }}
+          rules={{ required: readOnly ? false : 'Enter date' }}
           render={({ field: { onChange, value } }) => {
             return (
               <DatePicker
