@@ -12,6 +12,7 @@ import { Tickets } from '../../types/api'
 import { useGetPaginatedTicketList } from '../api/generated/endpoints'
 import { Flex, Spacer } from '../primitives'
 import { Max } from '../primitives/Max'
+import { TableConstructor } from '../tableConstructor/TableConstructor'
 
 const createCols = (object: any): { field: string; headerName: string; editable: boolean; selected: boolean; width?: number; minWidth?: number }[] | [] => {
   const result = !object
@@ -23,90 +24,11 @@ const createCols = (object: any): { field: string; headerName: string; editable:
 }
 
 export const AllTicketsPage = () => {
-  const navigate = useNavigate()
-  const [searchAttrib, setSearchAttrib] = useState('')
-  const [searchString, setSearchString] = useState('')
   const [pageSize, setPageSize] = useState(50)
   const [page, setPage] = useState<any>(1)
-  const [count, setCount] = useState(10)
 
-  const { data: ticketsData, isLoading } = useGetPaginatedTicketList({ per_page: pageSize, page })
+  const { data: ticketsData, isLoading, ...rest } = useGetPaginatedTicketList({ per_page: pageSize, page })
   const { data: tickets }: any = ticketsData || {}
 
-  useEffect(() => {
-    if (tickets?.last_page) {
-      setCount(tickets.last_page)
-    }
-  }, [tickets?.last_page])
-
-  const cols = createCols(tickets?.data[0])
-
-  return (
-    <div>
-      <Max maxWidth={600}>
-        <TextField
-          variant="outlined"
-          fullWidth
-          label="Search query"
-          value={searchString}
-          onChange={(e) => setSearchString(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <SearchRoundedIcon />
-              </InputAdornment>
-            )
-          }}
-        />
-        <Spacer width={10} />
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Col attribute</InputLabel>
-          <Select labelId="demo-simple-select-label" id="demo-simple-select" value={searchAttrib} displayEmpty label="Col attribute" onChange={(e) => setSearchAttrib(e.target.value)}>
-            {[...cols, { field: 'any', selected: false, headerName: 'Any' }].map((col, idx) => {
-              return (
-                <MenuItem key={idx} value={col.field} selected={!!col.selected}>
-                  {col.headerName}
-                </MenuItem>
-              )
-            })}
-          </Select>
-        </FormControl>
-      </Max>
-
-      <Spacer />
-
-      <Wrapper flexDirection="column">
-        <DataGrid
-          density="comfortable"
-          hideFooter
-          onRowClick={(row) => {
-            navigate(ROUTES.TICKET.replace(':id', String(row.id)))
-          }}
-          headerHeight={70}
-          rows={tickets?.data || []}
-          columns={cols}
-          loading={isLoading}
-        />
-        <Spacer />
-        <Stack spacing={2}>
-          <Pagination
-            shape="rounded"
-            page={page}
-            count={count}
-            renderItem={(item) => {
-              return <PaginationItem {...item} onClick={() => setPage(item?.page)} />
-            }}
-          />
-        </Stack>
-      </Wrapper>
-    </div>
-  )
+  return <TableConstructor {...rest} data={tickets} isLoading={isLoading} page={page} pageSize={pageSize} setPageSize={setPageSize} setPage={setPage} />
 }
-
-const Wrapper = styled(Flex)`
-  height: 666px;
-
-  div.MuiDataGrid-root {
-    border-radius: 10px !important;
-  }
-`

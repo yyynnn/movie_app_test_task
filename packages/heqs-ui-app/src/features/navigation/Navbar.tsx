@@ -93,7 +93,7 @@ export const Navbar = () => {
                     <Flex>
                       <Typography>
                         <b>
-                          {auth?.user?.name} {auth?.user.surname}
+                          {auth?.user?.name} {auth?.user?.surname}
                         </b>
                       </Typography>
                       <Spacer width={4} />

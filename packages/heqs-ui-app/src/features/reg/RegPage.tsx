@@ -77,7 +77,7 @@ export const RegPage = () => {
             <Error name="name" />
           </Col>
           <Col lg={6}>
-            <TextField {...register('surname', { required: 'Fill out surname' })} label="Surname" variant="outlined" fullWidth autoComplete="surname" error={!!errors.surname} />
+            <TextField {...register('surname', { required: 'Fill out surname' })} label="Surname" variant="outlined" fullWidth autoComplete="surname" error={!!errors?.surname} />
             <Error name="surname" />
           </Col>
         </Row>
