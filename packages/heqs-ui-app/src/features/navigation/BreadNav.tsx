@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
-import { Breadcrumbs, Typography } from '@mui/material'
+import { Breadcrumbs, Container, Typography } from '@mui/material'
 import React from 'react'
+import { Col, Row } from 'react-grid-system'
 import { Link, useLocation } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
@@ -23,9 +24,6 @@ export const BreadNav = () => {
 
   return (
     <Wrapper>
-      <Typography variant="h4">
-        <b>{heading}</b>
-      </Typography>
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" to={ROUTES.HOME}>
           Home

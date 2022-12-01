@@ -11,6 +11,7 @@ import { TicketConstructor } from './features/ticketConstructor/TicketConstructo
 import { TicketReadOnly } from './features/ticketConstructor/TicketReadOnly'
 import { TicketSuccess } from './features/ticketConstructor/TicketSuccess'
 import { WorkcentersPage } from './features/workcenters/WorkcentersPage'
+import { SystemPreferencesPage } from './systemPreferences/SystemPreferencesPage'
 
 export const routes = [
   {
@@ -66,6 +67,12 @@ export const routes = [
     path: ROUTES.ALL_CORRECTIVE_ACTIONS,
     privatePage: true,
     featureActive: true
+  },
+  {
+    element: <SystemPreferencesPage />,
+    path: ROUTES.SYSTEM_PREFERENCES,
+    privatePage: true,
+    featureActive: false
   },
   {
     element: <TicketConstructor hasCorrectiveActions={false} heading="Accident" hasShortDescription={false} />,

@@ -4,7 +4,7 @@ import CloseRounded from '@mui/icons-material/CloseRounded'
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
-import { Badge, Button, Chip, Divider, Drawer, IconButton, Link as MLink, List, ListItem, ListItemButton, Typography } from '@mui/material'
+import { Badge, Button, Chip, Divider, Drawer, IconButton, Link as MLink, List, ListItem, ListItemButton, Paper, SwipeableDrawer, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-grid-system'
 import { Link, useNavigate } from 'react-router-dom'
@@ -16,7 +16,7 @@ import { CorrectiveAction } from '../api/generated/models'
 import { WorkerPositions } from '../api/mocks'
 import { useAuth } from '../auth/AuthProvider'
 import { useDictionaries } from '../dictionaries/DictionariesProvider'
-import { Absolute, Flex, Max, Pad, Spacer } from '../primitives'
+import { Absolute, Flex, Max, Pad, Pointer, Spacer, ZIndex } from '../primitives'
 import { StatusBulb } from '../primitives/StatusBulb'
 import { Visibility } from '../primitives/Visibility'
 import { ThemeSwitcher } from '../themingAndStyling/ThemeSwitcher'
@@ -120,21 +120,24 @@ export const Navbar = () => {
           </Row>
         </Container>
 
-        <Drawer
+        <SwipeableDrawer
           PaperProps={{
             sx: { maxWidth: '100vw', width: '100%', backgroundColor: 'transparent', boxShadow: 'none' }
           }}
           anchor="right"
           open={drawerOpen}
           onClose={() => toggleDrawer(false)}
+          onOpen={() => toggleDrawer(true)}
         >
-          <Pad pad="40px" width="100%" height="100%" flexDirection="column">
+          <Pad pad="20px" width="100%" height="100%" flexDirection="column">
             <Absolute right={0} top={0} onClick={() => toggleDrawer(false)}>
-              <div>
-                <Pad pad={20}>
-                  <CloseRounded />
-                </Pad>
-              </div>
+              <ZIndex zIndex={999}>
+                <Pointer>
+                  <Pad pad={20}>
+                    <CloseRounded />
+                  </Pad>
+                </Pointer>
+              </ZIndex>
             </Absolute>
 
             <Row>
@@ -148,7 +151,7 @@ export const Navbar = () => {
                 </Flex>
                 <Spacer />
                 <WidgetBlock>
-                  <Max maxHeight={600}>
+                  <Max maxHeight={600} justifyContent="center" alignItems="center">
                     <Scrollbar style={{ width: '100%', height: 350, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                       <List>
                         {corretciveActions.map((action, idx) => {
@@ -179,64 +182,86 @@ export const Navbar = () => {
                     </Scrollbar>
                   </Max>
                   <Spacer />
-                  <Link to={ROUTES.ALL_CORRECTIVE_ACTIONS}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    onClick={() => {
+                      toggleDrawer(false)
+                      navigate(ROUTES.ALL_CORRECTIVE_ACTIONS)
+                      return auth.signout()
+                    }}
+                  >
+                    <Flex gap={4} alignItems="center">
+                      <Typography variant="h6">All corrective actions</Typography>
+                    </Flex>
+                  </Button>
+                </WidgetBlock>
+                <Spacer />
+              </Col>
+              <Col lg={4}>
+                <Flex flexDirection="column">
+                  <Typography variant="h4">
+                    <b>Info</b>
+                  </Typography>
+
+                  <Spacer />
+
+                  <WidgetBlock>
+                    <Flex gap={14} alignItems="center">
+                      <Avatar {...stringAvatar(`${capitalize(auth?.user?.name)} ${capitalize(auth?.user?.surname)}`)} />
+
+                      <div>
+                        <Typography variant="h4">
+                          <b>
+                            {capitalize(auth?.user?.name)} {capitalize(auth?.user?.surname)}
+                          </b>
+                        </Typography>
+                        <Spacer space={4} />
+                        <Typography>{workersKeys[auth?.user?.user_position_id]?.replaceAll('_', ' ')}</Typography>
+                      </div>
+                    </Flex>
+
+                    <Spacer />
+
+                    <Typography variant="h4">
+                      <b>Location</b>
+                    </Typography>
+
+                    <Spacer space={4} />
+
+                    <Typography>
+                      {factory?.title}. Timezone: {factory?.timezone || '0.00 UTC'}
+                    </Typography>
+
+                    <Typography>Your time zone: {timezone}</Typography>
+                  </WidgetBlock>
+
+                  <Spacer />
+
+                  <div>
                     <Button
-                      variant="contained"
-                      size="large"
+                      variant="outlined"
+                      size="small"
                       fullWidth
                       onClick={() => {
                         toggleDrawer(false)
-                        return auth.signout()
+                        navigate(ROUTES.SYSTEM_PREFERENCES)
                       }}
                     >
                       <Flex gap={4} alignItems="center">
-                        <Typography variant="h6">All corrective actions</Typography>
+                        <SettingsRoundedIcon />
+                        <Typography variant="h6">System preferences</Typography>
                       </Flex>
                     </Button>
-                  </Link>
-                </WidgetBlock>
-              </Col>
-              <Col lg={4}>
-                <Typography variant="h4">
-                  <b>Info</b>
-                </Typography>
-                <Spacer />
-                <WidgetBlock>
-                  <Flex gap={14} alignItems="center">
-                    <Avatar {...stringAvatar(`${capitalize(auth?.user?.name)} ${capitalize(auth?.user?.surname)}`)} />
+                  </div>
 
-                    <div>
-                      <Typography variant="h4">
-                        <b>
-                          {capitalize(auth?.user?.name)} {capitalize(auth?.user?.surname)}
-                        </b>
-                      </Typography>
-                      <Spacer space={4} />
-                      <Typography>{workersKeys[auth?.user?.user_position_id]?.replaceAll('_', ' ')}</Typography>
-                    </div>
-                  </Flex>
-                </WidgetBlock>
+                  <Spacer />
 
-                <Spacer />
-
-                <WidgetBlock>
-                  <Typography variant="h4">
-                    <b>Location</b>
-                  </Typography>
-                  <Spacer space={4} />
-                  <Typography>
-                    {factory?.title}. Timezone: {factory?.timezone || '+3.00 UTC'}
-                  </Typography>
-
-                  <Typography>Your time zone: {timezone}</Typography>
-                </WidgetBlock>
-
-                <Spacer />
-
-                <Link to={ROUTES.SYSTEM_PREFERENCE}>
                   <Button
                     variant="contained"
-                    size="large"
+                    color="error"
+                    size="small"
                     fullWidth
                     onClick={() => {
                       toggleDrawer(false)
@@ -244,35 +269,17 @@ export const Navbar = () => {
                     }}
                   >
                     <Flex gap={4} alignItems="center">
-                      <SettingsRoundedIcon />
-                      <Typography variant="h6">System preferences</Typography>
+                      <MeetingRoomRoundedIcon />
+                      <Typography variant="h6">Logout</Typography>
                     </Flex>
                   </Button>
-                </Link>
-
-                <Spacer />
-
-                <Button
-                  variant="contained"
-                  color="error"
-                  size="large"
-                  fullWidth
-                  onClick={() => {
-                    toggleDrawer(false)
-                    return auth.signout()
-                  }}
-                >
-                  <Flex gap={4} alignItems="center">
-                    <MeetingRoomRoundedIcon />
-                    <Typography variant="h6">Logout</Typography>
-                  </Flex>
-                </Button>
+                </Flex>
               </Col>
             </Row>
           </Pad>
-        </Drawer>
+        </SwipeableDrawer>
       </Wrapper>
-      <Spacer space={120} />
+      <Spacer space={80} />
     </div>
   )
 }
@@ -304,11 +311,14 @@ const Wrapper = styled.div`
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+
+  & div {
+    /* padding-left: 0 !important; */
+    /* padding-right: 0 !important; */
+  }
 `
 
-const WidgetBlock = styled.div`
-  padding: 30px;
-  background-color: #07101ae7;
-  border-radius: 30px;
+const WidgetBlock = styled(Paper)`
+  padding: 2vw;
   width: 100%;
 `

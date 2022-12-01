@@ -4,7 +4,7 @@ export const ROUTES = {
   LOGIN: '/login',
   REG: '/register',
   PERSONAL_TASKS: '/personal_tasks',
-  SYSTEM_PREFERENCE: '/system_preference',
+  SYSTEM_PREFERENCES: '/system_preferences',
   ALL_TICKETS: '/all_tickets',
   TICKET: '/ticket/:id',
   ALL_CORRECTIVE_ACTIONS: '/all_corrective_actions',

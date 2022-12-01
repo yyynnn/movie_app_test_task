@@ -20,10 +20,8 @@ export const GlobalLayout = () => {
         <Container>
           <Row>
             <Col>
-              <div>
-                <Navbar />
-                {location.pathname !== ROUTES.HOME && location.pathname !== ROUTES.ROOT && <BreadNav />}
-              </div>
+              <Navbar />
+              {location.pathname !== ROUTES.HOME && location.pathname !== ROUTES.ROOT && <BreadNav />}
               <Outlet />
             </Col>
           </Row>
