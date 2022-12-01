@@ -105,7 +105,7 @@ export const HomePage = () => {
           </Typography>
           <Spacer space={10} />
           <Row>
-            <Col xl={6}>
+            <Col lg={6}>
               <Card fillHeight heading="All tickets" bgColor="#FF8A00" bgColorDark="#FF8A00">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={74} />
@@ -116,7 +116,7 @@ export const HomePage = () => {
               </Card>
             </Col>
 
-            <Col xl={6}>
+            <Col lg={6}>
               <Card fillHeight heading="All corrective actions" bgColor="#FF8A00" bgColorDark="#FF8A00">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={74} />
