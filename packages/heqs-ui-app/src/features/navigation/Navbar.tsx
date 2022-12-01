@@ -70,8 +70,10 @@ export const Navbar = () => {
   const { data: corretciveActionsData }: any = corretciveActionsResponse || {}
   const { data: corretciveActions = [] }: { data: CorrectiveAction[] } = corretciveActionsData || {}
 
-  const factory = factories?.find((factory) => factory.id === auth.user.factory_id)
+  // some data
+  const factory: any = factories?.find((factory) => factory.id === auth?.user?.factory_id)
   const totalCorretciveActions = corretciveActionsData?.total
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   return (
     <div>
@@ -177,7 +179,7 @@ export const Navbar = () => {
                     </Scrollbar>
                   </Max>
                   <Spacer />
-                  <Link to={ROUTES.SYSTEM_PREFERENCE}>
+                  <Link to={ROUTES.ALL_CORRECTIVE_ACTIONS}>
                     <Button
                       variant="contained"
                       size="large"
@@ -188,7 +190,7 @@ export const Navbar = () => {
                       }}
                     >
                       <Flex gap={4} alignItems="center">
-                        <Typography variant="h6">All actions</Typography>
+                        <Typography variant="h6">All corrective actions</Typography>
                       </Flex>
                     </Button>
                   </Link>
@@ -219,10 +221,14 @@ export const Navbar = () => {
 
                 <WidgetBlock>
                   <Typography variant="h4">
-                    <b>Compound</b>
+                    <b>Location</b>
                   </Typography>
                   <Spacer space={4} />
-                  <Typography>{factory?.title}</Typography>
+                  <Typography>
+                    {factory?.title}. Timezone: {factory?.timezone || '+3.00 UTC'}
+                  </Typography>
+
+                  <Typography>Your time zone: {timezone}</Typography>
                 </WidgetBlock>
 
                 <Spacer />

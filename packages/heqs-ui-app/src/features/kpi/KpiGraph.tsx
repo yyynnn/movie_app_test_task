@@ -3,11 +3,10 @@ import { Paper, Typography, useTheme } from '@mui/material'
 import { Bar } from '@nivo/bar'
 import { Pie } from '@nivo/pie'
 import { BasicTooltip } from '@nivo/tooltip'
-import { Tickets } from '../../types/api'
 import _ from 'lodash'
 
+import { Tickets } from '../../types/api'
 import { Flex, Pad, Spacer } from '../primitives'
-
 import { dataPieAFC } from './fakeData'
 
 const BarTooltip: React.FunctionComponent<any> = (props, idx) => {
@@ -27,7 +26,7 @@ const BarTooltip: React.FunctionComponent<any> = (props, idx) => {
 
 export const KpiGraph = ({ data }: { data?: Tickets }) => {
   const groupedByMonth = _.groupBy(data, ({ date_created }) => new Date(date_created).getMonth())
-  let result: { month: string; OHS: number; QUAL: number; ENV: number }[] = []
+  const result: { month: string; OHS: number; QUAL: number; ENV: number }[] = []
 
   Object.entries(groupedByMonth).forEach(([key, array]) => {
     const month = new Date(array[0].date_created).toLocaleString('en-US', { month: 'long' })

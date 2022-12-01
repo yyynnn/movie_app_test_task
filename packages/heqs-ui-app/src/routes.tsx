@@ -3,6 +3,7 @@ import { AllCorrectiveActionsPage } from './features/allCorrectiveActions/AllCor
 import { AllTicketsPage } from './features/allTickets/AllTicketsPage'
 import { ExampleFeaturePage } from './features/exampleFeature/ExampleFeaturePage'
 import { HomePage } from './features/home/HomePage'
+import { KpiPage } from './features/kpi/KpiPage'
 import { ForgotPasswordPage } from './features/login/ForgotPasswordPage'
 import { LoginPage } from './features/login/LoginPage'
 import { RegPage } from './features/reg/RegPage'
@@ -10,7 +11,6 @@ import { TicketConstructor } from './features/ticketConstructor/TicketConstructo
 import { TicketReadOnly } from './features/ticketConstructor/TicketReadOnly'
 import { TicketSuccess } from './features/ticketConstructor/TicketSuccess'
 import { WorkcentersPage } from './features/workcenters/WorkcentersPage'
-import { KpiPage } from './features/kpi/KpiPage'
 
 export const routes = [
   {
