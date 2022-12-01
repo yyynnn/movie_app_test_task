@@ -4,7 +4,7 @@ import CloseRounded from '@mui/icons-material/CloseRounded'
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
-import { Badge, Button, Chip, Divider, Drawer, IconButton, Link as MLink, List, ListItemButton, Typography } from '@mui/material'
+import { Badge, Button, Chip, Divider, Drawer, IconButton, Link as MLink, List, ListItem, ListItemButton, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-grid-system'
 import { Link, useNavigate } from 'react-router-dom'
@@ -167,12 +167,12 @@ export const Navbar = () => {
                                   <Typography>{action.corrective_action}</Typography>
                                 </Flex>
                                 <Spacer />
-                                <StatusBulb statusId={action.ca_status_id} />
-                                {/* <Typography>{action.corrective_action_due_date}</Typography> */}
+                                <StatusBulb statusId={action.ca_status_id === 2 ? action.ca_status_id + 1 : action.ca_status_id} />
                               </Flex>
                             </ListItemButton>
                           )
                         })}
+                        {totalCorretciveActions > corretciveActions.length && <ListItemButton disabled>...</ListItemButton>}
                       </List>
                     </Scrollbar>
                   </Max>
