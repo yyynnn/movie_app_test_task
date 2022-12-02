@@ -92,17 +92,19 @@ export const Navbar = () => {
                 <Flex alignItems="center">
                   <Spacer width={10} />
                   <Visibility visibleAt={['md', 'lg', 'xl', 'xxl']}>
-                    <Flex>
-                      <Typography>
-                        <b>
-                          {auth?.user?.name} {auth?.user?.surname}
-                        </b>
-                      </Typography>
-                      <Spacer width={4} />
-                      <Typography>|</Typography>
-                      <Spacer width={4} />
-                      <Typography>{factory?.title}</Typography>
-                    </Flex>
+                    {!!auth.token ? (
+                      <Flex>
+                        <Typography>
+                          <b>
+                            {auth?.user?.name} {auth?.user?.surname}
+                          </b>
+                        </Typography>
+                        <Spacer width={4} />
+                        <Typography>|</Typography>
+                        <Spacer width={4} />
+                        <Typography>{factory?.title}</Typography>
+                      </Flex>
+                    ) : null}
                   </Visibility>
                   <Spacer width={20} />
                   <ThemeSwitcher />
