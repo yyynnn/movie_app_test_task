@@ -1,10 +1,10 @@
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
-import { Button, Chip, Stack, Typography } from '@mui/material'
+import { Button, Chip, Stack, Tooltip, Typography } from '@mui/material'
 import { Col, Row } from 'react-grid-system'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Spacer } from '../../primitives'
+import { Spacer } from '../primitives'
 import { Card } from './Card'
 
 export const HomePage = () => {
@@ -13,51 +13,114 @@ export const HomePage = () => {
   return (
     <div>
       <Row>
-        <Col lg={6}>
+        <Col xl={12}>
           <Typography variant="h3">
-            <b>Create ticket</b>
+            <b>Create a ticket</b>
           </Typography>
-          <Spacer space={30} />
+          <Spacer space={10} />
           <Row>
-            <Col xl={12}>
-              <Card fillHeight heading="Occupational health and safety" bgColor="#fff" bgColorDark="#0849ff">
+            <Col md={6} xl={4}>
+              <Card fillHeight heading="Occupational health and safety" bgColor="#0849ff" bgColorDark="#0849ff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={32} />
-                  <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_ACCIDENT)}>
-                    Accident
-                  </Button>
-                  <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_NEAR_MISS)}>
-                    Nearmiss
-                  </Button>
-                  <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT)}>
-                    Possible accident
-                  </Button>
+                  <Tooltip placement="right" title="Already happened, injuries" aria-label="already happened, injuries">
+                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_ACCIDENT)}>
+                      Accident
+                    </Button>
+                  </Tooltip>
+
+                  <Tooltip placement="right" title="Already happened, no injuries" aria-label="already happened, no injuries">
+                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_NEAR_MISS)}>
+                      Nearmiss
+                    </Button>
+                  </Tooltip>
+
+                  <Tooltip placement="right" title="Threat, violation" aria-label="threat, violation">
+                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT)}>
+                      Possible accident
+                    </Button>
+                  </Tooltip>
+                </Stack>
+              </Card>
+            </Col>
+
+            <Col md={6} xl={4}>
+              <Card fillHeight heading="Quality" bgColor="#ff0835" bgColorDark="#ff0835">
+                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
+                  <Spacer space={32} />
+                  <Tooltip placement="right" title="Non-conformity found during  the audit" aria-label="non-conformity found during  the audit">
+                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                      Audit non-conformity
+                    </Button>
+                  </Tooltip>
+
+                  <Tooltip placement="right" title="External/internal customer claim" aria-label="external/internal customer claim">
+                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                      Non-conforming product
+                    </Button>
+                  </Tooltip>
+
+                  <Tooltip placement="right" title="Delivery delays" aria-label="delivery delays">
+                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                      OTD
+                    </Button>
+                  </Tooltip>
+                </Stack>
+              </Card>
+            </Col>
+
+            <Col md={12} xl={4}>
+              <Card fillHeight heading="Environment" bgColor="#2dcf58" bgColorDark="#2dcf58">
+                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
+                  <Spacer space={32} />
+                  <Tooltip placement="right" title="Already happened, injuries" aria-label="already happened, injuries">
+                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                      Accident
+                    </Button>
+                  </Tooltip>
+
+                  <Tooltip placement="right" title="Already happened, no injuries" aria-label="already happened, no injuries">
+                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                      Nearmiss
+                    </Button>
+                  </Tooltip>
+
+                  <Tooltip placement="right" title="Threat, violation" aria-label="threat, violation">
+                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                      Possible accident
+                    </Button>
+                  </Tooltip>
                 </Stack>
               </Card>
             </Col>
           </Row>
         </Col>
+      </Row>
+      <Spacer space={10} />
 
-        <Col lg={6}>
+      <Row>
+        <Col xl={12}>
           <Typography variant="h3">
-            <b>Database</b>
+            <b>Databases</b>
           </Typography>
-          <Spacer space={30} />
+          <Spacer space={10} />
           <Row>
-            <Col md={6} xl={6}>
-              <Card heading="All tickets" bgColor="#FF8A00" bgColorDark="#FF8A00">
+            <Col lg={6}>
+              <Card fillHeight heading="All tickets" bgColor="#FF8A00" bgColorDark="#FF8A00">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Spacer space={84} />
-                  <Button color="warning" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ALL_TICKETS)}>
+                  <Spacer space={74} />
+                  <Button color="error" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ALL_TICKETS)}>
                     Go
                   </Button>
                 </Stack>
               </Card>
             </Col>
-            <Col md={6} xl={6}>
-              <Card heading="All corrective actions" bgColor="#ff606d" bgColorDark="#ff606d">
+
+            <Col lg={6}>
+              <Card fillHeight heading="All corrective actions" bgColor="#FF8A00" bgColorDark="#FF8A00">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Spacer space={84} />
+                  <Spacer space={74} />
+
                   <Button color="error" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ALL_CORRECTIVE_ACTIONS)}>
                     Go
                   </Button>
@@ -66,24 +129,27 @@ export const HomePage = () => {
             </Col>
           </Row>
         </Col>
+      </Row>
+      <Spacer space={10} />
 
+      <Row>
         <Col lg={12}>
           <Typography variant="h3">
             <b>Explore</b>
           </Typography>
-          <Spacer space={30} />
+          <Spacer space={10} />
           <Row>
             <Col md={6} xl={3}>
-              <Card fillHeight heading="Personal stats" bgColor="#005fff" bgColorDark="#005fff">
+              <Card fillHeight heading="Personal tasks" bgColor="#8100ff" bgColorDark="#8100ff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.PERSONAL_STATS)}>
+                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.PERSONAL_TASKS)}>
                     Go
                   </Button>
                 </Stack>
               </Card>
             </Col>
             <Col md={6} xl={3}>
-              <Card fillHeight={true} heading="Global KPI" bgColor="#005fff" bgColorDark="#005fff">
+              <Card fillHeight={true} heading="Global KPI" bgColor="#8100ff" bgColorDark="#8100ff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.GLOBAL_KPI)}>
                     Go
@@ -92,7 +158,7 @@ export const HomePage = () => {
               </Card>
             </Col>
             <Col md={6} xl={3}>
-              <Card fillHeight={true} heading="KPI" bgColor="#005fff" bgColorDark="#005fff">
+              <Card fillHeight={true} heading="KPI" bgColor="#8100ff" bgColorDark="#8100ff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.KPI)}>
                     Go
@@ -102,9 +168,9 @@ export const HomePage = () => {
             </Col>
 
             <Col md={6} xl={3}>
-              <Card heading="Workstations" bgColor="#005fff" bgColorDark="#005fff">
+              <Card heading="Workcenters" bgColor="#8100ff" bgColorDark="#8100ff">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.WORKSTATIONS)}>
+                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.WORKCENTERS)}>
                     Go
                   </Button>
                 </Stack>
@@ -116,34 +182,3 @@ export const HomePage = () => {
     </div>
   )
 }
-
-// {/* <Col xl={12}>
-//           <Card heading="Enviornment" bgColor="#fff" bgColorDark="#0849ff">
-//             <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-//               <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ENV.ACCIDENT.CREATE)}>
-//                 Accident
-//               </Button>
-//               <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH.NEAR_MISS.CREATE)}>
-//                 Nearmiss
-//               </Button>
-//               <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH.POSIBLE_ACCIDENT.CREATE)}>
-//                 Possible accident
-//               </Button>
-//             </Stack>
-//           </Card>
-//         </Col> */}
-//         {/* <Col>
-//           <Card heading="Quality" bgColor="#fff" bgColorDark="#0849ff">
-//             <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-//               <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.QUALITY.AUDIT.CREATE)}>
-//                 Audit non-conformity
-//               </Button>
-//               <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.QUALITY.PRODUCT.CREATE)}>
-//                 Non-conforming product
-//               </Button>
-//               <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.QUALITY.OTD.CREATE)}>
-//                 OTD
-//               </Button>
-//             </Stack>
-//           </Card>
-//         </Col> */}

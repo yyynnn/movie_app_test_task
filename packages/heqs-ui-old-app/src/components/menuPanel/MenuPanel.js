@@ -1,6 +1,6 @@
 import React from "react";
-import {Link} from "react-router-dom";
-import {People, Reports, Rows, Settings, Works, World, listicon} from "../../img/Icons/indexIcon";
+import { Link } from "react-router-dom";
+import { People, Reports, Rows, Settings, Works, World, listicon } from "../../img/Icons/indexIcon";
 
 const MenuPanel = () => {
     return (
@@ -35,7 +35,7 @@ const MenuPanel = () => {
                             height="40"
                         />
                     </Link>
-                    <Link to="/" className="p-3" title="Workstations">
+                    <Link to="/" className="p-3" title="Workcenters">
                         <img
                             className="mx-auto mb-2 mt-2"
                             src={Works}

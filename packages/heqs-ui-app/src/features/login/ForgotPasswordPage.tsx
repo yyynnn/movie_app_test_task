@@ -4,9 +4,9 @@ import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Flex, Spacer } from '../../primitives'
 import { useAuth } from '../auth/AuthProvider'
 import { Logo } from '../navigation/Logo'
+import { Flex, Spacer } from '../primitives'
 
 export const ForgotPasswordPage = () => {
   const navigate = useNavigate()

@@ -1,130 +1,34 @@
 import styled from '@emotion/styled'
-import { Box, Breadcrumbs, CircularProgress, Typography } from '@mui/material'
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import { Box, Breadcrumbs, capitalize, CircularProgress, FormControl, InputAdornment, InputLabel, MenuItem, Pagination, PaginationItem, Select, Stack, TextField, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
-import React from 'react'
+import { useDemoData } from '@mui/x-data-grid-generator'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
-import { useBasicQuery } from '../../hooks/useBasicQuery'
-import { Flex, Spacer } from '../../primitives'
 import { Tickets } from '../../types/api'
+import { useGetPaginatedTicketList } from '../api/generated/endpoints'
+import { Flex, Spacer } from '../primitives'
+import { Max } from '../primitives/Max'
+import { TableConstructor } from '../tableConstructor/TableConstructor'
 
-export const AllTicketsPage = () => {
-  const { data: ticketList, isLoading } = useBasicQuery<{ data: Tickets }>({
-    apiPath: API.GET.TICKETS_LIST
-  })
-  const navigate = useNavigate()
-
-  const { data: tickets } = ticketList || {}
-
-  return (
-    <div>
-      <Wrapper>
-        {tickets?.length ? (
-          <DataGrid
-            autoPageSize
-            density="comfortable"
-            onRowClick={(row) => {
-              // @ts-ignore
-              navigate(ROUTES.TICKET.replace(':id', row.id))
-            }}
-            headerHeight={70}
-            rows={tickets}
-            columns={columns}
-            pageSize={50}
-            experimentalFeatures={{ newEditingApi: true }}
-          />
-        ) : (
-          <Flex width="100%" height="100%" flexDirection="column" alignItems="center" justifyContent="center">
-            <CircularProgress />
-          </Flex>
-        )}
-      </Wrapper>
-    </div>
-  )
+const createCols = (object: any): { field: string; headerName: string; editable: boolean; selected: boolean; width?: number; minWidth?: number }[] | [] => {
+  const result = !object
+    ? []
+    : Object.keys(object).map((key) => {
+        return { field: key, headerName: capitalize(key.replaceAll('_', ' ')), editable: true, selected: true, minWidth: 140 }
+      })
+  return result
 }
 
-const Wrapper = styled(Flex)`
-  height: 666px;
+export const AllTicketsPage = () => {
+  const [pageSize, setPageSize] = useState(50)
+  const [page, setPage] = useState<any>(1)
 
-  div.MuiDataGrid-root {
-    border-radius: 10px !important;
-  }
-`
+  const { data: ticketsData, isLoading, ...rest } = useGetPaginatedTicketList({ per_page: pageSize, page })
+  const { data: tickets }: any = ticketsData || {}
 
-const columns: GridColDef[] = [
-  {
-    field: 'status',
-    headerName: 'Status',
-    editable: true
-  },
-  {
-    field: 'due_date',
-    headerName: 'Due Date',
-    editable: true
-  },
-  {
-    field: 'description',
-    headerName: 'Description',
-    editable: true
-  },
-  {
-    field: 'responsible',
-    headerName: 'Responsible',
-    editable: true
-  },
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'date_created',
-    headerName: 'Creation Date',
-    minWidth: 150,
-    editable: true
-  },
-  {
-    field: 'time_created',
-    headerName: 'Creation Time',
-    minWidth: 150,
-    editable: true
-  },
-  {
-    field: 'correction',
-    headerName: 'Correction',
-    minWidth: 150,
-    editable: true
-  },
-  {
-    field: 'extension',
-    headerName: 'Extension',
-    minWidth: 150,
-    editable: true
-  },
-  {
-    field: 'class',
-    headerName: 'Class',
-    minWidth: 150,
-    editable: true
-  },
-  {
-    field: 'category',
-    headerName: 'Category',
-    minWidth: 150,
-    editable: true
-  },
-  {
-    field: 'workcenter',
-    headerName: 'Workcenter',
-    editable: true
-  }
-]
-
-// {
-//   "id": 32,
-//   "date_created": "2022-05-14",
-//   "time_created": "22:12:00",
-//   "correction": "Использовали сыпучие средства для предотрв.1234",
-//   "extension": "jpg",
-//   "class": "Health&Safety",
-//   "category": "Nearmiss",
-//   "workcenter": "C201"
-// }
+  return <TableConstructor {...rest} data={tickets} isLoading={isLoading} page={page} pageSize={pageSize} setPageSize={setPageSize} setPage={setPage} />
+}

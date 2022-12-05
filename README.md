@@ -8,8 +8,9 @@
 6. напор на использование примитивов packages/uikit. Например все отстпуты можно делать через <Spacer space={20} />, позиционирование через <Flex />
 7. автоимпорты работают
 
-# SWAGGER 
-https://dev.heqsapp.com/api/documentation#/
+# SWAGGER
+
+https://heqs-services-dev.onrender.com/api/documentation#/Dictionaries/Get%20corrective_action_statuses%20dictionary
 
 # MONOREPO tutorial
 
@@ -28,15 +29,12 @@ https://dev.heqsapp.com/api/documentation#/
     ]
   },
 ...
-```  
+```
 
 Обычно деление пакетов происходит на apps и простые утилиты, например:
 
 ```js
-`/packages/heqs-ui-app`
-`/packages/heqs-admin-ui-app`
-`/packages/uikit`
-`/packages/font-roboto`
+;`/packages/heqs-ui-app``/packages/heqs-admin-ui-app``/packages/uikit``/packages/font-roboto`
 ```
 
 В монорепе внутренние пакеты имеют свои package.json. При установке зависимости которое не упонимаются в других пакетах остаются на уровне;
@@ -54,6 +52,7 @@ https://dev.heqsapp.com/api/documentation#/
 
 Названия пакетов дожны строится так:
 
-`
-@heqs-ui/heqs-ui-app - где @{имя монорепы}/{имя пакета}
-`
+`@heqs-ui/heqs-ui-app - где @{имя монорепы}/{имя пакета}`
+
+Иллюстрации
+https://designs.ai/graphicmaker/illustrations/Duotone_Cartoon_Set

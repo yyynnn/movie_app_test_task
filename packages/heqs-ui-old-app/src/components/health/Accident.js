@@ -30,7 +30,7 @@ const Accident = ({ selectedTicketData }) => {
               foreman:
                   !isLoadingEmployee &&
                   `${employee.find((e) => e.id === selectedTicketData.foreman_id).name} ${
-                      employee.find((e) => e.id === selectedTicketData.foreman_id).surname
+                      employee.find((e) => e.id === selectedTicketData.foreman_id)?.surname
                   }`,
               workcenter:
                   !isLoadingWorkCenter &&
@@ -102,7 +102,7 @@ const Accident = ({ selectedTicketData }) => {
                     ticket_category_id: 5,
                     photo: selectedFile,
                     workcenter_id: workCenter.find((w) => w.number === formData.workcenter).id,
-                    foreman_id: employee.find((e) => `${e.name} ${e.surname}` === formData.foreman)
+                    foreman_id: employee.find((e) => `${e.name} ${e?.surname}` === formData.foreman)
                         .id
                 };
 
@@ -200,7 +200,7 @@ const Accident = ({ selectedTicketData }) => {
                                                 {!isLoadingEmployee &&
                                                     employee.map((e) => (
                                                         <option key={e.id}>
-                                                            {`${e.name} ${e.surname}`}
+                                                            {`${e.name} ${e?.surname}`}
                                                         </option>
                                                     ))}
                                             </select>

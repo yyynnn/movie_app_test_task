@@ -2,18 +2,21 @@ export const ROUTES = {
   ROOT: '/',
   HOME: '/home',
   LOGIN: '/login',
-  PERSONAL_STATS: '/personal_stats',
+  REG: '/register',
+  PERSONAL_TASKS: '/personal_tasks',
+  SYSTEM_PREFERENCES: '/system_preferences',
   ALL_TICKETS: '/all_tickets',
   TICKET: '/ticket/:id',
   ALL_CORRECTIVE_ACTIONS: '/all_corrective_actions',
   GLOBAL_KPI: '/global_kpi',
   KPI: '/kpi',
-  WORKSTATIONS: '/workstations',
+  WORKCENTERS: '/workcenters',
   TICKET_SUCCESS: '/ticket_success',
   HEALTH_AND_SAFETY_ACCIDENT: '/health/accident/create',
   HEALTH_AND_SAFETY_NEAR_MISS: '/health/near_miss/create',
   HEALTH_AND_SAFETY_POSIBLE_ACCIDENT: '/health/posible_accident/create',
-  FORGOT_PASSWORD: '/forgot'
+  FORGOT_PASSWORD: '/forgot',
+  UNDER_CONSTRUCTION: '/under_construction'
 }
 
 // ENV: {

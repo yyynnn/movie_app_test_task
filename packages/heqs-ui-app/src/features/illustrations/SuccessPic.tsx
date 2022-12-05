@@ -25,6 +25,6 @@ export const SuccessPic = () => {
 }
 
 const Svg = styled.svg`
-  max-width: 500px;
+  max-width: 400px;
   width: 100%;
 `

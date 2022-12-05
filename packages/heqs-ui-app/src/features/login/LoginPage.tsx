@@ -1,39 +1,74 @@
 import styled from '@emotion/styled'
-import { Alert, Button, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Alert, Button, Checkbox, CircularProgress, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Controller, FieldValues, useForm } from 'react-hook-form'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Flex, Spacer } from '../../primitives'
+import { useLogin } from '../api/generated/endpoints'
 import { useAuth } from '../auth/AuthProvider'
-import { Logo } from '../navigation/Logo'
+import { Flex, Spacer } from '../primitives'
 
 export const LoginPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const auth = useAuth()
-  const [formError, setFormError] = useState(false)
+
+  const methods = useForm({ reValidateMode: 'onSubmit' })
+  const { handleSubmit, setError, formState, getValues, register, control, clearErrors, trigger } = methods
+  const formValues = getValues()
+  const errors = formState.errors
+
+  const { mutate, isLoading } = useLogin({
+    mutation: {
+      onSuccess: ({ data }) => {
+        const formValues = getValues()
+        auth.signin({ token: data.token, rememberMe: formValues.rememberMe, user: data.user }, () => {
+          navigate(from, { replace: true })
+        })
+      },
+      onError: (error) => {
+        const errorMessage = error?.response?.data?.errors?.[0]
+
+        if (error.response?.status === 422) {
+          setError('network', {
+            type: 'server',
+            message: errorMessage || 'Networ error'
+          })
+        } else {
+          setError('email', {
+            type: 'server',
+            message: 'Wrong email'
+          })
+          setError('password', {
+            type: 'server',
+            message: 'Wrong password'
+          })
+        }
+      }
+    }
+  })
 
   const from = location.state?.from?.pathname || '/'
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const formData = new FormData(event.currentTarget)
-    const username = formData.get('username') as string
-    const password = formData.get('password') as string
-
-    if (username && password) {
-      auth.signin(username, () => {
-        navigate(from, { replace: true })
-      })
-    } else {
-      setFormError(true)
-    }
+  function onSubmit(data: FieldValues) {
+    mutate({
+      data
+    })
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      onChange={(e) => {
+        console.log('🐸 Pepe said => LoginPage => e', e)
+        clearErrors()
+      }}
+      onBlur={(e) => {
+        console.log('🐸 Pepe said => LoginPage => e', e)
+        clearErrors()
+      }}
+    >
       {auth.token ? (
         <Flex flexDirection="column">
           <Typography variant="h3">
@@ -46,7 +81,6 @@ export const LoginPage = () => {
         </Flex>
       ) : (
         <Flex flexDirection="column" alignItems="center" justifyContent="center">
-          <Logo />
           <Spacer />
           <Typography variant="h2" textAlign="center">
             <b>Hi there!</b>
@@ -55,26 +89,50 @@ export const LoginPage = () => {
           </Typography>
           <Spacer />
 
-          <TextField name="username" label="Username/login" variant="outlined" fullWidth autoComplete="username" required />
+          <TextField {...register('email', { required: 'Fill out email' })} label="E-mail" variant="outlined" fullWidth autoComplete="email" error={!!errors.email} />
           <Spacer />
-          <TextField name="password" label="Password" variant="outlined" type="password" autoComplete="current-password" fullWidth required />
+          <TextField
+            {...register('password', { required: 'Fill out password' })}
+            label="Password"
+            variant="outlined"
+            type="password"
+            autoComplete="current-password"
+            fullWidth
+            error={!!errors.password}
+          />
           <Spacer space={4} />
           <Flex alignItems="center" justifyContent="space-between" width="100%">
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" />
-            <Link to={ROUTES.FORGOT_PASSWORD}>I forgot password</Link>
+            <Controller
+              control={control}
+              name="rememberMe"
+              defaultValue={true}
+              render={({ field: { onChange, onBlur, value } }) => <FormControlLabel label="Remember me" control={<Checkbox onBlur={onBlur} checked={value} onChange={onChange} />} />}
+            />
+            {/* <Link to={ROUTES.FORGOT_PASSWORD}>I forgot password</Link> */}
           </Flex>
+
           <Spacer space={20} />
-          <Button variant="contained" fullWidth size="large" type="submit">
-            LOGIN
-          </Button>
-          <Spacer />
-          <Flex>
-            {formError && (
-              <Alert variant="filled" severity="error">
-                Wrong login and/or password
-              </Alert>
-            )}
-          </Flex>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <>
+              <Button variant="contained" fullWidth size="large" type="submit" onClick={() => clearErrors()}>
+                LOGIN
+              </Button>
+              <Spacer />
+              <Button variant="outlined" fullWidth size="large" onClick={() => navigate(ROUTES.REG)}>
+                REGISTER
+              </Button>
+              <Spacer />
+              <Flex>
+                {(errors.email || errors.password || errors.network) && (
+                  <Alert variant="filled" severity="error">
+                    <div>{errors?.network?.message?.toString() || 'Wrong login and/or password'}</div>
+                  </Alert>
+                )}
+              </Flex>
+            </>
+          )}
         </Flex>
       )}
     </Form>

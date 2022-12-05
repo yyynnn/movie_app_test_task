@@ -3,9 +3,7 @@ import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import { LoadingButton } from '@mui/lab'
 import { Alert, AlertTitle, Badge, Breadcrumbs, Button, Divider, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material'
-import { DatePicker, TimePicker } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DateTimePicker, TimePicker } from '@mui/x-date-pickers'
 import imageCompression from 'browser-image-compression'
 import React, { MouseEventHandler, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
@@ -16,25 +14,26 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
-import { useBasicMutation } from '../../hooks/useBasicMutation'
-import { useBasicQuery } from '../../hooks/useBasicQuery'
-import { Flex, Pad, Spacer } from '../../primitives'
-import { LinearProgressBuffer } from '../../primitives/LinearProgressBuffer'
 import { Employees, Ticket, Tickets, Workcenters } from '../../types/api'
 import { RFCC } from '../../types/react'
 import { convertToBase64 } from '../../utils'
+import { useBasicMutation } from '../hooks/useBasicMutation'
+import { useBasicQuery } from '../hooks/useBasicQuery'
+import { Flex, Pad, Spacer } from '../primitives'
+import { LinearProgressBuffer } from '../primitives/LinearProgressBuffer'
+import { CorrectiveActions } from './CorrectiveActions'
 
 type TicketConstructorType = {
   heading?: string | undefined
   ticketClass?: number | undefined
   ticketCategory?: number | undefined
-  hasTime?: boolean | undefined
-  hasDate?: boolean | undefined
+  hasDateTime?: boolean | undefined
   hasForeman?: boolean | undefined
   hasWorkscenter?: boolean | undefined
   hasDamagedItem?: boolean | undefined
   hasShortDescription?: boolean | undefined
   readOnly?: boolean | undefined
+  hasCorrectiveActions?: boolean | undefined
   initialData?: any
 }
 
@@ -42,13 +41,13 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
   heading = 'Ticket',
   ticketClass = 2,
   ticketCategory = 6,
-  hasTime = true,
-  hasDate = true,
+  hasDateTime = true,
   hasForeman = true,
   hasWorkscenter = true,
   hasDamagedItem = true,
   hasShortDescription = false,
   readOnly = false,
+  hasCorrectiveActions = true,
   initialData
 }) => {
   const { mutate: addTicket, isLoading: isAddingTicket } = useBasicMutation<any>({
@@ -70,7 +69,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
     apiPath: API.GET.WORK_CENTERS
   })
 
-  const { handleSubmit, control, formState, getValues, watch, setValue } = useForm({
+  const { handleSubmit, control, formState, getValues, setValue } = useForm({
     defaultValues: initialData
   })
   const navigate = useNavigate()
@@ -102,6 +101,8 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
         ...data,
         ticket_class_id: ticketClass,
         ticket_category_id: ticketCategory,
+        created_user_id: 1,
+        responsible_user_id: 1,
         foreman: employees?.find((employee) => employee.id === data.foreman_id)?.name,
         workcenter: workcenters?.find((employee) => employee.id === data.workcenter_id)?.number
       }
@@ -112,198 +113,176 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
   const formValues = getValues()
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Form $readOnly={readOnly}>
-        <Stack direction={{ md: 'column', lg: 'row' }} divider={<Divider orientation="vertical" flexItem />} spacing={{ xs: 1, sm: 1, md: 1, lg: 2 }}>
-          {hasDate && (
+    <Form $readOnly={readOnly}>
+      <Stack direction={{ md: 'column', lg: 'row' }} divider={<Divider orientation="vertical" flexItem />} spacing={{ xs: 1, sm: 1, md: 1, lg: 2 }}>
+        {hasDateTime && (
+          <Controller
+            control={control}
+            name="date_time_created"
+            rules={{ required: 'Ошибка' }}
+            render={({ field: { onChange, ref, value, name } }) => {
+              return (
+                <DateTimePicker
+                  ref={ref}
+                  disabled={readOnly}
+                  label="Date and Time"
+                  value={value && typeof value !== 'string' ? value.toISOString() : value || ''}
+                  onChange={onChange}
+                  renderInput={(params) => {
+                    return <TextField {...params} error={!!errors[name]} fullWidth />
+                  }}
+                />
+              )
+            }}
+          />
+        )}
+
+        {hasForeman && (
+          <Controller
+            control={control}
+            name="foreman_id"
+            rules={{ required: 'Ошибка' }}
+            render={({ field: { onChange, ref, value, name } }) => {
+              return (
+                <FormControl fullWidth>
+                  <TextField disabled={readOnly} value={value || ''} onChange={onChange} label="User/worker" error={!!errors[name]} />
+                </FormControl>
+              )
+            }}
+          />
+        )}
+
+        {hasWorkscenter && (
+          <Controller
+            control={control}
+            name="workcenter_id"
+            rules={{ required: 'Ошибка' }}
+            render={({ field: { onChange, ref, value, name } }) => {
+              return (
+                <FormControl fullWidth>
+                  <InputLabel id="workcenter-label">Workcenter</InputLabel>
+                  <Select disabled={readOnly} value={value || ''} onChange={onChange} labelId="workcenter-label" label="Workcenter" error={!!errors[name]}>
+                    {workcenters?.map((workcenter) => {
+                      return (
+                        //@ts-ignore - necessary to load object into value
+                        <MenuItem key={workcenter.id} value={workcenter.id}>
+                          {workcenter.name}
+                        </MenuItem>
+                      )
+                    })}
+                  </Select>
+                </FormControl>
+              )
+            }}
+          />
+        )}
+
+        {hasDamagedItem && (
+          <Controller
+            control={control}
+            name="damaged_item"
+            rules={{ required: 'Ошибка' }}
+            render={({ field: { onChange, ref, value, name } }) => {
+              return <TextField disabled={readOnly} onChange={onChange} value={value} fullWidth label="Damaged Item" error={!!errors[name]} />
+            }}
+          />
+        )}
+
+        {hasShortDescription && (
+          <Controller
+            control={control}
+            name="correction"
+            rules={{ required: 'Ошибка' }}
+            render={({ field: { onChange, value, name } }) => {
+              return <TextField disabled={readOnly} onChange={onChange} value={value} fullWidth label="Short description" error={!!errors[name]} />
+            }}
+          />
+        )}
+      </Stack>
+      <Spacer />
+
+      <Row>
+        {!readOnly && (
+          <Col md={6}>
             <Controller
+              name="photo"
               control={control}
-              name="date_created"
-              rules={{ required: 'Ошибка' }}
-              render={({ field: { onChange, ref, value, name } }) => {
+              defaultValue=""
+              render={({ field: { name } }) => {
                 return (
-                  <DatePicker
-                    ref={ref}
-                    label="Date"
-                    value={value && typeof value !== 'string' ? value.toISOString() : value || ''}
-                    onChange={onChange}
-                    renderInput={(params) => {
-                      return <TextField {...params} error={!!errors[name]} fullWidth />
-                    }}
-                  />
+                  <DropzoneWrapper variant="outlined" $haserrors={errors[name] ? 'true' : null}>
+                    <Pad>
+                      <Dropzone {...getRootProps()}>
+                        <div>
+                          <input type="text" {...getInputProps()} name={name} />
+                          {formValues.photo ? (
+                            <div>
+                              <DropzoneThumb>
+                                <LinearProgressBuffer />
+                                <IconWrapper>
+                                  <Button color="error" variant="contained" onClick={removeAllFiles}>
+                                    <DeleteForeverRoundedIcon />
+                                  </Button>
+                                </IconWrapper>
+                                <img src={formValues.photo} alt="thumb" />
+                              </DropzoneThumb>
+                            </div>
+                          ) : (
+                            <Flex justifyContent="center" alignItems="center">
+                              <UploadFileRoundedIcon />
+                              <Spacer width={10} />
+                              <Typography variant="h6">Click or drag to upload</Typography>
+                            </Flex>
+                          )}
+                        </div>
+                      </Dropzone>
+                    </Pad>
+                  </DropzoneWrapper>
                 )
               }}
             />
-          )}
+            <Spacer />
+          </Col>
+        )}
 
-          {hasTime && (
-            <Controller
-              control={control}
-              name="time_created"
-              rules={{ required: 'Ошибка' }}
-              render={({ field: { onChange, ref, value, name } }) => {
-                return (
-                  <TimePicker
-                    label="Time"
-                    value={value && typeof value !== 'string' ? value.toISOString() : value || ''}
-                    onChange={onChange}
-                    renderInput={(params) => <TextField {...params} error={!!errors[name]} fullWidth />}
-                  />
-                )
-              }}
-            />
-          )}
-
-          {hasForeman && (
-            <Controller
-              control={control}
-              name="foreman_id"
-              rules={{ required: 'Ошибка' }}
-              render={({ field: { onChange, ref, value, name } }) => {
-                return (
-                  <FormControl fullWidth>
-                    <InputLabel id="foreman-label">Foreman</InputLabel>
-                    <Select value={value || ''} onChange={onChange} labelId="foreman-label" label="Foreman" error={!!errors[name]}>
-                      {employees?.map((employee) => {
-                        return (
-                          //@ts-ignore - necessary to load object into value
-                          <MenuItem key={employee.id} value={employee.id}>
-                            {employee.name + ' ' + employee.surname}
-                          </MenuItem>
-                        )
-                      })}
-                    </Select>
-                  </FormControl>
-                )
-              }}
-            />
-          )}
-
-          {hasWorkscenter && (
-            <Controller
-              control={control}
-              name="workcenter_id"
-              rules={{ required: 'Ошибка' }}
-              render={({ field: { onChange, ref, value, name } }) => {
-                return (
-                  <FormControl fullWidth>
-                    <InputLabel id="workcenter-label">Workcenter</InputLabel>
-                    <Select value={value || ''} onChange={onChange} labelId="workcenter-label" label="Workcenter" error={!!errors[name]}>
-                      {workcenters?.map((workcenter) => {
-                        return (
-                          //@ts-ignore - necessary to load object into value
-                          <MenuItem key={workcenter.id} value={workcenter.id}>
-                            {workcenter.name}
-                          </MenuItem>
-                        )
-                      })}
-                    </Select>
-                  </FormControl>
-                )
-              }}
-            />
-          )}
-
-          {hasDamagedItem && (
-            <Controller
-              control={control}
-              name="damaged_item"
-              rules={{ required: 'Ошибка' }}
-              render={({ field: { onChange, ref, value, name } }) => {
-                return <TextField onChange={onChange} value={value} fullWidth label="Damaged Item" error={!!errors[name]} />
-              }}
-            />
-          )}
-
-          {hasShortDescription && (
+        <Col lg={readOnly ? 6 : 6}>
+          {!hasShortDescription && (
             <Controller
               control={control}
               name="correction"
               rules={{ required: 'Ошибка' }}
               render={({ field: { onChange, value, name } }) => {
-                return <TextField onChange={onChange} value={value} fullWidth label="Short description" error={!!errors[name]} />
+                return <TextField onChange={onChange} value={value} fullWidth label="Correction" error={!!errors[name]} multiline rows={16} defaultValue="" />
               }}
             />
           )}
-        </Stack>
-        <Spacer />
+          <Spacer />
+        </Col>
 
-        <Row>
-          <Col md={6}>
-            {!readOnly && (
-              <Controller
-                name="photo"
-                rules={{ required: 'Ошибка' }}
-                control={control}
-                defaultValue=""
-                render={({ field: { name } }) => {
-                  return (
-                    <DropzoneWrapper variant="outlined" $haserrors={errors[name] ? 'true' : null}>
-                      <Pad>
-                        <Dropzone {...getRootProps()}>
-                          <div>
-                            <input type="text" {...getInputProps()} name={name} />
-                            {formValues.photo ? (
-                              <div>
-                                <DropzoneThumb>
-                                  <LinearProgressBuffer />
-                                  <IconWrapper>
-                                    <Button color="error" variant="contained" onClick={removeAllFiles}>
-                                      <DeleteForeverRoundedIcon />
-                                    </Button>
-                                  </IconWrapper>
-                                  <img src={formValues.photo} alt="thumb" />
-                                </DropzoneThumb>
-                              </div>
-                            ) : (
-                              <Flex justifyContent="center" alignItems="center">
-                                <UploadFileRoundedIcon />
-                                <Spacer width={10} />
-                                <Typography variant="h6">Click or drag to upload</Typography>
-                              </Flex>
-                            )}
-                          </div>
-                        </Dropzone>
-                      </Pad>
-                    </DropzoneWrapper>
-                  )
-                }}
-              />
-            )}
-
-            <Spacer />
+        {hasCorrectiveActions && (
+          <Col lg={readOnly ? 6 : 12}>
+            <CorrectiveActions readOnly={readOnly} />
           </Col>
-          <Col md={readOnly ? 12 : 6}>
-            {!hasShortDescription && (
-              <Controller
-                control={control}
-                name="correction"
-                rules={{ required: 'Ошибка' }}
-                render={({ field: { onChange, value, name } }) => {
-                  return <TextField onChange={onChange} value={value} fullWidth label="Correction" error={!!errors[name]} multiline rows={16} defaultValue="" />
-                }}
-              />
-            )}
-            <Spacer />
-          </Col>
-        </Row>
-
-        {!!Object.keys(errors).length && (
-          <Alert severity="error">
-            <AlertTitle>Error</AlertTitle>
-            Please fill out these fields: {Object.keys(errors).join(', ')}
-          </Alert>
         )}
+      </Row>
 
-        <Spacer />
+      <Spacer />
 
-        {!readOnly && (
-          <LoadingButton loading={isAddingTicket} fullWidth size="large" variant="contained" onClick={handleSubmit((data) => onSubmit(data))}>
-            SUBMIT
-          </LoadingButton>
-        )}
-      </Form>
-    </LocalizationProvider>
+      {!!Object.keys(errors).length && (
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          Please fill out these fields: {Object.keys(errors).join(', ')}
+        </Alert>
+      )}
+
+      <Spacer />
+
+      {!readOnly && (
+        <LoadingButton loading={isAddingTicket} fullWidth size="large" variant="contained" onClick={handleSubmit((data) => onSubmit(data))}>
+          SUBMIT
+        </LoadingButton>
+      )}
+    </Form>
   )
 }
 

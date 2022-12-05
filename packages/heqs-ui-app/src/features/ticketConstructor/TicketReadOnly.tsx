@@ -3,21 +3,16 @@ import React from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
 import { API } from '../../consts/api'
-import { useBasicQuery } from '../../hooks/useBasicQuery'
 import { Ticket } from '../../types/api'
+import { useReadTicketByID } from '../api/generated/endpoints'
 import { TicketConstructor } from './TicketConstructor'
 
 export const TicketReadOnly = () => {
   const params: any = useParams()
-  const location = useLocation()
 
-  const {
-    // @ts-ignore
-    data
-  } = useBasicQuery<{ data: Ticket }>({
-    apiPath: API.GET.TICKET(params.id),
-    enabled: !!params.id
-  })
+  const { data } = useReadTicketByID(params?.id)
+
   const { data: ticket } = data || {}
-  return <div>{ticket ? <TicketConstructor readOnly initialData={ticket} /> : <CircularProgress />}</div>
+
+  return <div>{ticket ? <TicketConstructor readOnly initialData={ticket} hasCorrectiveActions /> : <CircularProgress />}</div>
 }

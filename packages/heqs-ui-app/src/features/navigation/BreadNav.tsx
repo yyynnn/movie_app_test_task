@@ -1,15 +1,15 @@
 import styled from '@emotion/styled'
-import { Breadcrumbs, Typography } from '@mui/material'
+import { Breadcrumbs, Container, Typography } from '@mui/material'
 import React from 'react'
+import { Col, Row } from 'react-grid-system'
 import { Link, useLocation } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
-import { Spacer } from '../../primitives'
 import { extractNumber } from '../../utils'
+import { Spacer } from '../primitives'
 
 export const BreadNav = () => {
   const location = useLocation()
-  console.log('🐸 Pepe said => BreadNav => location', location)
   const isTicket = location.pathname.includes('/ticket/')
   const ticketId = extractNumber(location.pathname)
 
@@ -24,9 +24,6 @@ export const BreadNav = () => {
 
   return (
     <Wrapper>
-      <Typography variant="h4">
-        <b>{heading}</b>
-      </Typography>
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" to={ROUTES.HOME}>
           Home

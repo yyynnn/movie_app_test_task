@@ -1,19 +1,17 @@
-import { BREAKPOINTS } from './consts/common'
 import { ROUTES } from './consts/routes'
 import { AllCorrectiveActionsPage } from './features/allCorrectiveActions/AllCorrectiveActionsPage'
 import { AllTicketsPage } from './features/allTickets/AllTicketsPage'
-import { AuthProvider, RequireAuth } from './features/auth/AuthProvider'
-import { NotFound } from './features/errors/NotFound'
-import { UnderConstruction } from './features/errors/UnderConstruction'
 import { ExampleFeaturePage } from './features/exampleFeature/ExampleFeaturePage'
 import { HomePage } from './features/home/HomePage'
-import { GlobalLayout } from './features/layouts/GlobalLayout'
+// import { KpiPage } from './features/kpi/KpiPage'
 import { ForgotPasswordPage } from './features/login/ForgotPasswordPage'
 import { LoginPage } from './features/login/LoginPage'
+import { RegPage } from './features/reg/RegPage'
 import { TicketConstructor } from './features/ticketConstructor/TicketConstructor'
 import { TicketReadOnly } from './features/ticketConstructor/TicketReadOnly'
 import { TicketSuccess } from './features/ticketConstructor/TicketSuccess'
-import { WorkstationsPage } from './features/workstations/WorkstationsPage'
+import { WorkcentersPage } from './features/workcenters/WorkcentersPage'
+import { SystemPreferencesPage } from './systemPreferences/SystemPreferencesPage'
 
 export const routes = [
   {
@@ -23,8 +21,20 @@ export const routes = [
     featureActive: true
   },
   {
-    element: <WorkstationsPage />,
-    path: ROUTES.WORKSTATIONS,
+    element: <RegPage />,
+    path: ROUTES.REG,
+    privatePage: false,
+    featureActive: true
+  },
+  {
+    element: <AllCorrectiveActionsPage />,
+    path: ROUTES.PERSONAL_TASKS,
+    privatePage: true,
+    featureActive: true
+  },
+  {
+    element: <WorkcentersPage />,
+    path: ROUTES.WORKCENTERS,
     privatePage: true,
     featureActive: true
   },
@@ -54,20 +64,32 @@ export const routes = [
     featureActive: true
   },
   {
-    element: <TicketConstructor heading="Accident" hasShortDescription={false} />,
+    element: <SystemPreferencesPage />,
+    path: ROUTES.SYSTEM_PREFERENCES,
+    privatePage: true,
+    featureActive: false
+  },
+  {
+    element: <TicketConstructor hasCorrectiveActions={false} heading="Accident" hasShortDescription={false} />,
     path: ROUTES.HEALTH_AND_SAFETY_ACCIDENT,
     privatePage: true,
     featureActive: false
   },
   {
-    element: <TicketConstructor heading="Nearmiss (Occupational health and safety)" hasShortDescription={false} />,
+    element: <TicketConstructor hasCorrectiveActions={false} heading="Nearmiss (Occupational health and safety)" hasShortDescription={false} />,
     path: ROUTES.HEALTH_AND_SAFETY_NEAR_MISS,
     privatePage: true,
     featureActive: true
   },
   {
-    element: <TicketConstructor heading="Posible accident" hasShortDescription={false} />,
+    element: <TicketConstructor hasCorrectiveActions={false} heading="Posible accident" hasShortDescription={false} />,
     path: ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT,
+    privatePage: true,
+    featureActive: false
+  },
+  {
+    element: <div />,
+    path: ROUTES.UNDER_CONSTRUCTION,
     privatePage: true,
     featureActive: false
   },
