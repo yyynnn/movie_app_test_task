@@ -521,16 +521,19 @@ export const useGetUserPositionsDictionary = <TData = Awaited<ReturnType<typeof 
 
 /**
  * Display a listing of the resource.
+
+//  * @param Request $request
+//  * @return LengthAwarePaginator
  * @summary Get Paginated Ticket List
  */
 export const getPaginatedTicketList = (params?: GetPaginatedTicketListParams, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
-  return axios.get(`/tickets`, {
+  return axios.get(`/tickets/list/filtered`, {
     ...options,
     params: { ...params, ...options?.params }
   })
 }
 
-export const getGetPaginatedTicketListQueryKey = (params?: GetPaginatedTicketListParams) => [`/tickets`, ...(params ? [params] : [])]
+export const getGetPaginatedTicketListQueryKey = (params?: GetPaginatedTicketListParams) => [`/tickets/list/filtered`, ...(params ? [params] : [])]
 
 export type GetPaginatedTicketListQueryResult = NonNullable<Awaited<ReturnType<typeof getPaginatedTicketList>>>
 export type GetPaginatedTicketListQueryError = AxiosError<unknown>
@@ -663,6 +666,38 @@ export const useDeleteTicketByID = <TError = AxiosError<unknown>, TContext = unk
   }
 
   return useMutation<Awaited<ReturnType<typeof deleteTicketByID>>, TError, { ticketId: number }, TContext>(mutationFn, mutationOptions)
+}
+
+/**
+ * Display the specified resource.
+ * @summary Read correctve actions by ticket id
+ */
+export const readCorrectveActionsByTicketId = (ticketId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<CorrectiveAction[]>> => {
+  return axios.get(`/tickets/cas/${ticketId}`, options)
+}
+
+export const getReadCorrectveActionsByTicketIdQueryKey = (ticketId: number) => [`/tickets/cas/${ticketId}`]
+
+export type ReadCorrectveActionsByTicketIdQueryResult = NonNullable<Awaited<ReturnType<typeof readCorrectveActionsByTicketId>>>
+export type ReadCorrectveActionsByTicketIdQueryError = AxiosError<unknown>
+
+export const useReadCorrectveActionsByTicketId = <TData = Awaited<ReturnType<typeof readCorrectveActionsByTicketId>>, TError = AxiosError<unknown>>(
+  ticketId: number,
+  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof readCorrectveActionsByTicketId>>, TError, TData>; axios?: AxiosRequestConfig }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getReadCorrectveActionsByTicketIdQueryKey(ticketId)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readCorrectveActionsByTicketId>>> = ({ signal }) => readCorrectveActionsByTicketId(ticketId, { signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof readCorrectveActionsByTicketId>>, TError, TData>(queryKey, queryFn, { enabled: !!ticketId, ...queryOptions }) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey
+  }
+
+  query.queryKey = queryKey
+
+  return query
 }
 
 /**

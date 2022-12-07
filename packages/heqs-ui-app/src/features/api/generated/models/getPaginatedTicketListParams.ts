@@ -5,5 +5,28 @@
  * Документация для микро сервиса
  * OpenAPI spec version: 1.0.0
  */
+import type { GetPaginatedTicketListSort } from './getPaginatedTicketListSort'
 
-export type GetPaginatedTicketListParams = { page?: number; per_page?: number }
+export type GetPaginatedTicketListParams = {
+  'page[number]'?: number
+  'page[size]'?: number
+  'filter[tickets.ticket_class_id]'?: number
+  'filter[tickets.ticket_category_id]'?: number
+  'filter[tickets.ticket_status_id]'?: number
+  'filter[tickets.created_user_id]'?: number
+  'filter[tickets.responsible_user_id]'?: number
+  'filter[tickets.root_cause_id]'?: number
+  'filter[tickets.workcenter_id]'?: number
+  'filter[tickets.correction]'?: string
+  'filter[tickets.damaged_item]'?: string
+  'filter[tickets.created_at]'?: string
+  'filter[tickets.updated_at]'?: string
+  'filter[tickets.date_time_created]'?: string
+  'filter[tickets.date_time_created_after]'?: string
+  'filter[tickets.date_time_created_before]'?: string
+  'filter[tickets.date_time_created_between]'?: string
+  'filter[workcenters.workcenter_group_id]'?: number
+  'filter[workcenters.factory_id]'?: number
+  'filter[factories.country_id]'?: number
+  sort?: GetPaginatedTicketListSort
+}
