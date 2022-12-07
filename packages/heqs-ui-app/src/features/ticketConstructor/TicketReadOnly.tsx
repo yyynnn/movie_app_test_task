@@ -2,8 +2,6 @@ import { CircularProgress } from '@mui/material'
 import React from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
-import { API } from '../../consts/api'
-import { Ticket } from '../../types/api'
 import { useReadTicketByID } from '../api/generated/endpoints'
 import { TicketConstructor } from './TicketConstructor'
 

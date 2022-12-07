@@ -48,6 +48,7 @@
     "match-sorter": "6.3.1",
     "sort-by": "1.2.0",
     "jwt-js-decode": "1.5.1",
+    "cogent-js": "2.0.0",
     "react-parallax-tilt": "1.7.72"
   }
 }

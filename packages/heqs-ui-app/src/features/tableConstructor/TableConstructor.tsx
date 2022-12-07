@@ -20,12 +20,13 @@ const createCols = (object: any): { field: string; headerName: string; editable:
   return result
 }
 
-export const TableConstructor: RFCC<{ data: any; isLoading?: boolean; page: number; pageSize: number; setPageSize: any; setPage: any }> = ({
+export const TableConstructor: RFCC<{ data: any; isLoading?: boolean; page: number; pageSize: number; setPageSize: any; setPage: any; rowId: string }> = ({
   data,
   isLoading,
   page,
   pageSize,
   setPageSize,
+  rowId = 'id',
   setPage
 }) => {
   const navigate = useNavigate()
@@ -79,6 +80,7 @@ export const TableConstructor: RFCC<{ data: any; isLoading?: boolean; page: numb
         <DataGrid
           density="comfortable"
           hideFooter
+          getRowId={(row) => row[rowId]}
           onRowClick={(row) => {
             navigate(ROUTES.TICKET.replace(':id', String(row.id)))
           }}

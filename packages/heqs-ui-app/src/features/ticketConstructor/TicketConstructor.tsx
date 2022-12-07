@@ -259,9 +259,9 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
           <Spacer />
         </Col>
 
-        {hasCorrectiveActions && (
+        {hasCorrectiveActions && initialData.id && (
           <Col lg={readOnly ? 6 : 12}>
-            <CorrectiveActions readOnly={readOnly} />
+            <CorrectiveActions readOnly={readOnly} ticketId={initialData.id} />
           </Col>
         )}
       </Row>
