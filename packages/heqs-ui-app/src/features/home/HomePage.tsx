@@ -20,7 +20,7 @@ export const HomePage = () => {
           <Spacer space={10} />
           <Row>
             <Col md={6} xl={4}>
-              <Card fillHeight heading="Occupational health and safety" bgColor="#0849ff" bgColorDark="#0849ff">
+              <Card fillHeight heading="Occupational health and safety" bgColor="#0849ff63" bgColorDark="#0849ff63">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={32} />
                   <Tooltip placement="right" title="Already happened, injuries" aria-label="already happened, injuries">
@@ -45,7 +45,7 @@ export const HomePage = () => {
             </Col>
 
             <Col md={6} xl={4}>
-              <Card fillHeight heading="Quality" bgColor="#ff0835" bgColorDark="#ff0835">
+              <Card fillHeight heading="Quality" bgColor="#ff083563" bgColorDark="#ff083563">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={32} />
                   <Tooltip placement="right" title="Non-conformity found during  the audit" aria-label="non-conformity found during  the audit">
@@ -70,7 +70,7 @@ export const HomePage = () => {
             </Col>
 
             <Col md={12} xl={4}>
-              <Card fillHeight heading="Environment" bgColor="#2dcf58" bgColorDark="#2dcf58">
+              <Card fillHeight heading="Environment" bgColor="#2dcf5863" bgColorDark="#2dcf5863">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={32} />
                   <Tooltip placement="right" title="Already happened, injuries" aria-label="already happened, injuries">
@@ -106,7 +106,7 @@ export const HomePage = () => {
           <Spacer space={10} />
           <Row>
             <Col lg={6}>
-              <Card fillHeight heading="All tickets" bgColor="#FF8A00" bgColorDark="#FF8A00">
+              <Card fillHeight heading="All tickets" bgColor="#FF8A0063" bgColorDark="#FF8A0063">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={74} />
                   <Button color="error" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ALL_TICKETS)}>
@@ -117,7 +117,7 @@ export const HomePage = () => {
             </Col>
 
             <Col lg={6}>
-              <Card fillHeight heading="All corrective actions" bgColor="#FF8A00" bgColorDark="#FF8A00">
+              <Card fillHeight heading="All corrective actions" bgColor="#FF8A0063" bgColorDark="#FF8A0063">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Spacer space={74} />
 
@@ -140,7 +140,7 @@ export const HomePage = () => {
           <Spacer space={10} />
           <Row>
             <Col md={6} xl={3}>
-              <Card fillHeight heading="Personal tasks" bgColor="#8100ff" bgColorDark="#8100ff">
+              <Card fillHeight heading="Personal tasks" bgColor="#8100ff63" bgColorDark="#8100ff63">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.PERSONAL_TASKS)}>
                     Go
@@ -149,7 +149,7 @@ export const HomePage = () => {
               </Card>
             </Col>
             <Col md={6} xl={3}>
-              <Card fillHeight={true} heading="Global KPI" bgColor="#8100ff" bgColorDark="#8100ff">
+              <Card fillHeight={true} heading="Global KPI" bgColor="#8100ff63" bgColorDark="#8100ff63">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.GLOBAL_KPI)}>
                     Go
@@ -158,7 +158,7 @@ export const HomePage = () => {
               </Card>
             </Col>
             <Col md={6} xl={3}>
-              <Card fillHeight={true} heading="KPI" bgColor="#8100ff" bgColorDark="#8100ff">
+              <Card fillHeight={true} heading="KPI" bgColor="#8100ff63" bgColorDark="#8100ff63">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.KPI)}>
                     Go
@@ -168,7 +168,7 @@ export const HomePage = () => {
             </Col>
 
             <Col md={6} xl={3}>
-              <Card heading="Workcenters" bgColor="#8100ff" bgColorDark="#8100ff">
+              <Card heading="Workcenters" bgColor="#8100ff63" bgColorDark="#8100ff63">
                 <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
                   <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.WORKCENTERS)}>
                     Go

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import styled from '@emotion/styled'
 import { Alert, Button, Checkbox, CircularProgress, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
@@ -55,6 +56,21 @@ export const LoginPage = () => {
     mutate({
       data
     })
+  }
+
+  const fakeLoginHandler = () => {
+    clearErrors()
+    auth.signin(
+      {
+        token:
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5N2NlN2NkMi03YWFjLTRkMGMtOWJiNi05NDhhZmYxZmY2MzAiLCJqdGkiOiJkY2Y0YzBlMzlkNzg5MGJkMzcyN2VkMTlkOWRmODViOGY4MmFiNWRiOGM5NTQ2MTUyZjJiM2JiYzU1OTc3NzhlMjVlZmQ4NjRhODA1ZmJhOSIsImlhdCI6MTY2OTEzMjY5NS4xNjU0NjQsIm5iZiI6MTY2OTEzMjY5NS4xNjU0NjksImV4cCI6MTY4NDc3MTA5NS4xNjAyNTksInN1YiI6IjIiLCJzY29wZXMiOltdfQ.zIzV2a6g1iDZnS6xtFOWQ9Q6XL2rRZkl9WAsnh3NGif1VVT3gzXECXu9yi7knm9LHif8U1ZJXYefljPumrlFKuch-lGy0Kc_lWI6Okhph2tQ5EPaZhXopMBzgoJknSPYhY48UyieCMqmx-5anfGWRd9B3SF-Urr9Z59XR1g1dLKiawObEpFAAblXxpM88bo7u_siAJtN66ihx3GcLbLFUBIuFQhB8h1Rsz1C6jtN7-2oTChQL5N8kJoB-Jp8vRlV7LCXKBXgiMIP5gs-qtzVZKf2vNHjBrcXsNRKzpz8LeL0UepWCzxHXgUEYZ2Motb_w8UAxuTgOuV_GzGcxBUF_KHxxd3NMd_yivlG144G7RKcIoMpWYfpY1bGOZfGJSNdvLF4hkEPn5NTU42Yuk6cYC-6iFyQ6Td9n_wagGlEYVVBYvzWn2VguraHBmcvbY0z_7du1E4jG2V1PDioE8fGY_gFmPu1nnh7Vd2AkRbXRFnR-ErCr189pFv_s51W3UFAcewGMFzDirflmxGHMexyHKTzUp7nFiSOYhu34CyM2TEuIIznqxoU5hmHkzQOfMe8_NM1odZlnNm65vBMq-uiF4QnyN_fci-hU4NdkSNjhLTH_tN54ljm9TdsHG1RAz2g1670ffs885_D3xJK49GP5B1vjsGASae-_YKUIc0HGFI',
+        rememberMe: formValues.rememberMe,
+        user: { email: 'jdoe@fakemail.com', name: 'John', surname: 'Doe', user_position_id: 4, factory_id: 2 }
+      },
+      () => {
+        navigate(from, { replace: true })
+      }
+    )
   }
 
   return (
@@ -116,6 +132,10 @@ export const LoginPage = () => {
             <CircularProgress />
           ) : (
             <>
+              <Button variant="contained" fullWidth size="large" type="button" onClick={fakeLoginHandler}>
+                FAKE LOGIN
+              </Button>
+              <Spacer />
               <Button variant="contained" fullWidth size="large" type="submit" onClick={() => clearErrors()}>
                 LOGIN
               </Button>

@@ -23,7 +23,7 @@ export const Card: RFCC<CardProps> = ({ fillHeight = true, heading, bgColor, bgC
 
   return (
     <OuterWrapper fillHeight={fillHeight}>
-      <Tilt tiltReverse transitionSpeed={2000} glareBorderRadius={'10px'} glareEnable={false} tiltMaxAngleY={2} tiltMaxAngleX={5} scale={0.99}>
+      <Tilt tiltReverse transitionSpeed={400} glareBorderRadius={'10px'} glareEnable={false} tiltMaxAngleY={2} tiltMaxAngleX={5} scale={0.99}>
         <Wrapper fillHeight={fillHeight} flexDirection="column" bgColor={bgColor} bgColorDark={bgColorDark} justifyContent="space-between">
           <Typography variant="h4">
             <b>{heading}</b>

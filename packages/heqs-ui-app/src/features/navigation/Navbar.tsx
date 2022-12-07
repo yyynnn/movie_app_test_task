@@ -183,18 +183,15 @@ export const Navbar = () => {
                 </Max>
                 <Spacer />
                 <Button
+                  size="large"
                   variant="outlined"
-                  size="small"
                   fullWidth
                   onClick={() => {
                     toggleDrawer(false)
                     navigate(ROUTES.ALL_CORRECTIVE_ACTIONS)
-                    return auth.signout()
                   }}
                 >
-                  <Flex gap={4} alignItems="center">
-                    <Typography variant="h6">All corrective actions</Typography>
-                  </Flex>
+                  All corrective actions
                 </Button>
               </WidgetBlock>
               <Spacer />
