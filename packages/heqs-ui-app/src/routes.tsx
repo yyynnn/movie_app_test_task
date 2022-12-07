@@ -3,7 +3,7 @@ import { AllCorrectiveActionsPage } from './features/allCorrectiveActions/AllCor
 import { AllTicketsPage } from './features/allTickets/AllTicketsPage'
 import { ExampleFeaturePage } from './features/exampleFeature/ExampleFeaturePage'
 import { HomePage } from './features/home/HomePage'
-import { KpiPage } from './features/kpi/KpiPage'
+// import { KpiPage } from './features/kpi/KpiPage'
 import { ForgotPasswordPage } from './features/login/ForgotPasswordPage'
 import { LoginPage } from './features/login/LoginPage'
 import { RegPage } from './features/reg/RegPage'
@@ -38,12 +38,7 @@ export const routes = [
     privatePage: true,
     featureActive: true
   },
-  {
-    element: <KpiPage />,
-    path: ROUTES.KPI,
-    privatePage: true,
-    featureActive: true
-  },
+
   {
     element: <ForgotPasswordPage />,
     path: ROUTES.FORGOT_PASSWORD,
