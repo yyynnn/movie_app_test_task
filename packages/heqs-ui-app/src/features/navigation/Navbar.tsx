@@ -1,6 +1,7 @@
 /* eslint-disable no-extra-boolean-cast */
 import styled from '@emotion/styled'
 import CloseRounded from '@mui/icons-material/CloseRounded'
+import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded'
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
@@ -186,7 +187,7 @@ export const Navbar = () => {
                 <Spacer />
                 <Button
                   size="large"
-                  variant="outlined"
+                  variant="contained"
                   fullWidth
                   onClick={() => {
                     toggleDrawer(false)
@@ -238,30 +239,37 @@ export const Navbar = () => {
 
                 <Spacer />
 
-                <Button
-                  size="large"
-                  variant="outlined"
-                  onClick={() => {
-                    toggleDrawer(false)
-                    navigate(ROUTES.SYSTEM_PREFERENCES)
-                  }}
-                >
-                  System preferences
-                </Button>
+                <Row>
+                  <Col>
+                    <Button
+                      size="large"
+                      variant="contained"
+                      fullWidth
+                      onClick={() => {
+                        toggleDrawer(false)
+                        navigate(ROUTES.SYSTEM_PREFERENCES)
+                      }}
+                    >
+                      <SettingsRoundedIcon />
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button
+                      size="large"
+                      variant="contained"
+                      color="error"
+                      fullWidth
+                      onClick={() => {
+                        toggleDrawer(false)
+                        return auth.signout()
+                      }}
+                    >
+                      <ExitToAppRoundedIcon />
+                    </Button>
+                  </Col>
+                </Row>
 
                 <Spacer />
-
-                <Button
-                  size="large"
-                  variant="outlined"
-                  color="error"
-                  onClick={() => {
-                    toggleDrawer(false)
-                    return auth.signout()
-                  }}
-                >
-                  Logout
-                </Button>
               </Flex>
             </Col>
           </Row>
