@@ -9,11 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@quentin-sommer/react-useragent": "^3.2.0",
     "next-seo": "5.15.0",
     "next": "13.0.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "styled-components": "5.3.6"
+    "styled-components": "5.3.6",
+    "axios": "0.27.2",
+    "large-small-dynamic-viewport-units-polyfill": "^0.0.4",
+    "react-grid-system": "8.1.6",
+    "react-modern-drawer": "^1.1.2",
+    "reactjs-popup": "^2.0.5",
+    "smoothscroll-polyfill": "^0.4.4",
+    "ssr-window": "4.0.2",
+    "typograf": "6.15.1"
   },
   "devDependencies": {
     "@types/node": "18.11.9",

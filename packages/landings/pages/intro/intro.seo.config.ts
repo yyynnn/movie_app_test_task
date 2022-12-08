@@ -1,6 +1,6 @@
 import type { NextSeoProps } from 'next-seo'
 
-export const NEXT_SEO_DEFAULT: NextSeoProps = {
+export const NEXT_SEO: NextSeoProps = {
   title: 'Title A',
   description: 'Description A',
   openGraph: {

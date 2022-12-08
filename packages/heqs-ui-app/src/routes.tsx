@@ -7,11 +7,11 @@ import { HomePage } from './features/home/HomePage'
 import { ForgotPasswordPage } from './features/login/ForgotPasswordPage'
 import { LoginPage } from './features/login/LoginPage'
 import { RegPage } from './features/reg/RegPage'
+import { SystemPreferencesPage } from './features/systemPreferences/SystemPreferencesPage'
 import { TicketConstructor } from './features/ticketConstructor/TicketConstructor'
 import { TicketReadOnly } from './features/ticketConstructor/TicketReadOnly'
 import { TicketSuccess } from './features/ticketConstructor/TicketSuccess'
 import { WorkcentersPage } from './features/workcenters/WorkcentersPage'
-import { SystemPreferencesPage } from './systemPreferences/SystemPreferencesPage'
 
 export const routes = [
   {
@@ -70,19 +70,37 @@ export const routes = [
     featureActive: false
   },
   {
-    element: <TicketConstructor hasCorrectiveActions={false} heading="Accident" hasShortDescription={false} />,
+    element: (
+      <TicketConstructor
+        hasCorrectiveActions={false}
+        heading="Accident"
+        hasShortDescription={false}
+      />
+    ),
     path: ROUTES.HEALTH_AND_SAFETY_ACCIDENT,
     privatePage: true,
     featureActive: false
   },
   {
-    element: <TicketConstructor hasCorrectiveActions={false} heading="Nearmiss (Occupational health and safety)" hasShortDescription={false} />,
+    element: (
+      <TicketConstructor
+        hasCorrectiveActions={false}
+        heading="Nearmiss (Occupational health and safety)"
+        hasShortDescription={false}
+      />
+    ),
     path: ROUTES.HEALTH_AND_SAFETY_NEAR_MISS,
     privatePage: true,
     featureActive: true
   },
   {
-    element: <TicketConstructor hasCorrectiveActions={false} heading="Posible accident" hasShortDescription={false} />,
+    element: (
+      <TicketConstructor
+        hasCorrectiveActions={false}
+        heading="Posible accident"
+        hasShortDescription={false}
+      />
+    ),
     path: ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT,
     privatePage: true,
     featureActive: false

@@ -2403,6 +2403,13 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.6.tgz#cee20bd55e68a1720bdab363ecf0c821ded4cd45"
   integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
 
+"@quentin-sommer/react-useragent@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@quentin-sommer/react-useragent/-/react-useragent-3.2.0.tgz#76e235d55d3c2610277e4fa42e8bbb6d862cbf2d"
+  integrity sha512-4ZCL6AZp5p4vtZv+2cE//aGRv0OCUaoa/YgNya4aJbNXRRJdHN8ZvB+sb7EpyylbkqW9MukFXBf51/V3iT3I7g==
+  dependencies:
+    ua-parser-js "^0.7.20"
+
 "@react-aria/ssr@^3.2.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@react-aria/ssr/-/ssr-3.3.0.tgz#25e81daf0c7a270a4a891159d8d984578e4512d8"
@@ -4002,6 +4009,14 @@ axe-core@^4.4.3:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.5.0.tgz#6efe2ecdba205fcc9d7ddb3d48c2cf630f70eb5e"
   integrity sha512-4+rr8eQ7+XXS5nZrKcMO/AikHL0hVqy+lHWAnE3xdHl+aguag8SOQ6eEqLexwLNWgXIMfunGuD3ON1/6Kyet0A==
+
+axios@0.27.2:
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.27.2.tgz#207658cc8621606e586c85db4b41a750e756d972"
+  integrity sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==
+  dependencies:
+    follow-redirects "^1.14.9"
+    form-data "^4.0.0"
 
 axios@1.1.3:
   version "1.1.3"
@@ -7267,7 +7282,7 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@^1.0.0, follow-redirects@^1.14.7, follow-redirects@^1.15.0:
+follow-redirects@^1.0.0, follow-redirects@^1.14.7, follow-redirects@^1.14.9, follow-redirects@^1.15.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
   integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
@@ -9342,6 +9357,11 @@ language-tags@^1.0.5:
   integrity sha512-qJhlO9cGXi6hBGKoxEG/sKZDAHD5Hnu9Hs4WbOY3pCWXDhw0N8x1NenNzm2EnNLkLkk7J2SdxAkDSbb6ftT+UQ==
   dependencies:
     language-subtag-registry "~0.3.2"
+
+large-small-dynamic-viewport-units-polyfill@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/large-small-dynamic-viewport-units-polyfill/-/large-small-dynamic-viewport-units-polyfill-0.0.4.tgz#5d32499e6dda39aa15ff9b613ad073519d93a7f1"
+  integrity sha512-UmvkvGfb5p2KoXLrW3+y8lP8yNrRpHQUwZ2JkwAX8nYu1u29WMu0yfxg5GZQT3t2BHIC6Im5ARfx0KCPC7Avsg==
 
 last-call-webpack-plugin@^3.0.0:
   version "3.0.0"
@@ -11975,6 +11995,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-modern-drawer@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-modern-drawer/-/react-modern-drawer-1.1.2.tgz#33a8a167a86e899c5c5258cb4b2fa091d3851445"
+  integrity sha512-v7I6gGHZnJo7mVLFV74NyazEgl7IXJSmnmFE98olhH7sP9O0ul/1l/d7YQOARWyyLPd96P0odriX+nRusDJr6g==
+
 react-parallax-tilt@1.7.72:
   version "1.7.72"
   resolved "https://registry.yarnpkg.com/react-parallax-tilt/-/react-parallax-tilt-1.7.72.tgz#9aaad589c0c45eb044a22d2cc456e7c38cde0fbc"
@@ -12181,6 +12206,11 @@ react@^17.0.2:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
+
+reactjs-popup@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/reactjs-popup/-/reactjs-popup-2.0.5.tgz#588a74966bb126699429d739948e3448d7771eac"
+  integrity sha512-b5hv9a6aGsHEHXFAgPO5s1Jw1eSkopueyUVxQewGdLgqk2eW0IVXZrPRpHR629YcgIpC2oxtX8OOZ8a7bQJbxA==
 
 read-pkg-up@^7.0.1:
   version "7.0.1"
@@ -12949,6 +12979,11 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
+smoothscroll-polyfill@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/smoothscroll-polyfill/-/smoothscroll-polyfill-0.4.4.tgz#3a259131dc6930e6ca80003e1cb03b603b69abf8"
+  integrity sha512-TK5ZA9U5RqCwMpfoMq/l1mrH0JAR7y7KRvOBx0n2869aLxch+gT9GhN3yUfjiw+d/DiF1mKo14+hd62JyMmoBg==
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"
@@ -13140,6 +13175,11 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
+
+ssr-window@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-4.0.2.tgz#dc6b3ee37be86ac0e3ddc60030f7b3bc9b8553be"
+  integrity sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==
 
 ssri@^6.0.1:
   version "6.0.2"
@@ -13886,7 +13926,12 @@ typescript@^4.9.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.3.tgz#3aea307c1746b8c384435d8ac36b8a2e580d85db"
   integrity sha512-CIfGzTelbKNEnLpLdGFgdyKhG23CKdKgQPOBc+OUNrkJ2vr+KSzsSV5kq5iWhEQbok+quxgGzrAtGWCyU7tHnA==
 
-ua-parser-js@^0.7.30:
+typograf@6.15.1:
+  version "6.15.1"
+  resolved "https://registry.yarnpkg.com/typograf/-/typograf-6.15.1.tgz#592ac2998fb46a06acdddcd8dbd461082589a254"
+  integrity sha512-G1IIJlh4ycW+rvTspdgZKQoj/fKpmwif6MUhrmn3LY50W8njRnBqdFIJcfDqbmDg+RmmP51R9jdjjMwBYA5P0Q==
+
+ua-parser-js@^0.7.20, ua-parser-js@^0.7.30:
   version "0.7.32"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.32.tgz#cd8c639cdca949e30fa68c44b7813ef13e36d211"
   integrity sha512-f9BESNVhzlhEFf2CHMSj40NWOjYPl1YKYbrvIr/hFTDEmLq7SRbWvm7FcdcpCYT95zrOhC7gZSxjdnnTpBcwVw==

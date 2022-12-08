@@ -18,7 +18,6 @@
     "@mui/material": "5.10.16",
     "@mui/lab": "5.0.0-alpha.110",
     "@mui/icons-material": "5.10.16",
-    "@fontsource/plus-jakarta-sans": "4.5.10",
     "@hookform/error-message": "2.0.0",
     "@trendmicro/react-radio": "4.0.0-alpha",
     "@emotion/react": "^11.5.0",
