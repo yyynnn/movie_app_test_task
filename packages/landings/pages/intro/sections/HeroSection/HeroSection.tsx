@@ -1,11 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { Text3dAnimation } from '../../../../components/Text3dAnimation'
+
 export const HeroSection = () => {
   return (
     <Wrapper>
       <Hero>
-        <p>Build the statistics. Improve your business.</p>
+        {/* <p>Build the statistics. Improve your business.</p> */}
+        <Text3dAnimation />
       </Hero>
     </Wrapper>
   )

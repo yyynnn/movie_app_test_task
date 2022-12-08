@@ -22,12 +22,13 @@
     "reactjs-popup": "^2.0.5",
     "smoothscroll-polyfill": "^0.4.4",
     "ssr-window": "4.0.2",
-    "typograf": "6.15.1"
+    "typograf": "6.15.1",
+    "@react-three/fiber": "8.9.1",
+    "@react-three/drei": "9.46.4",
+    "three": "^0.139.0",
+    "three-stdlib": "^2.8.11"
   },
   "devDependencies": {
-    "@types/node": "18.11.9",
-    "@types/next-seo": "2.1.2",
-    "@types/react": "18.0.24",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.1"
   }

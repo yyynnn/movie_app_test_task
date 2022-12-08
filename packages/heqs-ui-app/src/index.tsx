@@ -22,7 +22,11 @@ import { ScrollToTop } from './features/navigation/ScrollToTop'
 import BrandingProvider from './features/themingAndStyling/BrandingProvider'
 import { routes } from './routes'
 
-setConfiguration({ gutterWidth: 20, breakpoints: BREAKPOINTS, containerWidths: [540, 740, 1100, 1280, 1540, 1810] })
+setConfiguration({
+  gutterWidth: 20,
+  breakpoints: BREAKPOINTS,
+  containerWidths: [540, 740, 1100, 1280, 1540, 1810]
+})
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,7 +54,13 @@ export const App = () => {
                   <Routes>
                     <Route element={<GlobalLayout />}>
                       {routes.map((route) => {
-                        const comp = !route.featureActive ? <UnderConstruction /> : route.privatePage ? <RequireAuth>{route.element}</RequireAuth> : route.element
+                        const comp = !route.featureActive ? (
+                          <UnderConstruction />
+                        ) : route.privatePage ? (
+                          <RequireAuth>{route.element}</RequireAuth>
+                        ) : (
+                          route.element
+                        )
                         return <Route key={route.path} path={route.path} element={comp} />
                       })}
                       <Route path="*" element={<NotFound />} />
