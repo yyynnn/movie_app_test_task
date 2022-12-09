@@ -13,7 +13,7 @@ import { HeroSection } from '../../components/intro/sections/HeroSection'
 import { GlobalStyle } from '../../components/intro/theming/GlobalStyle'
 import { BREAKPOINTS } from '../../consts'
 import { Spacer } from '../../kit/Spacer'
-import { NEXT_SEO } from './intro.seo.config'
+import { NEXT_SEO } from '../../seo/intro.seo.config'
 
 setConfiguration({
   gutterWidth: 20,
