@@ -1,8 +1,10 @@
+/* eslint-disable max-len */
 import type { NextSeoProps } from 'next-seo'
 
 export const NEXT_SEO: NextSeoProps = {
-  title: 'Title A',
-  description: 'Description A',
+  title: 'HEQS Intro',
+  description:
+    'HEQS  is a SaaS appplication that allows you to improve your operations  by decisionmaking based on a reliable data',
   openGraph: {
     type: 'website',
     locale: 'en_IE',

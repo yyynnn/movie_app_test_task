@@ -9,8 +9,8 @@ export const GlobalStyle = createGlobalStyle`
 
   html, body {
   font-family: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif !important;
-  background-color: inherit !important;
-  color: inherit !important;
+  background-color: black;
+  color: white;
   font-size: 16px;
   font-weight: 400;
   font-synthesis: none;
@@ -25,17 +25,23 @@ export const GlobalStyle = createGlobalStyle`
 
 * {
   font-family: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+   box-sizing: border-box;
 }
 
-  a {
+a {
       color: white;
       text-decoration: none; /* no underline */
       cursor: pointer;
-  }
+}
+button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  outline: none;
+  white-space:nowrap;
+  cursor: pointer;
 
-  * {
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      box-sizing: border-box;
-  }
+}
 `
