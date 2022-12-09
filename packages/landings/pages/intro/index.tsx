@@ -7,13 +7,13 @@ import { DefaultSeo } from 'next-seo'
 import React from 'react'
 import { setConfiguration } from 'react-grid-system'
 
-import { BREAKPOINTS } from '../consts'
-import { Spacer } from '../kit/Spacer'
+import { Navbar } from '../../components/intro/nav/Navbar'
+import { AboutSection } from '../../components/intro/sections/AboutSection'
+import { HeroSection } from '../../components/intro/sections/HeroSection'
+import { GlobalStyle } from '../../components/intro/theming/GlobalStyle'
+import { BREAKPOINTS } from '../../consts'
+import { Spacer } from '../../kit/Spacer'
 import { NEXT_SEO } from './intro.seo.config'
-import { Navbar } from './nav/Navbar'
-import { AboutSection } from './sections/AboutSection/AboutSection'
-import { HeroSection } from './sections/HeroSection/HeroSection'
-import { GlobalStyle } from './theming/GlobalStyle'
 
 setConfiguration({
   gutterWidth: 20,

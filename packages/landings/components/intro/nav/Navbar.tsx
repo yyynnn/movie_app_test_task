@@ -8,15 +8,15 @@ import Drawer from 'react-modern-drawer'
 import { getDocument, getWindow } from 'ssr-window'
 import styled from 'styled-components'
 
-import { Button } from '../../../components/Button'
 import { useScrollDirection } from '../../../hooks/useScroll'
-import { Flex } from '../../kit/Flex'
-import { Max } from '../../kit/Max'
-import { Pad } from '../../kit/Pad'
-import { Pointer } from '../../kit/Pointer'
-import { Spacer } from '../../kit/Spacer'
-import { Text } from '../../kit/Text'
-import { Visibility } from '../../kit/Visibility'
+import { Flex } from '../../../kit/Flex'
+import { Max } from '../../../kit/Max'
+import { Pad } from '../../../kit/Pad'
+import { Pointer } from '../../../kit/Pointer'
+import { Spacer } from '../../../kit/Spacer'
+import { Text } from '../../../kit/Text'
+import { Visibility } from '../../../kit/Visibility'
+import { Button } from '../../common/Button'
 import { Logo } from './Logo'
 
 const window = getWindow()
@@ -124,7 +124,7 @@ export const Navbar = () => {
               <LogoWrapper justifyContent="center" alignItems="center">
                 <Link href={`/`}>
                   <Pointer>
-                    <Image width="92" height="22" src="/images/logo.svg" alt="next" />
+                    <Logo />
                   </Pointer>
                 </Link>
               </LogoWrapper>

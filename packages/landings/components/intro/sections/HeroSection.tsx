@@ -3,9 +3,9 @@ import { useFrame } from '@react-three/fiber'
 import React, { useRef } from 'react'
 import styled from 'styled-components'
 
-import { Scene } from '../../../../components/Scene'
-import { Text3dAnimation } from '../../../../components/Text3dAnimation'
-import { oscillator } from '../../../../utils'
+import { oscillator } from '../../../utils'
+import { Scene } from '../../common/Scene'
+import { Text3dAnimation } from '../../common/Text3dAnimation'
 
 export const HeroSection = () => {
   return (
@@ -151,6 +151,4 @@ const Wrapper = styled.div`
   padding: 0px;
 `
 
-const Hero = styled.div`
-  background-color: #15102e; /* This is the "polyfill" */
-`
+const Hero = styled.div``

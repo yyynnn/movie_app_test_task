@@ -11,7 +11,7 @@ import {
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import React, { useRef, useState } from 'react'
 
-import { RFCC } from '../types/react'
+import { RFCC } from '../../types/react'
 import { Scene } from './Scene'
 
 const IS_SERVER = typeof window === 'undefined'
