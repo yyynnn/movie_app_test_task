@@ -4,11 +4,6 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   distDir: './dist',
-  experimental: {
-    images: {
-      unoptimized: true
-    }
-  },
   compiler: {
     styledComponents: { ssr: true, displayName: true }
   },

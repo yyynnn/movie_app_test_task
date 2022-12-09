@@ -133,7 +133,7 @@ export const Navbar = () => {
             <div>
               <div>
                 <Flex justifyContent="center">
-                  <Link href="https://dion.vc/auth" target="_blank" rel="noopener">
+                  <Link href="/" target="_blank" rel="noopener">
                     <Pointer>
                       <Text text="Войти" color="inverted" />
                     </Pointer>
