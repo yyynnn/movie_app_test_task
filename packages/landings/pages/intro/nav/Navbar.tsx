@@ -63,20 +63,18 @@ export const Navbar = () => {
         <Spacer space={20} />
         <Container fluid>
           <Visibility visibleAt={['xs', 'sm', 'md']}>
-            <Flex justifyContent="space-between" gap={20} alignItems="center">
-              <LogoWrapper justifyContent="center" alignItems="center">
-                <Link href={`/`}>
-                  <Pointer>
-                    <Logo />
-                  </Pointer>
-                </Link>
-              </LogoWrapper>
-            </Flex>
+            <LogoWrapper alignItems="center">
+              <Link href={`/`}>
+                <Pointer>
+                  <Logo />
+                </Pointer>
+              </Link>
+            </LogoWrapper>
           </Visibility>
           <Row id="navbar_main_row" justify="between">
             <Col xs={12} md={12} lg={2}>
               <Visibility visibleAt={['lg', 'xl', 'xxl']}>
-                <LogoWrapper justifyContent="center" alignItems="center">
+                <LogoWrapper alignItems="center">
                   <Link href={`/`}>
                     <Pointer>
                       <Logo />
@@ -153,9 +151,7 @@ export const Navbar = () => {
 
 const Navblock = styled(Flex)``
 
-const LogoWrapper = styled(Flex)`
-  max-height: 22px;
-`
+const LogoWrapper = styled(Flex)``
 
 const ButtonWrapper = styled(Flex)`
   max-width: 161px;
