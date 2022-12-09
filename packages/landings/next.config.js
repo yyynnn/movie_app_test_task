@@ -3,6 +3,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  distDir: './dist',
   experimental: {
     images: {
       unoptimized: true
