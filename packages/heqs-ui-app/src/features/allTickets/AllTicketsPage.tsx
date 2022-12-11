@@ -8,22 +8,40 @@ import { TableConstructor } from '../tableConstructor/TableConstructor'
 export const AllTicketsPage = () => {
   const [pageSize, setPageSize] = useState(50)
   const [page, setPage] = useState<any>(1)
-  const [filters, setFilters] = useState<{ filter: string; string: string }>({
-    filter: '',
+  const [filters, setFilters] = useState<{ category: string; string: string }>({
+    category: '',
     string: ''
   })
+  const [sorting, setSorting] = useState<{ field: string; sort: string }[]>([
+    {
+      field: '',
+      sort: ''
+    }
+  ])
 
-  const currentFilter = filters.filter
+  const currentFilter = filters.category
     ? {
-        [`filter[tickets.${filters.filter}]`]: filters.string
+        [`filter[tickets.${filters.category}]`]: filters.string
       }
     : {}
+
+  const currentSorting: any = sorting.length
+    ? sorting.map((field) => {
+        return `${field.sort === 'asc' ? '' : '-'}${field.field}`
+      })
+    : []
+  console.log('🐸 Pepe said => AllTicketsPage => currentSorting', currentSorting)
 
   const {
     data: ticketsData,
     isLoading,
     ...rest
-  } = useGetPaginatedTicketList({ 'page[size]': pageSize, 'page[number]': page, ...currentFilter })
+  } = useGetPaginatedTicketList({
+    'page[size]': pageSize,
+    'page[number]': page,
+    sort: currentSorting,
+    ...currentFilter
+  })
   const { data: tickets }: any = ticketsData || {}
 
   return (
@@ -37,6 +55,8 @@ export const AllTicketsPage = () => {
       setPage={setPage}
       filters={filters}
       setFilters={setFilters}
+      sorting={sorting}
+      setSorting={setSorting}
       rowId="id"
     />
   )

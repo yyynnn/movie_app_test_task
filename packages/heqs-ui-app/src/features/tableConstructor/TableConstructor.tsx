@@ -56,6 +56,8 @@ export const TableConstructor: RFCC<{
   page: number
   pageSize: number
   setPageSize: any
+  setSorting: any
+  sorting: any
   setPage: any
   rowId?: string
 }> = ({
@@ -68,6 +70,8 @@ export const TableConstructor: RFCC<{
   setPage,
   filters,
   setFilters,
+  sorting,
+  setSorting,
   ...rest
 }) => {
   const navigate = useNavigate()
@@ -77,10 +81,10 @@ export const TableConstructor: RFCC<{
   const [count, setCount] = useState(10)
 
   useEffect(() => {
-    if (data?.last_page) {
-      setCount(data.last_page)
+    if (data?.meta.last_page) {
+      setCount(data.meta.last_page)
     }
-  }, [data?.last_page])
+  }, [data?.meta.last_page])
 
   useEffect(() => {
     if (data?.data[0]) {
@@ -98,7 +102,7 @@ export const TableConstructor: RFCC<{
           value={searchString}
           onChange={(e) => {
             setFilters({
-              filter: searchAttrib,
+              category: searchAttrib,
               string: e.target.value
             })
             return setSearchString(e.target.value)
@@ -122,7 +126,7 @@ export const TableConstructor: RFCC<{
             label="Col attribute"
             onChange={(e) => {
               setFilters({
-                filter: e.target.value,
+                category: e.target.value,
                 string: searchString
               })
               return setSearchAttrib(e.target.value)
@@ -155,6 +159,12 @@ export const TableConstructor: RFCC<{
           loading={isLoading}
           disableVirtualization
           scrollbarSize={1}
+          sortModel={sorting}
+          onSortModelChange={(newSortModel) => {
+            console.log('🐸 Pepe said => newSortModel', newSortModel)
+
+            return setSorting(newSortModel)
+          }}
         />
         <Spacer />
         <Stack spacing={2}>
