@@ -18,32 +18,50 @@ interface CardProps {
   fillHeight?: boolean
 }
 
-export const Card: RFCC<CardProps> = ({ fillHeight = true, heading, bgColor, bgColorDark, children, text, link, linkText }) => {
+export const Card: RFCC<CardProps> = ({
+  fillHeight = true,
+  heading,
+  bgColor,
+  bgColorDark,
+  children,
+  text,
+  link,
+  linkText
+}) => {
   const navigate = useNavigate()
 
   return (
     <OuterWrapper fillHeight={fillHeight}>
-      <Tilt tiltReverse transitionSpeed={400} glareBorderRadius={'10px'} glareEnable={false} tiltMaxAngleY={2} tiltMaxAngleX={5} scale={0.99}>
-        <Wrapper fillHeight={fillHeight} flexDirection="column" bgColor={bgColor} bgColorDark={bgColorDark} justifyContent="space-between">
-          <Typography variant="h4">
-            <b>{heading}</b>
-          </Typography>
-          <Spacer space={30} />
-          {text && (
-            <div>
-              <Typography variant="h4">
-                <b>{text}</b>
-              </Typography>
-              <Spacer space={30} />
-            </div>
-          )}
-          {children || (
-            <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(link || '/')}>
-              {linkText || 'Go'}
-            </Button>
-          )}
-        </Wrapper>
-      </Tilt>
+      <Wrapper
+        fillHeight={fillHeight}
+        flexDirection="column"
+        bgColor={bgColor}
+        bgColorDark={bgColorDark}
+        justifyContent="space-between"
+      >
+        <Typography variant="h4">
+          <b>{heading}</b>
+        </Typography>
+        <Spacer space={30} />
+        {text && (
+          <div>
+            <Typography variant="h4">
+              <b>{text}</b>
+            </Typography>
+            <Spacer space={30} />
+          </div>
+        )}
+        {children || (
+          <Button
+            variant="contained"
+            endIcon={<ArrowForwardRoundedIcon />}
+            onClick={() => navigate(link || '/')}
+          >
+            {linkText || 'Go'}
+          </Button>
+        )}
+      </Wrapper>
+
       <Spacer />
     </OuterWrapper>
   )
@@ -54,14 +72,16 @@ const OuterWrapper = styled.div<any>`
 `
 
 const Wrapper = styled(Pad)<any>`
-  background-color: ${({ theme, bgColor, bgColorDark }) => (theme.palette.mode === 'light' ? bgColor : bgColorDark)};
+  background-color: ${({ theme, bgColor, bgColorDark }) =>
+    theme.palette.mode === 'light' ? bgColor : bgColorDark};
   border-radius: 10px;
   transition: all 0.2s ease-in-out;
   border: 1px solid #0000001a;
   height: ${({ fillHeight }) => fillHeight && 'calc(100% - 20px)'};
 
   button {
-    background-color: ${({ theme, bgColor, bgColorDark }) => (theme.palette.mode !== 'light' ? '#ffffff46' : '#0000003c')} !important;
+    background-color: ${({ theme, bgColor, bgColorDark }) =>
+      theme.palette.mode !== 'light' ? '#ffffff46' : '#0000003c'} !important;
   }
 
   &:hover {

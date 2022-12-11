@@ -20,7 +20,11 @@ export const Error: RFCC<Props> = ({ as, arbitError = false, name, message = '',
 
   const { message: messageFromRegister, types } = error || {}
 
-  return error && (messageFromRegister || message) ? <Wrapper>{messageFromRegister || message}</Wrapper> : <Spacer space={30} mobSpace={30} />
+  return error && (messageFromRegister || message) ? (
+    <Wrapper>{messageFromRegister || message}</Wrapper>
+  ) : (
+    <Spacer space={30} mobSpace={30} />
+  )
 }
 
 const Wrapper = styled.div`

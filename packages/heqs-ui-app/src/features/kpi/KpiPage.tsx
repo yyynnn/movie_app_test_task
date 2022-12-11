@@ -1,15 +1,16 @@
 import styled from '@emotion/styled'
-import { useState } from 'react'
-import { Paper, Typography, useTheme, TextField } from '@mui/material'
+import { Paper, TextField, Typography, useTheme } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { useBasicQuery } from '../hooks/useBasicQuery'
-import { Tickets } from '../../types/api'
 import { Bar } from '@nivo/bar'
 import { BasicTooltip } from '@nivo/tooltip'
-import { KpiGraph } from './KpiGraph'
-import { Flex, Pad, Spacer } from '../primitives'
+import { useState } from 'react'
+
 import { API } from '../../consts/api'
+import { Tickets } from '../../types/api'
+import { useBasicQuery } from '../hooks/useBasicQuery'
+import { Flex, Pad, Spacer } from '../primitives'
 import { tickets } from './fakeData'
+import { KpiGraph } from './KpiGraph'
 
 export const KpiPage = (props: any) => {
   const theme = useTheme()

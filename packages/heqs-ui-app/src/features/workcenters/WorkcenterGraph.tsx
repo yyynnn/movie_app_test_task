@@ -39,7 +39,15 @@ export const WorkcenterGraph = ({ data }: { data?: any }) => {
               <Typography>No data for selected month</Typography>
             </Flex>
           ) : (
-            <Scrollbar style={{ width: '100%', height: 550, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Scrollbar
+              style={{
+                width: '100%',
+                height: 550,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
               <Bar
                 data={data}
                 animate={false}

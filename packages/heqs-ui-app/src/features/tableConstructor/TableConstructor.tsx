@@ -1,6 +1,18 @@
 import styled from '@emotion/styled'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
-import { capitalize, FormControl, InputAdornment, InputLabel, MenuItem, Pagination, PaginationItem, Select, Stack, TextField, Typography } from '@mui/material'
+import {
+  capitalize,
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Pagination,
+  PaginationItem,
+  Select,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -11,24 +23,41 @@ import { RFCC } from '../../types/react'
 import { Flex, Spacer } from '../primitives'
 import { Max } from '../primitives/Max'
 
-const createCols = (object: any): { field: string; headerName: string; editable: boolean; selected: boolean; width?: number; minWidth?: number }[] | [] => {
+const createCols = (
+  object: any
+):
+  | {
+      field: string
+      headerName: string
+      editable: boolean
+      selected: boolean
+      width?: number
+      minWidth?: number
+    }[]
+  | [] => {
   const result = !object
     ? []
     : Object.keys(object).map((key) => {
-        return { field: key, headerName: capitalize(key.replaceAll('_', ' ')), editable: true, selected: true, minWidth: 140 }
+        return {
+          field: key,
+          headerName: capitalize(key.replaceAll('_', ' ')),
+          editable: true,
+          selected: true,
+          minWidth: 140
+        }
       })
   return result
 }
 
-export const TableConstructor: RFCC<{ data: any; isLoading?: boolean; page: number; pageSize: number; setPageSize: any; setPage: any; rowId: string }> = ({
-  data,
-  isLoading,
-  page,
-  pageSize,
-  setPageSize,
-  rowId = 'id',
-  setPage
-}) => {
+export const TableConstructor: RFCC<{
+  data: any
+  isLoading?: boolean
+  page: number
+  pageSize: number
+  setPageSize: any
+  setPage: any
+  rowId?: string
+}> = ({ data, isLoading, page, pageSize, setPageSize, rowId = 'id', setPage }) => {
   const navigate = useNavigate()
   const [searchAttrib, setSearchAttrib] = useState('')
   const [searchString, setSearchString] = useState('')
@@ -62,7 +91,14 @@ export const TableConstructor: RFCC<{ data: any; isLoading?: boolean; page: numb
         <Spacer width={10} />
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Col attribute</InputLabel>
-          <Select labelId="demo-simple-select-label" id="demo-simple-select" value={searchAttrib} displayEmpty label="Col attribute" onChange={(e) => setSearchAttrib(e.target.value)}>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={searchAttrib}
+            displayEmpty
+            label="Col attribute"
+            onChange={(e) => setSearchAttrib(e.target.value)}
+          >
             {[...cols, { field: 'any', selected: false, headerName: 'Any' }].map((col, idx) => {
               return (
                 <MenuItem key={idx} value={col.field} selected={!!col.selected}>

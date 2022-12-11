@@ -21,7 +21,9 @@ export const GlobalLayout = () => {
           <Row>
             <Col>
               <Navbar />
-              {location.pathname !== ROUTES.HOME && location.pathname !== ROUTES.ROOT && <BreadNav />}
+              {location.pathname !== ROUTES.HOME && location.pathname !== ROUTES.ROOT && (
+                <BreadNav />
+              )}
               <Outlet />
             </Col>
           </Row>

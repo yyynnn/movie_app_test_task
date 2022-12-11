@@ -1,13 +1,13 @@
-import httpService from "./http.service";
+import httpService from './http.service'
 
-const workCenterEndPoint = "readWorkCenters";
+const workCenterEndPoint = 'readWorkCenters'
 
 const workCenterService = {
-    fetch: async () => {
-        const { data } = await httpService.get(workCenterEndPoint);
+  fetch: async () => {
+    const { data } = await httpService.get(workCenterEndPoint)
 
-        return data;
-    }
-};
+    return data
+  }
+}
 
-export default workCenterService;
+export default workCenterService

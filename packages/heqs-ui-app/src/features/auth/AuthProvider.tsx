@@ -39,7 +39,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
   const user = typeof _user === 'string' && _user ? JSON.parse(_user) : _user
 
-  const signin = (newUser: { token: string; rememberMe: ConstrainBooleanParameters; user: Login200User }, callback: VoidFunction) => {
+  const signin = (
+    newUser: { token: string; rememberMe: ConstrainBooleanParameters; user: Login200User },
+    callback: VoidFunction
+  ) => {
     if (newUser.rememberMe) {
       setToken(newUser.token)
     } else {
@@ -60,7 +63,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const requestHeaders = (config: any) => {
       const lstoken = localStorage.getItem('token')?.replaceAll('"', '')
 
-      if (lstoken && config && !config?.url.includes(API.MUTATE.LOGIN) && !config?.url.includes(API.MUTATE.REGISTER)) {
+      if (
+        lstoken &&
+        config &&
+        !config?.url.includes(API.MUTATE.LOGIN) &&
+        !config?.url.includes(API.MUTATE.REGISTER)
+      ) {
         config.headers.Authorization = `Bearer ${lstoken}`
       }
 
@@ -70,7 +78,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const responseHeaders = (config: any) => {
       const newResponseToken = config?.headers?.AccessToken?.replace('Bearer ', '')
 
-      if (newResponseToken && config && !config?.url.includes(API.MUTATE.LOGIN) && !config?.url.includes(API.MUTATE.REGISTER)) {
+      if (
+        newResponseToken &&
+        config &&
+        !config?.url.includes(API.MUTATE.LOGIN) &&
+        !config?.url.includes(API.MUTATE.REGISTER)
+      ) {
         localStorage.setItem('token', newResponseToken)
         config.headers.AccessToken = `Bearer ${newResponseToken}`
       }
@@ -149,7 +162,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // add request interceptors
     reqInterceptor = axios.interceptors.request.use(interceptorsInit().request)
     // add response interceptors
-    resInterceptor = axios.interceptors.response.use(interceptorsInit().response, interceptorsInit().errors)
+    resInterceptor = axios.interceptors.response.use(
+      interceptorsInit().response,
+      interceptorsInit().errors
+    )
 
     return () => {
       // remove all intercepts when done

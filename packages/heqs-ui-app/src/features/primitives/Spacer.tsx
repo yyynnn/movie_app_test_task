@@ -11,8 +11,20 @@ interface IProps {
   isMobile?: number
 }
 
-export const Spacer: React.FC<IProps> = ({ space = DEFAULT_SPACE, width = DEFAULT_WIDTH, mobSpace = DEFAULT_SPACE, isMobile = false, ...rest }) => (
-  <InnerSpacer data-test-id="spacer" space={space} width={width} mobSpace={isMobile ? mobSpace : space} {...rest} />
+export const Spacer: React.FC<IProps> = ({
+  space = DEFAULT_SPACE,
+  width = DEFAULT_WIDTH,
+  mobSpace = DEFAULT_SPACE,
+  isMobile = false,
+  ...rest
+}) => (
+  <InnerSpacer
+    data-test-id="spacer"
+    space={space}
+    width={width}
+    mobSpace={isMobile ? mobSpace : space}
+    {...rest}
+  />
 )
 
 const InnerSpacer = styled.div<IProps>`

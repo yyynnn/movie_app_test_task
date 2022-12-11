@@ -20,23 +20,57 @@ export const HomePage = () => {
           <Spacer space={10} />
           <Row>
             <Col md={6} xl={4}>
-              <Card fillHeight heading="Occupational health and safety" bgColor="#0849ff63" bgColorDark="#0849ff63">
-                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
+              <Card
+                fillHeight
+                heading="Occupational health and safety"
+                bgColor="#ffcc33"
+                bgColorDark="#ffcc33"
+              >
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
                   <Spacer space={32} />
-                  <Tooltip placement="right" title="Already happened, injuries" aria-label="already happened, injuries">
-                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_ACCIDENT)}>
+                  <Tooltip
+                    placement="right"
+                    title="Already happened, injuries"
+                    aria-label="already happened, injuries"
+                  >
+                    <Button
+                      variant="contained"
+                      endIcon={<ArrowForwardRoundedIcon />}
+                      onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_ACCIDENT)}
+                    >
                       Accident
                     </Button>
                   </Tooltip>
 
-                  <Tooltip placement="right" title="Already happened, no injuries" aria-label="already happened, no injuries">
-                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_NEAR_MISS)}>
+                  <Tooltip
+                    placement="right"
+                    title="Already happened, no injuries"
+                    aria-label="already happened, no injuries"
+                  >
+                    <Button
+                      variant="contained"
+                      endIcon={<ArrowForwardRoundedIcon />}
+                      onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_NEAR_MISS)}
+                    >
                       Nearmiss
                     </Button>
                   </Tooltip>
 
-                  <Tooltip placement="right" title="Threat, violation" aria-label="threat, violation">
-                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT)}>
+                  <Tooltip
+                    placement="right"
+                    title="Threat, violation"
+                    aria-label="threat, violation"
+                  >
+                    <Button
+                      variant="contained"
+                      endIcon={<ArrowForwardRoundedIcon />}
+                      onClick={() => navigate(ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT)}
+                    >
                       Possible accident
                     </Button>
                   </Tooltip>
@@ -45,23 +79,48 @@ export const HomePage = () => {
             </Col>
 
             <Col md={6} xl={4}>
-              <Card fillHeight heading="Quality" bgColor="#ff083563" bgColorDark="#ff083563">
-                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
+              <Card fillHeight heading="Quality" bgColor="#589bbc" bgColorDark="#589bbc">
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
                   <Spacer space={32} />
-                  <Tooltip placement="right" title="Non-conformity found during  the audit" aria-label="non-conformity found during  the audit">
-                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                  <Tooltip
+                    placement="right"
+                    title="Non-conformity found during  the audit"
+                    aria-label="non-conformity found during  the audit"
+                  >
+                    <Button
+                      variant="contained"
+                      endIcon={<ArrowForwardRoundedIcon />}
+                      onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}
+                    >
                       Audit non-conformity
                     </Button>
                   </Tooltip>
 
-                  <Tooltip placement="right" title="External/internal customer claim" aria-label="external/internal customer claim">
-                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                  <Tooltip
+                    placement="right"
+                    title="External/internal customer claim"
+                    aria-label="external/internal customer claim"
+                  >
+                    <Button
+                      variant="contained"
+                      endIcon={<ArrowForwardRoundedIcon />}
+                      onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}
+                    >
                       Non-conforming product
                     </Button>
                   </Tooltip>
 
                   <Tooltip placement="right" title="Delivery delays" aria-label="delivery delays">
-                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                    <Button
+                      variant="contained"
+                      endIcon={<ArrowForwardRoundedIcon />}
+                      onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}
+                    >
                       OTD
                     </Button>
                   </Tooltip>
@@ -70,23 +129,52 @@ export const HomePage = () => {
             </Col>
 
             <Col md={12} xl={4}>
-              <Card fillHeight heading="Environment" bgColor="#2dcf5863" bgColorDark="#2dcf5863">
-                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
+              <Card fillHeight heading="Environment" bgColor="#c9c906" bgColorDark="#c9c906">
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
                   <Spacer space={32} />
-                  <Tooltip placement="right" title="Already happened, injuries" aria-label="already happened, injuries">
-                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                  <Tooltip
+                    placement="right"
+                    title="Already happened, injuries"
+                    aria-label="already happened, injuries"
+                  >
+                    <Button
+                      variant="contained"
+                      endIcon={<ArrowForwardRoundedIcon />}
+                      onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}
+                    >
                       Accident
                     </Button>
                   </Tooltip>
 
-                  <Tooltip placement="right" title="Already happened, no injuries" aria-label="already happened, no injuries">
-                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                  <Tooltip
+                    placement="right"
+                    title="Already happened, no injuries"
+                    aria-label="already happened, no injuries"
+                  >
+                    <Button
+                      variant="contained"
+                      endIcon={<ArrowForwardRoundedIcon />}
+                      onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}
+                    >
                       Nearmiss
                     </Button>
                   </Tooltip>
 
-                  <Tooltip placement="right" title="Threat, violation" aria-label="threat, violation">
-                    <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}>
+                  <Tooltip
+                    placement="right"
+                    title="Threat, violation"
+                    aria-label="threat, violation"
+                  >
+                    <Button
+                      variant="contained"
+                      endIcon={<ArrowForwardRoundedIcon />}
+                      onClick={() => navigate(ROUTES.UNDER_CONSTRUCTION)}
+                    >
                       Possible accident
                     </Button>
                   </Tooltip>
@@ -106,10 +194,20 @@ export const HomePage = () => {
           <Spacer space={10} />
           <Row>
             <Col lg={6}>
-              <Card fillHeight heading="All tickets" bgColor="#FF8A0063" bgColorDark="#FF8A0063">
-                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
+              <Card fillHeight heading="All tickets" bgColor="#FF8A00" bgColorDark="#FF8A00">
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
                   <Spacer space={74} />
-                  <Button color="error" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ALL_TICKETS)}>
+                  <Button
+                    color="error"
+                    variant="contained"
+                    endIcon={<ArrowForwardRoundedIcon />}
+                    onClick={() => navigate(ROUTES.ALL_TICKETS)}
+                  >
                     Go
                   </Button>
                 </Stack>
@@ -117,11 +215,26 @@ export const HomePage = () => {
             </Col>
 
             <Col lg={6}>
-              <Card fillHeight heading="All corrective actions" bgColor="#FF8A0063" bgColorDark="#FF8A0063">
-                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
+              <Card
+                fillHeight
+                heading="All corrective actions"
+                bgColor="#FF8A00"
+                bgColorDark="#FF8A00"
+              >
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
                   <Spacer space={74} />
 
-                  <Button color="error" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.ALL_CORRECTIVE_ACTIONS)}>
+                  <Button
+                    color="error"
+                    variant="contained"
+                    endIcon={<ArrowForwardRoundedIcon />}
+                    onClick={() => navigate(ROUTES.ALL_CORRECTIVE_ACTIONS)}
+                  >
                     Go
                   </Button>
                 </Stack>
@@ -140,27 +253,57 @@ export const HomePage = () => {
           <Spacer space={10} />
           <Row>
             <Col md={6} xl={3}>
-              <Card fillHeight heading="Personal tasks" bgColor="#8100ff63" bgColorDark="#8100ff63">
-                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.PERSONAL_TASKS)}>
+              <Card fillHeight heading="Personal tasks" bgColor="#5300a6" bgColorDark="#5300a6">
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    endIcon={<ArrowForwardRoundedIcon />}
+                    onClick={() => navigate(ROUTES.PERSONAL_TASKS)}
+                  >
                     Go
                   </Button>
                 </Stack>
               </Card>
             </Col>
             <Col md={6} xl={3}>
-              <Card fillHeight={true} heading="Global KPI" bgColor="#8100ff63" bgColorDark="#8100ff63">
-                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.GLOBAL_KPI)}>
+              <Card fillHeight={true} heading="Global KPI" bgColor="#5300a6" bgColorDark="#5300a6">
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    endIcon={<ArrowForwardRoundedIcon />}
+                    onClick={() => navigate(ROUTES.GLOBAL_KPI)}
+                  >
                     Go
                   </Button>
                 </Stack>
               </Card>
             </Col>
             <Col md={6} xl={3}>
-              <Card fillHeight={true} heading="KPI" bgColor="#8100ff63" bgColorDark="#8100ff63">
-                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.KPI)}>
+              <Card fillHeight={true} heading="KPI" bgColor="#5300a6" bgColorDark="#5300a6">
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    endIcon={<ArrowForwardRoundedIcon />}
+                    onClick={() => navigate(ROUTES.KPI)}
+                  >
                     Go
                   </Button>
                 </Stack>
@@ -168,9 +311,19 @@ export const HomePage = () => {
             </Col>
 
             <Col md={6} xl={3}>
-              <Card heading="Workcenters" bgColor="#8100ff63" bgColorDark="#8100ff63">
-                <Stack direction="column" spacing={1} justifyContent="flex-start" alignItems="flex-start">
-                  <Button color="primary" variant="contained" endIcon={<ArrowForwardRoundedIcon />} onClick={() => navigate(ROUTES.WORKCENTERS)}>
+              <Card heading="Workcenters" bgColor="#5300a6" bgColorDark="#5300a6">
+                <Stack
+                  direction="column"
+                  spacing={1}
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    endIcon={<ArrowForwardRoundedIcon />}
+                    onClick={() => navigate(ROUTES.WORKCENTERS)}
+                  >
                     Go
                   </Button>
                 </Stack>

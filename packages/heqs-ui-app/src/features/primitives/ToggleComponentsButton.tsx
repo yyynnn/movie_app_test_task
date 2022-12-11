@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react'
 import styled from '@emotion/styled'
+import React, { ReactNode } from 'react'
 
 import { Flex } from './Flex'
 
@@ -10,7 +10,11 @@ interface IProps {
   tooltip?: string
 }
 
-export const ToggleComponentsButton: React.FC<IProps> = ({ components, toggle, toggleState = false }) => {
+export const ToggleComponentsButton: React.FC<IProps> = ({
+  components,
+  toggle,
+  toggleState = false
+}) => {
   const toggleHandler = (e: React.MouseEvent): any => {
     e.stopPropagation()
     if (toggle) {

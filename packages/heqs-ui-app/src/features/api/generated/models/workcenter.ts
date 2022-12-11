@@ -9,4 +9,13 @@
 /**
  * Workcenter model
  */
-export type Workcenter = unknown
+export interface Workcenter {
+  /** workcenter_number */
+  workcenter_number?: number
+  /** workcenter_name */
+  workcenter_name?: number
+  /** ticket_class_id */
+  workcenter_group_id?: number
+  /** ticket_category_id */
+  factory_id?: number
+}

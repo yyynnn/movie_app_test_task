@@ -1,27 +1,26 @@
 button,
 .quality:before {
-	background-color: #589BBC;
+  background-color: #589bbc;
 }
 
-
 .quality:before {
-	font-family: 'HelveticaNeue';
-	font-size: 15.5px;
-	line-height: 40px;
-	text-align: center;
-	color: #E6E6E6;
+  font-family: 'HelveticaNeue';
+  font-size: 15.5px;
+  line-height: 40px;
+  text-align: center;
+  color: #e6e6e6;
 }
 
 #Audit:before {
-	content: 'non-conformity found during the audit';
-	font-size: 15px;
-	white-space: pre;
+  content: 'non-conformity found during the audit';
+  font-size: 15px;
+  white-space: pre;
 }
 
 #Product:before {
-	content: 'external/internal customer claim';
+  content: 'external/internal customer claim';
 }
 
 #OTD:before {
-	content: 'delivery delays';
+  content: 'delivery delays';
 }

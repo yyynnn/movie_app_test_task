@@ -41,7 +41,14 @@ export default function BrandingProvider({ children, mode: modeProp }: BrandingP
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <GlobalStyles styles={{ html: { backgroundColor: mode === 'light' ? 'white' : '#001e3c', color: mode === 'light' ? '#001e3c' : 'white' } }} />
+      <GlobalStyles
+        styles={{
+          html: {
+            backgroundColor: mode === 'light' ? 'white' : '#001e3c',
+            color: mode === 'light' ? '#001e3c' : 'white'
+          }
+        }}
+      />
       <ThemeProvider theme={modeProp ? () => theme : theme}>{children}</ThemeProvider>
       <CssBaseline enableColorScheme />
     </ColorModeContext.Provider>

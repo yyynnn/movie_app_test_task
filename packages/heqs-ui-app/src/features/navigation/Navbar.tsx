@@ -5,14 +5,27 @@ import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded'
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
-import { Badge, Button, Chip, Divider, IconButton, Link as MLink, List, ListItem, ListItemButton, Paper, SwipeableDrawer, Typography } from '@mui/material'
+import {
+  Badge,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Link as MLink,
+  List,
+  ListItem,
+  ListItemButton,
+  Paper,
+  SwipeableDrawer,
+  Typography
+} from '@mui/material'
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-grid-system'
 import { Link, useNavigate } from 'react-router-dom'
 import { Scrollbar } from 'react-scrollbars-custom'
 
 import { ROUTES } from '../../consts/routes'
-import { useGetPaginatedCorretciveActionList } from '../api/generated/endpoints'
+import { useGetPaginatedCorrectiveActionList } from '../api/generated/endpoints'
 import { CorrectiveAction } from '../api/generated/models'
 import { WorkerPositions } from '../api/mocks'
 import { useAuth } from '../auth/AuthProvider'
@@ -67,7 +80,7 @@ export const Navbar = () => {
   const [drawerOpen, toggleDrawer] = useState(false)
 
   // requests
-  const { data: corretciveActionsResponse } = useGetPaginatedCorretciveActionList()
+  const { data: corretciveActionsResponse } = useGetPaginatedCorrectiveActionList()
   const { data: corretciveActionsData }: any = corretciveActionsResponse || {}
   const { data: corretciveActions = [] }: { data: CorrectiveAction[] } = corretciveActionsData || {}
 
@@ -112,7 +125,12 @@ export const Navbar = () => {
                   <Spacer width={20} />
                   {!!auth.token && (
                     <Badge badgeContent={totalCorretciveActions} color="error">
-                      <IconButton onClick={() => toggleDrawer(true)} size="large" aria-label="menu" sx={{ p: 0 }}>
+                      <IconButton
+                        onClick={() => toggleDrawer(true)}
+                        size="large"
+                        aria-label="menu"
+                        sx={{ p: 0 }}
+                      >
                         <MenuIcon />
                       </IconButton>
                     </Badge>
@@ -125,7 +143,12 @@ export const Navbar = () => {
 
         <Drawer
           PaperProps={{
-            sx: { maxWidth: '100vw', width: '100%', backgroundColor: 'transparent', boxShadow: 'none' }
+            sx: {
+              maxWidth: '100vw',
+              width: '100%',
+              backgroundColor: 'transparent',
+              boxShadow: 'none'
+            }
           }}
           anchor="right"
           open={drawerOpen}
@@ -155,7 +178,15 @@ export const Navbar = () => {
               <Spacer />
               <WidgetBlock>
                 <Max maxHeight={600} justifyContent="center" alignItems="center">
-                  <Scrollbar style={{ width: '100%', height: 350, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <Scrollbar
+                    style={{
+                      width: '100%',
+                      height: 350,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}
+                  >
                     <List>
                       {corretciveActions.map((action, idx) => {
                         return (
@@ -163,7 +194,9 @@ export const Navbar = () => {
                             key={idx}
                             onClick={() => {
                               toggleDrawer(false)
-                              return navigate(ROUTES.TICKET.replace(':id', String(action.ticket_id)))
+                              return navigate(
+                                ROUTES.TICKET.replace(':id', String(action.ticket_id))
+                              )
                             }}
                           >
                             <Flex width="100%" alignItems="center" justifyContent="space-between">
@@ -175,12 +208,20 @@ export const Navbar = () => {
                                 <Typography>{action.corrective_action}</Typography>
                               </Flex>
                               <Spacer />
-                              <StatusBulb statusId={action.ca_status_id === 2 ? action.ca_status_id + 1 : action.ca_status_id} />
+                              <StatusBulb
+                                statusId={
+                                  action.ca_status_id === 2
+                                    ? action.ca_status_id + 1
+                                    : action.ca_status_id
+                                }
+                              />
                             </Flex>
                           </ListItemButton>
                         )
                       })}
-                      {totalCorretciveActions > corretciveActions.length && <ListItemButton disabled>...</ListItemButton>}
+                      {totalCorretciveActions > corretciveActions.length && (
+                        <ListItemButton disabled>...</ListItemButton>
+                      )}
                     </List>
                   </Scrollbar>
                 </Max>
@@ -209,7 +250,11 @@ export const Navbar = () => {
 
                 <WidgetBlock>
                   <Flex gap={14} alignItems="center">
-                    <Avatar {...stringAvatar(`${capitalize(auth?.user?.name)} ${capitalize(auth?.user?.surname)}`)} />
+                    <Avatar
+                      {...stringAvatar(
+                        `${capitalize(auth?.user?.name)} ${capitalize(auth?.user?.surname)}`
+                      )}
+                    />
 
                     <div>
                       <Typography variant="h4">
@@ -218,7 +263,9 @@ export const Navbar = () => {
                         </b>
                       </Typography>
                       <Spacer space={4} />
-                      <Typography>{workersKeys[auth?.user?.user_position_id]?.replaceAll('_', ' ')}</Typography>
+                      <Typography>
+                        {workersKeys[auth?.user?.user_position_id]?.replaceAll('_', ' ')}
+                      </Typography>
                     </div>
                   </Flex>
 

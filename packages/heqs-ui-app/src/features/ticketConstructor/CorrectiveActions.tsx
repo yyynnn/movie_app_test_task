@@ -7,14 +7,18 @@ import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { RFCC } from '../../types/react'
-import { useReadCorrectveActionsByTicketId } from '../api/generated/endpoints'
+import { useReadCorrectiveActionsByTicketId } from '../api/generated/endpoints'
 import { CorrectiveAction } from '../api/generated/models'
 import { Flex, Pad, Spacer } from '../primitives'
 
-export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean; ticketId: number }> = ({ id, readOnly, ticketId }) => {
+export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean; ticketId: number }> = ({
+  id,
+  readOnly,
+  ticketId
+}) => {
   const [actions, setActions] = useState<CorrectiveAction[]>([])
   const { control, register, getValues, formState, trigger, watch } = useForm()
-  const { data } = useReadCorrectveActionsByTicketId(ticketId)
+  const { data } = useReadCorrectiveActionsByTicketId(ticketId)
   const { data: ca } = data || {}
   console.log('🐸 Pepe said => ca', ca)
 
@@ -27,7 +31,16 @@ export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean; ticketId
     const newAction: CorrectiveAction = getValues()
     if (newAction.corrective_action && newAction.user_id && newAction.corrective_action_due_date) {
       // @ts-ignore
-      setActions([...actions, { ...newAction, due_date: typeof newAction.due_date === 'object' ? newAction.due_date.toDateString() : newAction.due_date }])
+      setActions([
+        ...actions,
+        {
+          ...newAction,
+          corrective_action_due_date:
+            typeof newAction.corrective_action_due_date === 'object'
+              ? newAction.corrective_action_due_date
+              : newAction.corrective_action_due_date
+        }
+      ])
     }
   }
 
@@ -154,7 +167,15 @@ export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean; ticketId
                     inputFormat="MM.dd.yyyy"
                     value={value}
                     onChange={onChange}
-                    renderInput={(params: any) => <TextField {...params} {...register('due_date')} fullWidth error={false} helperText={null} />}
+                    renderInput={(params: any) => (
+                      <TextField
+                        {...params}
+                        {...register('corrective_action_due_date')}
+                        fullWidth
+                        error={false}
+                        helperText={null}
+                      />
+                    )}
                   />
                 )
               }}

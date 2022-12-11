@@ -69,3 +69,7 @@ a:visited {
 .MuiDrawer-paper {
   padding: 20px;
 }
+
+.MuiTooltip-tooltip {
+  background-color: #000;
+}

@@ -25,8 +25,11 @@ export const WorkcentersPage = (props: any) => {
   const [qDate, setQDate] = useState<Date>(new Date())
 
   const ohsData = fakeData.filter((workstation) => {
-    const equalYear = !!new Date(workstation.date) && new Date(workstation.date)?.getFullYear() === ohsDate?.getFullYear()
-    const equalMonth = !!new Date(workstation.date) && new Date(workstation.date)?.getMonth() === ohsDate?.getMonth()
+    const equalYear =
+      !!new Date(workstation.date) &&
+      new Date(workstation.date)?.getFullYear() === ohsDate?.getFullYear()
+    const equalMonth =
+      !!new Date(workstation.date) && new Date(workstation.date)?.getMonth() === ohsDate?.getMonth()
     return equalYear && equalMonth
   })
 

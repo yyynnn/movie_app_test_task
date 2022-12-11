@@ -2,7 +2,22 @@ import styled from '@emotion/styled'
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import { LoadingButton } from '@mui/lab'
-import { Alert, AlertTitle, Badge, Breadcrumbs, Button, Divider, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material'
+import {
+  Alert,
+  AlertTitle,
+  Badge,
+  Breadcrumbs,
+  Button,
+  Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material'
 import { DateTimePicker, TimePicker } from '@mui/x-date-pickers'
 import imageCompression from 'browser-image-compression'
 import React, { MouseEventHandler, useRef, useState } from 'react'
@@ -114,7 +129,11 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
 
   return (
     <Form $readOnly={readOnly}>
-      <Stack direction={{ md: 'column', lg: 'row' }} divider={<Divider orientation="vertical" flexItem />} spacing={{ xs: 1, sm: 1, md: 1, lg: 2 }}>
+      <Stack
+        direction={{ md: 'column', lg: 'row' }}
+        divider={<Divider orientation="vertical" flexItem />}
+        spacing={{ xs: 1, sm: 1, md: 1, lg: 2 }}
+      >
         {hasDateTime && (
           <Controller
             control={control}
@@ -145,7 +164,13 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
             render={({ field: { onChange, ref, value, name } }) => {
               return (
                 <FormControl fullWidth>
-                  <TextField disabled={readOnly} value={value || ''} onChange={onChange} label="User/worker" error={!!errors[name]} />
+                  <TextField
+                    disabled={readOnly}
+                    value={value || ''}
+                    onChange={onChange}
+                    label="User/worker"
+                    error={!!errors[name]}
+                  />
                 </FormControl>
               )
             }}
@@ -161,7 +186,14 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
               return (
                 <FormControl fullWidth>
                   <InputLabel id="workcenter-label">Workcenter</InputLabel>
-                  <Select disabled={readOnly} value={value || ''} onChange={onChange} labelId="workcenter-label" label="Workcenter" error={!!errors[name]}>
+                  <Select
+                    disabled={readOnly}
+                    value={value || ''}
+                    onChange={onChange}
+                    labelId="workcenter-label"
+                    label="Workcenter"
+                    error={!!errors[name]}
+                  >
                     {workcenters?.map((workcenter) => {
                       return (
                         //@ts-ignore - necessary to load object into value
@@ -183,7 +215,16 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
             name="damaged_item"
             rules={{ required: 'Ошибка' }}
             render={({ field: { onChange, ref, value, name } }) => {
-              return <TextField disabled={readOnly} onChange={onChange} value={value} fullWidth label="Damaged Item" error={!!errors[name]} />
+              return (
+                <TextField
+                  disabled={readOnly}
+                  onChange={onChange}
+                  value={value}
+                  fullWidth
+                  label="Damaged Item"
+                  error={!!errors[name]}
+                />
+              )
             }}
           />
         )}
@@ -194,7 +235,16 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
             name="correction"
             rules={{ required: 'Ошибка' }}
             render={({ field: { onChange, value, name } }) => {
-              return <TextField disabled={readOnly} onChange={onChange} value={value} fullWidth label="Short description" error={!!errors[name]} />
+              return (
+                <TextField
+                  disabled={readOnly}
+                  onChange={onChange}
+                  value={value}
+                  fullWidth
+                  label="Short description"
+                  error={!!errors[name]}
+                />
+              )
             }}
           />
         )}
@@ -220,7 +270,11 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
                               <DropzoneThumb>
                                 <LinearProgressBuffer />
                                 <IconWrapper>
-                                  <Button color="error" variant="contained" onClick={removeAllFiles}>
+                                  <Button
+                                    color="error"
+                                    variant="contained"
+                                    onClick={removeAllFiles}
+                                  >
                                     <DeleteForeverRoundedIcon />
                                   </Button>
                                 </IconWrapper>
@@ -252,7 +306,18 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
               name="correction"
               rules={{ required: 'Ошибка' }}
               render={({ field: { onChange, value, name } }) => {
-                return <TextField onChange={onChange} value={value} fullWidth label="Correction" error={!!errors[name]} multiline rows={16} defaultValue="" />
+                return (
+                  <TextField
+                    onChange={onChange}
+                    value={value}
+                    fullWidth
+                    label="Correction"
+                    error={!!errors[name]}
+                    multiline
+                    rows={16}
+                    defaultValue=""
+                  />
+                )
               }}
             />
           )}
@@ -278,7 +343,13 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
       <Spacer />
 
       {!readOnly && (
-        <LoadingButton loading={isAddingTicket} fullWidth size="large" variant="contained" onClick={handleSubmit((data) => onSubmit(data))}>
+        <LoadingButton
+          loading={isAddingTicket}
+          fullWidth
+          size="large"
+          variant="contained"
+          onClick={handleSubmit((data) => onSubmit(data))}
+        >
           SUBMIT
         </LoadingButton>
       )}

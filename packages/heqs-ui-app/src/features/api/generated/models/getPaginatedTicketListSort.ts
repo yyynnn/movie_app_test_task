@@ -6,7 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetPaginatedTicketListSort = typeof GetPaginatedTicketListSort[keyof typeof GetPaginatedTicketListSort]
+export type GetPaginatedTicketListSort =
+  typeof GetPaginatedTicketListSort[keyof typeof GetPaginatedTicketListSort]
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetPaginatedTicketListSort = {

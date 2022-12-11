@@ -4,9 +4,20 @@ import { BREAKPOINTS, BREAKPOINTS_NAMES } from '../../consts/common'
 import { RFCC } from '../../types/react'
 import { Flex } from './Flex'
 
-export const Visibility: RFCC = ({ children, visibleAt = ['md', 'lg', 'xl', 'xxl'], hiddenAt = [''], ...rest }) => {
+export const Visibility: RFCC = ({
+  children,
+  visibleAt = ['md', 'lg', 'xl', 'xxl'],
+  hiddenAt = [''],
+  ...rest
+}) => {
   return (
-    <Wrapper alignItems="center" justifyContent="center" visibleAt={visibleAt} hiddenAt={hiddenAt} {...rest}>
+    <Wrapper
+      alignItems="center"
+      justifyContent="center"
+      visibleAt={visibleAt}
+      hiddenAt={hiddenAt}
+      {...rest}
+    >
       {children}
     </Wrapper>
   )

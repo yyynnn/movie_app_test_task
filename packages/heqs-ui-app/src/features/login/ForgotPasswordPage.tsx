@@ -1,5 +1,13 @@
 import styled from '@emotion/styled'
-import { Alert, Button, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
+import {
+  Alert,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Paper,
+  TextField,
+  Typography
+} from '@mui/material'
 import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
@@ -54,14 +62,28 @@ export const ForgotPasswordPage = () => {
           </Typography>
           <Spacer />
 
-          <TextField name="username" label="Username/login" variant="outlined" fullWidth autoComplete="username" required />
+          <TextField
+            name="username"
+            label="Username/login"
+            variant="outlined"
+            fullWidth
+            autoComplete="username"
+            required
+          />
 
           <Spacer space={20} />
           <Button variant="contained" fullWidth size="large" type="submit">
             RESET PASSWORD
           </Button>
           <Spacer />
-          <Button color="secondary" variant="contained" fullWidth size="large" type="submit" onClick={() => navigate(ROUTES.LOGIN)}>
+          <Button
+            color="secondary"
+            variant="contained"
+            fullWidth
+            size="large"
+            type="submit"
+            onClick={() => navigate(ROUTES.LOGIN)}
+          >
             GO BACK
           </Button>
           <Flex>

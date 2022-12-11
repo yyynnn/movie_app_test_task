@@ -76,9 +76,21 @@ export const ExampleFeaturePage = () => {
         <Spacer space={30} />
 
         <Flex flexDirection="row" justifyContent="center" alignItems="center">
-          <TextField fullWidth multiline rows={10} variant="outlined" onChange={(e) => setNewTicket(JSON.parse(e.target.value))} value={JSON.stringify(newTicket)} />
+          <TextField
+            fullWidth
+            multiline
+            rows={10}
+            variant="outlined"
+            onChange={(e) => setNewTicket(JSON.parse(e.target.value))}
+            value={JSON.stringify(newTicket)}
+          />
           <Spacer width={10} />
-          <Button fullWidth variant="contained" size="large" onClick={() => addTicket({ data: newTicket })}>
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={() => addTicket({ data: newTicket })}
+          >
             ADD TICKET
           </Button>
         </Flex>

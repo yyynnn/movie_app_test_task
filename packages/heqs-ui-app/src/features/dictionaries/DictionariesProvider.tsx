@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
-import { useGetFactoriesDictionary, useGetTicketStatusesDictionary, useGetUserPositionsDictionary } from '../api/generated/endpoints'
+import {
+  useGetFactoriesDictionary,
+  useGetTicketStatusesDictionary,
+  useGetUserPositionsDictionary
+} from '../api/generated/endpoints'
 import { Factory, UserPosition } from '../api/generated/models'
 
 export enum TicketStatusEnum {

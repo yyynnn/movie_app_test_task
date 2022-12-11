@@ -1,5 +1,18 @@
 import styled from '@emotion/styled'
-import { Alert, AlertTitle, Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material'
+import {
+  Alert,
+  AlertTitle,
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  Typography
+} from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-grid-system'
 import { Controller, FieldValues, FormProvider, useForm } from 'react-hook-form'
@@ -15,8 +28,12 @@ import { Error, Flex, Spacer } from '../primitives'
 type WorkerPositionsKeys = keyof typeof WorkerPositions
 type FactoriesKeys = keyof typeof Factories
 
-const workerPositions = Object.keys(WorkerPositions).filter((_, idx) => idx >= Object.keys(WorkerPositions).length / 2) as WorkerPositionsKeys[]
-const factories = Object.keys(Factories).filter((_, idx) => idx >= Object.keys(Factories).length / 2) as FactoriesKeys[]
+const workerPositions = Object.keys(WorkerPositions).filter(
+  (_, idx) => idx >= Object.keys(WorkerPositions).length / 2
+) as WorkerPositionsKeys[]
+const factories = Object.keys(Factories).filter(
+  (_, idx) => idx >= Object.keys(Factories).length / 2
+) as FactoriesKeys[]
 
 export const RegPage = () => {
   const navigate = useNavigate()
@@ -73,23 +90,47 @@ export const RegPage = () => {
 
         <Row>
           <Col lg={6}>
-            <TextField {...register('name', { required: 'Fill out name' })} label="Name" variant="outlined" fullWidth error={!!errors.name} />
+            <TextField
+              {...register('name', { required: 'Fill out name' })}
+              label="Name"
+              variant="outlined"
+              fullWidth
+              error={!!errors.name}
+            />
             <Error name="name" />
           </Col>
           <Col lg={6}>
-            <TextField {...register('surname', { required: 'Fill out surname' })} label="Surname" variant="outlined" fullWidth autoComplete="surname" error={!!errors?.surname} />
+            <TextField
+              {...register('surname', { required: 'Fill out surname' })}
+              label="Surname"
+              variant="outlined"
+              fullWidth
+              autoComplete="surname"
+              error={!!errors?.surname}
+            />
             <Error name="surname" />
           </Col>
         </Row>
 
-        <TextField {...register('email', { required: 'Fill out email' })} label="E-mail" variant="outlined" fullWidth autoComplete="email" error={!!errors.email} />
+        <TextField
+          {...register('email', { required: 'Fill out email' })}
+          label="E-mail"
+          variant="outlined"
+          fullWidth
+          autoComplete="email"
+          error={!!errors.email}
+        />
         <Error name="email" />
 
         <Row>
           <Col lg={6}>
             <div>
               <TextField
-                {...register('password', { required: 'Fill out password', validate: (value) => value === formValues.password_confirmation || 'The passwords do not match' })}
+                {...register('password', {
+                  required: 'Fill out password',
+                  validate: (value) =>
+                    value === formValues.password_confirmation || 'The passwords do not match'
+                })}
                 error={!!errors.password}
                 label="Password"
                 variant="outlined"
@@ -102,7 +143,10 @@ export const RegPage = () => {
           </Col>
           <Col lg={6}>
             <TextField
-              {...register('password_confirmation', { required: 'Fill out password confirmation', validate: (value) => value === formValues.password || 'The passwords do not match' })}
+              {...register('password_confirmation', {
+                required: 'Fill out password confirmation',
+                validate: (value) => value === formValues.password || 'The passwords do not match'
+              })}
               error={!!errors.password_confirmation}
               label="Password confirmation"
               variant="outlined"
@@ -124,7 +168,13 @@ export const RegPage = () => {
                 return (
                   <FormControl fullWidth>
                     <InputLabel id="user_position_id-label">User Position</InputLabel>
-                    <Select value={value || ''} onChange={onChange} labelId="user_position_id-label" label="User Position" error={!!errors[name]}>
+                    <Select
+                      value={value || ''}
+                      onChange={onChange}
+                      labelId="user_position_id-label"
+                      label="User Position"
+                      error={!!errors[name]}
+                    >
                       {workerPositions.map((workerPosition, idx) => {
                         return (
                           <MenuItem key={idx} value={idx}>
@@ -148,7 +198,13 @@ export const RegPage = () => {
                 return (
                   <FormControl fullWidth>
                     <InputLabel id="Factory-label">Factory</InputLabel>
-                    <Select value={value || ''} onChange={onChange} labelId="Factory-label" label="Factory" error={!!errors[name]}>
+                    <Select
+                      value={value || ''}
+                      onChange={onChange}
+                      labelId="Factory-label"
+                      label="Factory"
+                      error={!!errors[name]}
+                    >
                       {factories.map((factory, idx) => {
                         return (
                           <MenuItem key={idx} value={idx}>

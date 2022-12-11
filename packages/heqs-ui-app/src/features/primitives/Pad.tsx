@@ -31,7 +31,13 @@ export const Pad = styled(Flex)<TFlexProps & TPadProps>`
       ${
         useMobile
           ? `@media (max-width: 991px) {
-        padding: ${data ? (typeof padMobileFinal === 'number' ? `${padMobile || Number(data) / 2}px` : negateString(padMobileFinal)) : '20px'};
+        padding: ${
+          data
+            ? typeof padMobileFinal === 'number'
+              ? `${padMobile || Number(data) / 2}px`
+              : negateString(padMobileFinal)
+            : '20px'
+        };
       }`
           : null
       }

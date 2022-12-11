@@ -5,7 +5,14 @@
  * Документация для микро сервиса
  * OpenAPI spec version: 1.0.0
  */
-import type { MutationFunction, QueryFunction, QueryKey, UseMutationOptions, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
+import type {
+  MutationFunction,
+  QueryFunction,
+  QueryKey,
+  UseMutationOptions,
+  UseQueryOptions,
+  UseQueryResult
+} from '@tanstack/react-query'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
@@ -13,7 +20,7 @@ import axios from 'axios'
 import type {
   CorrectiveAction,
   Factory,
-  GetPaginatedCorretciveActionListParams,
+  GetPaginatedCorrectiveActionListParams,
   GetPaginatedTicketListParams,
   Login200,
   Login422,
@@ -25,7 +32,8 @@ import type {
   Ticket,
   User,
   UserPosition,
-  Workcenter
+  Workcenter,
+  WorkcentersTicketStatusesStaticticsParams
 } from './models'
 
 /**
@@ -41,7 +49,10 @@ export const getPhpQueryKey = () => [`/php`]
 export type PhpQueryResult = NonNullable<Awaited<ReturnType<typeof php>>>
 export type PhpQueryError = AxiosError<unknown>
 
-export const usePhp = <TData = Awaited<ReturnType<typeof php>>, TError = AxiosError<unknown>>(options?: {
+export const usePhp = <
+  TData = Awaited<ReturnType<typeof php>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof php>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -49,9 +60,14 @@ export const usePhp = <TData = Awaited<ReturnType<typeof php>>, TError = AxiosEr
 
   const queryKey = queryOptions?.queryKey ?? getPhpQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof php>>> = ({ signal }) => php({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof php>>> = ({ signal }) =>
+    php({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof php>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof php>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -59,31 +75,54 @@ export const usePhp = <TData = Awaited<ReturnType<typeof php>>, TError = AxiosEr
 }
 
 /**
- * @summary Get Paginated Corretcive Action List
+ * @summary Get Paginated Corrective Action List
  */
-export const getPaginatedCorretciveActionList = (params?: GetPaginatedCorretciveActionListParams, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getPaginatedCorrectiveActionList = (
+  params?: GetPaginatedCorrectiveActionListParams,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/corretcive_actions`, {
     ...options,
     params: { ...params, ...options?.params }
   })
 }
 
-export const getGetPaginatedCorretciveActionListQueryKey = (params?: GetPaginatedCorretciveActionListParams) => [`/corretcive_actions`, ...(params ? [params] : [])]
+export const getGetPaginatedCorrectiveActionListQueryKey = (
+  params?: GetPaginatedCorrectiveActionListParams
+) => [`/corretcive_actions`, ...(params ? [params] : [])]
 
-export type GetPaginatedCorretciveActionListQueryResult = NonNullable<Awaited<ReturnType<typeof getPaginatedCorretciveActionList>>>
-export type GetPaginatedCorretciveActionListQueryError = AxiosError<unknown>
+export type GetPaginatedCorrectiveActionListQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPaginatedCorrectiveActionList>>
+>
+export type GetPaginatedCorrectiveActionListQueryError = AxiosError<unknown>
 
-export const useGetPaginatedCorretciveActionList = <TData = Awaited<ReturnType<typeof getPaginatedCorretciveActionList>>, TError = AxiosError<unknown>>(
-  params?: GetPaginatedCorretciveActionListParams,
-  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof getPaginatedCorretciveActionList>>, TError, TData>; axios?: AxiosRequestConfig }
+export const useGetPaginatedCorrectiveActionList = <
+  TData = Awaited<ReturnType<typeof getPaginatedCorrectiveActionList>>,
+  TError = AxiosError<unknown>
+>(
+  params?: GetPaginatedCorrectiveActionListParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPaginatedCorrectiveActionList>>,
+      TError,
+      TData
+    >
+    axios?: AxiosRequestConfig
+  }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const { query: queryOptions, axios: axiosOptions } = options ?? {}
 
-  const queryKey = queryOptions?.queryKey ?? getGetPaginatedCorretciveActionListQueryKey(params)
+  const queryKey = queryOptions?.queryKey ?? getGetPaginatedCorrectiveActionListQueryKey(params)
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPaginatedCorretciveActionList>>> = ({ signal }) => getPaginatedCorretciveActionList(params, { signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPaginatedCorrectiveActionList>>> = ({
+    signal
+  }) => getPaginatedCorrectiveActionList(params, { signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getPaginatedCorretciveActionList>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<
+    Awaited<ReturnType<typeof getPaginatedCorrectiveActionList>>,
+    TError,
+    TData
+  >(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -93,55 +132,92 @@ export const useGetPaginatedCorretciveActionList = <TData = Awaited<ReturnType<t
 /**
  * @summary Create New Corretcive Action
  */
-export const createNewCorretciveAction = (correctiveAction: CorrectiveAction, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const createNewCorretciveAction = (
+  correctiveAction: CorrectiveAction,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.post(`/corretcive_actions`, correctiveAction, options)
 }
 
-export type CreateNewCorretciveActionMutationResult = NonNullable<Awaited<ReturnType<typeof createNewCorretciveAction>>>
+export type CreateNewCorretciveActionMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createNewCorretciveAction>>
+>
 export type CreateNewCorretciveActionMutationBody = CorrectiveAction
 export type CreateNewCorretciveActionMutationError = AxiosError<unknown>
 
-export const useCreateNewCorretciveAction = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<Awaited<ReturnType<typeof createNewCorretciveAction>>, TError, { data: CorrectiveAction }, TContext>
+export const useCreateNewCorretciveAction = <
+  TError = AxiosError<unknown>,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createNewCorretciveAction>>,
+    TError,
+    { data: CorrectiveAction },
+    TContext
+  >
   axios?: AxiosRequestConfig
 }) => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
-  const mutationFn: MutationFunction<Awaited<ReturnType<typeof createNewCorretciveAction>>, { data: CorrectiveAction }> = (props) => {
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createNewCorretciveAction>>,
+    { data: CorrectiveAction }
+  > = (props) => {
     const { data } = props ?? {}
 
     return createNewCorretciveAction(data, axiosOptions)
   }
 
-  return useMutation<Awaited<ReturnType<typeof createNewCorretciveAction>>, TError, { data: CorrectiveAction }, TContext>(mutationFn, mutationOptions)
+  return useMutation<
+    Awaited<ReturnType<typeof createNewCorretciveAction>>,
+    TError,
+    { data: CorrectiveAction },
+    TContext
+  >(mutationFn, mutationOptions)
 }
 
 /**
  * @summary Read Corretcive Action By ID
  */
-export const readCorretciveActionByID = (corretciveActionId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<CorrectiveAction>> => {
+export const readCorretciveActionByID = (
+  corretciveActionId: number,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<CorrectiveAction>> => {
   return axios.get(`/corretcive_actions/${corretciveActionId}`, options)
 }
 
-export const getReadCorretciveActionByIDQueryKey = (corretciveActionId: number) => [`/corretcive_actions/${corretciveActionId}`]
+export const getReadCorretciveActionByIDQueryKey = (corretciveActionId: number) => [
+  `/corretcive_actions/${corretciveActionId}`
+]
 
-export type ReadCorretciveActionByIDQueryResult = NonNullable<Awaited<ReturnType<typeof readCorretciveActionByID>>>
+export type ReadCorretciveActionByIDQueryResult = NonNullable<
+  Awaited<ReturnType<typeof readCorretciveActionByID>>
+>
 export type ReadCorretciveActionByIDQueryError = AxiosError<unknown>
 
-export const useReadCorretciveActionByID = <TData = Awaited<ReturnType<typeof readCorretciveActionByID>>, TError = AxiosError<unknown>>(
+export const useReadCorretciveActionByID = <
+  TData = Awaited<ReturnType<typeof readCorretciveActionByID>>,
+  TError = AxiosError<unknown>
+>(
   corretciveActionId: number,
-  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof readCorretciveActionByID>>, TError, TData>; axios?: AxiosRequestConfig }
+  options?: {
+    query?: UseQueryOptions<Awaited<ReturnType<typeof readCorretciveActionByID>>, TError, TData>
+    axios?: AxiosRequestConfig
+  }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const { query: queryOptions, axios: axiosOptions } = options ?? {}
 
   const queryKey = queryOptions?.queryKey ?? getReadCorretciveActionByIDQueryKey(corretciveActionId)
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof readCorretciveActionByID>>> = ({ signal }) => readCorretciveActionByID(corretciveActionId, { signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readCorretciveActionByID>>> = ({
+    signal
+  }) => readCorretciveActionByID(corretciveActionId, { signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof readCorretciveActionByID>>, TError, TData>(queryKey, queryFn, { enabled: !!corretciveActionId, ...queryOptions }) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof readCorretciveActionByID>>, TError, TData>(
+    queryKey,
+    queryFn,
+    { enabled: !!corretciveActionId, ...queryOptions }
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -151,68 +227,118 @@ export const useReadCorretciveActionByID = <TData = Awaited<ReturnType<typeof re
 /**
  * @summary Update Corretcive Action By ID
  */
-export const updateCorretciveActionByID = (corretciveActionId: number, correctiveAction: CorrectiveAction, options?: AxiosRequestConfig): Promise<AxiosResponse<CorrectiveAction>> => {
+export const updateCorretciveActionByID = (
+  corretciveActionId: number,
+  correctiveAction: CorrectiveAction,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<CorrectiveAction>> => {
   return axios.put(`/corretcive_actions/${corretciveActionId}`, correctiveAction, options)
 }
 
-export type UpdateCorretciveActionByIDMutationResult = NonNullable<Awaited<ReturnType<typeof updateCorretciveActionByID>>>
+export type UpdateCorretciveActionByIDMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updateCorretciveActionByID>>
+>
 export type UpdateCorretciveActionByIDMutationBody = CorrectiveAction
 export type UpdateCorretciveActionByIDMutationError = AxiosError<unknown>
 
-export const useUpdateCorretciveActionByID = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<Awaited<ReturnType<typeof updateCorretciveActionByID>>, TError, { corretciveActionId: number; data: CorrectiveAction }, TContext>
+export const useUpdateCorretciveActionByID = <
+  TError = AxiosError<unknown>,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateCorretciveActionByID>>,
+    TError,
+    { corretciveActionId: number; data: CorrectiveAction },
+    TContext
+  >
   axios?: AxiosRequestConfig
 }) => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
-  const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateCorretciveActionByID>>, { corretciveActionId: number; data: CorrectiveAction }> = (props) => {
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateCorretciveActionByID>>,
+    { corretciveActionId: number; data: CorrectiveAction }
+  > = (props) => {
     const { corretciveActionId, data } = props ?? {}
 
     return updateCorretciveActionByID(corretciveActionId, data, axiosOptions)
   }
 
-  return useMutation<Awaited<ReturnType<typeof updateCorretciveActionByID>>, TError, { corretciveActionId: number; data: CorrectiveAction }, TContext>(mutationFn, mutationOptions)
+  return useMutation<
+    Awaited<ReturnType<typeof updateCorretciveActionByID>>,
+    TError,
+    { corretciveActionId: number; data: CorrectiveAction },
+    TContext
+  >(mutationFn, mutationOptions)
 }
 
 /**
  * @summary Delete Corretcive Action By ID
  */
-export const deleteCorretciveActionByID = (corretciveActionId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const deleteCorretciveActionByID = (
+  corretciveActionId: number,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.delete(`/corretcive_actions/${corretciveActionId}`, options)
 }
 
-export type DeleteCorretciveActionByIDMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCorretciveActionByID>>>
+export type DeleteCorretciveActionByIDMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteCorretciveActionByID>>
+>
 
 export type DeleteCorretciveActionByIDMutationError = AxiosError<unknown>
 
-export const useDeleteCorretciveActionByID = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteCorretciveActionByID>>, TError, { corretciveActionId: number }, TContext>
+export const useDeleteCorretciveActionByID = <
+  TError = AxiosError<unknown>,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteCorretciveActionByID>>,
+    TError,
+    { corretciveActionId: number },
+    TContext
+  >
   axios?: AxiosRequestConfig
 }) => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
-  const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCorretciveActionByID>>, { corretciveActionId: number }> = (props) => {
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteCorretciveActionByID>>,
+    { corretciveActionId: number }
+  > = (props) => {
     const { corretciveActionId } = props ?? {}
 
     return deleteCorretciveActionByID(corretciveActionId, axiosOptions)
   }
 
-  return useMutation<Awaited<ReturnType<typeof deleteCorretciveActionByID>>, TError, { corretciveActionId: number }, TContext>(mutationFn, mutationOptions)
+  return useMutation<
+    Awaited<ReturnType<typeof deleteCorretciveActionByID>>,
+    TError,
+    { corretciveActionId: number },
+    TContext
+  >(mutationFn, mutationOptions)
 }
 
 /**
  * @summary Get ticket_classes dictionary
  */
-export const getTicketClassesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getTicketClassesDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/ticket_classes`, options)
 }
 
 export const getGetTicketClassesDictionaryQueryKey = () => [`/dictionary/ticket_classes`]
 
-export type GetTicketClassesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getTicketClassesDictionary>>>
+export type GetTicketClassesDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTicketClassesDictionary>>
+>
 export type GetTicketClassesDictionaryQueryError = AxiosError<unknown>
 
-export const useGetTicketClassesDictionary = <TData = Awaited<ReturnType<typeof getTicketClassesDictionary>>, TError = AxiosError<unknown>>(options?: {
+export const useGetTicketClassesDictionary = <
+  TData = Awaited<ReturnType<typeof getTicketClassesDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getTicketClassesDictionary>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -220,9 +346,15 @@ export const useGetTicketClassesDictionary = <TData = Awaited<ReturnType<typeof 
 
   const queryKey = queryOptions?.queryKey ?? getGetTicketClassesDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTicketClassesDictionary>>> = ({ signal }) => getTicketClassesDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTicketClassesDictionary>>> = ({
+    signal
+  }) => getTicketClassesDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getTicketClassesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getTicketClassesDictionary>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -232,16 +364,23 @@ export const useGetTicketClassesDictionary = <TData = Awaited<ReturnType<typeof 
 /**
  * @summary Get ticket_categories dictionary
  */
-export const getTicketCategoriesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getTicketCategoriesDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/ticket_categories`, options)
 }
 
 export const getGetTicketCategoriesDictionaryQueryKey = () => [`/dictionary/ticket_categories`]
 
-export type GetTicketCategoriesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getTicketCategoriesDictionary>>>
+export type GetTicketCategoriesDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTicketCategoriesDictionary>>
+>
 export type GetTicketCategoriesDictionaryQueryError = AxiosError<unknown>
 
-export const useGetTicketCategoriesDictionary = <TData = Awaited<ReturnType<typeof getTicketCategoriesDictionary>>, TError = AxiosError<unknown>>(options?: {
+export const useGetTicketCategoriesDictionary = <
+  TData = Awaited<ReturnType<typeof getTicketCategoriesDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getTicketCategoriesDictionary>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -249,9 +388,15 @@ export const useGetTicketCategoriesDictionary = <TData = Awaited<ReturnType<type
 
   const queryKey = queryOptions?.queryKey ?? getGetTicketCategoriesDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTicketCategoriesDictionary>>> = ({ signal }) => getTicketCategoriesDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTicketCategoriesDictionary>>> = ({
+    signal
+  }) => getTicketCategoriesDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getTicketCategoriesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getTicketCategoriesDictionary>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -261,16 +406,23 @@ export const useGetTicketCategoriesDictionary = <TData = Awaited<ReturnType<type
 /**
  * @summary Get ticket_statuses dictionary
  */
-export const getTicketStatusesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getTicketStatusesDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/ticket_statuses`, options)
 }
 
 export const getGetTicketStatusesDictionaryQueryKey = () => [`/dictionary/ticket_statuses`]
 
-export type GetTicketStatusesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getTicketStatusesDictionary>>>
+export type GetTicketStatusesDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTicketStatusesDictionary>>
+>
 export type GetTicketStatusesDictionaryQueryError = AxiosError<unknown>
 
-export const useGetTicketStatusesDictionary = <TData = Awaited<ReturnType<typeof getTicketStatusesDictionary>>, TError = AxiosError<unknown>>(options?: {
+export const useGetTicketStatusesDictionary = <
+  TData = Awaited<ReturnType<typeof getTicketStatusesDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getTicketStatusesDictionary>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -278,9 +430,15 @@ export const useGetTicketStatusesDictionary = <TData = Awaited<ReturnType<typeof
 
   const queryKey = queryOptions?.queryKey ?? getGetTicketStatusesDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTicketStatusesDictionary>>> = ({ signal }) => getTicketStatusesDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTicketStatusesDictionary>>> = ({
+    signal
+  }) => getTicketStatusesDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getTicketStatusesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getTicketStatusesDictionary>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -290,26 +448,45 @@ export const useGetTicketStatusesDictionary = <TData = Awaited<ReturnType<typeof
 /**
  * @summary Get corrective_action_statuses dictionary
  */
-export const getCorrectiveActionStatusesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getCorrectiveActionStatusesDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/corrective_action_statuses`, options)
 }
 
-export const getGetCorrectiveActionStatusesDictionaryQueryKey = () => [`/dictionary/corrective_action_statuses`]
+export const getGetCorrectiveActionStatusesDictionaryQueryKey = () => [
+  `/dictionary/corrective_action_statuses`
+]
 
-export type GetCorrectiveActionStatusesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>>
+export type GetCorrectiveActionStatusesDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>
+>
 export type GetCorrectiveActionStatusesDictionaryQueryError = AxiosError<unknown>
 
-export const useGetCorrectiveActionStatusesDictionary = <TData = Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>, TError = AxiosError<unknown>>(options?: {
-  query?: UseQueryOptions<Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>, TError, TData>
+export const useGetCorrectiveActionStatusesDictionary = <
+  TData = Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>,
+    TError,
+    TData
+  >
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const { query: queryOptions, axios: axiosOptions } = options ?? {}
 
   const queryKey = queryOptions?.queryKey ?? getGetCorrectiveActionStatusesDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>> = ({ signal }) => getCorrectiveActionStatusesDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>
+  > = ({ signal }) => getCorrectiveActionStatusesDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<
+    Awaited<ReturnType<typeof getCorrectiveActionStatusesDictionary>>,
+    TError,
+    TData
+  >(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -319,16 +496,23 @@ export const useGetCorrectiveActionStatusesDictionary = <TData = Awaited<ReturnT
 /**
  * @summary Get root_causes dictionary
  */
-export const getRootCausesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getRootCausesDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/root_causes`, options)
 }
 
 export const getGetRootCausesDictionaryQueryKey = () => [`/dictionary/root_causes`]
 
-export type GetRootCausesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getRootCausesDictionary>>>
+export type GetRootCausesDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getRootCausesDictionary>>
+>
 export type GetRootCausesDictionaryQueryError = AxiosError<unknown>
 
-export const useGetRootCausesDictionary = <TData = Awaited<ReturnType<typeof getRootCausesDictionary>>, TError = AxiosError<unknown>>(options?: {
+export const useGetRootCausesDictionary = <
+  TData = Awaited<ReturnType<typeof getRootCausesDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getRootCausesDictionary>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -336,9 +520,15 @@ export const useGetRootCausesDictionary = <TData = Awaited<ReturnType<typeof get
 
   const queryKey = queryOptions?.queryKey ?? getGetRootCausesDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRootCausesDictionary>>> = ({ signal }) => getRootCausesDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRootCausesDictionary>>> = ({
+    signal
+  }) => getRootCausesDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getRootCausesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getRootCausesDictionary>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -348,16 +538,23 @@ export const useGetRootCausesDictionary = <TData = Awaited<ReturnType<typeof get
 /**
  * @summary Get countries dictionary
  */
-export const getCountriesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getCountriesDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/countries`, options)
 }
 
 export const getGetCountriesDictionaryQueryKey = () => [`/dictionary/countries`]
 
-export type GetCountriesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getCountriesDictionary>>>
+export type GetCountriesDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCountriesDictionary>>
+>
 export type GetCountriesDictionaryQueryError = AxiosError<unknown>
 
-export const useGetCountriesDictionary = <TData = Awaited<ReturnType<typeof getCountriesDictionary>>, TError = AxiosError<unknown>>(options?: {
+export const useGetCountriesDictionary = <
+  TData = Awaited<ReturnType<typeof getCountriesDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getCountriesDictionary>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -365,9 +562,14 @@ export const useGetCountriesDictionary = <TData = Awaited<ReturnType<typeof getC
 
   const queryKey = queryOptions?.queryKey ?? getGetCountriesDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getCountriesDictionary>>> = ({ signal }) => getCountriesDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getCountriesDictionary>>> = ({ signal }) =>
+    getCountriesDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getCountriesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getCountriesDictionary>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -377,16 +579,23 @@ export const useGetCountriesDictionary = <TData = Awaited<ReturnType<typeof getC
 /**
  * @summary Get factories dictionary
  */
-export const getFactoriesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getFactoriesDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/factories`, options)
 }
 
 export const getGetFactoriesDictionaryQueryKey = () => [`/dictionary/factories`]
 
-export type GetFactoriesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getFactoriesDictionary>>>
+export type GetFactoriesDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getFactoriesDictionary>>
+>
 export type GetFactoriesDictionaryQueryError = AxiosError<unknown>
 
-export const useGetFactoriesDictionary = <TData = Awaited<ReturnType<typeof getFactoriesDictionary>>, TError = AxiosError<unknown>>(options?: {
+export const useGetFactoriesDictionary = <
+  TData = Awaited<ReturnType<typeof getFactoriesDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getFactoriesDictionary>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -394,9 +603,14 @@ export const useGetFactoriesDictionary = <TData = Awaited<ReturnType<typeof getF
 
   const queryKey = queryOptions?.queryKey ?? getGetFactoriesDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getFactoriesDictionary>>> = ({ signal }) => getFactoriesDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getFactoriesDictionary>>> = ({ signal }) =>
+    getFactoriesDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getFactoriesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getFactoriesDictionary>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -406,16 +620,23 @@ export const useGetFactoriesDictionary = <TData = Awaited<ReturnType<typeof getF
 /**
  * @summary Get workcenter_groups dictionary
  */
-export const getWorkcenterGroupsDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getWorkcenterGroupsDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/workcenter_groups`, options)
 }
 
 export const getGetWorkcenterGroupsDictionaryQueryKey = () => [`/dictionary/workcenter_groups`]
 
-export type GetWorkcenterGroupsDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>>
+export type GetWorkcenterGroupsDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>
+>
 export type GetWorkcenterGroupsDictionaryQueryError = AxiosError<unknown>
 
-export const useGetWorkcenterGroupsDictionary = <TData = Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>, TError = AxiosError<unknown>>(options?: {
+export const useGetWorkcenterGroupsDictionary = <
+  TData = Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -423,9 +644,15 @@ export const useGetWorkcenterGroupsDictionary = <TData = Awaited<ReturnType<type
 
   const queryKey = queryOptions?.queryKey ?? getGetWorkcenterGroupsDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>> = ({ signal }) => getWorkcenterGroupsDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>> = ({
+    signal
+  }) => getWorkcenterGroupsDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getWorkcenterGroupsDictionary>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -435,16 +662,23 @@ export const useGetWorkcenterGroupsDictionary = <TData = Awaited<ReturnType<type
 /**
  * @summary Get workcenters dictionary
  */
-export const getWorkcentersDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getWorkcentersDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/workcenters`, options)
 }
 
 export const getGetWorkcentersDictionaryQueryKey = () => [`/dictionary/workcenters`]
 
-export type GetWorkcentersDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getWorkcentersDictionary>>>
+export type GetWorkcentersDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getWorkcentersDictionary>>
+>
 export type GetWorkcentersDictionaryQueryError = AxiosError<unknown>
 
-export const useGetWorkcentersDictionary = <TData = Awaited<ReturnType<typeof getWorkcentersDictionary>>, TError = AxiosError<unknown>>(options?: {
+export const useGetWorkcentersDictionary = <
+  TData = Awaited<ReturnType<typeof getWorkcentersDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getWorkcentersDictionary>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -452,9 +686,15 @@ export const useGetWorkcentersDictionary = <TData = Awaited<ReturnType<typeof ge
 
   const queryKey = queryOptions?.queryKey ?? getGetWorkcentersDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getWorkcentersDictionary>>> = ({ signal }) => getWorkcentersDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getWorkcentersDictionary>>> = ({
+    signal
+  }) => getWorkcentersDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getWorkcentersDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getWorkcentersDictionary>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -464,16 +704,23 @@ export const useGetWorkcentersDictionary = <TData = Awaited<ReturnType<typeof ge
 /**
  * @summary Get user_roles dictionary
  */
-export const getUserRolesDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getUserRolesDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/user_roles`, options)
 }
 
 export const getGetUserRolesDictionaryQueryKey = () => [`/dictionary/user_roles`]
 
-export type GetUserRolesDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getUserRolesDictionary>>>
+export type GetUserRolesDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getUserRolesDictionary>>
+>
 export type GetUserRolesDictionaryQueryError = AxiosError<unknown>
 
-export const useGetUserRolesDictionary = <TData = Awaited<ReturnType<typeof getUserRolesDictionary>>, TError = AxiosError<unknown>>(options?: {
+export const useGetUserRolesDictionary = <
+  TData = Awaited<ReturnType<typeof getUserRolesDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getUserRolesDictionary>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -481,9 +728,14 @@ export const useGetUserRolesDictionary = <TData = Awaited<ReturnType<typeof getU
 
   const queryKey = queryOptions?.queryKey ?? getGetUserRolesDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserRolesDictionary>>> = ({ signal }) => getUserRolesDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserRolesDictionary>>> = ({ signal }) =>
+    getUserRolesDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getUserRolesDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getUserRolesDictionary>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -493,16 +745,23 @@ export const useGetUserRolesDictionary = <TData = Awaited<ReturnType<typeof getU
 /**
  * @summary Get user_positions dictionary
  */
-export const getUserPositionsDictionary = (options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getUserPositionsDictionary = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/dictionary/user_positions`, options)
 }
 
 export const getGetUserPositionsDictionaryQueryKey = () => [`/dictionary/user_positions`]
 
-export type GetUserPositionsDictionaryQueryResult = NonNullable<Awaited<ReturnType<typeof getUserPositionsDictionary>>>
+export type GetUserPositionsDictionaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getUserPositionsDictionary>>
+>
 export type GetUserPositionsDictionaryQueryError = AxiosError<unknown>
 
-export const useGetUserPositionsDictionary = <TData = Awaited<ReturnType<typeof getUserPositionsDictionary>>, TError = AxiosError<unknown>>(options?: {
+export const useGetUserPositionsDictionary = <
+  TData = Awaited<ReturnType<typeof getUserPositionsDictionary>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof getUserPositionsDictionary>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -510,9 +769,15 @@ export const useGetUserPositionsDictionary = <TData = Awaited<ReturnType<typeof 
 
   const queryKey = queryOptions?.queryKey ?? getGetUserPositionsDictionaryQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserPositionsDictionary>>> = ({ signal }) => getUserPositionsDictionary({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserPositionsDictionary>>> = ({
+    signal
+  }) => getUserPositionsDictionary({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getUserPositionsDictionary>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getUserPositionsDictionary>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -526,29 +791,48 @@ export const useGetUserPositionsDictionary = <TData = Awaited<ReturnType<typeof 
 //  * @return LengthAwarePaginator
  * @summary Get Paginated Ticket List
  */
-export const getPaginatedTicketList = (params?: GetPaginatedTicketListParams, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const getPaginatedTicketList = (
+  params?: GetPaginatedTicketListParams,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.get(`/tickets/list/filtered`, {
     ...options,
     params: { ...params, ...options?.params }
   })
 }
 
-export const getGetPaginatedTicketListQueryKey = (params?: GetPaginatedTicketListParams) => [`/tickets/list/filtered`, ...(params ? [params] : [])]
+export const getGetPaginatedTicketListQueryKey = (params?: GetPaginatedTicketListParams) => [
+  `/tickets/list/filtered`,
+  ...(params ? [params] : [])
+]
 
-export type GetPaginatedTicketListQueryResult = NonNullable<Awaited<ReturnType<typeof getPaginatedTicketList>>>
+export type GetPaginatedTicketListQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPaginatedTicketList>>
+>
 export type GetPaginatedTicketListQueryError = AxiosError<unknown>
 
-export const useGetPaginatedTicketList = <TData = Awaited<ReturnType<typeof getPaginatedTicketList>>, TError = AxiosError<unknown>>(
+export const useGetPaginatedTicketList = <
+  TData = Awaited<ReturnType<typeof getPaginatedTicketList>>,
+  TError = AxiosError<unknown>
+>(
   params?: GetPaginatedTicketListParams,
-  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof getPaginatedTicketList>>, TError, TData>; axios?: AxiosRequestConfig }
+  options?: {
+    query?: UseQueryOptions<Awaited<ReturnType<typeof getPaginatedTicketList>>, TError, TData>
+    axios?: AxiosRequestConfig
+  }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const { query: queryOptions, axios: axiosOptions } = options ?? {}
 
   const queryKey = queryOptions?.queryKey ?? getGetPaginatedTicketListQueryKey(params)
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPaginatedTicketList>>> = ({ signal }) => getPaginatedTicketList(params, { signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPaginatedTicketList>>> = ({ signal }) =>
+    getPaginatedTicketList(params, { signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof getPaginatedTicketList>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof getPaginatedTicketList>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -559,7 +843,10 @@ export const useGetPaginatedTicketList = <TData = Awaited<ReturnType<typeof getP
  * Store a newly created resource in storage.
  * @summary Create New Ticket
  */
-export const createNewTicket = (ticket: Ticket, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const createNewTicket = (
+  ticket: Ticket,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.post(`/tickets`, ticket, options)
 }
 
@@ -568,25 +855,41 @@ export type CreateNewTicketMutationBody = Ticket
 export type CreateNewTicketMutationError = AxiosError<unknown>
 
 export const useCreateNewTicket = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<Awaited<ReturnType<typeof createNewTicket>>, TError, { data: Ticket }, TContext>
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createNewTicket>>,
+    TError,
+    { data: Ticket },
+    TContext
+  >
   axios?: AxiosRequestConfig
 }) => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
-  const mutationFn: MutationFunction<Awaited<ReturnType<typeof createNewTicket>>, { data: Ticket }> = (props) => {
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createNewTicket>>,
+    { data: Ticket }
+  > = (props) => {
     const { data } = props ?? {}
 
     return createNewTicket(data, axiosOptions)
   }
 
-  return useMutation<Awaited<ReturnType<typeof createNewTicket>>, TError, { data: Ticket }, TContext>(mutationFn, mutationOptions)
+  return useMutation<
+    Awaited<ReturnType<typeof createNewTicket>>,
+    TError,
+    { data: Ticket },
+    TContext
+  >(mutationFn, mutationOptions)
 }
 
 /**
  * Display the specified resource.
  * @summary Read Ticket By ID
  */
-export const readTicketByID = (ticketId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<Ticket>> => {
+export const readTicketByID = (
+  ticketId: number,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Ticket>> => {
   return axios.get(`/tickets/${ticketId}`, options)
 }
 
@@ -595,19 +898,28 @@ export const getReadTicketByIDQueryKey = (ticketId: number) => [`/tickets/${tick
 export type ReadTicketByIDQueryResult = NonNullable<Awaited<ReturnType<typeof readTicketByID>>>
 export type ReadTicketByIDQueryError = AxiosError<unknown>
 
-export const useReadTicketByID = <TData = Awaited<ReturnType<typeof readTicketByID>>, TError = AxiosError<unknown>>(
+export const useReadTicketByID = <
+  TData = Awaited<ReturnType<typeof readTicketByID>>,
+  TError = AxiosError<unknown>
+>(
   ticketId: number,
-  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof readTicketByID>>, TError, TData>; axios?: AxiosRequestConfig }
+  options?: {
+    query?: UseQueryOptions<Awaited<ReturnType<typeof readTicketByID>>, TError, TData>
+    axios?: AxiosRequestConfig
+  }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const { query: queryOptions, axios: axiosOptions } = options ?? {}
 
   const queryKey = queryOptions?.queryKey ?? getReadTicketByIDQueryKey(ticketId)
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof readTicketByID>>> = ({ signal }) => readTicketByID(ticketId, { signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readTicketByID>>> = ({ signal }) =>
+    readTicketByID(ticketId, { signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof readTicketByID>>, TError, TData>(queryKey, queryFn, { enabled: !!ticketId, ...queryOptions }) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey
-  }
+  const query = useQuery<Awaited<ReturnType<typeof readTicketByID>>, TError, TData>(
+    queryKey,
+    queryFn,
+    { enabled: !!ticketId, ...queryOptions }
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -618,82 +930,208 @@ export const useReadTicketByID = <TData = Awaited<ReturnType<typeof readTicketBy
  * Update the specified resource in storage.
  * @summary Update Ticket By ID
  */
-export const updateTicketByID = (ticketId: number, ticket: Ticket, options?: AxiosRequestConfig): Promise<AxiosResponse<Ticket>> => {
+export const updateTicketByID = (
+  ticketId: number,
+  ticket: Ticket,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Ticket>> => {
   return axios.put(`/tickets/${ticketId}`, ticket, options)
 }
 
-export type UpdateTicketByIDMutationResult = NonNullable<Awaited<ReturnType<typeof updateTicketByID>>>
+export type UpdateTicketByIDMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updateTicketByID>>
+>
 export type UpdateTicketByIDMutationBody = Ticket
 export type UpdateTicketByIDMutationError = AxiosError<unknown>
 
 export const useUpdateTicketByID = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<Awaited<ReturnType<typeof updateTicketByID>>, TError, { ticketId: number; data: Ticket }, TContext>
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateTicketByID>>,
+    TError,
+    { ticketId: number; data: Ticket },
+    TContext
+  >
   axios?: AxiosRequestConfig
 }) => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
-  const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateTicketByID>>, { ticketId: number; data: Ticket }> = (props) => {
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateTicketByID>>,
+    { ticketId: number; data: Ticket }
+  > = (props) => {
     const { ticketId, data } = props ?? {}
 
     return updateTicketByID(ticketId, data, axiosOptions)
   }
 
-  return useMutation<Awaited<ReturnType<typeof updateTicketByID>>, TError, { ticketId: number; data: Ticket }, TContext>(mutationFn, mutationOptions)
+  return useMutation<
+    Awaited<ReturnType<typeof updateTicketByID>>,
+    TError,
+    { ticketId: number; data: Ticket },
+    TContext
+  >(mutationFn, mutationOptions)
 }
 
 /**
  * Remove the specified resource from storage.
  * @summary Delete Ticket By ID
  */
-export const deleteTicketByID = (ticketId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<void>> => {
+export const deleteTicketByID = (
+  ticketId: number,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
   return axios.delete(`/tickets/${ticketId}`, options)
 }
 
-export type DeleteTicketByIDMutationResult = NonNullable<Awaited<ReturnType<typeof deleteTicketByID>>>
+export type DeleteTicketByIDMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteTicketByID>>
+>
 
 export type DeleteTicketByIDMutationError = AxiosError<unknown>
 
 export const useDeleteTicketByID = <TError = AxiosError<unknown>, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteTicketByID>>, TError, { ticketId: number }, TContext>
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteTicketByID>>,
+    TError,
+    { ticketId: number },
+    TContext
+  >
   axios?: AxiosRequestConfig
 }) => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
-  const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteTicketByID>>, { ticketId: number }> = (props) => {
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteTicketByID>>,
+    { ticketId: number }
+  > = (props) => {
     const { ticketId } = props ?? {}
 
     return deleteTicketByID(ticketId, axiosOptions)
   }
 
-  return useMutation<Awaited<ReturnType<typeof deleteTicketByID>>, TError, { ticketId: number }, TContext>(mutationFn, mutationOptions)
+  return useMutation<
+    Awaited<ReturnType<typeof deleteTicketByID>>,
+    TError,
+    { ticketId: number },
+    TContext
+  >(mutationFn, mutationOptions)
 }
 
 /**
  * Display the specified resource.
- * @summary Read correctve actions by ticket id
+ * @summary Read corrective actions by ticket id
  */
-export const readCorrectveActionsByTicketId = (ticketId: number, options?: AxiosRequestConfig): Promise<AxiosResponse<CorrectiveAction[]>> => {
+export const readCorrectiveActionsByTicketId = (
+  ticketId: number,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<CorrectiveAction[]>> => {
   return axios.get(`/tickets/cas/${ticketId}`, options)
 }
 
-export const getReadCorrectveActionsByTicketIdQueryKey = (ticketId: number) => [`/tickets/cas/${ticketId}`]
+export const getReadCorrectiveActionsByTicketIdQueryKey = (ticketId: number) => [
+  `/tickets/cas/${ticketId}`
+]
 
-export type ReadCorrectveActionsByTicketIdQueryResult = NonNullable<Awaited<ReturnType<typeof readCorrectveActionsByTicketId>>>
-export type ReadCorrectveActionsByTicketIdQueryError = AxiosError<unknown>
+export type ReadCorrectiveActionsByTicketIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof readCorrectiveActionsByTicketId>>
+>
+export type ReadCorrectiveActionsByTicketIdQueryError = AxiosError<unknown>
 
-export const useReadCorrectveActionsByTicketId = <TData = Awaited<ReturnType<typeof readCorrectveActionsByTicketId>>, TError = AxiosError<unknown>>(
+export const useReadCorrectiveActionsByTicketId = <
+  TData = Awaited<ReturnType<typeof readCorrectiveActionsByTicketId>>,
+  TError = AxiosError<unknown>
+>(
   ticketId: number,
-  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof readCorrectveActionsByTicketId>>, TError, TData>; axios?: AxiosRequestConfig }
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof readCorrectiveActionsByTicketId>>,
+      TError,
+      TData
+    >
+    axios?: AxiosRequestConfig
+  }
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
   const { query: queryOptions, axios: axiosOptions } = options ?? {}
 
-  const queryKey = queryOptions?.queryKey ?? getReadCorrectveActionsByTicketIdQueryKey(ticketId)
+  const queryKey = queryOptions?.queryKey ?? getReadCorrectiveActionsByTicketIdQueryKey(ticketId)
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof readCorrectveActionsByTicketId>>> = ({ signal }) => readCorrectveActionsByTicketId(ticketId, { signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readCorrectiveActionsByTicketId>>> = ({
+    signal
+  }) => readCorrectiveActionsByTicketId(ticketId, { signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof readCorrectveActionsByTicketId>>, TError, TData>(queryKey, queryFn, { enabled: !!ticketId, ...queryOptions }) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey
+  const query = useQuery<
+    Awaited<ReturnType<typeof readCorrectiveActionsByTicketId>>,
+    TError,
+    TData
+  >(queryKey, queryFn, { enabled: !!ticketId, ...queryOptions }) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * Display a listing of the resource.
+
+//  * @return \Illuminate\Http\Response
+ * @summary Workcenters Ticket Statuses Statictics
+ */
+export const workcentersTicketStatusesStatictics = (
+  factoryId: number,
+  params?: WorkcentersTicketStatusesStaticticsParams,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
+  return axios.get(`/workcenters/stat/${factoryId}`, {
+    ...options,
+    params: { ...params, ...options?.params }
+  })
+}
+
+export const getWorkcentersTicketStatusesStaticticsQueryKey = (
+  factoryId: number,
+  params?: WorkcentersTicketStatusesStaticticsParams
+) => [`/workcenters/stat/${factoryId}`, ...(params ? [params] : [])]
+
+export type WorkcentersTicketStatusesStaticticsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof workcentersTicketStatusesStatictics>>
+>
+export type WorkcentersTicketStatusesStaticticsQueryError = AxiosError<unknown>
+
+export const useWorkcentersTicketStatusesStatictics = <
+  TData = Awaited<ReturnType<typeof workcentersTicketStatusesStatictics>>,
+  TError = AxiosError<unknown>
+>(
+  factoryId: number,
+  params?: WorkcentersTicketStatusesStaticticsParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof workcentersTicketStatusesStatictics>>,
+      TError,
+      TData
+    >
+    axios?: AxiosRequestConfig
   }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getWorkcentersTicketStatusesStaticticsQueryKey(factoryId, params)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof workcentersTicketStatusesStatictics>>> = ({
+    signal
+  }) => workcentersTicketStatusesStatictics(factoryId, params, { signal, ...axiosOptions })
+
+  const query = useQuery<
+    Awaited<ReturnType<typeof workcentersTicketStatusesStatictics>>,
+    TError,
+    TData
+  >(queryKey, queryFn, { enabled: !!factoryId, ...queryOptions }) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -704,7 +1142,10 @@ export const useReadCorrectveActionsByTicketId = <TData = Awaited<ReturnType<typ
  * Регистрация нового пользователя
  * @summary Регистрация
  */
-export const register = (registerBody: RegisterBody, options?: AxiosRequestConfig): Promise<AxiosResponse<Register200>> => {
+export const register = (
+  registerBody: RegisterBody,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Register200>> => {
   return axios.post(`/register`, registerBody, options)
 }
 
@@ -713,25 +1154,41 @@ export type RegisterMutationBody = RegisterBody
 export type RegisterMutationError = AxiosError<Register422>
 
 export const useRegister = <TError = AxiosError<Register422>, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<Awaited<ReturnType<typeof register>>, TError, { data: RegisterBody }, TContext>
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof register>>,
+    TError,
+    { data: RegisterBody },
+    TContext
+  >
   axios?: AxiosRequestConfig
 }) => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
-  const mutationFn: MutationFunction<Awaited<ReturnType<typeof register>>, { data: RegisterBody }> = (props) => {
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof register>>,
+    { data: RegisterBody }
+  > = (props) => {
     const { data } = props ?? {}
 
     return register(data, axiosOptions)
   }
 
-  return useMutation<Awaited<ReturnType<typeof register>>, TError, { data: RegisterBody }, TContext>(mutationFn, mutationOptions)
+  return useMutation<
+    Awaited<ReturnType<typeof register>>,
+    TError,
+    { data: RegisterBody },
+    TContext
+  >(mutationFn, mutationOptions)
 }
 
 /**
  * Авторизация
  * @summary Авторизация
  */
-export const login = (loginBody: LoginBody, options?: AxiosRequestConfig): Promise<AxiosResponse<Login200>> => {
+export const login = (
+  loginBody: LoginBody,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Login200>> => {
   return axios.post(`/login`, loginBody, options)
 }
 
@@ -740,18 +1197,28 @@ export type LoginMutationBody = LoginBody
 export type LoginMutationError = AxiosError<Login422>
 
 export const useLogin = <TError = AxiosError<Login422>, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<Awaited<ReturnType<typeof login>>, TError, { data: LoginBody }, TContext>
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof login>>,
+    TError,
+    { data: LoginBody },
+    TContext
+  >
   axios?: AxiosRequestConfig
 }) => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
-  const mutationFn: MutationFunction<Awaited<ReturnType<typeof login>>, { data: LoginBody }> = (props) => {
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof login>>, { data: LoginBody }> = (
+    props
+  ) => {
     const { data } = props ?? {}
 
     return login(data, axiosOptions)
   }
 
-  return useMutation<Awaited<ReturnType<typeof login>>, TError, { data: LoginBody }, TContext>(mutationFn, mutationOptions)
+  return useMutation<Awaited<ReturnType<typeof login>>, TError, { data: LoginBody }, TContext>(
+    mutationFn,
+    mutationOptions
+  )
 }
 
 /**
@@ -767,7 +1234,10 @@ export const getLogoutQueryKey = () => [`/logout`]
 export type LogoutQueryResult = NonNullable<Awaited<ReturnType<typeof logout>>>
 export type LogoutQueryError = AxiosError<unknown>
 
-export const useLogout = <TData = Awaited<ReturnType<typeof logout>>, TError = AxiosError<unknown>>(options?: {
+export const useLogout = <
+  TData = Awaited<ReturnType<typeof logout>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof logout>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -775,9 +1245,14 @@ export const useLogout = <TData = Awaited<ReturnType<typeof logout>>, TError = A
 
   const queryKey = queryOptions?.queryKey ?? getLogoutQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof logout>>> = ({ signal }) => logout({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof logout>>> = ({ signal }) =>
+    logout({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof logout>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof logout>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -797,7 +1272,10 @@ export const getReadFactorieQueryKey = () => [`/readFactorie`]
 export type ReadFactorieQueryResult = NonNullable<Awaited<ReturnType<typeof readFactorie>>>
 export type ReadFactorieQueryError = AxiosError<unknown>
 
-export const useReadFactorie = <TData = Awaited<ReturnType<typeof readFactorie>>, TError = AxiosError<unknown>>(options?: {
+export const useReadFactorie = <
+  TData = Awaited<ReturnType<typeof readFactorie>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof readFactorie>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -805,9 +1283,14 @@ export const useReadFactorie = <TData = Awaited<ReturnType<typeof readFactorie>>
 
   const queryKey = queryOptions?.queryKey ?? getReadFactorieQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof readFactorie>>> = ({ signal }) => readFactorie({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readFactorie>>> = ({ signal }) =>
+    readFactorie({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof readFactorie>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof readFactorie>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -818,16 +1301,23 @@ export const useReadFactorie = <TData = Awaited<ReturnType<typeof readFactorie>>
  * Получение списка должностей
  * @summary Получение списка должностей
  */
-export const readUsersPositions = (options?: AxiosRequestConfig): Promise<AxiosResponse<UserPosition>> => {
+export const readUsersPositions = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<UserPosition>> => {
   return axios.get(`/readUsersPositions`, options)
 }
 
 export const getReadUsersPositionsQueryKey = () => [`/readUsersPositions`]
 
-export type ReadUsersPositionsQueryResult = NonNullable<Awaited<ReturnType<typeof readUsersPositions>>>
+export type ReadUsersPositionsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof readUsersPositions>>
+>
 export type ReadUsersPositionsQueryError = AxiosError<unknown>
 
-export const useReadUsersPositions = <TData = Awaited<ReturnType<typeof readUsersPositions>>, TError = AxiosError<unknown>>(options?: {
+export const useReadUsersPositions = <
+  TData = Awaited<ReturnType<typeof readUsersPositions>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof readUsersPositions>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -835,9 +1325,14 @@ export const useReadUsersPositions = <TData = Awaited<ReturnType<typeof readUser
 
   const queryKey = queryOptions?.queryKey ?? getReadUsersPositionsQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof readUsersPositions>>> = ({ signal }) => readUsersPositions({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readUsersPositions>>> = ({ signal }) =>
+    readUsersPositions({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof readUsersPositions>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof readUsersPositions>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -857,7 +1352,10 @@ export const getReadUsersQueryKey = () => [`/readEmployees`]
 export type ReadUsersQueryResult = NonNullable<Awaited<ReturnType<typeof readUsers>>>
 export type ReadUsersQueryError = AxiosError<unknown>
 
-export const useReadUsers = <TData = Awaited<ReturnType<typeof readUsers>>, TError = AxiosError<unknown>>(options?: {
+export const useReadUsers = <
+  TData = Awaited<ReturnType<typeof readUsers>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof readUsers>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -865,9 +1363,14 @@ export const useReadUsers = <TData = Awaited<ReturnType<typeof readUsers>>, TErr
 
   const queryKey = queryOptions?.queryKey ?? getReadUsersQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof readUsers>>> = ({ signal }) => readUsers({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readUsers>>> = ({ signal }) =>
+    readUsers({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof readUsers>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof readUsers>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 
@@ -878,7 +1381,9 @@ export const useReadUsers = <TData = Awaited<ReturnType<typeof readUsers>>, TErr
  * Получение списка рабочих мест
  * @summary Получение списка рабочих мест
  */
-export const readWorkCenters = (options?: AxiosRequestConfig): Promise<AxiosResponse<Workcenter>> => {
+export const readWorkCenters = (
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<Workcenter>> => {
   return axios.get(`/readWorkCenters`, options)
 }
 
@@ -887,7 +1392,10 @@ export const getReadWorkCentersQueryKey = () => [`/readWorkCenters`]
 export type ReadWorkCentersQueryResult = NonNullable<Awaited<ReturnType<typeof readWorkCenters>>>
 export type ReadWorkCentersQueryError = AxiosError<unknown>
 
-export const useReadWorkCenters = <TData = Awaited<ReturnType<typeof readWorkCenters>>, TError = AxiosError<unknown>>(options?: {
+export const useReadWorkCenters = <
+  TData = Awaited<ReturnType<typeof readWorkCenters>>,
+  TError = AxiosError<unknown>
+>(options?: {
   query?: UseQueryOptions<Awaited<ReturnType<typeof readWorkCenters>>, TError, TData>
   axios?: AxiosRequestConfig
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
@@ -895,9 +1403,14 @@ export const useReadWorkCenters = <TData = Awaited<ReturnType<typeof readWorkCen
 
   const queryKey = queryOptions?.queryKey ?? getReadWorkCentersQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof readWorkCenters>>> = ({ signal }) => readWorkCenters({ signal, ...axiosOptions })
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof readWorkCenters>>> = ({ signal }) =>
+    readWorkCenters({ signal, ...axiosOptions })
 
-  const query = useQuery<Awaited<ReturnType<typeof readWorkCenters>>, TError, TData>(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+  const query = useQuery<Awaited<ReturnType<typeof readWorkCenters>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey
 

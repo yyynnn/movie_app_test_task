@@ -13,7 +13,8 @@ interface Props extends TFlexProps {
 }
 
 export const StatusBulb: RFCC<Props> = ({ statusId = 666, ...rest }) => {
-  const statusColor = statusId === 1 ? '#ffb300' : statusId === 2 ? '#0055ff' : statusId === 3 ? '#3bff48' : 'gray'
+  const statusColor =
+    statusId === 1 ? '#ffb300' : statusId === 2 ? '#0055ff' : statusId === 3 ? '#3bff48' : 'gray'
   const status = Object.keys(TicketStatusEnum)[statusId + 2]
 
   return (

@@ -12,5 +12,13 @@ export const TicketReadOnly = () => {
 
   const { data: ticket } = data || {}
 
-  return <div>{ticket ? <TicketConstructor readOnly initialData={ticket} hasCorrectiveActions /> : <CircularProgress />}</div>
+  return (
+    <div>
+      {ticket ? (
+        <TicketConstructor readOnly initialData={ticket} hasCorrectiveActions />
+      ) : (
+        <CircularProgress />
+      )}
+    </div>
+  )
 }

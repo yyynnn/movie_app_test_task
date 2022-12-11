@@ -19,9 +19,12 @@ export type GetPaginatedTicketListParams = {
   'filter[tickets.workcenter_id]'?: number
   'filter[tickets.correction]'?: string
   'filter[tickets.damaged_item]'?: string
-  'filter[tickets.created_at]'?: string
-  'filter[tickets.updated_at]'?: string
-  'filter[tickets.date_time_created]'?: string
+  'filter[tickets.created_at_after]'?: string
+  'filter[tickets.created_at_before]'?: string
+  'filter[tickets.created_at_between]'?: string
+  'filter[tickets.updated_at_after]'?: string
+  'filter[tickets.updated_at_before]'?: string
+  'filter[tickets.updated_at_between]'?: string
   'filter[tickets.date_time_created_after]'?: string
   'filter[tickets.date_time_created_before]'?: string
   'filter[tickets.date_time_created_between]'?: string

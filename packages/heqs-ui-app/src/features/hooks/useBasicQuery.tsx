@@ -11,7 +11,13 @@ interface IProps {
   [x: string]: any
 }
 
-export const useBasicQuery = <T,>({ apiPath, params = {}, options = {}, enabled, ...rest }: IProps): UseQueryResult<T, unknown> => {
+export const useBasicQuery = <T,>({
+  apiPath,
+  params = {},
+  options = {},
+  enabled,
+  ...rest
+}: IProps): UseQueryResult<T, unknown> => {
   const { token } = useAuth()
   const { data: queryDataResp, ...queryRest } = useQuery(
     [apiPath],
