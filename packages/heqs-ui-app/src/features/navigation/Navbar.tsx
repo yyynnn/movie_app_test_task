@@ -2,7 +2,6 @@
 import styled from '@emotion/styled'
 import CloseRounded from '@mui/icons-material/CloseRounded'
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded'
-import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
 import {
@@ -86,7 +85,7 @@ export const Navbar = () => {
 
   // some data
   const factory: any = factories?.find((factory) => factory.id === auth?.user?.factory_id)
-  const totalCorretciveActions = corretciveActionsData?.total
+  const totalCorretciveActions = corretciveActionsData?.meta.total
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   return (

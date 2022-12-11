@@ -19,11 +19,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
 import { RFCC } from '../../types/react'
-import { CogentQuery } from '../../utils/cogent'
 import { Flex, Spacer } from '../primitives'
 import { Max } from '../primitives/Max'
-
-const query = new CogentQuery()
 
 const createCols = (
   object: any
