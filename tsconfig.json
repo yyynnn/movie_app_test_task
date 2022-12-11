@@ -16,10 +16,16 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "typeRoots": ["./types/**/*", "./node_modules/@types/**/*"],
     "baseUrl": "./",
     "paths": {
       "react": ["node_modules/@types/react"]
     }
   },
-  "include": ["packages/heqs-ui-old-app/**/*.ts", "packages/heqs-ui-old-app/**/*.tsx", "packages/heqs-ui-app/**/*.ts", "packages/heqs-ui-app/**/*.tsx"]
+  "include": [
+    "packages/heqs-ui-old-app/**/*.ts",
+    "packages/heqs-ui-old-app/**/*.tsx",
+    "packages/heqs-ui-app/**/*.ts",
+    "packages/heqs-ui-app/**/*.tsx"
+  ]
 }

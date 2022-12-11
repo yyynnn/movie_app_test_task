@@ -12,6 +12,7 @@
       "packages/*"
     ]
   },
+  "types": "./types/index.d.ts",
   "scripts": {
     "dev": "yarn workspace @heqs-ui/heqs-ui-app start",
     "build": "yarn workspace @heqs-ui/heqs-ui-app build",

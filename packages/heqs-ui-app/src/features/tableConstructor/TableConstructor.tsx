@@ -16,12 +16,14 @@ import {
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Scrollbar } from 'react-scrollbars-custom'
 
 import { ROUTES } from '../../consts/routes'
 import { RFCC } from '../../types/react'
+import { CogentQuery } from '../../utils/cogent'
 import { Flex, Spacer } from '../primitives'
 import { Max } from '../primitives/Max'
+
+const query = new CogentQuery()
 
 const createCols = (
   object: any
@@ -52,15 +54,29 @@ const createCols = (
 export const TableConstructor: RFCC<{
   data: any
   isLoading?: boolean
+  filters?: any
+  setFilters?: any
   page: number
   pageSize: number
   setPageSize: any
   setPage: any
   rowId?: string
-}> = ({ data, isLoading, page, pageSize, setPageSize, rowId = 'id', setPage }) => {
+}> = ({
+  data,
+  isLoading,
+  page,
+  pageSize,
+  setPageSize,
+  rowId = 'id',
+  setPage,
+  filters,
+  setFilters,
+  ...rest
+}) => {
   const navigate = useNavigate()
   const [searchAttrib, setSearchAttrib] = useState('')
   const [searchString, setSearchString] = useState('')
+  const [cols, setCols] = useState<any>([])
   const [count, setCount] = useState(10)
 
   useEffect(() => {
@@ -69,17 +85,27 @@ export const TableConstructor: RFCC<{
     }
   }, [data?.last_page])
 
-  const cols = createCols(data?.data[0])
+  useEffect(() => {
+    if (data?.data[0]) {
+      setCols(createCols(data?.data[0]))
+    }
+  }, [data?.data[0]])
 
   return (
     <div>
-      <Max maxWidth={600}>
+      <StyledMax maxWidth={600}>
         <TextField
           variant="outlined"
           fullWidth
           label="Search query"
           value={searchString}
-          onChange={(e) => setSearchString(e.target.value)}
+          onChange={(e) => {
+            setFilters({
+              filter: searchAttrib,
+              string: e.target.value
+            })
+            return setSearchString(e.target.value)
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -97,7 +123,13 @@ export const TableConstructor: RFCC<{
             value={searchAttrib}
             displayEmpty
             label="Col attribute"
-            onChange={(e) => setSearchAttrib(e.target.value)}
+            onChange={(e) => {
+              setFilters({
+                filter: e.target.value,
+                string: searchString
+              })
+              return setSearchAttrib(e.target.value)
+            }}
           >
             {[...cols, { field: 'any', selected: false, headerName: 'Any' }].map((col, idx) => {
               return (
@@ -108,7 +140,7 @@ export const TableConstructor: RFCC<{
             })}
           </Select>
         </FormControl>
-      </Max>
+      </StyledMax>
 
       <Spacer />
 
@@ -142,6 +174,10 @@ export const TableConstructor: RFCC<{
     </div>
   )
 }
+
+const StyledMax = styled(Max)`
+  padding-top: 10px;
+`
 
 const Wrapper = styled(Flex)`
   height: 666px;
