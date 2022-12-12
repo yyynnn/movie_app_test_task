@@ -15,6 +15,7 @@ export const Text3dAnimation: RFCC<{
   noLights?: boolean
   wobble?: boolean
   dist?: boolean
+  scale?: boolean
   maxZ?: number
   shiftWidth?: true
 }> = ({
@@ -26,10 +27,10 @@ export const Text3dAnimation: RFCC<{
   noLights = false,
   wobble = false,
   dist = false,
+  scale = false,
   shiftWidth
 }) => {
   const textRef = useRef(null)
-  console.log('🐸 Pepe said => textRef', textRef)
 
   useFrame(({ clock }) => {
     const time = +clock.elapsedTime.toFixed(2)
@@ -40,8 +41,10 @@ export const Text3dAnimation: RFCC<{
     if (textRef.current && shiftWidth) {
       textRef.current.scale.z = -100 * movement
       textRef.current.position.z = 1
-      textRef.current.scale.x = 1
-      textRef.current.scale.y = 1
+    }
+    if (textRef.current && scale) {
+      textRef.current.scale.x = 1 + 1 * movement
+      textRef.current.scale.y = 1 + 1 * movement
     }
   })
 
