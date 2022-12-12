@@ -7,6 +7,8 @@ import { Scene } from './Scene'
 
 const IS_SERVER = typeof window === 'undefined'
 
+let opacityTransition = 0
+
 export const Text3dAnimation: RFCC<{
   text?: string
   color?: string
@@ -31,6 +33,7 @@ export const Text3dAnimation: RFCC<{
   shiftWidth
 }) => {
   const textRef = useRef(null)
+  const matRef = useRef(null)
 
   useFrame(({ clock }) => {
     const time = +clock.elapsedTime.toFixed(2)
@@ -45,6 +48,10 @@ export const Text3dAnimation: RFCC<{
     if (textRef.current && scale) {
       textRef.current.scale.x = 1 + 1 * movement
       textRef.current.scale.y = 1 + 1 * movement
+    }
+    if (matRef.current && opacityTransition <= 1) {
+      opacityTransition = opacityTransition + time * 0.003
+      matRef.current.opacity = opacityTransition
     }
   })
 
@@ -63,13 +70,16 @@ export const Text3dAnimation: RFCC<{
 
       {wobble ? (
         <MeshWobbleMaterial
+          ref={matRef}
           color={color || 'white'}
           emissive={noLights ? color : null}
           speed={1}
           factor={0.2}
+          transparent
         />
       ) : (
         <meshStandardMaterial
+          ref={matRef}
           attach="material"
           color={color || 'white'}
           emissive={noLights ? color : null}

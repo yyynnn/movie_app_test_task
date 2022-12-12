@@ -9,6 +9,9 @@ import { Mouse3D } from '../../../utils/Mouse3D'
 import { Scene } from '../../common/Scene'
 import { Text3dAnimation } from '../../common/Text3dAnimation'
 
+let intensityTransition1 = 0
+let intensityTransition2 = 0
+
 const MouseLight = () => {
   const meshRef = useRef<THREE.Mesh>(null)
 
@@ -135,9 +138,6 @@ const InnerScene: any = () => {
     const target = { x: 0, y: 0, z: 0 }
     const camera_speed = 0.1
 
-    let intensityTransition1 = 0
-    let intensityTransition2 = 0
-
     const goX = oscillator({
       time,
       frequency: camera_speed,
@@ -160,7 +160,7 @@ const InnerScene: any = () => {
       // lightRect1Ref.current.position.z = target.z + goZ
 
       if (intensityTransition1 < 1) {
-        intensityTransition1 = intensityTransition1 + time * 0.1
+        intensityTransition1 = intensityTransition1 + time * 0.001
         lightRect1Ref.current.intensity = intensityTransition1
       }
     }
@@ -170,8 +170,8 @@ const InnerScene: any = () => {
       // lightRect2Ref.current.position.z = target.z + goZ
 
       if (intensityTransition2 < 1) {
-        intensityTransition2 = intensityTransition2 + time * 0.1
-        lightRect1Ref.current.intensity = intensityTransition2
+        intensityTransition2 = intensityTransition2 + time * 0.007
+        lightRect2Ref.current.intensity = intensityTransition2
       }
     }
   })
