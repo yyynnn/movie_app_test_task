@@ -159,7 +159,7 @@ const InnerScene: any = () => {
       // lightRect1Ref.current.position.x = target.x + goX
       // lightRect1Ref.current.position.z = target.z + goZ
 
-      if (intensityTransition1 < 1.5) {
+      if (intensityTransition1 < 1) {
         intensityTransition1 = intensityTransition1 + time * 0.1
         lightRect1Ref.current.intensity = intensityTransition1
       }
@@ -169,7 +169,7 @@ const InnerScene: any = () => {
       // lightRect2Ref.current.position.x = target.x + goX
       // lightRect2Ref.current.position.z = target.z + goZ
 
-      if (intensityTransition2 < 1.5) {
+      if (intensityTransition2 < 1) {
         intensityTransition2 = intensityTransition2 + time * 0.1
         lightRect1Ref.current.intensity = intensityTransition2
       }
