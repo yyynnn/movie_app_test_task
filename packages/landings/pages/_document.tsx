@@ -1,13 +1,19 @@
-import Document, { Head, Main, NextScript } from 'next/document'
-import { Html } from 'next/document'
-import Script from 'next/script'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
-const attrs = {
-  xmlns: 'http://www.w3.org/1999/xhtml',
-  'xmlns:fb': 'http://ogp.me/ns/fb#'
-}
 export default class MyDocument extends Document {
+  render() {
+    return (
+      <Html lang="en">
+        <Head />
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
+  }
+
   static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet()
     const originalRenderPage = ctx.renderPage
@@ -31,16 +37,5 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal()
     }
-  }
-
-  render() {
-    return (
-      <Html lang="ru" prefix="og: http://ogp.me/ns#" {...attrs}>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    )
   }
 }

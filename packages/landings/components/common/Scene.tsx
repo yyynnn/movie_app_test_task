@@ -1,4 +1,4 @@
-import { Preload } from '@react-three/drei'
+import { OrbitControls, Preload } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import styled from 'styled-components'
 
@@ -21,6 +21,7 @@ export function Scene({ children, ...props }) {
         <InnerScene>
           {children}
           <Preload all />
+          <OrbitControls />
         </InnerScene>
       </Canvas>
     </Wrapper>
@@ -32,7 +33,7 @@ const InnerScene: any = ({ children }) => {
     const time = +clock.elapsedTime.toFixed(2)
     const target = { x: 0, y: 0, z: 0 }
     const camera_offset = { x: 1, y: 0.05, z: 1 }
-    const camera_speed = 0.05
+    const camera_speed = 0.03
 
     const goX = oscillator({
       time,
@@ -51,10 +52,10 @@ const InnerScene: any = ({ children }) => {
       funcType: 'cos'
     })
 
-    camera.position.x = target.x + goX
-    camera.position.z = target.z + goZ
-    camera.position.y = target.y + camera_offset.y
-    camera.lookAt(target.x, target.y, target.z)
+    // camera.position.x = target.x + goX
+    // camera.position.z = target.z + goZ
+    // camera.position.y = target.y + camera_offset.y
+    // camera.lookAt(target.x, target.y, target.z)
   })
   return children
 }

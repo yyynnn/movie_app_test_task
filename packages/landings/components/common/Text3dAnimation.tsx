@@ -1,13 +1,4 @@
-import {
-  Center,
-  Decal,
-  MeshDistortMaterial,
-  MeshWobbleMaterial,
-  OrbitControls,
-  Text3D,
-  useGLTF,
-  useTexture
-} from '@react-three/drei'
+import { Center, Decal, MeshDistortMaterial, MeshWobbleMaterial, Text3D } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import React, { useRef, useState } from 'react'
 
@@ -24,28 +15,33 @@ export const Text3dAnimation: RFCC<{
   noLights?: boolean
   wobble?: boolean
   dist?: boolean
+  maxZ?: number
   shiftWidth?: true
 }> = ({
   text,
   color,
   position,
   width,
+  maxZ = 1,
   noLights = false,
   wobble = false,
   dist = false,
   shiftWidth
 }) => {
   const textRef = useRef(null)
+  console.log('🐸 Pepe said => textRef', textRef)
 
-  useFrame(({ clock, camera }) => {
+  useFrame(({ clock }) => {
     const time = +clock.elapsedTime.toFixed(2)
-    const speed = 1
+    const speed = 0.1
 
-    const movement = Math.sin(time * speed) * 0.1
+    const movement = Math.abs(Math.sin(time * speed)) * 0.1
 
     if (textRef.current && shiftWidth) {
-      textRef.current.position.z = (textRef.current.position.z + 1) * movement
-      // textRef.current.scale.z = textRef.current.scale.z * movement
+      textRef.current.scale.z = -100 * movement
+      textRef.current.position.z = 1
+      textRef.current.scale.x = 1
+      textRef.current.scale.y = 1
     }
   })
 
@@ -68,14 +64,6 @@ export const Text3dAnimation: RFCC<{
           emissive={noLights ? color : null}
           speed={1}
           factor={0.2}
-        />
-      ) : dist ? (
-        <MeshDistortMaterial
-          color={color || 'white'}
-          emissive={noLights ? color : null}
-          speed={1}
-          distort={0.3}
-          radius={1}
         />
       ) : (
         <meshStandardMaterial

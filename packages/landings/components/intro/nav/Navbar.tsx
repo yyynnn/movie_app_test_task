@@ -86,10 +86,10 @@ export const Navbar = () => {
             <Col xs={12} md={12} lg={6}>
               <Visibility visibleAt={['lg', 'xl', 'xxl']}>
                 <Flex justifyContent="center" alignItems="center">
-                  <button>What is HEQS?</button>
-                  <button>Mission and vision</button>
-                  <button>Features</button>
-                  <button>Pricing</button>
+                  <NavblockButton>What is HEQS?</NavblockButton>
+                  <NavblockButton>Mission and vision</NavblockButton>
+                  <NavblockButton>Features</NavblockButton>
+                  <NavblockButton>Pricing</NavblockButton>
                 </Flex>
               </Visibility>
             </Col>
@@ -149,7 +149,15 @@ export const Navbar = () => {
   )
 }
 
-const Navblock = styled(Flex)``
+const NavblockButton = styled.button`
+  font-size: 20px;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.7;
+  }
+`
 
 const LogoWrapper = styled(Flex)``
 
