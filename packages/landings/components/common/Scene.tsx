@@ -1,6 +1,7 @@
 import { OrbitControls, Preload } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import styled from 'styled-components'
+import { MathUtils } from 'three'
 
 import { oscillator } from '../../utils'
 
@@ -33,6 +34,9 @@ const InnerScene: any = ({ children }) => {
     const target = { x: 0, y: 0, z: 0 }
     const camera_offset = { x: 1, y: 0.05, z: 1 }
     const camera_speed = 0.05
+    const zoomMult = window.innerWidth / 1280
+    camera.zoom = MathUtils.lerp(camera.zoom, zoomMult * 80, 0.1)
+    camera.updateProjectionMatrix()
 
     const goX = oscillator({
       time,

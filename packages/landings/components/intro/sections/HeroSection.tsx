@@ -25,7 +25,7 @@ const MouseLight = () => {
     const time = +clock.elapsedTime.toFixed(2)
     const speed = 1
 
-    const movement = Math.cos(time * speed) * 0.1
+    const movement = Math.cos(time * speed) * 0.2
 
     const angle = 360 * movement
 
@@ -39,7 +39,7 @@ const MouseLight = () => {
       <mesh ref={meshRef}>
         <meshBasicMaterial />
         <pointLight
-          position={[-0.5, 0, 0]}
+          position={[-3.5, 0, 0]}
           intensity={0.5}
           distance={10}
           castShadow
@@ -48,7 +48,7 @@ const MouseLight = () => {
           color="#ff0000"
         />
         <pointLight
-          position={[0.5, 0, 0]}
+          position={[3.5, 0, 0]}
           intensity={0.5}
           distance={10}
           castShadow
@@ -135,6 +135,9 @@ const InnerScene: any = () => {
     const target = { x: 0, y: 0, z: 0 }
     const camera_speed = 0.1
 
+    let intensityTransition1 = 0
+    let intensityTransition2 = 0
+
     const goX = oscillator({
       time,
       frequency: camera_speed,
@@ -153,13 +156,23 @@ const InnerScene: any = () => {
     })
 
     if (lightRect1Ref.current) {
-      lightRect1Ref.current.position.x = target.x + goX
-      lightRect1Ref.current.position.z = target.z + goZ
+      // lightRect1Ref.current.position.x = target.x + goX
+      // lightRect1Ref.current.position.z = target.z + goZ
+
+      if (intensityTransition1 < 1.5) {
+        intensityTransition1 = intensityTransition1 + time * 0.1
+        lightRect1Ref.current.intensity = intensityTransition1
+      }
     }
 
     if (lightRect2Ref.current) {
-      lightRect2Ref.current.position.x = target.x + goX
-      lightRect2Ref.current.position.z = target.z + goZ
+      // lightRect2Ref.current.position.x = target.x + goX
+      // lightRect2Ref.current.position.z = target.z + goZ
+
+      if (intensityTransition2 < 1.5) {
+        intensityTransition2 = intensityTransition2 + time * 0.1
+        lightRect1Ref.current.intensity = intensityTransition2
+      }
     }
   })
 
@@ -187,7 +200,7 @@ const InnerScene: any = () => {
         <Text3dAnimation text="your business" position={[1.3, -1, 0]} />
       </group>
 
-      <group position={[-3, 0, 1.1]} name="thin_text_group">
+      <group position={[-3, 0, 1]} name="thin_text_group">
         <Text3dAnimation
           text="Build the"
           color="#fff"
@@ -241,27 +254,33 @@ const InnerScene: any = () => {
 
       <group>
         <rectAreaLight
+          ref={lightRect1Ref}
           visible
           rotation={[0, (Math.PI / 180) * 180, 0]}
           position={[-10, 0, 0]}
-          intensity={2}
           color="#ff0044"
         />
       </group>
 
       <group>
         <rectAreaLight
+          ref={lightRect2Ref}
           visible={true}
           rotation={[0, (Math.PI / 180) * 180, 0]}
           position={[10, 0, 0]}
-          intensity={2}
           color="#1e00ff"
         />
       </group>
 
       <group position={[0, -3, 25]} rotation={[(Math.PI / 180) * 2, 0, 0]}>
-        <Box args={[50, 0.1, 50]}>
+        <Box args={[500, 0.1, 50]}>
           <meshStandardMaterial roughness={0.1} metalness={0} color="white" />
+        </Box>
+      </group>
+
+      <group position={[0, -255, 0]} rotation={[(Math.PI / 180) * 2, 0, 0]}>
+        <Box args={[500, 500, 50]}>
+          <meshBasicMaterial color="black" />
         </Box>
       </group>
 
