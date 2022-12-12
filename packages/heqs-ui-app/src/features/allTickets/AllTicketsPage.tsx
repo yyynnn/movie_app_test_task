@@ -30,7 +30,6 @@ export const AllTicketsPage = () => {
         return `${field.sort === 'asc' ? '' : '-'}${field.field}`
       })
     : []
-  console.log('🐸 Pepe said => AllTicketsPage => currentSorting', currentSorting)
 
   const {
     data: ticketsData,

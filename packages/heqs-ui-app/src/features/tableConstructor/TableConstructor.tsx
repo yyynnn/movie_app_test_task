@@ -14,16 +14,19 @@ import {
   Typography
 } from '@mui/material'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { number } from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
 import { RFCC } from '../../types/react'
+import { useDictionaries } from '../dictionaries/DictionariesProvider'
 import { Flex, Spacer } from '../primitives'
 import { Max } from '../primitives/Max'
 
 const createCols = (
-  object: any
+  object: any,
+  dictionaries: any
 ):
   | {
       field: string
@@ -37,12 +40,43 @@ const createCols = (
   const result = !object
     ? []
     : Object.keys(object).map((key) => {
+        const letterWidth = 10
+        const value = object[key]
+        const valueWidth = value?.length ? value?.length * letterWidth : 1
+        const minWidth = valueWidth < key.length * letterWidth ? key.length * 10 : valueWidth
+
+        const dictionaryName =
+          Object.keys(dictionaries)?.find((d) => {
+            return key.includes(d)
+          }) || ''
+        const dictionary = dictionaries[dictionaryName]
+
+        let translatedName = ''
+
+        if (typeof value === 'number' && !!dictionary?.[value]) {
+          const translatedObj = dictionary?.[value]
+          console.log('🐸 Pepe said => :Object.keys => translatedObj', translatedObj)
+          const translatedKey = Object.keys(translatedObj)[1]
+          console.log('🐸 Pepe said => :Object.keys => translatedKey', translatedKey)
+          translatedName = translatedObj[translatedKey]
+          // console.log('🐸 Pepe said => :Object.keys => dictionary?.[value]', dictionary?.[value])
+          // console.log('🐸 Pepe said => :Object.keys => translatedObj', translatedObj)
+        }
+
+        // const translatedKey =
+        //   typeof translatedObj === 'object' && translatedObj !== null
+        //     ? Object.keys(translatedObj)[1]
+        //     : ''
+        // const translatedValue = translatedObj[translatedKey]
+        // console.log('🐸 Pepe said => :Object.keys => translatedValue', translatedValue)
+        console.log('🐸 Pepe said => :Object.keys => translatedName', translatedName)
+
         return {
           field: key,
           headerName: capitalize(key.replaceAll('_', ' ')),
           editable: true,
           selected: true,
-          minWidth: 140
+          minWidth: minWidth
         }
       })
   return result
@@ -75,6 +109,7 @@ export const TableConstructor: RFCC<{
   ...rest
 }) => {
   const navigate = useNavigate()
+  const dictionaries = useDictionaries()
   const [searchAttrib, setSearchAttrib] = useState('')
   const [searchString, setSearchString] = useState('')
   const [cols, setCols] = useState<any>([])
@@ -87,10 +122,10 @@ export const TableConstructor: RFCC<{
   }, [data?.meta.last_page])
 
   useEffect(() => {
-    if (data?.data[0]) {
-      setCols(createCols(data?.data[0]))
+    if (data?.data[0] && dictionaries.factories) {
+      setCols(createCols(data?.data[0], dictionaries))
     }
-  }, [data?.data[0]])
+  }, [data?.data[0], dictionaries.factories])
 
   return (
     <div>
@@ -161,8 +196,6 @@ export const TableConstructor: RFCC<{
           scrollbarSize={1}
           sortModel={sorting}
           onSortModelChange={(newSortModel) => {
-            console.log('🐸 Pepe said => newSortModel', newSortModel)
-
             return setSorting(newSortModel)
           }}
         />
