@@ -8,7 +8,7 @@ interface IProps {
   space?: number
   mobSpace?: number
   width?: number
-  isMobile?: number
+  isMobile?: boolean
 }
 
 export const Spacer: React.FC<IProps> = ({

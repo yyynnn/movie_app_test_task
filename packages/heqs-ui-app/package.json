@@ -11,6 +11,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@mui/x-date-pickers-pro": "5.0.10",
     "@mui/x-data-grid-generator": "5.17.13",
     "@mui/x-data-grid-premium": "5.17.13",
     "@mui/x-data-grid": "5.17.13",

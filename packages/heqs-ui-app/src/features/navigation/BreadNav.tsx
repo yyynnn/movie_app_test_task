@@ -24,13 +24,14 @@ export const BreadNav = () => {
 
   return (
     <Wrapper>
+      <Spacer space={10} mobSpace={20} isMobile />
       <Breadcrumbs aria-label="breadcrumb">
         <Link color="inherit" to={ROUTES.HOME}>
           Home
         </Link>
         <Typography color="text.primary">{heading}</Typography>
       </Breadcrumbs>
-      <Spacer space={50} />
+      <Spacer space={30} mobSpace={10} isMobile />
     </Wrapper>
   )
 }

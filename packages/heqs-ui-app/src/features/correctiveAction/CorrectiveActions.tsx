@@ -20,7 +20,6 @@ export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean; ticketId
   const { control, register, getValues, formState, trigger, watch } = useForm()
   const { data } = useReadCorrectiveActionsByTicketId(ticketId)
   const { data: ca } = data || {}
-  console.log('🐸 Pepe said => ca', ca)
 
   const errors = formState.errors
   const isEditMode = readOnly

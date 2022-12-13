@@ -11,16 +11,12 @@ const someRequest = async () => {
   await axios
     .get('https://heqs-services-dev.onrender.com/api/tickets/')
     .then((response) => {
-      console.log('🐸 Pepe said => .then => response', response)
-      console.log('🐸 Pepe said => count', count)
       setTimeout(() => {
         someRequest()
         count = count + 1
       }, delay)
     })
     .catch((error) => {
-      console.log('🐸 Pepe said => someRequest => error', error)
-      console.log('🐸 Pepe said => count', count)
       setTimeout(() => {
         someRequest()
         count = count + 1

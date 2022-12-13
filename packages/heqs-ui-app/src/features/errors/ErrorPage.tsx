@@ -8,7 +8,6 @@ import { AppErrorPic } from '../illustrations/AppErrorPic'
 import { Absolute, Flex, Max, Pad, Spacer } from '../primitives'
 
 export const ErrorPage = (props: any) => {
-  console.log('🐸 Pepe said => ErrorPage => props', props)
   const navigate = useNavigate()
 
   return (

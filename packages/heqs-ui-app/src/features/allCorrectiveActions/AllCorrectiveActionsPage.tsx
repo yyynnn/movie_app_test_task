@@ -13,12 +13,24 @@ export const AllCorrectiveActionsPage = () => {
     filter: '',
     string: ''
   })
+  const [sorting, setSorting] = useState<{ field: string; sort: string }[]>([
+    {
+      field: '',
+      sort: ''
+    }
+  ])
 
   const currentFilter = filters.filter
     ? {
         [`filter[ca.${filters.filter}]`]: filters.string
       }
     : {}
+
+  const currentSorting: any = sorting.length
+    ? sorting.map((field) => {
+        return `${field.sort === 'asc' ? '' : '-'}${field.field}`
+      })
+    : []
 
   const {
     data: caData,
@@ -42,6 +54,10 @@ export const AllCorrectiveActionsPage = () => {
       setPage={setPage}
       filters={filters}
       setFilters={setFilters}
+      sorting={sorting}
+      setSorting={setSorting}
+      rowId="id"
+      type="ca"
     />
   )
 }

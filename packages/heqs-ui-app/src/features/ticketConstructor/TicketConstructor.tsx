@@ -5,22 +5,19 @@ import { LoadingButton } from '@mui/lab'
 import {
   Alert,
   AlertTitle,
-  Badge,
-  Breadcrumbs,
   Button,
   Divider,
   FormControl,
   InputLabel,
   MenuItem,
-  Paper,
   Select,
   Stack,
   TextField,
   Typography
 } from '@mui/material'
-import { DateTimePicker, TimePicker } from '@mui/x-date-pickers'
+import { DateTimePicker } from '@mui/x-date-pickers'
 import imageCompression from 'browser-image-compression'
-import React, { MouseEventHandler, useRef, useState } from 'react'
+import React, { MouseEventHandler } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Col, Row } from 'react-grid-system'
 import { Controller, useForm } from 'react-hook-form'
@@ -32,11 +29,11 @@ import { ROUTES } from '../../consts/routes'
 import { Employees, Ticket, Tickets, Workcenters } from '../../types/api'
 import { RFCC } from '../../types/react'
 import { convertToBase64 } from '../../utils'
+import { CorrectiveActions } from '../correctiveAction/CorrectiveActions'
 import { useBasicMutation } from '../hooks/useBasicMutation'
 import { useBasicQuery } from '../hooks/useBasicQuery'
 import { Flex, Pad, Spacer } from '../primitives'
 import { LinearProgressBuffer } from '../primitives/LinearProgressBuffer'
-import { CorrectiveActions } from './CorrectiveActions'
 
 type TicketConstructorType = {
   heading?: string | undefined

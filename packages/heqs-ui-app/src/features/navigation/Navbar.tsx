@@ -115,7 +115,7 @@ export const Navbar = () => {
                         <Spacer width={4} />
                         <Typography>|</Typography>
                         <Spacer width={4} />
-                        <Typography>{factory?.title}</Typography>
+                        <Typography>{factory?.title || 'No location'}</Typography>
                       </Flex>
                     ) : null}
                   </Visibility>

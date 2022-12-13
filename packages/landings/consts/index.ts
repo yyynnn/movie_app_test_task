@@ -34,7 +34,6 @@ export const BREAKPOINTS: [
 export const BREAKPOINTS_NAMES = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl']
 
 export const APP_ENV = document.location.hostname.includes('dev') ? 'DEV_ENV' : 'PROD_ENV'
-console.log('🐸 Pepe said => APP_ENV', APP_ENV)
 
 export const HOST_URL = '/'
 

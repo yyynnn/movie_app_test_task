@@ -16,6 +16,12 @@ body {
   justify-content: center;
 }
 
+@media (max-width: 768px) {
+  body {
+    padding: 0 5px;
+  }
+}
+
 * {
   font-family: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif !important;
 }
@@ -48,6 +54,13 @@ a:visited {
   color: #027ffe;
 }
 
+body
+  > div.MuiDialog-root.MuiModal-root
+  > div.MuiDialog-container
+  > div
+  > div.MuiDialogContent-root
+  > div
+  > div:nth-child(1),
 .MuiDataGrid-main > div:nth-child(3) {
   display: none !important;
   visibility: hidden !important;

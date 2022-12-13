@@ -29,7 +29,6 @@ export class Mouse3D {
   }
 
   private _handleMouseMove = (e: MouseEvent) => {
-    console.log('🐸 Pepe said => Mouse3D => e', e)
     this._mouse.x = (e.pageX / window.innerWidth) * 2 - 1
     this._mouse.y = -(e.pageY / window.innerHeight) * 2 + 1
   }

@@ -16,6 +16,7 @@ interface CardProps {
   linkText?: string
   text?: string
   fillHeight?: boolean
+  onClick?: (v: any) => void
 }
 
 export const Card: RFCC<CardProps> = ({
@@ -26,12 +27,13 @@ export const Card: RFCC<CardProps> = ({
   children,
   text,
   link,
-  linkText
+  linkText,
+  onClick = () => null
 }) => {
   const navigate = useNavigate()
 
   return (
-    <OuterWrapper fillHeight={fillHeight}>
+    <OuterWrapper fillHeight={fillHeight} onClick={onClick}>
       <Wrapper
         fillHeight={fillHeight}
         flexDirection="column"

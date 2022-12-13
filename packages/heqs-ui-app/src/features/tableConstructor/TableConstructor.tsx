@@ -1,7 +1,9 @@
 import styled from '@emotion/styled'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import {
+  Button,
   capitalize,
+  Divider,
   FormControl,
   InputAdornment,
   InputLabel,
@@ -11,11 +13,14 @@ import {
   Select,
   Stack,
   TextField,
+  Tooltip,
   Typography
 } from '@mui/material'
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid'
+import { format, isValid, parse, parseISO } from 'date-fns'
 import { number } from 'prop-types'
 import React, { useEffect, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
@@ -23,64 +28,8 @@ import { RFCC } from '../../types/react'
 import { useDictionaries } from '../dictionaries/DictionariesProvider'
 import { Flex, Spacer } from '../primitives'
 import { Max } from '../primitives/Max'
-
-const createCols = (
-  object: any,
-  dictionaries: any
-):
-  | {
-      field: string
-      headerName: string
-      editable: boolean
-      selected: boolean
-      width?: number
-      minWidth?: number
-    }[]
-  | [] => {
-  const result = !object
-    ? []
-    : Object.keys(object).map((key) => {
-        const letterWidth = 10
-        const value = object[key]
-        const valueWidth = value?.length ? value?.length * letterWidth : 1
-        const minWidth = valueWidth < key.length * letterWidth ? key.length * 10 : valueWidth
-
-        const dictionaryName =
-          Object.keys(dictionaries)?.find((d) => {
-            return key.includes(d)
-          }) || ''
-        const dictionary = dictionaries[dictionaryName]
-
-        let translatedName = ''
-
-        if (typeof value === 'number' && !!dictionary?.[value]) {
-          const translatedObj = dictionary?.[value]
-          console.log('🐸 Pepe said => :Object.keys => translatedObj', translatedObj)
-          const translatedKey = Object.keys(translatedObj)[1]
-          console.log('🐸 Pepe said => :Object.keys => translatedKey', translatedKey)
-          translatedName = translatedObj[translatedKey]
-          // console.log('🐸 Pepe said => :Object.keys => dictionary?.[value]', dictionary?.[value])
-          // console.log('🐸 Pepe said => :Object.keys => translatedObj', translatedObj)
-        }
-
-        // const translatedKey =
-        //   typeof translatedObj === 'object' && translatedObj !== null
-        //     ? Object.keys(translatedObj)[1]
-        //     : ''
-        // const translatedValue = translatedObj[translatedKey]
-        // console.log('🐸 Pepe said => :Object.keys => translatedValue', translatedValue)
-        console.log('🐸 Pepe said => :Object.keys => translatedName', translatedName)
-
-        return {
-          field: key,
-          headerName: capitalize(key.replaceAll('_', ' ')),
-          editable: true,
-          selected: true,
-          minWidth: minWidth
-        }
-      })
-  return result
-}
+import { StatusBulb } from '../primitives/StatusBulb'
+import { TableFiltersTickets } from './TableFiltersTickets'
 
 export const TableConstructor: RFCC<{
   data: any
@@ -94,6 +43,8 @@ export const TableConstructor: RFCC<{
   sorting: any
   setPage: any
   rowId?: string
+  refetch?: any
+  type: 'ca' | 'tickets'
 }> = ({
   data,
   isLoading,
@@ -106,14 +57,144 @@ export const TableConstructor: RFCC<{
   setFilters,
   sorting,
   setSorting,
+  type,
+  refetch,
   ...rest
 }) => {
   const navigate = useNavigate()
   const dictionaries = useDictionaries()
-  const [searchAttrib, setSearchAttrib] = useState('')
   const [searchString, setSearchString] = useState('')
   const [cols, setCols] = useState<any>([])
   const [count, setCount] = useState(10)
+  const methods = useForm({
+    reValidateMode: 'onChange'
+  })
+  const { handleSubmit, control, formState, getValues, watch } = methods
+  const createCols = (
+    object: any
+  ):
+    | {
+        field: string
+        headerName: string
+        editable: boolean
+        resizable: boolean
+        width?: number
+        minWidth?: number
+      }[]
+    | [] => {
+    const result = !object
+      ? []
+      : Object.keys(object).map((key) => {
+          const letterWidth = 10
+          const value = object[key]
+          const valueWidth = value?.length ? value?.length * letterWidth : 1
+          const minWidth =
+            key === 'id'
+              ? 200
+              : valueWidth < key.length * letterWidth
+              ? key.length * 10
+              : valueWidth
+
+          return {
+            field: key,
+            headerName: capitalize(key.replaceAll('_', ' ')),
+            sortable: key !== 'id',
+            editable: false,
+            resizable: true,
+            minWidth: minWidth,
+            renderCell: (params: GridRenderCellParams<any>) => {
+              const isDate = isValid(parseISO(params.value))
+              const isClass = params?.field?.includes('class')
+              const isCategory = params?.field?.includes('categor')
+              const isWorkcenter = params?.field?.includes('workcenter')
+              const isStatus = params?.field?.includes('status')
+              const isRootCause = params?.field?.includes('root')
+              const isId = params?.field === 'id'
+              // console.log('🐸 Pepe said => :Object.keys => isClass', isClass)
+
+              if (isId) {
+                return (
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      navigate(ROUTES.TICKET.replace(':id', String(params.value)))
+                    }}
+                  >
+                    Open ticket #{params.value}
+                  </Button>
+                )
+              }
+
+              if (isWorkcenter) {
+                return (
+                  <Tooltip title={dictionaries.workcenters[params.value - 1].workcenter_name}>
+                    <span>{dictionaries.workcenters[params.value - 1].workcenter_name}</span>
+                  </Tooltip>
+                )
+              }
+
+              if (isRootCause) {
+                return (
+                  <Tooltip title={dictionaries.root_causes[params.value - 1].root_cause_name}>
+                    <span>{dictionaries.root_causes[params.value - 1].root_cause_name}</span>
+                  </Tooltip>
+                )
+              }
+
+              if (isStatus) {
+                return (
+                  <Tooltip title={dictionaries.ticket_status[params.value - 1].ticket_status}>
+                    {/* <span>{dictionaries.ticket_status[params.value - 1].ticket_status}</span> */}
+                    <StatusBulb statusId={params.value} />
+                  </Tooltip>
+                )
+              }
+
+              if (isCategory) {
+                return (
+                  <Tooltip title={dictionaries.ticket_categories[params.value - 1].ticket_category}>
+                    <span>{dictionaries.ticket_categories[params.value - 1].ticket_category}</span>
+                  </Tooltip>
+                )
+              }
+
+              if (isClass) {
+                return (
+                  <Tooltip title={dictionaries.ticket_class[params.value - 1].ticket_class}>
+                    <span>{dictionaries.ticket_class[params.value - 1].ticket_class}</span>
+                  </Tooltip>
+                )
+              }
+
+              if (isDate) {
+                const date = format(new Date(params.value), 'EEEE dd MMMM HH:mm:ss')
+                return (
+                  <Tooltip title={date}>
+                    <span>{date}</span>
+                  </Tooltip>
+                )
+              }
+
+              return (
+                <Tooltip title={params.value}>
+                  <span>{params.value}</span>
+                </Tooltip>
+              )
+            }
+          }
+        })
+    return result
+  }
+  const formValues = getValues()
+
+  // Callback version of watch.  It's your responsibility to unsubscribe when done.
+  React.useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      refetch()
+      return console.log(value, name, type)
+    })
+    return () => subscription.unsubscribe()
+  }, [watch])
 
   useEffect(() => {
     if (data?.meta.last_page) {
@@ -122,61 +203,35 @@ export const TableConstructor: RFCC<{
   }, [data?.meta.last_page])
 
   useEffect(() => {
-    if (data?.data[0] && dictionaries.factories) {
-      setCols(createCols(data?.data[0], dictionaries))
+    if (data?.data[0]) {
+      setCols(createCols(data?.data[0]))
     }
-  }, [data?.data[0], dictionaries.factories])
+  }, [data?.data[0]])
+
+  useEffect(() => {
+    setFilters({
+      ...filters,
+      'filter[tickets.created_at_between]': formValues?.date_time_range
+        ? `${formValues?.date_time_range[0]?.toISOString()},${formValues?.date_time_range[1]?.toISOString()}`
+        : '',
+      'filter[tickets.ticket_class_id]': formValues.ticket_class_id,
+      'filter[tickets.ticket_category_id]': formValues.ticket_category_id,
+      'filter[tickets.workcenter_id]': formValues.workcenter_id,
+      'filter[tickets.correction]': formValues.correction
+    })
+  }, [JSON.stringify(formValues)])
 
   return (
-    <div>
-      <StyledMax maxWidth={600}>
-        <TextField
-          variant="outlined"
-          fullWidth
-          label="Search query"
-          value={searchString}
-          onChange={(e) => {
-            setFilters({
-              category: searchAttrib,
-              string: e.target.value
-            })
-            return setSearchString(e.target.value)
-          }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <SearchRoundedIcon />
-              </InputAdornment>
-            )
-          }}
-        />
-        <Spacer width={10} />
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Col attribute</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={searchAttrib}
-            displayEmpty
-            label="Col attribute"
-            onChange={(e) => {
-              setFilters({
-                category: e.target.value,
-                string: searchString
-              })
-              return setSearchAttrib(e.target.value)
-            }}
-          >
-            {[...cols, { field: 'any', selected: false, headerName: 'Any' }].map((col, idx) => {
-              return (
-                <MenuItem key={idx} value={col.field} selected={!!col.selected}>
-                  {col.headerName}
-                </MenuItem>
-              )
-            })}
-          </Select>
-        </FormControl>
-      </StyledMax>
+    <FormProvider {...methods}>
+      {/* <Typography>Fast search</Typography>
+      <Spacer space={10} />
+    */}
+      {/* <Spacer />
+      <Divider />
+      <Spacer />
+      <Typography>Detailed search</Typography> */}
+      <Spacer space={10} />
+      <form>{type === 'tickets' ? <TableFiltersTickets /> : null}</form>
 
       <Spacer />
 
@@ -185,14 +240,11 @@ export const TableConstructor: RFCC<{
           density="comfortable"
           hideFooter
           getRowId={(row) => row[rowId]}
-          onRowClick={(row) => {
-            navigate(ROUTES.TICKET.replace(':id', String(row.id)))
-          }}
-          headerHeight={70}
           rows={data?.data || []}
           columns={cols}
           loading={isLoading}
           disableVirtualization
+          disableColumnMenu
           scrollbarSize={1}
           sortModel={sorting}
           onSortModelChange={(newSortModel) => {
@@ -211,13 +263,9 @@ export const TableConstructor: RFCC<{
           />
         </Stack>
       </Wrapper>
-    </div>
+    </FormProvider>
   )
 }
-
-const StyledMax = styled(Max)`
-  padding-top: 10px;
-`
 
 const Wrapper = styled(Flex)`
   height: 666px;
