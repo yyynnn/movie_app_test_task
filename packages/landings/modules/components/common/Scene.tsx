@@ -3,7 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import styled from 'styled-components'
 import { MathUtils } from 'three'
 
-import { oscillator } from '../../utils'
+import { oscillator } from '../../../utils'
 
 export function Scene({ children, ...props }) {
   // Everything defined in here will persist between route changes, only children are swapped
