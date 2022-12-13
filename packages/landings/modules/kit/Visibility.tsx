@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { BREAKPOINTS, BREAKPOINTS_NAMES } from '../consts'
+import { BREAKPOINTS, BREAKPOINTS_NAMES } from '../../consts'
 import { Flex } from './Flex'
 
 export const Visibility = ({

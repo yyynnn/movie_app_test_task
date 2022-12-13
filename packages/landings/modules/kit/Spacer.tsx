@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { BREAKPOINTS } from '../consts'
+import { BREAKPOINTS } from '../../consts'
 
 const DEFAULT_SPACE = 20
 const DEFAULT_WIDTH = 0

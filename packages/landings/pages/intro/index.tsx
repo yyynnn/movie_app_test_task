@@ -7,12 +7,12 @@ import { DefaultSeo } from 'next-seo'
 import React from 'react'
 import { setConfiguration } from 'react-grid-system'
 
-import { Navbar } from '../../components/intro/nav/Navbar'
-import { AboutSection } from '../../components/intro/sections/AboutSection'
-import { HeroSection } from '../../components/intro/sections/HeroSection'
-import { GlobalStyle } from '../../components/intro/theming/GlobalStyle'
 import { BREAKPOINTS } from '../../consts'
-import { Spacer } from '../../kit/Spacer'
+import { Navbar } from '../../modules/components/intro/nav/Navbar'
+import { AboutSection } from '../../modules/components/intro/sections/AboutSection'
+import { HeroSection } from '../../modules/components/intro/sections/HeroSection'
+import { GlobalStyle } from '../../modules/components/intro/theming/GlobalStyle'
+import { Spacer } from '../../modules/kit/Spacer'
 import { NEXT_SEO } from '../../seo/intro.seo.config'
 
 setConfiguration({

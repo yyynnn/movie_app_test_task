@@ -4,7 +4,7 @@ import { getDocument, getWindow } from 'ssr-window'
 import styled from 'styled-components'
 import Typograf from 'typograf'
 
-import { BREAKPOINTS } from '../consts'
+import { BREAKPOINTS } from '../../consts'
 
 const window = getWindow()
 const document = getDocument()

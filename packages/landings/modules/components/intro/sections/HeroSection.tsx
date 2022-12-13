@@ -4,8 +4,8 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { Matrix4, Vector3 } from 'three'
 
-import { oscillator } from '../../../utils'
-import { Mouse3D } from '../../../utils/Mouse3D'
+import { oscillator } from '../../../../utils'
+import { Mouse3D } from '../../../../utils/Mouse3D'
 import { Scene } from '../../common/Scene'
 import { Text3dAnimation } from '../../common/Text3dAnimation'
 

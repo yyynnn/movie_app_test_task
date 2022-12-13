@@ -8,7 +8,7 @@ import Drawer from 'react-modern-drawer'
 import { getDocument, getWindow } from 'ssr-window'
 import styled from 'styled-components'
 
-import { useScrollDirection } from '../../../hooks/useScroll'
+import { useScrollDirection } from '../../../../hooks/useScroll'
 import { Flex } from '../../../kit/Flex'
 import { Max } from '../../../kit/Max'
 import { Pad } from '../../../kit/Pad'
