@@ -1,11 +1,13 @@
-import { Box } from '@react-three/drei'
+import { Box, Text } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { oscillator } from '../../../utils'
 
 export const BarAnimated = ({ width = 1, value = 1, index = 0, positionX = 0, color }) => {
   const barRef = useRef(null)
+  const textRef = useRef(null)
+  const [count, setCount] = useState(Math.random())
 
   const funcType = Math.random() > 0.5 ? 'cos' : 'sin'
 
@@ -23,20 +25,23 @@ export const BarAnimated = ({ width = 1, value = 1, index = 0, positionX = 0, co
       funcType
     })
 
+    const scale = Math.abs(goY) / 10
+
     if (barRef.current) {
-      const scale = Math.abs(goY) / 10
       barRef.current.scale.y = scale
     }
+
+    if (textRef.current) {
+      textRef.current.position.y = scale * 6
+      console.log('🐸 Pepe said => useFrame => textRef.current.', textRef.current)
+    }
   })
+
   return (
-    <Box
-      ref={barRef}
-      args={[width, value * 10, width]}
-      position={[index === 0 ? 0 : positionX, 0, 0]}
-      castShadow
-      receiveShadow
-    >
-      <meshStandardMaterial roughness={0} metalness={0} color={color} />
-    </Box>
+    <group position={[index === 0 ? 0 : positionX, 0, 0]}>
+      <Box ref={barRef} args={[width, value * 10, width]} castShadow receiveShadow>
+        <meshStandardMaterial roughness={0} metalness={0} color={color} />
+      </Box>
+    </group>
   )
 }

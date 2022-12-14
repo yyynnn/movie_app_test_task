@@ -2,16 +2,13 @@ import { Box } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import React, { useEffect, useMemo, useRef } from 'react'
 import styled from 'styled-components'
-import { Matrix4, Vector3 } from 'three'
+import { MathUtils, Matrix4, Vector3 } from 'three'
 
 import { oscillator, randArrayGenerator } from '../../../../utils'
 import { Mouse3D } from '../../../../utils/Mouse3D'
 import { BarAnimated } from '../../common/BarAnimated'
 import { Scene } from '../../common/Scene'
 import { Text3dAnimation } from '../../common/Text3dAnimation'
-
-let intensityTransition1 = 0
-let intensityTransition2 = 0
 
 const chartData = randArrayGenerator(20)
 
@@ -23,7 +20,7 @@ export const ChartSection = () => {
   return (
     <Wrapper>
       <Hero>
-        <Scene orbit zoom={50}>
+        <Scene zoom={20} camPosition={[10, 100, 1000]}>
           <InnerScene />
         </Scene>
       </Hero>
@@ -34,47 +31,50 @@ export const ChartSection = () => {
 const InnerScene: any = () => {
   const lightRect1Ref = useRef(null)
   const lightRect2Ref = useRef(null)
+  const lightsRef = useRef(null)
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock, camera }) => {
     const time = +clock.elapsedTime.toFixed(2)
-    const target = { x: 0, y: 0, z: 0 }
-    const camera_speed = 0.1
+    const speed = 0.1
+    const movement = Math.cos(time * speed) * 0.07
+    const angle = 360 * movement
+    const camera_speed = 0.05
 
     const goX = oscillator({
       time,
       frequency: camera_speed,
-      amplitude: 10.39,
+      amplitude: 0.9,
       offset: 0.1,
       phase: 0.9,
-      funcType: 'sin'
+      funcType: 'cos'
     })
     const goZ = oscillator({
       time,
       frequency: camera_speed,
-      amplitude: 10.39,
-      offset: 2,
+      amplitude: 0.19,
+      offset: 1,
       phase: 0.1,
-      funcType: 'cos'
+      funcType: 'sin'
     })
+    const target = { x: 5, y: 0, z: 0 }
+    const camera_offset = { x: 10, y: 0.2, z: 10 }
 
-    if (lightRect1Ref.current) {
-      if (intensityTransition1 < 1) {
-        intensityTransition1 = intensityTransition1 + time * 0.001
-        lightRect1Ref.current.intensity = intensityTransition1
-      }
-    }
+    camera.position.x = target.x + goX
+    camera.position.z = target.z + goZ
+    camera.position.y = target.y + camera_offset.y
+    camera.lookAt(target.x, target.y, target.z)
+    const zoomMult = window.innerWidth / 1280
+    camera.zoom = MathUtils.lerp(camera.zoom, zoomMult * 40, 0.01)
+    camera.updateProjectionMatrix()
 
-    if (lightRect2Ref.current) {
-      if (intensityTransition2 < 1) {
-        intensityTransition2 = intensityTransition2 + time * 0.007
-        lightRect2Ref.current.intensity = intensityTransition2
-      }
-    }
+    // if (lightsRef.current) {
+    //   lightsRef.current.position.x = (Math.PI / 180) * angle * goX
+    // }
   })
 
   return (
     <>
-      <group position={[-chartData.length / 2, -2, 0]} name="chart">
+      <group position={[-chartData.length / 2, -2, 0]} name="chart_red">
         {chartData.map((bar, idx) => {
           const width = 1
           const padding = 0.5
@@ -87,36 +87,62 @@ const InnerScene: any = () => {
               index={idx}
               positionX={positionX}
               value={bar.value}
-              color="black"
+              color="#ff0044"
             />
           )
         })}
       </group>
 
-      <group ref={lightRect1Ref}>
-        <rectAreaLight
-          visible
-          rotation={[0, (Math.PI / 180) * 180, 0]}
-          position={[5, 0, -12]}
-          intensity={10}
-          castShadow
-          color="#ff0044"
-        />
+      <group position={[-chartData.length / 2 + 0.5, -2, 1]} name="chart_blue">
+        {chartData.map((bar, idx) => {
+          const width = 1
+          const padding = 0.5
+          const positionX = idx + padding * idx
+
+          return (
+            <BarAnimated
+              key={idx}
+              width={width}
+              index={idx}
+              positionX={positionX}
+              value={bar.value}
+              color="#0022ff"
+            />
+          )
+        })}
       </group>
 
-      <group ref={lightRect2Ref}>
+      {/* <mesh ref={lightsRef}>
+        <pointLight position={[-3.5, 0, 0]} intensity={0.5} distance={100} color="#ff0000" />
+        <pointLight position={[3.5, 0, 0]} intensity={0.5} distance={100} color="#2200ff" />
+      </mesh> */}
+
+      <group>
         <rectAreaLight
           visible
           rotation={[0, (Math.PI / 180) * 180, 0]}
-          position={[-5, 0, -12]}
+          position={[5, 0, -10]}
+          intensity={20}
+          color="#ff0044"
+        />
+        <rectAreaLight
+          visible
+          rotation={[0, (Math.PI / 180) * 180, 0]}
+          position={[-5, 0, -10]}
           intensity={20}
           color="#0022ff"
         />
       </group>
 
-      <group position={[0, -3, 25]} rotation={[(Math.PI / 180) * 2, 0, 0]}>
-        <Box args={[500, 0.1, 50]}>
-          <meshStandardMaterial roughness={0.1} metalness={0} color="white" />
+      <group position={[0, -2.1, 25]} rotation={[(Math.PI / 180) * 0, 0, 0]}>
+        <Box args={[500, 0.01, 50]}>
+          <meshStandardMaterial
+            roughness={0}
+            metalness={0}
+            color="white"
+            transparent
+            opacity={0.8}
+          />
         </Box>
       </group>
 

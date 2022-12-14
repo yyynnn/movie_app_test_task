@@ -2,7 +2,7 @@ import { Box } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import React, { useEffect, useMemo, useRef } from 'react'
 import styled from 'styled-components'
-import { Matrix4, Vector3 } from 'three'
+import { MathUtils, Matrix4, Vector3 } from 'three'
 
 import { oscillator } from '../../../../utils'
 import { Mouse3D } from '../../../../utils/Mouse3D'
@@ -13,7 +13,7 @@ let intensityTransition1 = 0
 let intensityTransition2 = 0
 
 const MouseLight = () => {
-  const meshRef = useRef<THREE.Mesh>(null)
+  const meshRef: any = useRef(null)
 
   const { camera } = useThree()
   const mouse = useMemo(() => new Mouse3D(camera), [camera])
@@ -27,10 +27,36 @@ const MouseLight = () => {
 
     const time = +clock.elapsedTime.toFixed(2)
     const speed = 1
-
     const movement = Math.cos(time * speed) * 0.07
-
     const angle = 360 * movement
+    const camera_speed = 0.05
+
+    const goX = oscillator({
+      time,
+      frequency: camera_speed,
+      amplitude: 0.39,
+      offset: 0.1,
+      phase: 0.9,
+      funcType: 'sin'
+    })
+    const goZ = oscillator({
+      time,
+      frequency: camera_speed,
+      amplitude: 0.39,
+      offset: 2,
+      phase: 0.1,
+      funcType: 'cos'
+    })
+    const target = { x: 0, y: 0, z: 0 }
+    const camera_offset = { x: 1, y: 0.05, z: 1 }
+
+    camera.position.x = target.x + goX
+    camera.position.z = target.z + goZ
+    camera.position.y = target.y + camera_offset.y
+    camera.lookAt(target.x, target.y, target.z)
+    const zoomMult = window.innerWidth / 1280
+    camera.zoom = MathUtils.lerp(camera.zoom, zoomMult * 80, 0.1)
+    camera.updateProjectionMatrix()
 
     if (meshRef.current) {
       meshRef.current.rotation.z = (Math.PI / 180) * angle
@@ -39,15 +65,12 @@ const MouseLight = () => {
 
   return (
     <>
-      <mesh ref={meshRef}>
-        <meshBasicMaterial />
+      <group ref={meshRef}>
         <pointLight
           position={[-3.5, 0, 0]}
           intensity={0.5}
           distance={10}
           castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
           color="#ff0000"
         />
         <pointLight
@@ -55,11 +78,9 @@ const MouseLight = () => {
           intensity={0.5}
           distance={10}
           castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
           color="#2200ff"
         />
-      </mesh>
+      </group>
     </>
   )
 }
@@ -121,7 +142,7 @@ export const HeroSection = () => {
   return (
     <Wrapper>
       <Hero>
-        <Scene>
+        <Scene camPosition={[-45, 9, 100]}>
           <InnerScene />
         </Scene>
       </Hero>
