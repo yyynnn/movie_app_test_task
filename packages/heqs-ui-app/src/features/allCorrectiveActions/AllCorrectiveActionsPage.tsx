@@ -9,22 +9,13 @@ import { TableConstructor } from './TableConstructor'
 export const AllCorrectiveActionsPage = () => {
   const [pageSize, setPageSize] = useState(50)
   const [page, setPage] = useState<any>(1)
-  const [filters, setFilters] = useState<{ filter: string; string: string }>({
-    filter: '',
-    string: ''
-  })
+  const [filters, setFilters] = useState({})
   const [sorting, setSorting] = useState<{ field: string; sort: string }[]>([
     {
       field: '',
       sort: ''
     }
   ])
-
-  const currentFilter = filters.filter
-    ? {
-        [`filter[ca.${filters.filter}]`]: filters.string
-      }
-    : {}
 
   const currentSorting: any = sorting.length
     ? sorting.map((field) => {
@@ -39,7 +30,7 @@ export const AllCorrectiveActionsPage = () => {
   } = useGetPaginatedCorrectiveActionList({
     'page[size]': pageSize,
     'page[number]': page,
-    ...currentFilter
+    ...filters
   })
   const { data: ca }: any = caData || {}
 

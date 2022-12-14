@@ -27,6 +27,8 @@ import { Max } from '../primitives/Max'
 import { StatusBulb } from '../primitives/StatusBulb'
 import { TableFiltersCA } from './TableFiltersCA'
 
+// Allowed filter(s) are `corrective_actions.user_id, corrective_actions.ticket_id, corrective_actions.ca_status_id, corrective_actions.corrective_action, corrective_actions.corrective_action_due_date_after, corrective_actions.corrective_action_due_date_before, corrective_actions.corrective_action_due_date_between, corrective_actions.created_at_after, corrective_actions.created_at_before, corrective_actions.created_at_between, corrective_actions.updated_at_after, corrective_actions.updated_at_before, corrective_actions.updated_at_between, tickets.ticket_class_id, tickets.ticket_category_id, tickets.ticket_status_id, tickets.created_user_id, tickets.responsible_user_id, tickets.root_cause_id, tickets.workcenter_id, tickets.correction, tickets.damaged_item, tickets.created_at_after, tickets.created_at_before, tickets.created_at_between, tickets.updated_at_after, tickets.updated_at_before, tickets.updated_at_between, tickets.date_time_created_after, tickets.date_time_created_before, tickets.date_time_created_between, workcenters.workcenter_group_id, workcenters.factory_id, workcenters.workcenter_number, workcenters.workcenter_name`."
+
 export const TableConstructor: RFCC<{
   data: any
   isLoading?: boolean
@@ -86,7 +88,7 @@ export const TableConstructor: RFCC<{
           const value = object[key]
           const valueWidth = value?.length ? value?.length * letterWidth : 1
           const minWidth =
-            key === 'id'
+            key === 'ticket_id'
               ? 200
               : valueWidth < key.length * letterWidth
               ? key.length * 10
@@ -98,7 +100,7 @@ export const TableConstructor: RFCC<{
             sortable: key !== 'id',
             editable: false,
             resizable: true,
-            minWidth: minWidth,
+            minWidth: minWidth + 30,
             renderCell: (params: GridRenderCellParams<any>) => {
               const isDate = isValid(parseISO(params.value))
               const isClass = params?.field?.includes('class')
@@ -106,8 +108,7 @@ export const TableConstructor: RFCC<{
               const isWorkcenter = params?.field?.includes('workcenter')
               const isStatus = params?.field?.includes('status')
               const isRootCause = params?.field?.includes('root')
-              const isId = params?.field === 'id'
-              // console.log('🐸 Pepe said => :Object.keys => isClass', isClass)
+              const isId = params?.field === 'ticket_id'
 
               if (isId) {
                 return (
@@ -142,7 +143,13 @@ export const TableConstructor: RFCC<{
                 return (
                   <Tooltip title={dictionaries.ticket_status[params.value - 1].ticket_status}>
                     {/* <span>{dictionaries.ticket_status[params.value - 1].ticket_status}</span> */}
-                    <StatusBulb statusId={params.value} />
+                    <StatusBulb
+                      statusId={params.value}
+                      type="ca"
+                      statusText={
+                        dictionaries.corrective_action_statuses[params.value - 1].ca_status_name
+                      }
+                    />
                   </Tooltip>
                 )
               }
@@ -217,12 +224,11 @@ export const TableConstructor: RFCC<{
       'filter[corrective_actions.corrective_action_due_date_between]':
         formValues?.corrective_action_due_date_between
           ? `${formValues?.corrective_action_due_date_between[0]?.toISOString()},${formValues?.corrective_action_due_date_between[1]?.toISOString()}`
-          : '',
-      'filter[corrective_actions.ticket_class_id]': formValues.ticket_class_id,
+          : undefined,
+      'filter[tickets.ticket_class_id]': formValues.ticket_class_id,
       'filter[corrective_actions.ticket_category_id]': formValues.ticket_category_id,
       'filter[corrective_actions.workcenter_id]': formValues.workcenter_id,
-      'filter[corrective_actions.corrective_action_status_id]':
-        formValues.corrective_action_status_id
+      'filter[corrective_actions.ca_status_id]': formValues.ca_status_id
     })
   }, [JSON.stringify(formValues)])
 

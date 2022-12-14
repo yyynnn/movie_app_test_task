@@ -61,7 +61,7 @@ type CorrectiveActionStatuses = {
 
 type ContextType = {
   factories: Factory[] | undefined
-  user_position: UserPosition[] | undefined
+  user_positions: UserPosition[] | undefined
   ticket_status: TicketStatus[]
   ticket_class: TicketClass[]
   ticket_categories: TicketCategories[]
@@ -88,7 +88,7 @@ export const DictionariesProvider = ({ children }: { children: React.ReactNode }
   const { data: caStatusesResponse } = useGetCorrectiveActionStatusesDictionary()
 
   const { data: factories }: any = factoriesResponse || {}
-  const { data: user_position }: any = userPositionResponse || {}
+  const { data: user_positions }: any = userPositionResponse || {}
   const { data: ticket_status }: any = ticketStatusesResponse || {}
   const { data: ticket_class }: any = classesResponse || {}
   const { data: ticket_categories }: any = categoriesResponse || {}
@@ -98,7 +98,7 @@ export const DictionariesProvider = ({ children }: { children: React.ReactNode }
 
   const contextData: ContextType = {
     factories: factories,
-    user_position: user_position,
+    user_positions,
     ticket_status,
     ticket_class,
     ticket_categories,

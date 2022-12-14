@@ -10,11 +10,30 @@ import { Spacer } from './Spacer'
 interface Props extends TFlexProps {
   statusId?: number
   statusColor?: string
+  statusText?: string
+  type?: 'tickets' | 'ca'
 }
 
-export const StatusBulb: RFCC<Props> = ({ statusId = 666, ...rest }) => {
+export const StatusBulb: RFCC<Props> = ({
+  statusId = 666,
+  statusText,
+  type = 'tickets',
+  ...rest
+}) => {
   const statusColor =
-    statusId === 1 ? '#ffb300' : statusId === 2 ? '#0055ff' : statusId === 3 ? '#3bff48' : 'gray'
+    type === 'ca'
+      ? statusId === 1
+        ? '#ffb300'
+        : statusId === 2
+        ? '#3bff48'
+        : 'gray'
+      : statusId === 1
+      ? '#ffb300'
+      : statusId === 2
+      ? '#0055ff'
+      : statusId === 3
+      ? '#3bff48'
+      : 'gray'
   const status = Object.keys(TicketStatusEnum)[statusId + 2]
 
   return (
@@ -23,7 +42,7 @@ export const StatusBulb: RFCC<Props> = ({ statusId = 666, ...rest }) => {
         <Flex alignItems="center">
           <Status {...rest} statusColor={statusColor} />
           <Spacer />
-          <Typography>{status}</Typography>
+          <Typography>{statusText || status}</Typography>
         </Flex>
       }
     />
@@ -32,6 +51,8 @@ export const StatusBulb: RFCC<Props> = ({ statusId = 666, ...rest }) => {
 
 const Status = styled(Flex)<Props>`
   height: 10px;
+  min-height: 10px;
+  min-width: 10px;
   width: 10px;
   border-radius: 50px;
   background-color: ${({ statusColor }) => statusColor};

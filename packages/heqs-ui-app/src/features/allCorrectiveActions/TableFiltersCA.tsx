@@ -168,7 +168,7 @@ export const TableFiltersCA = () => {
         <Col lg={4}>
           <Controller
             control={control}
-            name="corrective_action_status_id"
+            name="ca_status_id"
             rules={{ required: 'Ошибка' }}
             render={({ field: { onChange, ref, value, name } }) => {
               return (
@@ -177,8 +177,8 @@ export const TableFiltersCA = () => {
                   <Select
                     value={value || ''}
                     onChange={onChange}
-                    labelId="corrective_action_status_id-label"
-                    label="corrective_action_status_id"
+                    labelId="ca_status_id-label"
+                    label="ca_status_id"
                   >
                     {corrective_action_statuses?.map((castatus) => {
                       return (

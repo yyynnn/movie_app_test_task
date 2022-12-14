@@ -23,6 +23,7 @@ import { useRegister } from '../api/generated/endpoints'
 import { RegisterBody } from '../api/generated/models'
 import { Factories, WorkerPositions } from '../api/mocks'
 import { useAuth } from '../auth/AuthProvider'
+import { useDictionaries } from '../dictionaries/DictionariesProvider'
 import { Error, Flex, Spacer } from '../primitives'
 
 type WorkerPositionsKeys = keyof typeof WorkerPositions
@@ -31,14 +32,11 @@ type FactoriesKeys = keyof typeof Factories
 const workerPositions = Object.keys(WorkerPositions).filter(
   (_, idx) => idx >= Object.keys(WorkerPositions).length / 2
 ) as WorkerPositionsKeys[]
-const factories = Object.keys(Factories).filter(
-  (_, idx) => idx >= Object.keys(Factories).length / 2
-) as FactoriesKeys[]
 
 export const RegPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const auth = useAuth()
+  const { factories, user_positions } = useDictionaries()
   const [formError, setFormError] = useState('')
   const { mutate } = useRegister({
     mutation: {
@@ -175,10 +173,10 @@ export const RegPage = () => {
                       label="User Position"
                       error={!!errors[name]}
                     >
-                      {workerPositions.map((workerPosition, idx) => {
+                      {user_positions?.map((workerPosition, idx) => {
                         return (
-                          <MenuItem key={idx} value={idx}>
-                            {workerPosition.replaceAll('_', ' ')}
+                          <MenuItem key={idx} value={workerPosition.id}>
+                            {workerPosition.title}
                           </MenuItem>
                         )
                       })}
@@ -205,10 +203,10 @@ export const RegPage = () => {
                       label="Factory"
                       error={!!errors[name]}
                     >
-                      {factories.map((factory, idx) => {
+                      {factories?.map((factory, idx) => {
                         return (
-                          <MenuItem key={idx} value={idx}>
-                            {factory.replaceAll('_', '')}
+                          <MenuItem key={idx} value={factory.id}>
+                            {factory.title}
                           </MenuItem>
                         )
                       })}
