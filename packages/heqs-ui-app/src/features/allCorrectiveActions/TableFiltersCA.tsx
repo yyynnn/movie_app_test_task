@@ -31,13 +31,6 @@ import { useNavigate } from 'react-router-dom'
 import { useDictionaries } from '../dictionaries/DictionariesProvider'
 import { Flex, Spacer } from '../primitives'
 
-// tickets
-// по классу тикета
-// по дате тикета
-// по категории тикета
-// по рабочему центру
-// по статусу тикета
-
 // ca
 // по классу тикета
 // по сроку выполнения корр. действия
@@ -45,41 +38,15 @@ import { Flex, Spacer } from '../primitives'
 // по рабочему центру
 // по статусу корр. действия
 
-export const TableFiltersTickets = () => {
+export const TableFiltersCA = () => {
   const dictionaries = useDictionaries()
-  const { ticket_class, ticket_categories, workcenters, ticket_status } = dictionaries
+  const { ticket_class, ticket_categories, workcenters, corrective_action_statuses } = dictionaries
 
   const { control, getValues } = useFormContext()
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Row>
-        <Col lg={12}>
-          <Controller
-            control={control}
-            name="correction"
-            rules={{ required: 'Ошибка' }}
-            render={({ field: { onChange, ref, value, name } }) => {
-              return (
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  label="Correction"
-                  value={value}
-                  onChange={onChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <SearchRoundedIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              )
-            }}
-          />
-          <Spacer />
-        </Col>
         <Col lg={6}>
           <Controller
             control={control}
@@ -114,7 +81,7 @@ export const TableFiltersTickets = () => {
         <Col lg={6}>
           <Controller
             control={control}
-            name="date_time_range"
+            name="corrective_action_due_date_between"
             rules={{ required: 'Ошибка' }}
             render={({ field: { onChange, ref, value, name } }) => {
               return (
@@ -138,7 +105,7 @@ export const TableFiltersTickets = () => {
           <Spacer />
         </Col>
 
-        <Col lg={6}>
+        <Col lg={4}>
           <Controller
             control={control}
             name="ticket_category"
@@ -168,7 +135,7 @@ export const TableFiltersTickets = () => {
           <Spacer />
         </Col>
 
-        <Col lg={6}>
+        <Col lg={4}>
           <Controller
             control={control}
             name="workcenter_id"
@@ -187,6 +154,36 @@ export const TableFiltersTickets = () => {
                       return (
                         <MenuItem key={workcenter.id} value={workcenter.id}>
                           {workcenter.workcenter_name}
+                        </MenuItem>
+                      )
+                    })}
+                  </Select>
+                </FormControl>
+              )
+            }}
+          />
+          <Spacer />
+        </Col>
+
+        <Col lg={4}>
+          <Controller
+            control={control}
+            name="corrective_action_status_id"
+            rules={{ required: 'Ошибка' }}
+            render={({ field: { onChange, ref, value, name } }) => {
+              return (
+                <FormControl fullWidth>
+                  <InputLabel id="workcenters-label">CA status</InputLabel>
+                  <Select
+                    value={value || ''}
+                    onChange={onChange}
+                    labelId="corrective_action_status_id-label"
+                    label="corrective_action_status_id"
+                  >
+                    {corrective_action_statuses?.map((castatus) => {
+                      return (
+                        <MenuItem key={castatus.id} value={castatus.id}>
+                          {castatus.ca_status_name}
                         </MenuItem>
                       )
                     })}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import {
+  useGetCorrectiveActionStatusesDictionary,
   useGetFactoriesDictionary,
   useGetRootCausesDictionary,
   useGetTicketCategoriesDictionary,
@@ -53,6 +54,11 @@ type Workcenters = {
   deleted_at: null
 }
 
+type CorrectiveActionStatuses = {
+  id: number
+  ca_status_name: string
+}
+
 type ContextType = {
   factories: Factory[] | undefined
   user_position: UserPosition[] | undefined
@@ -61,18 +67,25 @@ type ContextType = {
   ticket_categories: TicketCategories[]
   workcenters: Workcenters[]
   root_causes: RootCauses[]
+  corrective_action_statuses: CorrectiveActionStatuses[]
 }
 
 const Context = React.createContext<ContextType>(null!)
 
 export const DictionariesProvider = ({ children }: { children: React.ReactNode }) => {
+  // etc
   const { data: factoriesResponse } = useGetFactoriesDictionary()
+  const { data: rootCausesResponse } = useGetRootCausesDictionary()
+  const { data: workcentersResponse } = useGetWorkcentersDictionary()
+
+  // tickets
   const { data: userPositionResponse } = useGetUserPositionsDictionary()
   const { data: ticketStatusesResponse } = useGetTicketStatusesDictionary()
   const { data: classesResponse } = useGetTicketClassesDictionary()
   const { data: categoriesResponse } = useGetTicketCategoriesDictionary()
-  const { data: workcentersResponse } = useGetWorkcentersDictionary()
-  const { data: rootCausesResponse } = useGetRootCausesDictionary()
+
+  // ca
+  const { data: caStatusesResponse } = useGetCorrectiveActionStatusesDictionary()
 
   const { data: factories }: any = factoriesResponse || {}
   const { data: user_position }: any = userPositionResponse || {}
@@ -81,6 +94,7 @@ export const DictionariesProvider = ({ children }: { children: React.ReactNode }
   const { data: ticket_categories }: any = categoriesResponse || {}
   const { data: workcenters }: any = workcentersResponse || {}
   const { data: root_causes }: any = rootCausesResponse || {}
+  const { data: corrective_action_statuses }: any = caStatusesResponse || {}
 
   const contextData: ContextType = {
     factories: factories,
@@ -89,6 +103,7 @@ export const DictionariesProvider = ({ children }: { children: React.ReactNode }
     ticket_class,
     ticket_categories,
     root_causes,
+    corrective_action_statuses,
     workcenters
   }
 

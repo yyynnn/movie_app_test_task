@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { CogentQuery } from '../../utils/cogent'
 import { useGetPaginatedTicketList } from '../api/generated/endpoints'
-import { TableConstructor } from '../tableConstructor/TableConstructor'
+import { TableConstructor } from './TableConstructor'
 
 export const AllTicketsPage = () => {
   const [pageSize, setPageSize] = useState(50)
@@ -12,7 +12,7 @@ export const AllTicketsPage = () => {
   const [sorting, setSorting] = useState<{ field: string; sort: string }[]>([
     {
       field: '',
-      sort: ''
+      sort: 'asc'
     }
   ])
 

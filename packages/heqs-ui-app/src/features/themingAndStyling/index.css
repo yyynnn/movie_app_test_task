@@ -54,18 +54,6 @@ a:visited {
   color: #027ffe;
 }
 
-body
-  > div.MuiDialog-root.MuiModal-root
-  > div.MuiDialog-container
-  > div
-  > div.MuiDialogContent-root
-  > div
-  > div:nth-child(1),
-.MuiDataGrid-main > div:nth-child(3) {
-  display: none !important;
-  visibility: hidden !important;
-}
-
 .MuiBackdrop-root {
   backdrop-filter: blur(306px);
   background-color: #f0f8ff00 !important;

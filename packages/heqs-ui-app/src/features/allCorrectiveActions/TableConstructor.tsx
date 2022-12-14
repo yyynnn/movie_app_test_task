@@ -3,11 +3,6 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import {
   Button,
   capitalize,
-  Divider,
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
   Pagination,
   PaginationItem,
   Select,
@@ -25,11 +20,12 @@ import { useNavigate } from 'react-router-dom'
 
 import { ROUTES } from '../../consts/routes'
 import { RFCC } from '../../types/react'
+import { useAuth } from '../auth/AuthProvider'
 import { useDictionaries } from '../dictionaries/DictionariesProvider'
 import { Flex, Spacer } from '../primitives'
 import { Max } from '../primitives/Max'
 import { StatusBulb } from '../primitives/StatusBulb'
-import { TableFiltersTickets } from './TableFiltersTickets'
+import { TableFiltersCA } from './TableFiltersCA'
 
 export const TableConstructor: RFCC<{
   data: any
@@ -63,6 +59,7 @@ export const TableConstructor: RFCC<{
 }) => {
   const navigate = useNavigate()
   const dictionaries = useDictionaries()
+  const { user } = useAuth()
   const [searchString, setSearchString] = useState('')
   const [cols, setCols] = useState<any>([])
   const [count, setCount] = useState(10)
@@ -209,15 +206,23 @@ export const TableConstructor: RFCC<{
   }, [data?.data[0]])
 
   useEffect(() => {
+    // по классу тикета
+    // по сроку выполнения корр. действия
+    // по категории тикета
+    // по рабочему центру
+    // по статусу корр. действия
     setFilters({
       ...filters,
-      'filter[tickets.created_at_between]': formValues?.date_time_range
-        ? `${formValues?.date_time_range[0]?.toISOString()},${formValues?.date_time_range[1]?.toISOString()}`
-        : '',
-      'filter[tickets.ticket_class_id]': formValues.ticket_class_id,
-      'filter[tickets.ticket_category_id]': formValues.ticket_category_id,
-      'filter[tickets.workcenter_id]': formValues.workcenter_id,
-      'filter[tickets.correction]': formValues.correction
+      'filter[workcenters.factory_id]': user.factory_id,
+      'filter[corrective_actions.corrective_action_due_date_between]':
+        formValues?.corrective_action_due_date_between
+          ? `${formValues?.corrective_action_due_date_between[0]?.toISOString()},${formValues?.corrective_action_due_date_between[1]?.toISOString()}`
+          : '',
+      'filter[corrective_actions.ticket_class_id]': formValues.ticket_class_id,
+      'filter[corrective_actions.ticket_category_id]': formValues.ticket_category_id,
+      'filter[corrective_actions.workcenter_id]': formValues.workcenter_id,
+      'filter[corrective_actions.corrective_action_status_id]':
+        formValues.corrective_action_status_id
     })
   }, [JSON.stringify(formValues)])
 
@@ -231,7 +236,9 @@ export const TableConstructor: RFCC<{
       <Spacer />
       <Typography>Detailed search</Typography> */}
       <Spacer space={10} />
-      <form>{type === 'tickets' ? <TableFiltersTickets /> : null}</form>
+      <form>
+        <TableFiltersCA />
+      </form>
 
       <Spacer />
 

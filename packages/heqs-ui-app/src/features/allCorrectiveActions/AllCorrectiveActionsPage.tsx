@@ -4,7 +4,7 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import React, { useState } from 'react'
 
 import { useGetPaginatedCorrectiveActionList } from '../api/generated/endpoints'
-import { TableConstructor } from '../tableConstructor/TableConstructor'
+import { TableConstructor } from './TableConstructor'
 
 export const AllCorrectiveActionsPage = () => {
   const [pageSize, setPageSize] = useState(50)

@@ -8,7 +8,6 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 import { API } from '../../consts/api'
 import { ROUTES } from '../../consts/routes'
-import { JWTReturn } from '../../types'
 import { parseJwt } from '../../utils'
 import { Login200User } from '../api/generated/models'
 import { useLocalStorage } from '../hooks/useLocalStorage'
@@ -17,7 +16,13 @@ import { Absolute, Flex, Pointer, Spacer } from '../primitives'
 axios.defaults.baseURL = 'https://heqs-services-dev.onrender.com/api/'
 
 interface AuthContextType {
-  user: any
+  user: {
+    name: string
+    surname: string
+    user_position_id: number
+    factory_id: number
+    email: string
+  }
   token: string | null
   isOnetimeAuth: boolean
   signin: (userData: any, callback: VoidFunction) => void

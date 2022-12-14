@@ -16,7 +16,7 @@ export const GlobalLayout = () => {
 
   return (
     <>
-      {!!auth.token ? (
+      {!!auth?.token ? (
         <Container>
           <Row>
             <Col>
