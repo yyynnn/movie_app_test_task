@@ -141,7 +141,9 @@ export const TableConstructor: RFCC<{
 
               if (isStatus) {
                 return (
-                  <Tooltip title={dictionaries.ticket_status[params.value - 1].ticket_status}>
+                  <Tooltip
+                    title={dictionaries.corrective_action_statuses[params.value - 1].ca_status_name}
+                  >
                     {/* <span>{dictionaries.ticket_status[params.value - 1].ticket_status}</span> */}
                     <StatusBulb
                       statusId={params.value}

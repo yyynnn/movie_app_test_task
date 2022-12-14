@@ -29,7 +29,7 @@ import { ROUTES } from '../../consts/routes'
 import { Employees, Ticket, Tickets, Workcenters } from '../../types/api'
 import { RFCC } from '../../types/react'
 import { convertToBase64 } from '../../utils'
-import { CorrectiveActions } from '../correctiveAction/CorrectiveActions'
+import { CorrectiveActions } from '../correctiveActions/CorrectiveActions'
 import { useBasicMutation } from '../hooks/useBasicMutation'
 import { useBasicQuery } from '../hooks/useBasicQuery'
 import { Flex, Pad, Spacer } from '../primitives'
@@ -296,7 +296,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
           </Col>
         )}
 
-        <Col lg={readOnly ? 6 : 6}>
+        <Col lg={12}>
           {!hasShortDescription && (
             <Controller
               control={control}
@@ -311,7 +311,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
                     label="Correction"
                     error={!!errors[name]}
                     multiline
-                    rows={16}
+                    rows={4}
                     defaultValue=""
                   />
                 )
@@ -322,7 +322,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
         </Col>
 
         {hasCorrectiveActions && initialData.id && (
-          <Col lg={readOnly ? 6 : 12}>
+          <Col lg={12}>
             <CorrectiveActions readOnly={readOnly} ticketId={initialData.id} />
           </Col>
         )}

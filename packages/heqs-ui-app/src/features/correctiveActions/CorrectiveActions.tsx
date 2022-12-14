@@ -1,15 +1,28 @@
 import styled from '@emotion/styled'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
-import { Button, Divider, IconButton, List, Paper, TextField, Typography } from '@mui/material'
+import {
+  Button,
+  Divider,
+  IconButton,
+  List,
+  Paper,
+  TextField,
+  Tooltip,
+  Typography
+} from '@mui/material'
+import { DataGridPremium } from '@mui/x-data-grid-premium'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { format } from 'date-fns'
 import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { RFCC } from '../../types/react'
 import { useReadCorrectiveActionsByTicketId } from '../api/generated/endpoints'
 import { CorrectiveAction } from '../api/generated/models'
+import { useDictionaries } from '../dictionaries/DictionariesProvider'
 import { Flex, Pad, Spacer } from '../primitives'
+import { StatusBulb } from '../primitives/StatusBulb'
 
 export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean; ticketId: number }> = ({
   id,
@@ -18,7 +31,8 @@ export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean; ticketId
 }) => {
   const [actions, setActions] = useState<CorrectiveAction[]>([])
   const { control, register, getValues, formState, trigger, watch } = useForm()
-  const { data } = useReadCorrectiveActionsByTicketId(ticketId)
+  const { corrective_action_statuses } = useDictionaries()
+  const { data, isLoading } = useReadCorrectiveActionsByTicketId(ticketId)
   const { data: ca } = data || {}
 
   const errors = formState.errors
@@ -48,64 +62,95 @@ export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean; ticketId
   }
 
   useEffect(() => {
-    if (ca) {
-      setActions(ca)
-    }
-  }, [ca?.length && JSON.stringify(data)])
-
-  useEffect(() => {
     if (!readOnly) {
       watch()
     }
   }, [])
 
+  const cols: {
+    field: string
+    headerName: string
+    editable: boolean
+    resizable: boolean
+    width?: number
+    minWidth?: number
+    renderCell?: any
+  }[] = [
+    // { field: 'id', headerName: 'Id', editable: true, resizable: true },
+    {
+      field: 'corrective_action',
+      minWidth: 300,
+      headerName: 'Corrective action',
+      editable: true,
+      resizable: true,
+      renderCell: (params: any) => {
+        return (
+          <Tooltip title={params.value}>
+            <span>{params.value}</span>
+          </Tooltip>
+        )
+      }
+    },
+    {
+      field: 'corrective_action_due_date',
+      headerName: 'corrective_action_due_date',
+      editable: true,
+      resizable: true,
+      minWidth: 300,
+      renderCell: (params: any) => {
+        const date = format(new Date(params.value), 'EEEE dd MMMM HH:mm:ss')
+        return (
+          <Tooltip title={date}>
+            <span>{date}</span>
+          </Tooltip>
+        )
+      }
+    },
+    {
+      field: 'ca_status_id',
+      headerName: 'ca_status_id',
+      editable: true,
+      resizable: true,
+      minWidth: 200,
+      renderCell: (params: any) => {
+        return (
+          <Tooltip title={corrective_action_statuses[params.value - 1].ca_status_name}>
+            <StatusBulb
+              statusId={params.value}
+              type="ca"
+              statusText={corrective_action_statuses[params.value - 1].ca_status_name}
+            />
+          </Tooltip>
+        )
+      }
+    },
+    {
+      field: 'button',
+      headerName: '',
+      editable: true,
+      resizable: true,
+      renderCell: (params: any) => {
+        console.log('🐸 Pepe said => params', params)
+
+        return (
+          <IconButton>
+            <DeleteForeverRoundedIcon />
+          </IconButton>
+        )
+      }
+    }
+  ]
+
   return (
     <Wrapper>
-      <List dense={false}>
-        {actions.length ? (
-          actions.map((action, idx) => {
-            return (
-              <div key={idx}>
-                <Flex gap={6} justifyContent="space-between" alignItems="center">
-                  <div>
-                    <Typography variant="h5">
-                      <b>
-                        {idx + 1}. {action.corrective_action}
-                      </b>
-                    </Typography>
-                    <Flex>
-                      <Typography>
-                        Responsible: <b>{action.user_id}</b>
-                      </Typography>
-                      <Spacer width={4} />
-                      <Spacer width={4} />
-                      <Typography>
-                        Due: <b>{action.corrective_action_due_date}</b>
-                      </Typography>
-                    </Flex>
-                  </div>
-                  <IconButton onClick={() => removeItem(idx)}>
-                    <DeleteForeverRoundedIcon />
-                  </IconButton>
-                </Flex>
-                {isEditMode && (
-                  <div>
-                    <Spacer space={4} />
-                    <Divider />
-                    <Spacer space={4} />
-                  </div>
-                )}
-              </div>
-            )
-          })
-        ) : (
-          <Paper>
-            <Pad>
-              <Typography>No items</Typography>
-            </Pad>
-          </Paper>
-        )}
-      </List>
+      <DataGridPremium
+        // density="compact"
+        hideFooter
+        rows={ca || []}
+        columns={cols}
+        loading={isLoading}
+        disableColumnMenu
+      />
 
       {!readOnly && (
         <div>
@@ -192,7 +237,8 @@ export const CorrectiveActions: RFCC<{ id?: string; readOnly?: boolean; ticketId
 }
 
 const Wrapper = styled.div`
-  padding: 20px;
-  border: 1px solid #ffffff36;
-  border-radius: 30px;
+  /* padding: 20px; */
+  /* border: 1px solid #ffffff36;
+  border-radius: 30px; */
+  height: 400px;
 `

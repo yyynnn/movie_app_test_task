@@ -47,7 +47,7 @@ export const TableFiltersTickets = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Row>
-        <Col lg={12}>
+        <Col lg={4}>
           <Controller
             control={control}
             name="correction"
@@ -73,7 +73,7 @@ export const TableFiltersTickets = () => {
           />
           <Spacer />
         </Col>
-        <Col lg={6}>
+        <Col lg={4}>
           <Controller
             control={control}
             name="ticket_class_id"
@@ -93,6 +93,36 @@ export const TableFiltersTickets = () => {
                         //@ts-ignore - necessary to load object into value
                         <MenuItem key={ticketClass.id} value={ticketClass.id}>
                           {ticketClass.ticket_class_name}
+                        </MenuItem>
+                      )
+                    })}
+                  </Select>
+                </FormControl>
+              )
+            }}
+          />
+          <Spacer />
+        </Col>
+
+        <Col lg={4}>
+          <Controller
+            control={control}
+            name="ticket_category"
+            rules={{ required: 'Ошибка' }}
+            render={({ field: { onChange, ref, value, name } }) => {
+              return (
+                <FormControl fullWidth>
+                  <InputLabel id="ticket_category-label">Ticket category</InputLabel>
+                  <Select
+                    value={value || ''}
+                    onChange={onChange}
+                    labelId="ticket_category-label"
+                    label="ticket_category"
+                  >
+                    {ticket_categories?.map((ticketCategory) => {
+                      return (
+                        <MenuItem key={ticketCategory.id} value={ticketCategory.id}>
+                          {ticketCategory.ticket_category}
                         </MenuItem>
                       )
                     })}
@@ -125,36 +155,6 @@ export const TableFiltersTickets = () => {
                     </Flex>
                   )}
                 />
-              )
-            }}
-          />
-          <Spacer />
-        </Col>
-
-        <Col lg={6}>
-          <Controller
-            control={control}
-            name="ticket_category"
-            rules={{ required: 'Ошибка' }}
-            render={({ field: { onChange, ref, value, name } }) => {
-              return (
-                <FormControl fullWidth>
-                  <InputLabel id="ticket_category-label">Ticket category</InputLabel>
-                  <Select
-                    value={value || ''}
-                    onChange={onChange}
-                    labelId="ticket_category-label"
-                    label="ticket_category"
-                  >
-                    {ticket_categories?.map((ticketCategory) => {
-                      return (
-                        <MenuItem key={ticketCategory.id} value={ticketCategory.id}>
-                          {ticketCategory.ticket_category}
-                        </MenuItem>
-                      )
-                    })}
-                  </Select>
-                </FormControl>
               )
             }}
           />
