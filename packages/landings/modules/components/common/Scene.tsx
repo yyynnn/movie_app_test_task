@@ -1,7 +1,7 @@
-import { OrbitControls, Preload } from '@react-three/drei'
+import { AdaptiveDpr, AdaptiveEvents, OrbitControls, Preload } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import styled from 'styled-components'
-import { MathUtils } from 'three'
+import { MathUtils, WebGLBufferRenderer, WebGLRenderer } from 'three'
 
 import { oscillator } from '../../../utils'
 
@@ -13,12 +13,14 @@ export function Scene({
   camPosition,
   ...props
 }) {
-  // Everything defined in here will persist between route changes, only children are swapped
   return (
     <Wrapper>
       <Canvas
         orthographic={orthographic}
         shadows
+        // frameloop="demand"
+        gl={(canvas) => new WebGLRenderer({ canvas, antialias: false })}
+        dpr={[1, 2]}
         camera={{
           zoom,
           near: -100,
@@ -31,6 +33,8 @@ export function Scene({
           <Preload all />
           {orbit && <OrbitControls />}
         </InnerScene>
+        <AdaptiveDpr />
+        <AdaptiveEvents />
       </Canvas>
     </Wrapper>
   )

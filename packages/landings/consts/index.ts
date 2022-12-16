@@ -38,3 +38,5 @@ export const APP_ENV = document.location.hostname.includes('dev') ? 'DEV_ENV' : 
 export const HOST_URL = '/'
 
 export const POST_URL = '/api/marketing-info/'
+
+export const INPUT_HEIGHT = 60

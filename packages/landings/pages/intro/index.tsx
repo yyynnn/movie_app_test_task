@@ -10,7 +10,9 @@ import { setConfiguration } from 'react-grid-system'
 import { BREAKPOINTS } from '../../consts'
 import { Navbar } from '../../modules/components/intro/nav/Navbar'
 import { AboutSection } from '../../modules/components/intro/sections/AboutSection'
+import { CalcSection } from '../../modules/components/intro/sections/CalcSection'
 import { ChartSection } from '../../modules/components/intro/sections/ChartSection'
+import { FeaturesSection } from '../../modules/components/intro/sections/FeaturesSection'
 import { HeroSection } from '../../modules/components/intro/sections/HeroSection'
 import { GlobalStyle } from '../../modules/components/intro/theming/GlobalStyle'
 import { Spacer } from '../../modules/kit/Spacer'
@@ -30,10 +32,10 @@ const IntroPage = () => {
 
       <Navbar />
       <HeroSection />
-      <Spacer space={100} />
       <AboutSection />
-      <Spacer space={100} />
       <ChartSection />
+      <CalcSection />
+      <FeaturesSection />
       <Spacer space={300} />
     </>
   )

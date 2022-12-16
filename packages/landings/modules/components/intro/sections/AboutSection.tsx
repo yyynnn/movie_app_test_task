@@ -1,14 +1,17 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-grid-system'
+import styled from 'styled-components'
 
 import { Flex } from '../../../kit/Flex'
 import { Max } from '../../../kit/Max'
 import { Spacer } from '../../../kit/Spacer'
 import { Text } from '../../../kit/Text'
+import { GradientEdge } from '../../common/GradientEdge'
 
 export const AboutSection = () => {
   return (
-    <div>
+    <Wrapper>
+      <GradientEdge />
       <Container fluid>
         <Row>
           <Col>
@@ -57,7 +60,15 @@ export const AboutSection = () => {
           </Col>
         </Row>
       </Container>
-      <Spacer />
-    </div>
+      <Spacer space={100} />
+      <GradientEdge toTop />
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div`
+  background: #000;
+  background-image: radial-gradient(#ffffff30 1px, transparent 0);
+  background-size: 40px 40px;
+  background-position: -19px -19px;
+`

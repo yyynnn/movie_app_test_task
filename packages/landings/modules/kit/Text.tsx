@@ -27,22 +27,25 @@ export const Text: any = forwardRef(
       bold = false,
       adaptive = true,
       opacity = 1,
+      spacing,
       children,
       ...rest
     }: any,
     fRef
   ) => {
+    const _minSize = minSize || size * 0.5
     return (
       <Wrapper
         ref={fRef}
         opacity={opacity}
         size={size}
-        minSize={minSize}
+        minSize={_minSize}
         adaptive={adaptive}
         bold={bold}
         center={center}
         color={color}
         breakWord={breakWord}
+        spacing={spacing}
         {...rest}
       >
         {children ? children : typeof text === 'string' ? tp.execute(text) : text}
@@ -83,7 +86,7 @@ const Wrapper = styled.div<{
 }>`
   font-size: ${({ size }) => size || 16}px;
   text-align: ${({ center }) => (center ? 'center' : '')};
-  letter-spacing: -0.03em;
+  letter-spacing: ${({ spacing }) => spacing || '-0.03em'};
   /* letter-spacing: ${({ size }) => size / -70 || 0}px; */
   /* line-height: ${({ size }) => (size ? lhcalc(size) + 'px' : 'initial')}; */
   opacity: ${({ opacity }) => opacity};

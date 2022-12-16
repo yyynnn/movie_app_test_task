@@ -17,7 +17,8 @@ const Wrapper = styled.button<any>`
   width: 100%;
   background: transparent;
 
-  color: ${({ color }) => (color !== 'inverted' ? 'white' : '#fff;')};
+  color: ${({ color }) => (color === 'inverted' ? 'black' : '#fff;')};
+  background-color: ${({ color }) => (color !== 'inverted' ? 'black' : '#fff;')};
   border: none;
   align-items: center;
   text-align: center;
@@ -30,8 +31,8 @@ const Wrapper = styled.button<any>`
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background: ${({ color }) => (color === 'inverted' ? 'white' : '#fff;')};
-    color: #000;
+    background: ${({ color }) => (color === 'inverted' ? 'black' : '#fff;')};
+    color: ${({ color }) => (color !== 'inverted' ? 'black' : '#fff;')};
   }
 
   & p,

@@ -14,7 +14,7 @@ export const BarAnimated = ({ width = 1, value = 1, index = 0, positionX = 0, co
   useFrame(({ clock }) => {
     const time = +clock.elapsedTime.toFixed(2)
 
-    const speed = 0.01
+    const speed = 0.006
 
     const goY = oscillator({
       time,
@@ -29,12 +29,12 @@ export const BarAnimated = ({ width = 1, value = 1, index = 0, positionX = 0, co
 
     if (barRef.current) {
       barRef.current.scale.y = scale
+      //   barRef.current.scale.z = Math.abs(Math.sin(time)) * 0.2
     }
 
-    if (textRef.current) {
-      textRef.current.position.y = scale * 6
-      console.log('🐸 Pepe said => useFrame => textRef.current.', textRef.current)
-    }
+    // if (textRef.current) {
+    //   textRef.current.position.y = scale * 6
+    // }
   })
 
   return (

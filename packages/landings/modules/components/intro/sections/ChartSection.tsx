@@ -6,11 +6,18 @@ import { MathUtils, Matrix4, Vector3 } from 'three'
 
 import { oscillator, randArrayGenerator } from '../../../../utils'
 import { Mouse3D } from '../../../../utils/Mouse3D'
+import { Absolute } from '../../../kit/Absolute'
+import { Max } from '../../../kit/Max'
+import { Text } from '../../../kit/Text'
+import { ZIndex } from '../../../kit/ZIndex'
 import { BarAnimated } from '../../common/BarAnimated'
+import { GradientEdge } from '../../common/GradientEdge'
 import { Scene } from '../../common/Scene'
 import { Text3dAnimation } from '../../common/Text3dAnimation'
 
-const chartData = randArrayGenerator(20)
+const chartData = randArrayGenerator(40)
+let intensityTransition1 = 0
+let intensityTransition2 = 0
 
 const roundedSquareWave = (t, delta, a, f) => {
   return ((2 * a) / Math.PI) * Math.atan(Math.sin(2 * Math.PI * t * f) / delta)
@@ -19,11 +26,22 @@ const roundedSquareWave = (t, delta, a, f) => {
 export const ChartSection = () => {
   return (
     <Wrapper>
-      <Hero>
-        <Scene zoom={20} camPosition={[10, 100, 1000]}>
-          <InnerScene />
-        </Scene>
-      </Hero>
+      <div>
+        <Absolute justifyContent="center" alignItems="center" style={{ zIndex: 1, margin: 'auto' }}>
+          <Max maxWidth={900} justifyContent="center" alignItems="center">
+            <Text size={44} center spacing={'0px'}>
+              Quality, Health&Safety and Environment related statistics from your operations is
+              being analyzed by HEQS in a quick and reliable way.
+            </Text>
+          </Max>
+        </Absolute>
+        <div style={{ opacity: 0.9 }}>
+          <Scene zoom={20} camPosition={[10, 100, 1000]}>
+            <InnerScene />
+          </Scene>
+        </div>
+      </div>
+      <GradientEdge toTop />
     </Wrapper>
   )
 }
@@ -38,13 +56,13 @@ const InnerScene: any = () => {
     const speed = 0.1
     const movement = Math.cos(time * speed) * 0.07
     const angle = 360 * movement
-    const camera_speed = 0.05
+    const camera_speed = 0.01
 
     const goX = oscillator({
       time,
       frequency: camera_speed,
       amplitude: 0.9,
-      offset: 0.1,
+      offset: -0.7,
       phase: 0.9,
       funcType: 'cos'
     })
@@ -52,7 +70,7 @@ const InnerScene: any = () => {
       time,
       frequency: camera_speed,
       amplitude: 0.19,
-      offset: 1,
+      offset: -0.7,
       phase: 0.1,
       funcType: 'sin'
     })
@@ -64,12 +82,22 @@ const InnerScene: any = () => {
     camera.position.y = target.y + camera_offset.y
     camera.lookAt(target.x, target.y, target.z)
     const zoomMult = window.innerWidth / 1280
-    camera.zoom = MathUtils.lerp(camera.zoom, zoomMult * 40, 0.01)
+    camera.zoom = MathUtils.lerp(camera.zoom, zoomMult * 30, 0.01)
     camera.updateProjectionMatrix()
 
-    // if (lightsRef.current) {
-    //   lightsRef.current.position.x = (Math.PI / 180) * angle * goX
-    // }
+    if (lightRect1Ref.current) {
+      if (intensityTransition1 < 30) {
+        intensityTransition1 = intensityTransition1 + time * 0.01
+        lightRect1Ref.current.intensity = intensityTransition1
+      }
+    }
+
+    if (lightRect2Ref.current) {
+      if (intensityTransition2 < 30) {
+        intensityTransition2 = intensityTransition2 + time * 0.01
+        lightRect2Ref.current.intensity = intensityTransition2
+      }
+    }
   })
 
   return (
@@ -87,55 +115,33 @@ const InnerScene: any = () => {
               index={idx}
               positionX={positionX}
               value={bar.value}
-              color="#ff0044"
+              color="#fff"
             />
           )
         })}
       </group>
-
-      <group position={[-chartData.length / 2 + 0.5, -2, 1]} name="chart_blue">
-        {chartData.map((bar, idx) => {
-          const width = 1
-          const padding = 0.5
-          const positionX = idx + padding * idx
-
-          return (
-            <BarAnimated
-              key={idx}
-              width={width}
-              index={idx}
-              positionX={positionX}
-              value={bar.value}
-              color="#0022ff"
-            />
-          )
-        })}
-      </group>
-
-      {/* <mesh ref={lightsRef}>
-        <pointLight position={[-3.5, 0, 0]} intensity={0.5} distance={100} color="#ff0000" />
-        <pointLight position={[3.5, 0, 0]} intensity={0.5} distance={100} color="#2200ff" />
-      </mesh> */}
 
       <group>
         <rectAreaLight
           visible
+          ref={lightRect1Ref}
           rotation={[0, (Math.PI / 180) * 180, 0]}
-          position={[5, 0, -10]}
-          intensity={20}
+          position={[20, 0, -40]}
+          intensity={30}
           color="#ff0044"
         />
         <rectAreaLight
           visible
-          rotation={[0, (Math.PI / 180) * 180, 0]}
-          position={[-5, 0, -10]}
-          intensity={20}
+          ref={lightRect2Ref}
+          rotation={[0, (Math.PI / 180) * 0, 0]}
+          position={[-20, 0, 10]}
+          intensity={50}
           color="#0022ff"
         />
       </group>
 
-      <group position={[0, -2.1, 25]} rotation={[(Math.PI / 180) * 0, 0, 0]}>
-        <Box args={[500, 0.01, 50]}>
+      <group position={[0, -2.1, -249.5]} rotation={[0, 0, 0]}>
+        <Box args={[500, 0.01, 500]}>
           <meshStandardMaterial
             roughness={0}
             metalness={0}
@@ -160,5 +166,3 @@ const Wrapper = styled.div`
   position: relative;
   padding: 0px;
 `
-
-const Hero = styled.div``
