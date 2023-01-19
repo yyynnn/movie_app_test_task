@@ -33,6 +33,7 @@ module.exports = {
   ],
   plugins: ['simple-import-sort', 'prettier'],
   rules: {
+    'react/display-name': 'off',
     'no-unsafe-optional-chaining': 'error',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',

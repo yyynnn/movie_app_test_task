@@ -7,10 +7,6 @@ import { Col, Row } from 'react-grid-system'
 // импорты путей из API -> ../../consts/api
 import { API } from '../../consts/api'
 import { Employees, Ticket, Tickets, Workcenters } from '../../types/api'
-// useBasicMutation для POST/PUT (враппер над useMutation https://tanstack.com/query/v4/docs/reference/useMutation)
-import { useBasicMutation } from '../hooks/useBasicMutation'
-// useBasicQuery для GET (враппер над useQuery https://tanstack.com/query/v4/docs/reference/useQuery)
-import { useBasicQuery } from '../hooks/useBasicQuery'
 // Flex - основной компонент для верстки, основа всех примитивов
 // В осоновном достаточно трех пропов: flexDirection - row/column, justifyContent - центрирование по горизонтали (главная ось - row) alignItems - по вертикали (главная ось - row)
 //
@@ -39,42 +35,13 @@ export const ExampleFeaturePage = () => {
     damaged_item: 'item damaged',
     photo: 'The photo'
   })
-  const {
-    mutate: addTicket,
-    isLoading: isAddingTicket,
-    isError: ticketAdditionError
-  } = useBasicMutation<any>({
-    apiPath: API.MUTATE.ADD_TICKET
-  })
-
-  const { data: employees } = useBasicQuery<Employees>({
-    apiPath: API.GET.EMPLOYEES
-  })
-
-  const { data: tickets } = useBasicQuery<{ data: Tickets }>({
-    apiPath: API.GET.TICKETS_LIST
-  })
-
-  const { data: workcenters } = useBasicQuery<{ data: Workcenters }>({
-    apiPath: API.GET.WORK_CENTERS
-  })
 
   return (
     <Wrapper>
       <Pad padding={60} flexDirection="column">
-        <div>
-          {employees?.map((employee, idx) => {
-            return <div key={idx}>{employee.name}</div>
-          })}
-        </div>
+        x
         <Spacer />
-        <Flex wrap="wrap">
-          {tickets?.data?.map((ticket, idx) => {
-            return <Flex key={idx}>{ticket.correction}</Flex>
-          })}
-        </Flex>
         <Spacer space={30} />
-
         <Flex flexDirection="row" justifyContent="center" alignItems="center">
           <TextField
             fullWidth
@@ -85,12 +52,7 @@ export const ExampleFeaturePage = () => {
             value={JSON.stringify(newTicket)}
           />
           <Spacer width={10} />
-          <Button
-            fullWidth
-            variant="contained"
-            size="large"
-            onClick={() => addTicket({ data: newTicket })}
-          >
+          <Button fullWidth variant="contained" size="large">
             ADD TICKET
           </Button>
         </Flex>

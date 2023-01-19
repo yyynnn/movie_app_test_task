@@ -1,46 +1,37 @@
 import { ROUTES } from './consts/routes'
-import { ExampleFeaturePage } from './features/exampleFeature/ExampleFeaturePage'
+import { ExampleFeaturePage } from './features/exampleFeatures/ExampleFeaturePage'
+import { MemoPage } from './features/exampleFeatures/memo/MemoPage'
 import { HomePage } from './features/home/HomePage'
-// import { KpiPage } from './features/kpi/KpiPage'
-import { ForgotPasswordPage } from './features/login/ForgotPasswordPage'
-import { LoginPage } from './features/login/LoginPage'
 
 export const routes = [
   {
-    element: <LoginPage />,
-    path: ROUTES.LOGIN,
-    privatePage: false,
-    featureActive: true
-  },
-
-  {
-    element: <ForgotPasswordPage />,
-    path: ROUTES.FORGOT_PASSWORD,
-    privatePage: false,
-    featureActive: true
-  },
-  {
     element: <div />,
     path: ROUTES.UNDER_CONSTRUCTION,
-    privatePage: true,
+    privatePage: false,
     featureActive: false
+  },
+  {
+    element: <MemoPage />,
+    path: '/memo',
+    privatePage: false,
+    featureActive: true
   },
   {
     element: <ExampleFeaturePage />,
     path: '/example',
-    privatePage: true,
+    privatePage: false,
     featureActive: true
   },
   {
     element: <HomePage />,
     path: ROUTES.HOME,
-    privatePage: true,
+    privatePage: false,
     featureActive: true
   },
   {
     element: <HomePage />,
     path: ROUTES.ROOT,
-    privatePage: true,
+    privatePage: false,
     featureActive: true
   }
 ]
