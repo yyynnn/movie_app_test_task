@@ -10,7 +10,6 @@ import { TCard } from './types'
 export const MemoPage = () => {
   //state
   const [inputValue, setInputValue] = React.useState<TCard>({ name: '', time: '' })
-  const [time, setTime] = useState()
 
   const [cards, setCards] = useState<TCard[]>([])
 
