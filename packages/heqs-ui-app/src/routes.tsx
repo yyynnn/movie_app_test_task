@@ -74,7 +74,7 @@ export const routes = [
       <TicketConstructor
         hasCorrectiveActions={false}
         heading="Accident"
-        hasShortDescription={false}
+        hasCorrectionField={false}
       />
     ),
     path: ROUTES.HEALTH_AND_SAFETY_ACCIDENT,
@@ -86,7 +86,7 @@ export const routes = [
       <TicketConstructor
         hasCorrectiveActions={false}
         heading="Nearmiss (Occupational health and safety)"
-        hasShortDescription={false}
+        hasCorrectionField={false}
       />
     ),
     path: ROUTES.HEALTH_AND_SAFETY_NEAR_MISS,
@@ -98,7 +98,7 @@ export const routes = [
       <TicketConstructor
         hasCorrectiveActions={false}
         heading="Posible accident"
-        hasShortDescription={false}
+        hasCorrectionField={false}
       />
     ),
     path: ROUTES.HEALTH_AND_SAFETY_POSIBLE_ACCIDENT,

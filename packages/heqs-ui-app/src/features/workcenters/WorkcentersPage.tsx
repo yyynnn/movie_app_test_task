@@ -8,6 +8,7 @@ import { useState } from 'react'
 
 import { API } from '../../consts/api'
 import { Workcenters } from '../../types/api'
+import { useWorkcentersStat } from '../api/generated/endpoints'
 import { useBasicQuery } from '../hooks/useBasicQuery'
 import { Flex, Pad, Spacer } from '../primitives'
 import { fakeData } from './fakeData'
@@ -17,9 +18,9 @@ export const WorkcentersPage = (props: any) => {
   const theme = useTheme()
   const isDark = theme.palette.mode === 'dark'
 
-  const { data: workcenters } = useBasicQuery<{ data: Workcenters }>({
-    apiPath: API.GET.WORK_CENTERS
-  })
+  const { data } = useWorkcentersStat(1)
+  const { data: workcenters } = data || {}
+  console.log('🐸 Pepe said => WorkcentersPage => workcenters', workcenters)
 
   const [ohsDate, setOhsDate] = useState<Date>(new Date('2007-12-17T03:24:00'))
   const [qDate, setQDate] = useState<Date>(new Date())

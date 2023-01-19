@@ -18,7 +18,10 @@ import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
 
 import type {
+  AccidentsStatParams,
+  AuditFindingsClosureStatParams,
   CorrectiveAction,
+  CorrectiveActionImplementationStatParams,
   Factory,
   GetPaginatedCorrectiveActionListParams,
   GetPaginatedTicketListParams,
@@ -33,6 +36,7 @@ import type {
   User,
   UserPosition,
   Workcenter,
+  WorkcentersStatParams,
   WorkcentersTicketStatusesStaticticsParams
 } from './models'
 
@@ -777,6 +781,213 @@ export const useGetUserPositionsDictionary = <
     queryKey,
     queryFn,
     queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Accidents Stat
+ */
+export const accidentsStat = (
+  params: AccidentsStatParams,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
+  return axios.get(`/stat/accident`, {
+    ...options,
+    params: { ...params, ...options?.params }
+  })
+}
+
+export const getAccidentsStatQueryKey = (params: AccidentsStatParams) => [
+  `/stat/accident`,
+  ...(params ? [params] : [])
+]
+
+export type AccidentsStatQueryResult = NonNullable<Awaited<ReturnType<typeof accidentsStat>>>
+export type AccidentsStatQueryError = AxiosError<unknown>
+
+export const useAccidentsStat = <
+  TData = Awaited<ReturnType<typeof accidentsStat>>,
+  TError = AxiosError<unknown>
+>(
+  params: AccidentsStatParams,
+  options?: {
+    query?: UseQueryOptions<Awaited<ReturnType<typeof accidentsStat>>, TError, TData>
+    axios?: AxiosRequestConfig
+  }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getAccidentsStatQueryKey(params)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof accidentsStat>>> = ({ signal }) =>
+    accidentsStat(params, { signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof accidentsStat>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Audit Findings Closure Stat
+ */
+export const auditFindingsClosureStat = (
+  params: AuditFindingsClosureStatParams,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
+  return axios.get(`/stat/afc`, {
+    ...options,
+    params: { ...params, ...options?.params }
+  })
+}
+
+export const getAuditFindingsClosureStatQueryKey = (params: AuditFindingsClosureStatParams) => [
+  `/stat/afc`,
+  ...(params ? [params] : [])
+]
+
+export type AuditFindingsClosureStatQueryResult = NonNullable<
+  Awaited<ReturnType<typeof auditFindingsClosureStat>>
+>
+export type AuditFindingsClosureStatQueryError = AxiosError<unknown>
+
+export const useAuditFindingsClosureStat = <
+  TData = Awaited<ReturnType<typeof auditFindingsClosureStat>>,
+  TError = AxiosError<unknown>
+>(
+  params: AuditFindingsClosureStatParams,
+  options?: {
+    query?: UseQueryOptions<Awaited<ReturnType<typeof auditFindingsClosureStat>>, TError, TData>
+    axios?: AxiosRequestConfig
+  }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getAuditFindingsClosureStatQueryKey(params)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof auditFindingsClosureStat>>> = ({
+    signal
+  }) => auditFindingsClosureStat(params, { signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof auditFindingsClosureStat>>, TError, TData>(
+    queryKey,
+    queryFn,
+    queryOptions
+  ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Corrective Action Implementation Stat
+ */
+export const correctiveActionImplementationStat = (
+  params: CorrectiveActionImplementationStatParams,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
+  return axios.get(`/stat/cai`, {
+    ...options,
+    params: { ...params, ...options?.params }
+  })
+}
+
+export const getCorrectiveActionImplementationStatQueryKey = (
+  params: CorrectiveActionImplementationStatParams
+) => [`/stat/cai`, ...(params ? [params] : [])]
+
+export type CorrectiveActionImplementationStatQueryResult = NonNullable<
+  Awaited<ReturnType<typeof correctiveActionImplementationStat>>
+>
+export type CorrectiveActionImplementationStatQueryError = AxiosError<unknown>
+
+export const useCorrectiveActionImplementationStat = <
+  TData = Awaited<ReturnType<typeof correctiveActionImplementationStat>>,
+  TError = AxiosError<unknown>
+>(
+  params: CorrectiveActionImplementationStatParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof correctiveActionImplementationStat>>,
+      TError,
+      TData
+    >
+    axios?: AxiosRequestConfig
+  }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getCorrectiveActionImplementationStatQueryKey(params)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof correctiveActionImplementationStat>>> = ({
+    signal
+  }) => correctiveActionImplementationStat(params, { signal, ...axiosOptions })
+
+  const query = useQuery<
+    Awaited<ReturnType<typeof correctiveActionImplementationStat>>,
+    TError,
+    TData
+  >(queryKey, queryFn, queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
+
+  query.queryKey = queryKey
+
+  return query
+}
+
+/**
+ * @summary Workcenters Ticket Statuses Statictics
+ */
+export const workcentersStat = (
+  factoryId: number,
+  params?: WorkcentersStatParams,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<void>> => {
+  return axios.get(`/stat/workcenters/${factoryId}`, {
+    ...options,
+    params: { ...params, ...options?.params }
+  })
+}
+
+export const getWorkcentersStatQueryKey = (factoryId: number, params?: WorkcentersStatParams) => [
+  `/stat/workcenters/${factoryId}`,
+  ...(params ? [params] : [])
+]
+
+export type WorkcentersStatQueryResult = NonNullable<Awaited<ReturnType<typeof workcentersStat>>>
+export type WorkcentersStatQueryError = AxiosError<unknown>
+
+export const useWorkcentersStat = <
+  TData = Awaited<ReturnType<typeof workcentersStat>>,
+  TError = AxiosError<unknown>
+>(
+  factoryId: number,
+  params?: WorkcentersStatParams,
+  options?: {
+    query?: UseQueryOptions<Awaited<ReturnType<typeof workcentersStat>>, TError, TData>
+    axios?: AxiosRequestConfig
+  }
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+  const { query: queryOptions, axios: axiosOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getWorkcentersStatQueryKey(factoryId, params)
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof workcentersStat>>> = ({ signal }) =>
+    workcentersStat(factoryId, params, { signal, ...axiosOptions })
+
+  const query = useQuery<Awaited<ReturnType<typeof workcentersStat>>, TError, TData>(
+    queryKey,
+    queryFn,
+    { enabled: !!factoryId, ...queryOptions }
   ) as UseQueryResult<TData, TError> & { queryKey: QueryKey }
 
   query.queryKey = queryKey

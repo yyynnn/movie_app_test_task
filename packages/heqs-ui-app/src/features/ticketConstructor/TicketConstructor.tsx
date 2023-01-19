@@ -10,6 +10,7 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
   Stack,
   TextField,
@@ -43,7 +44,7 @@ type TicketConstructorType = {
   hasForeman?: boolean | undefined
   hasWorkscenter?: boolean | undefined
   hasDamagedItem?: boolean | undefined
-  hasShortDescription?: boolean | undefined
+  hasCorrectionField?: boolean | undefined
   readOnly?: boolean | undefined
   hasCorrectiveActions?: boolean | undefined
   initialData?: any
@@ -57,7 +58,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
   hasForeman = true,
   hasWorkscenter = true,
   hasDamagedItem = true,
-  hasShortDescription = false,
+  hasCorrectionField = false,
   readOnly = false,
   hasCorrectiveActions = true,
   initialData
@@ -115,7 +116,6 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
         ticket_category_id: ticketCategory,
         created_user_id: 1,
         responsible_user_id: 1,
-        foreman: employees?.find((employee) => employee.id === data.foreman_id)?.name,
         workcenter: workcenters?.find((employee) => employee.id === data.workcenter_id)?.number
       }
     })
@@ -156,7 +156,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
         {hasForeman && (
           <Controller
             control={control}
-            name="foreman_id"
+            name="responsible_user_id"
             rules={{ required: 'Ошибка' }}
             render={({ field: { onChange, ref, value, name } }) => {
               return (
@@ -226,7 +226,7 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
           />
         )}
 
-        {hasShortDescription && (
+        {hasCorrectionField && (
           <Controller
             control={control}
             name="correction"
@@ -249,8 +249,17 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
       <Spacer />
 
       <Row>
-        {!readOnly && (
-          <Col md={6}>
+        {readOnly ? (
+          <Col lg={6}>
+            <Paper>
+              <Pad>
+                <div>No Image</div>
+              </Pad>
+            </Paper>
+            <Spacer />
+          </Col>
+        ) : (
+          <Col lg={6}>
             <Controller
               name="photo"
               control={control}
@@ -296,33 +305,35 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
           </Col>
         )}
 
-        <Col lg={12}>
-          {!hasShortDescription && (
-            <Controller
-              control={control}
-              name="correction"
-              rules={{ required: 'Ошибка' }}
-              render={({ field: { onChange, value, name } }) => {
-                return (
-                  <TextField
-                    onChange={onChange}
-                    value={value}
-                    fullWidth
-                    label="Correction"
-                    error={!!errors[name]}
-                    multiline
-                    rows={4}
-                    defaultValue=""
-                  />
-                )
-              }}
-            />
+        <Col lg={6}>
+          {!hasCorrectionField && (
+            <HeightWrapper id="correction_field_wrapper">
+              <Controller
+                control={control}
+                name="correction"
+                rules={{ required: 'Ошибка' }}
+                render={({ field: { onChange, value, name } }) => {
+                  return (
+                    <TextField
+                      onChange={onChange}
+                      value={value}
+                      fullWidth
+                      label="Correction"
+                      error={!!errors[name]}
+                      multiline
+                      rows={4}
+                      defaultValue=""
+                    />
+                  )
+                }}
+              />
+              <Spacer />
+            </HeightWrapper>
           )}
-          <Spacer />
         </Col>
 
         {hasCorrectiveActions && initialData.id && (
-          <Col lg={12}>
+          <Col md={12}>
             <CorrectiveActions readOnly={readOnly} ticketId={initialData.id} />
           </Col>
         )}
@@ -353,6 +364,24 @@ export const TicketConstructor: RFCC<TicketConstructorType> = ({
     </Form>
   )
 }
+
+const HeightWrapper = styled.div`
+  height: 100%;
+
+  & .MuiFormControl-root {
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+  }
+  & .MuiInputBase-root {
+    height: calc(100% - 20px);
+    display: flex;
+    align-items: flex-start;
+  }
+  & texarea.MuiInputBase-input {
+    height: 100%;
+  }
+`
 
 const Form = styled.form<{ $readOnly: boolean }>`
   & * {

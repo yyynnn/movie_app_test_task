@@ -5,6 +5,7 @@
  * Документация для микро сервиса
  * OpenAPI spec version: 1.0.0
  */
+import type { GetPaginatedCorrectiveActionListSort } from './getPaginatedCorrectiveActionListSort'
 
 export type GetPaginatedCorrectiveActionListParams = {
   'page[number]'?: number
@@ -22,6 +23,7 @@ export type GetPaginatedCorrectiveActionListParams = {
   'filter[corrective_actions.corrective_action_due_date_after]'?: string
   'filter[corrective_actions.corrective_action_due_date_before]'?: string
   'filter[corrective_actions.corrective_action_due_date_between]'?: string
+  'filter[tickets.ticket_class_id]'?: number
   'filter[tickets.ticket_category_id]'?: number
   'filter[tickets.ticket_status_id]'?: number
   'filter[tickets.created_user_id]'?: number
@@ -31,4 +33,5 @@ export type GetPaginatedCorrectiveActionListParams = {
   'filter[workcenters.workcenter_group_id]'?: number
   'filter[workcenters.factory_id]'?: number
   'filter[factories.country_id]'?: number
+  sort?: GetPaginatedCorrectiveActionListSort
 }
