@@ -1,5 +1,5 @@
 {
-  "name": "@heqs-ui/paywall-server",
+  "name": "@movie-app/paywall-server",
   "version": "1.0.0",
   "description": "paywall api pinger",
   "main": "index.js",

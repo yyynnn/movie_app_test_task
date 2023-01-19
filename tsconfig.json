@@ -23,9 +23,9 @@
     }
   },
   "include": [
-    "packages/heqs-ui-old-app/**/*.ts",
-    "packages/heqs-ui-old-app/**/*.tsx",
-    "packages/heqs-ui-app/**/*.ts",
-    "packages/heqs-ui-app/**/*.tsx"
+    "packages/movie-app-old-app/**/*.ts",
+    "packages/movie-app-old-app/**/*.tsx",
+    "packages/movie-app/**/*.ts",
+    "packages/movie-app/**/*.tsx"
   ]
 }

@@ -9,7 +9,7 @@ let count = 1
 
 const someRequest = async () => {
   await axios
-    .get('https://heqs-services-dev.onrender.com/api/tickets/')
+    .get('/api/movies/')
     .then((response) => {
       setTimeout(() => {
         someRequest()
@@ -29,7 +29,7 @@ const someRequest = async () => {
 app.set('port', 3000)
 
 app.get('*', function (request, response) {
-  response.sendFile(__dirname + '/packages/heqs-ui-app/dist/index.html')
+  response.sendFile(__dirname + '/packages/movie-app/dist/index.html')
 })
 
 app.listen(app.get('port'), function () {

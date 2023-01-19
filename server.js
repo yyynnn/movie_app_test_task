@@ -4,10 +4,10 @@ var app = express()
 var fs = require('fs')
 
 app.set('port', 3000)
-app.use(express.static(__dirname + '/packages/heqs-ui-app/dist'))
+app.use(express.static(__dirname + '/packages/movie-app/dist'))
 
 app.get('*', function (request, response) {
-  response.sendFile(__dirname + '/packages/heqs-ui-app/dist/index.html')
+  response.sendFile(__dirname + '/packages/movie-app/dist/index.html')
 })
 
 app.listen(app.get('port'), function () {

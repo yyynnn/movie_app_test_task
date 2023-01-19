@@ -1,7 +1,7 @@
 {
-  "name": "heqs-ui",
+  "name": "movie-app",
   "version": "1.0.0",
-  "description": "heqs monorepo",
+  "description": "monorepo",
   "private": true,
   "engines": {
     "node": "^16",
@@ -14,17 +14,13 @@
   },
   "types": "./types/index.d.ts",
   "scripts": {
-    "dev": "yarn workspace @heqs-ui/heqs-ui-app start",
-    "build": "yarn workspace @heqs-ui/heqs-ui-app build",
-    "dev:landings": "yarn workspace @heqs-ui/landings dev",
-    "build:landings": "yarn workspace @heqs-ui/landings build",
-    "orval": "npx orval && npx prettier --config ./.prettierrc --write ./packages/heqs-ui-app/src/features/api/generated/* && npx eslint --fix ./packages/heqs-ui-app/src/features/api/generated/*",
+    "dev": "yarn workspace @movie-app/movie-app start",
+    "build": "yarn workspace @movie-app/movie-app build",
+    "dev:landings": "yarn workspace @movie-app/landings dev",
+    "build:landings": "yarn workspace @movie-app/landings build",
+    "orval": "npx orval && npx prettier --config ./.prettierrc --write ./packages/movie-app/src/features/api/generated/* && npx eslint --fix ./packages/movie-app/src/features/api/generated/*",
     "format:all": "npx prettier --config ./.prettierrc --write ./packages/* && npx eslint --fix ./packages/*",
-    "pinger": "yarn workspace @heqs-ui/paywall-server start"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:georgedanilyants/heqs.git"
+    "pinger": "yarn workspace @movie-app/paywall-server start"
   },
   "dependencies": {
     "@fontsource/plus-jakarta-sans": "4.5.10",
