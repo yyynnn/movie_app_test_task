@@ -1,7 +1,6 @@
 import { ROUTES } from './consts/routes'
-import { ExampleFeaturePage } from './features/exampleFeatures/ExampleFeaturePage'
-import { MemoPage } from './features/exampleFeatures/memo/MemoPage'
 import { HomePage } from './features/home/HomePage'
+import { MemoCallBacksPage } from './features/memoAndCallbacks/MemoCallBacksPage'
 
 export const routes = [
   {
@@ -11,14 +10,8 @@ export const routes = [
     featureActive: false
   },
   {
-    element: <MemoPage />,
+    element: <MemoCallBacksPage />,
     path: '/memo',
-    privatePage: false,
-    featureActive: true
-  },
-  {
-    element: <ExampleFeaturePage />,
-    path: '/example',
     privatePage: false,
     featureActive: true
   },
