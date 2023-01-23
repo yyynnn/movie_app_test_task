@@ -1,8 +1,8 @@
 import { Button, Input, Paper, Typography } from '@mui/material'
 import React, { MouseEvent, useCallback, useState } from 'react'
 
-import { uuid4 } from '../../utils'
-import { Pad, Spacer } from '../primitives'
+import { uuid4 } from '../../../utils'
+import { Pad, Spacer } from '../../primitives'
 import { Cards } from './Cards'
 import { TCard } from './types'
 

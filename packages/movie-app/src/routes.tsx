@@ -1,6 +1,6 @@
 import { ROUTES } from './consts/routes'
 import { HomePage } from './features/home/HomePage'
-import { MemoCallBacksPage } from './features/memoAndCallbacks/MemoCallBacksPage'
+import { MemoCallBacksPage } from './features/lessons/1. memoAndCallbacks/MemoCallBacksPage'
 
 export const routes = [
   {

@@ -34,13 +34,13 @@ namespace Validation {
 
 // можно разделять между файлами
 // file1.d.ts
-namespace Validation {
+namespace Validations {
   export interface StringValidator {
     isAcceptable(s: string): boolean
   }
 }
 // file2.d.ts
-namespace Validation {
+namespace Validations {
   const lettersRegexp = /^[A-Za-z]+$/
   const numberRegexp = /^[0-9]+$/
 

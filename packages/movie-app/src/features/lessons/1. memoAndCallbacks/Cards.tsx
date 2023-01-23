@@ -2,7 +2,7 @@ import { Button, Paper, Typography } from '@mui/material'
 import { RFCC } from 'packages/movie-app/src/types/react'
 import React, { memo, useMemo } from 'react'
 
-import { Pad, Spacer } from '../primitives'
+import { Pad, Spacer } from '../../primitives'
 import { TCard } from './types'
 
 // юзаем React.memo (HOC) чтобы не перерисовывать карточки, которые не изменились
