@@ -1,5 +1,5 @@
 import { Button, Input, Paper, Typography } from '@mui/material'
-import React, { useCallback, useState } from 'react'
+import React, { MouseEvent, useCallback, useState } from 'react'
 
 import { uuid4 } from '../../utils'
 import { Pad, Spacer } from '../primitives'
@@ -22,12 +22,12 @@ export const MemoCallBacksPage = (props: any) => {
   // ! при передаче функции как проп оптимизация полезна
   // ! но важно не забыть закинуть в зависимости все, что используется внутри функции
   const removeHandler = useCallback(
-    (val: string) => {
-      console.log('🐸 Pepe said => removeHandler => val', val)
+    (returnValue: string) => {
+      console.log('🐸 Pepe said => removeHandler => val', returnValue)
       console.log('🐸 Pepe said => removeHandler => cards', cards)
 
       const newCards = cards.filter((card) => {
-        return card.name !== val
+        return card.name !== returnValue
       })
       setCards(newCards)
     },
@@ -42,11 +42,13 @@ export const MemoCallBacksPage = (props: any) => {
     const currentTime = new Date().toLocaleString()
     // этот пример уже приближен к реальности
     const someTime = props.someTimeFromApi + ' ' + currentTime
+
     setInputData({ name: event.target.value, time: currentTime, id })
   }, [])
 
   // итог: useCallback - для ПЕРЕДАЧИ функции(колбека) как проп, чтобы не пересоздавать функцию при каждом рендере в циклах
   // и только в больших наборах данных
+  // и при тяжелой работе внутри функции
 
   return (
     <div>

@@ -23,9 +23,8 @@ export const impureFunction3 = (): void => {
 }
 
 //---------------------------------------------------------------------//
-
 // Композиция функций
-
+//
 // можно делать так
 // @ts-ignore
 const discount = normalizePrice(divide100(multiply20(200))) // 40.00
@@ -48,14 +47,13 @@ discountWithPrefix(200.0) // '$40.00'
 
 // ---------------------------------------------------------------------//
 // Карирование - лучше вообще не трогать
+//
 // Потому что ужасный синтаксис
-
 const sum = (x: number) => (y: number) => x + y
 // returns the number 3
 sum(2)(1)
 // returns a function y => 2 + y
 sum(2)
-
 // нечитаемо
 // @ts-ignore
 const curry = (x) => (y) => (z) => (a) => (b) => (c) => x + y + z + a + b + c

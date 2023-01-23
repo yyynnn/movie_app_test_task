@@ -1,4 +1,4 @@
-import React from 'react'
+import R from 'ramda'
 
 const EMPTY_OBJ: any = {}
 
@@ -8,6 +8,13 @@ const animals = [
   { name: 'Fluffball', type: 'rabbit', isNeutered: false, age: 1 },
   { name: 'Strawhat', type: 'cat', isNeutered: true, age: 5 }
 ]
+
+// identity - возвращает то же самое что и получила
+function identity(arg: any): any {
+  return arg
+}
+// или
+// arg => arg
 
 // ----- MAP -----
 // what you need:
@@ -76,6 +83,14 @@ const totalScore = animals
     return accumulator + animal.cutenessScore
   }, 0)
 
-export const FPPage = () => {
-  return <div>FPPage</div>
-}
+// ! Смысл ФП в том, что мы не мутируем данные, а создаем новые
+// и протягиваем данных свозь потоки
+
+// RAMDA
+// мемного перебор) но показывает принцип
+export const mappingRamda = R.cond([
+  [R.either(R.equals('chair'), R.equals('table')), R.always('Furniture')],
+  [R.equals('trousers'), R.always('Cloths')],
+  [R.equals('house'), R.always('Real Estate')],
+  [R.T, R.always('Unknown')]
+])

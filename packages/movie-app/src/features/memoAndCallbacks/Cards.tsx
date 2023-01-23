@@ -1,6 +1,6 @@
 import { Button, Paper, Typography } from '@mui/material'
 import { RFCC } from 'packages/movie-app/src/types/react'
-import React, { useMemo } from 'react'
+import React, { memo, useMemo } from 'react'
 
 import { Pad, Spacer } from '../primitives'
 import { TCard } from './types'
@@ -8,12 +8,15 @@ import { TCard } from './types'
 // юзаем React.memo (HOC) чтобы не перерисовывать карточки, которые не изменились
 // не нужен если правильно описать композицию компонентов
 // либо использовать children
-export const Cards: RFCC<{ cards: TCard[]; removeHandler: any }> = React.memo(
+export const Cards: RFCC<{ cards: TCard[]; removeHandler: any }> = memo(
   ({ cards, removeHandler }) => {
     // будет ре-рендер при каждом рендере родителя
+    const somePatialData = 'alalala'
     const someDataRerednder = {}
     // оправдано для передачи данных в дочерние компоненты
-    const someMemoData = useMemo(() => ({}), [])
+    const someMemoData = useMemo(() => {
+      return somePatialData
+    }, [])
 
     // итог: useMemo - для ПЕРЕДАЧИ данных в дочерние компоненты
     // да и то если расчет данных долгий
@@ -23,7 +26,7 @@ export const Cards: RFCC<{ cards: TCard[]; removeHandler: any }> = React.memo(
 
     return (
       <div>
-        {cards.map((card) => {
+        {cards.map((card, idx) => {
           return (
             <Pad key={card.id}>
               <Card card={card} removeHandler={removeHandler} />
@@ -35,7 +38,7 @@ export const Cards: RFCC<{ cards: TCard[]; removeHandler: any }> = React.memo(
   }
 )
 
-const Card: RFCC<{ card: TCard; removeHandler: any }> = React.memo(({ card, removeHandler }) => {
+const Card: RFCC<{ card: TCard; removeHandler: any }> = memo(({ card, removeHandler }) => {
   const onClick = () => removeHandler(card.name)
 
   return (
